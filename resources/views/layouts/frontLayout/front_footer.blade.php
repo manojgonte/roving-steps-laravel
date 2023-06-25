@@ -58,26 +58,9 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="py-20 border-top-light">
-            <div class="container">
-                <div class="row justify-between items-center y-gap-10">
-                    <div class="col-auto">
-                        <div class="row x-gap-30 y-gap-10">
-                            <div class="col-auto">
-                                <div class="d-flex items-center"> © {{date('Y')}} | Designed & Developed by &nbsp;<a herf="#" target="_blank"> MI</a> </div>
+                            <div class="col-12 pt-20">
+                                <div class="d-flex items-center text-white"> © {{date('Y')}} | Designed & Developed by &nbsp;<a herf="#" target="_blank"> MI</a> </div>
                             </div>
-                            {{-- <div class="col-auto">
-                                <div class="d-flex x-gap-15">
-                                    <a href="#">Privacy</a>
-                                    <a href="#">Terms</a>
-                                    <a href="#">Site Map</a>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>

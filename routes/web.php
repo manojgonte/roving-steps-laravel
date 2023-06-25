@@ -17,7 +17,7 @@ Route::get('/about-us', [IndexController::class, 'about'])->name('about');
 Route::get('/about-us', [IndexController::class, 'about'])->name('about');
 
 Route::get('/tours', [IndexController::class, 'tours']);
-Route::get('/tour-details/{id}/{slug?}', [IndexController::class, 'tourDetails']);
+Route::get('/tour-details/{id?}/{slug?}', [IndexController::class, 'tourDetails']);
 Route::get('/gallery', [IndexController::class, 'gallery']);
 
 Route::get('/flight-booking', [IndexController::class, 'flightBooking']);

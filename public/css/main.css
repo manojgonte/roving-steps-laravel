@@ -13092,3 +13092,14 @@ CUSTOM CSS
 .text_shadow_property {
   text-shadow: 1px 1px #697488
 }
+
+.slanted {
+  width: 200px;
+  max-width: 200px;
+  height: 60px;
+  clip-path: polygon(0 0%, 75% 0, 100% 100%, 0 100%);
+  align-items: center;
+  padding-left: 10px;
+  background-color: #051036;
+  color: #FFFFFF;
+}
