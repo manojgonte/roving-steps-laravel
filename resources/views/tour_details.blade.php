@@ -29,7 +29,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <div class="mainSearch bg-white px-10 py-10 lg:px-20 lg:pt-5 lg:pb-20 rounded-4">
+                        <div class="mainSearch bg-white px-10 py-10 lg:px-20 lg:pt-5 lg:pb-20 rounded-4 sm:d-none">
                             <div class="button-grid items-center">
                                 <div class="searchMenu-loc pl-10 pr-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
                                     <div data-x-dd-click="searchMenu-loc">
@@ -199,7 +199,7 @@
                 </div>
             </div>
         </div>
-        <div class="singleMenu__content">
+        <div class="singleMenu__content sm:d-none">
             <div class="container">
                 <div class="row y-gap-20 justify-between items-center">
                     <div class="col-auto">
