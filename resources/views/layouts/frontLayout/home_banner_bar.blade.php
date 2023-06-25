@@ -1,5 +1,5 @@
 <div class="text-center">
-    <h2 class="text-80 lg:text-60 sm:text-40 text-white">Explore the Huge World and Enjoy it's Beauty</h2>
+    <h2 class="text-60 lg:text-60 sm:text-40 text-white">Explore the Huge World and Enjoy it's Beauty</h2>
     <div class="text-white fw-500 mb-10">Let's experience moments which leave us stunned and gives us goosebumps and so much more that we cannot express when we travel to places we always wished for.</div>
 
     <div class="mainSearch -w-900 bg-white px-10 py-10 lg:px-20 lg:pt-5 lg:pb-20 rounded-100">

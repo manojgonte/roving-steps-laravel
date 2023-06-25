@@ -1,12 +1,21 @@
 @extends('layouts/frontLayout/front_design')
 @section('content')
 
+@section('styles')
+<style>
+    .bg-triangle {
+        background-image: url('img/elements/app_bg.jpeg');
+        background-size: cover;
+    }
+</style>
+@endsection('styles')
+
 <section class="masthead -type-9">
     <div class="masthead-slider js-masthead-slider-9">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <div class="masthead__bg bg-dark-3">
-                    <img src="img/masthead/9/bg.png" alt="image">
+                    <img src="img/banner/banner1.webp" alt="image">
                 </div>
                 <div class="container">
                     <div class="row justify-center">
@@ -66,7 +75,7 @@
     </a>
 </section>
 
-<section class="layout-pt-lg layout-pb-md">
+<section class="layout-pt-md layout-pb-md">
     <div data-anim-wrap class="container">
         <div data-anim-child="slide-up delay-1" class="row y-gap-30">
             <div class="col-xl-6 offset-xl-1 col-lg-7">
@@ -87,7 +96,7 @@
     </div>
 </section>
 
-<section class="layout-pt-lg layout-pb-md">
+<section class="layout-pt-md layout-pb-md">
     <div class="container">
         <div data-anim="slide-up delay-1" class="row y-gap-20 justify-between items-end">
             <div class="col-auto">
@@ -440,113 +449,168 @@
         </div>
     </div>
 </section>
-<section class="layout-pt-md layout-pb-lg">
-    <div data-anim-wrap class="container">
-        <div class="row y-gap-20 justify-between">
-            <div data-anim-child="slide-up delay-1" class="col-lg-3 col-sm-6">
-                <div class="featureIcon -type-1 ">
-                    <div class="d-flex justify-center">
-                        <img src="#" data-src="img/featureIcons/1/1.svg" alt="image" class="js-lazy">
-                    </div>
-                    <div class="text-center mt-30">
-                        <h4 class="text-18 fw-500">Best Price Guarantee</h4>
-                        <p class="text-15 mt-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
+
+<section class="layout-pt-md pb-50">
+    <div class="container">
+        <div class="row y-gap-30 justify-between items-center">
+            <div class="col-lg-4">
+                <img src="{{asset('img/eiffel-tower.jpg')}}" alt="image" class="rounded-4 img-border-style">
             </div>
-            <div data-anim-child="slide-up delay-2" class="col-lg-3 col-sm-6">
-                <div class="featureIcon -type-1 ">
-                    <div class="d-flex justify-center">
-                        <img src="#" data-src="img/featureIcons/1/2.svg" alt="image" class="js-lazy">
-                    </div>
-                    <div class="text-center mt-30">
-                        <h4 class="text-18 fw-500">Easy & Quick Booking</h4>
-                        <p class="text-15 mt-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <div class="col-lg-8">
+                <h2 class="text-30 fw-600">Why Choose Us?</h2>
+
+                <div data-anim-wrap>
+                    <div class="row y-gap-20 justify-between mt-10">
+                        <div data-anim-child="slide-up delay-1" class="col-lg-6 col-sm-6">
+                            <div class="featureIcon -type-1 ">
+                                <div class="d-flex justify-center align-items-center">
+                                    <i class="fa fa-fingerprint text-50"></i>
+                                    <div class="text-left mt-10 pl-20">
+                                        <h4 class="text-18 fw-500">Easy Booking</h4>
+                                        <p class="text-15">We offer easy and convenient flight bookings with attractive offers</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-anim-child="slide-up delay-2" class="col-lg-6 col-sm-6">
+                            <div class="featureIcon -type-1 ">
+                                <div class="d-flex justify-center align-items-center">
+                                    <i class="fa fa-earth-asia text-50"></i>
+                                    <div class="text-left mt-10 pl-20">
+                                        <h4 class="text-18 fw-500">Exciting Deals</h4>
+                                        <p class="text-15">Enjoy exciting deals on flights, hotels, buses, car rental and tour packages</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-anim-child="slide-up delay-3" class="col-lg-6 col-sm-6">
+                            <div class="featureIcon -type-1 ">
+                                <div class="d-flex justify-center align-items-center">
+                                    <i class="fa fa-cutlery text-50"></i>
+                                    <div class="text-left mt-10 pl-20">
+                                        <h4 class="text-18 fw-500">Pocket Friendly Pricing</h4>
+                                        <p class="text-15">We ensure low rates on hotel reservation, holiday packages and on flight tickets.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-anim-child="slide-up delay-3" class="col-lg-6 col-sm-6">
+                            <div class="featureIcon -type-1 ">
+                                <div class="d-flex justify-center align-items-center">
+                                    <i class="fa fa-phone text-50"></i>
+                                    <div class="text-left mt-10 pl-20">
+                                        <h4 class="text-18 fw-500">24/7 Support</h4>
+                                        <p class="text-15">Get assistance 24/7 on any kind of travel related query, We are happy to assist you</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div data-anim-child="slide-up delay-3" class="col-lg-3 col-sm-6">
-                <div class="featureIcon -type-1 ">
-                    <div class="d-flex justify-center">
-                        <img src="#" data-src="img/featureIcons/1/3.svg" alt="image" class="js-lazy">
-                    </div>
-                    <div class="text-center mt-30">
-                        <h4 class="text-18 fw-500">Customer Care 24/7</h4>
-                        <p class="text-15 mt-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
+
+                <p class="text-dark-1 text-15 mt-20 lg:mt-40 md:mt-20"> Lorem ipsum dolor sit amet. Ea magnam dolorum est totam quia aut perferendis cumque. Ea dolor similique sit illo temporibus ea pariatur recusandae et recusandae nemo sit optio libero. In placeat numquam sit eaque illo in illum culpa At praesentium amet qui expedita veniam nam error quis ut quod dolorum. Qui ipsum laboriosam ex galisum perspiciatis vel dignissimos rerum et voluptatem dolorum. Lorem ipsum dolor sit amet. Ea magnam dolorum est totam quia aut perferendis cumque. Ea dolor similique sit illo temporibus ea pariatur recusandae et recusandae nemo sit optio libero. In placeat numquam sit eaque illo in illum culpa At praesentium amet qui expedita veniam nam error quis ut quod dolorum.
+                </p>
             </div>
         </div>
     </div>
 </section>
-<section class="layout-pt-lg layout-pb-lg bg-blue-2">
-    <div data-anim-wrap class="container">
-        <div class="row y-gap-40 justify-between">
-            <div data-anim-child="slide-up delay-1" class="col-xl-5 col-lg-6">
-                <h2 class="text-30">What our customers are <br> saying us? </h2>
-                <p class="mt-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo.</p>
-                <div class="row y-gap-30 pt-60 lg:pt-40">
-                    <div class="col-sm-5 col-6">
-                        <div class="text-30 lh-15 fw-600">13m+</div>
-                        <div class="text-light-1 lh-15">Happy People</div>
-                    </div>
-                    <div class="col-sm-5 col-6">
-                        <div class="text-30 lh-15 fw-600">4.88</div>
-                        <div class="text-light-1 lh-15">Overall rating</div>
-                        <div class="d-flex x-gap-5 items-center pt-10">
-                            <div class="icon-star text-blue-1 text-10"></div>
-                            <div class="icon-star text-blue-1 text-10"></div>
-                            <div class="icon-star text-blue-1 text-10"></div>
-                            <div class="icon-star text-blue-1 text-10"></div>
-                            <div class="icon-star text-blue-1 text-10"></div>
+
+<section class="section-bg layout-pt-md layout-pb-md">
+    <div class="section-bg__item -mx-20 bg-light-2"></div>
+    <div class="container">
+        <div class="row justify-center text-center">
+            <div class="col-auto">
+                <div class="sectionTitle -md">
+                    <h2 class="sectionTitle__title">What Travelers are Saying About Us?</h2>
+                    <p class=" sectionTitle__text mt-5 sm:mt-0">These popular destinations have a lot to offer</p>
+                </div>
+            </div>
+        </div>
+        <div class="overflow-hidden pt-40 js-section-slider" data-gap="30" data-slider-cols="xl-3 lg-3 md-2 sm-1 base-1">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40">
+                        <h4 class="text-16 fw-500 text-blue-1 mb-20">Hotel Equatorial Melaka</h4>
+                        <p class="testimonials__text lh-18 fw-500 text-dark-1">&quot;Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic.&quot;</p>
+                        <div class="pt-20 mt-28 border-top-light">
+                            <div class="row x-gap-20 y-gap-20 items-center">
+                                <div class="col-auto">
+                                    <img class="size-60" src="img/avatars/1.png" alt="image">
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-15 fw-500 lh-14">Courtney Henry</div>
+                                    <div class="text-14 lh-14 text-light-1 mt-5">Web Designer</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div data-anim-child="slide-up delay-2" class="col-lg-6">
-                <div class="overflow-hidden js-testimonials-slider-3" data-scrollbar>
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="row items-center x-gap-30 y-gap-20">
+                <div class="swiper-slide">
+                    <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40">
+                        <h4 class="text-16 fw-500 text-blue-1 mb-20">Hotel Equatorial Melaka</h4>
+                        <p class="testimonials__text lh-18 fw-500 text-dark-1">&quot;Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic.&quot;</p>
+                        <div class="pt-20 mt-28 border-top-light">
+                            <div class="row x-gap-20 y-gap-20 items-center">
                                 <div class="col-auto">
-                                    <img src="#" data-src="img/avatars/1.png" alt="image" class="js-lazy">
+                                    <img class="size-60" src="img/avatars/1.png" alt="image">
                                 </div>
                                 <div class="col-auto">
-                                    <h5 class="text-16 fw-500">Annette Black</h5>
-                                    <div class="text-15 text-light-1 lh-15">UX / UI Designer</div>
-                                </div>
-                            </div>
-                            <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">The place is in a great location in Gumbet. The area is safe and beautiful. The apartment was comfortable and the host was kind and responsive to our requests.</p>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="row items-center x-gap-30 y-gap-20">
-                                <div class="col-auto">
-                                    <img src="#" data-src="img/avatars/1.png" alt="image" class="js-lazy">
-                                </div>
-                                <div class="col-auto">
-                                    <h5 class="text-16 fw-500">Annette Black</h5>
-                                    <div class="text-15 text-light-1 lh-15">UX / UI Designer</div>
+                                    <div class="text-15 fw-500 lh-14">Courtney Henry</div>
+                                    <div class="text-14 lh-14 text-light-1 mt-5">Web Designer</div>
                                 </div>
                             </div>
-                            <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">The place is in a great location in Gumbet. The area is safe and beautiful. The apartment was comfortable and the host was kind and responsive to our requests.</p>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="row items-center x-gap-30 y-gap-20">
-                                <div class="col-auto">
-                                    <img src="#" data-src="img/avatars/1.png" alt="image" class="js-lazy">
-                                </div>
-                                <div class="col-auto">
-                                    <h5 class="text-16 fw-500">Annette Black</h5>
-                                    <div class="text-15 text-light-1 lh-15">UX / UI Designer</div>
-                                </div>
-                            </div>
-                            <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">The place is in a great location in Gumbet. The area is safe and beautiful. The apartment was comfortable and the host was kind and responsive to our requests.</p>
                         </div>
                     </div>
-                    <div class="d-flex items-center mt-60 sm:mt-20 js-testimonials-slider-pag">
-                        <div class="text-dark-1 fw-500 js-current">01</div>
-                        <div class="slider-scrollbar bg-border ml-20 mr-20 w-max-300 js-scrollbar"></div>
-                        <div class="text-dark-1 fw-500 js-all">03</div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40">
+                        <h4 class="text-16 fw-500 text-blue-1 mb-20">Hotel Equatorial Melaka</h4>
+                        <p class="testimonials__text lh-18 fw-500 text-dark-1">&quot;Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic.&quot;</p>
+                        <div class="pt-20 mt-28 border-top-light">
+                            <div class="row x-gap-20 y-gap-20 items-center">
+                                <div class="col-auto">
+                                    <img class="size-60" src="img/avatars/1.png" alt="image">
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-15 fw-500 lh-14">Courtney Henry</div>
+                                    <div class="text-14 lh-14 text-light-1 mt-5">Web Designer</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40">
+                        <h4 class="text-16 fw-500 text-blue-1 mb-20">Hotel Equatorial Melaka</h4>
+                        <p class="testimonials__text lh-18 fw-500 text-dark-1">&quot;Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic.&quot;</p>
+                        <div class="pt-20 mt-28 border-top-light">
+                            <div class="row x-gap-20 y-gap-20 items-center">
+                                <div class="col-auto">
+                                    <img class="size-60" src="img/avatars/1.png" alt="image">
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-15 fw-500 lh-14">Courtney Henry</div>
+                                    <div class="text-14 lh-14 text-light-1 mt-5">Web Designer</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40">
+                        <h4 class="text-16 fw-500 text-blue-1 mb-20">Hotel Equatorial Melaka</h4>
+                        <p class="testimonials__text lh-18 fw-500 text-dark-1">&quot;Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic.&quot;</p>
+                        <div class="pt-20 mt-28 border-top-light">
+                            <div class="row x-gap-20 y-gap-20 items-center">
+                                <div class="col-auto">
+                                    <img class="size-60" src="img/avatars/1.png" alt="image">
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-15 fw-500 lh-14">Courtney Henry</div>
+                                    <div class="text-14 lh-14 text-light-1 mt-5">Web Designer</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -563,18 +627,8 @@
                         <div class="icon-newsletter text-60 sm:text-40 text-white"></div>
                     </div>
                     <div class="col-auto">
-                        <h4 class="text-26 text-white fw-600">Your Travel Journey Starts Here</h4>
+                        <h4 class="text-26 text-white fw-600">Your Travel Journey Starts Here </h4>
                         <div class="text-white">Sign up and we'll send the best deals to you</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-auto">
-                <div class="single-field -w-410 d-flex x-gap-10 y-gap-20">
-                    <div>
-                        <input class="bg-white h-60" type="text" placeholder="Your Email">
-                    </div>
-                    <div>
-                        <button class="button -md h-60 bg-blue-1 text-white">Subscribe</button>
                     </div>
                 </div>
             </div>

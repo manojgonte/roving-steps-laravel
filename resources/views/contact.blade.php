@@ -1,290 +1,144 @@
 @extends('layouts/frontLayout/front_design')
 @section('content')
 
-<main class="main">
-    <section class="section banner-contact">
-        <div class="container">
-            <div class="banner-1">
-                <div class="row align-items-center">
-                    <div class="col-lg-7">
-                        <span class="title-line line-48 wow animate__animated animate__fadeIn" data-wow-delay=".0s">Get in Touch</span>
-                        <h2 class="color-brand-1 mb-20 mt-10 wow animate__animated animate__fadeIn" data-wow-delay=".2s">We’d love to hear <br class="d-none d-lg-block">from you. </h2>
-                        <div class="row">
-                            <div class="col-lg-9">
-                                <p class="font-md color-grey-500 wow animate__animated animate__fadeIn" data-wow-delay=".4s">Ask a question, or get in touch here. If you’re interested in working at Kirtane & Pandit Coporation, check out our <a class="ml-3" href="{{url('careers')}}"> careers page.</a>
-                                </p>
+<section class="section-bg layout-pt-lg layout-pb-lg">
+    <div class="section-bg__item col-12">
+        <img src="{{asset('img/backgrounds/contact_bg.jpg')}}" alt="image">
+    </div>
+    <div class="container">
+        <div class="row justify-center text-center">
+            <div class="col-xl-6 col-lg-8 col-md-10">
+                <h1 class="text-40 md:text-25 fw-600 text-white">Contact Us</h1>
+                <div class="text-white mt-15">Your trusted trip companion</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="layout-pt-md layout-pb-lg">
+    <div class="container">
+        <div class="row d-flex x-gap-80 y-gap-20 justify-between">
+            <div class="col-lg-7">
+                <div class="text-30 sm:text-24 fw-600">Keep in touch with us</div>
+                <div class="bg-light-3 rounded-4 shadow-4">
+                    <div class="row y-gap-20">
+                        <div class="col-6">
+                            <div class="form-input ">
+                                <input type="text" required>
+                                <label class="lh-1 text-16 text-light-1">Full Name</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-5 d-none d-lg-block">
-                        <div class="box-banner-contact">
-                            <img src="{{asset('assets/imgs/page/contact/banner.png')}}" alt="">
+                        <div class="col-6">
+                            <div class="form-input ">
+                                <input type="text" required>
+                                <label class="lh-1 text-16 text-light-1">Email</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-input ">
+                                <input type="text" required>
+                                <label class="lh-1 text-16 text-light-1">Contact</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-input ">
+                                <input type="text" required>
+                                <label class="lh-1 text-16 text-light-1">Address</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-input ">
+                                <textarea required rows="4"></textarea>
+                                <label class="lh-1 text-16 text-light-1">Your Messages</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#" class="button px-24 h-50 -dark-1 bg-warning-2 text-white"> Send a Messsage <div class="icon-arrow-top-right ml-15"></div>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-5">
+                <div class="text-30 sm:text-24 fw-600">Contact Us</div>
+            	<div class="row d-flex x-gap-80 y-gap-20">
+            		<div class="col-12">
+		                <div class="text-18 fw-500 mt-10">Address</div>
+		                <div class="text-14 text-light-1">Sr. No. 31, 1st floor, Gosavi Building, Kundan Nagar, Dhankawadi, Pune - 411043</div>
+		            </div>
+            		<div class="col-12">
+		                <div class="text-18 fw-500 mt-10">Contact</div>
+		                <div class="text-14 text-light-1">+91 8600031545</div>
+		                <div class="text-14 text-light-1">+91 8600321645</div>
+		            </div>
+		            <div class="col-auto">
+		                <div class="text-18 fw-500 mt-10">Follow us on social media</div>
+		                <div class="d-flex x-gap-20 items-center mt-10">
+		                    <a href="#">
+		                        <i class="icon-facebook text-30"></i>
+		                    </a>
+		                    <a href="#">
+		                        <i class="icon-twitter text-30"></i>
+		                    </a>
+		                    <a href="#">
+		                        <i class="icon-instagram text-30"></i>
+		                    </a>
+		                    <a href="#">
+		                        <i class="icon-linkedin text-30"></i>
+		                    </a>
+		                </div>
+		            </div>
+            	</div>
+            </div>
         </div>
-    </section>
-
-    <section class="section mt-100">
-	    <div class="container">
-	        <div class="row d-flex justify-content-center align-items-center address">
-	        	<h3 class="color-brand-1 mb-5">Get in touch</h3>
-                <p class="color-grey-400 mb-15">Do you want to know more? Visit or write to us</p>
-	            <div class="col-lg-3 mb-30 wow animate__animated animate__fadeInUp" data-wow-delay=".0s">
-	                <div class="card-guide bg-7">
-	                    <div class="card-image">
-	                        <img src="{{asset('assets/imgs/template/icons/location-marker.svg')}}" alt="">
-	                    </div>
-	                    <div class="card-info">
-	                        <h6 class="color-brand-1 mb-5">Pune Office</h6>
-	                        <p class="font-sm color-grey-400 mb-5">5th Floor, Wing A, Gopal House, S.No. 127/1B/11, Plot A1, Kothrud, Pune – 411 038, India</p>
-	                        <div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<span class="font-sm-bold color-brand-1 author-name">+91 20 67295100, 25433104</span>
-                      				<span class="font-xs color-grey-500 department">Phone</span>
-                      			</div>
-                    		</div>
-                    		<div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<a href="mailto:kpca@kirtanepandit.com"><span class="font-sm-bold color-brand-1 author-name">kpca@kirtanepandit.com</span></a>
-                      				<span class="font-xs color-grey-500 department">Email</span>
-                      			</div>
-                    		</div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-lg-3 mb-30 wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-	                <div class="card-guide bg-5">
-	                    <div class="card-image">
-	                        <img src="{{asset('assets/imgs/template/icons/location-marker.svg')}}" alt="">
-	                    </div>
-	                    <div class="card-info">
-	                        <h6 class="color-brand-1 mb-5">Mumbai Office</h6>
-	                        <p class="font-sm color-grey-400 mb-5">601, 6th Floor, Earth Vintage, Senapati Bapat Marg, Dadar West, Mumbai- 400 028, India</p>
-	                        <div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<span class="font-sm-bold color-brand-1 author-name">+91-022 69328846/47/48</span>
-                      				<span class="font-xs color-grey-500 department">Phone</span>
-                      			</div>
-                    		</div>
-                    		<div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<a href="mailto:kpcamumbai@kirtanepandit.com"><span class="font-sm-bold color-brand-1 author-name">kpcamumbai@kirtanepandit.com</span></a>
-                      				<span class="font-xs color-grey-500 department">Email</span>
-                      			</div>
-                    		</div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-lg-3 mb-30 wow animate__animated animate__fadeInUp" data-wow-delay=".4s">
-	                <div class="card-guide bg-7">
-	                    <div class="card-image">
-	                        <img src="{{asset('assets/imgs/template/icons/location-marker.svg')}}" alt="">
-	                    </div>
-	                    <div class="card-info">
-	                        <h6 class="color-brand-1 mb-5">Nashik Office</h6>
-	                        <p class="font-sm color-grey-400 mb-5">Flat No. A- 102, Malpani Saffron, Near Hotel Express Inn, Pathardi Phata, Nashik -422010, India</p>
-	                        <div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<span class="font-sm-bold color-brand-1 author-name">+91-253-2386644</span>
-                      				<span class="font-xs color-grey-500 department">Phone</span>
-                      			</div>
-                    		</div>
-                    		<div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<a href="mailto:kpca@kirtanepandit.com"><span class="font-sm-bold color-brand-1 author-name">kpca@kirtanepandit.com</span></a>
-                      				<span class="font-xs color-grey-500 department">Email</span>
-                      			</div>
-                    		</div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-lg-3 mb-30 wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-	                <div class="card-guide bg-5">
-	                    <div class="card-image">
-	                        <img src="{{asset('assets/imgs/template/icons/location-marker.svg')}}" alt="">
-	                    </div>
-	                    <div class="card-info">
-	                        <h6 class="color-brand-1 mb-5">Bengaluru Office</h6>
-	                        <p class="font-sm color-grey-400 mb-5">No. 63/1, I Floor, Makam Plaza, III Main Road, 18th Cross, Malleshwaram, Bengaluru – 560 055, India</p>
-	                        <div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<span class="font-sm-bold color-brand-1 author-name">+91 99127 41089 / 94400 55917</span>
-                      				<span class="font-xs color-grey-500 department">Phone</span>
-                      			</div>
-                    		</div>
-                    		<div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<a href="mailto:kpcabengaluru@kirtanepandit.com"><span class="font-sm-bold color-brand-1 author-name">kpcabengaluru@kirtanepandit.com</span></a>
-                      				<span class="font-xs color-grey-500 department">Email</span>
-                      			</div>
-                    		</div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-lg-3 mb-30 wow animate__animated animate__fadeInUp" data-wow-delay=".4s">
-	                <div class="card-guide bg-7">
-	                    <div class="card-image">
-	                        <img src="{{asset('assets/imgs/template/icons/location-marker.svg')}}" alt="">
-	                    </div>
-	                    <div class="card-info">
-	                        <h6 class="color-brand-1 mb-5">Hyderabad Office</h6>
-	                        <p class="font-sm color-grey-400 mb-5">401 to 405, 4th Floor, Sanatana Eternal, 3-6-108/1, Liberty Road, Himayatnagar, Hyderabad – 500 029, India</p>
-	                        <div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<span class="font-sm-bold color-brand-1 author-name"> 040 40059090</span>
-                      				<span class="font-xs color-grey-500 department">Phone</span>
-                      			</div>
-                    		</div>
-                    		<div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<a href="mailto:kpcahyderabad@kirtanepandit.com"><span class="font-sm-bold color-brand-1 author-name">kpcahyderabad@kirtanepandit.com</span></a>
-                      				<span class="font-xs color-grey-500 department">Email</span>
-                      			</div>
-                    		</div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-lg-3 mb-30 wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-	                <div class="card-guide bg-5">
-	                    <div class="card-image">
-	                        <img src="{{asset('assets/imgs/template/icons/location-marker.svg')}}" alt="">
-	                    </div>
-	                    <div class="card-info">
-	                        <h6 class="color-brand-1 mb-5">New Delhi Office</h6>
-	                        <p class="font-sm color-grey-400 mb-5">Baber Lane, Bengali Market, New Delhi – 110 001, India</p>
-	                        <div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<span class="font-sm-bold color-brand-1 author-name"> 011-23350585</span>
-                      				<span class="font-xs color-grey-500 department">Phone</span>
-                      			</div>
-                    		</div>
-                    		<div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<a href="mailto:kpcadelhi@kirtanepandit.com"><span class="font-sm-bold color-brand-1 author-name">kpcadelhi@kirtanepandit.com</span></a>
-                      				<span class="font-xs color-grey-500 department">Email</span>
-                      			</div>
-                    		</div>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-lg-3 mb-30 wow animate__animated animate__fadeInUp" data-wow-delay=".4s">
-	                <div class="card-guide bg-7">
-	                    <div class="card-image">
-	                        <img src="{{asset('assets/imgs/template/icons/location-marker.svg')}}" alt="">
-	                    </div>
-	                    <div class="card-info">
-	                        <h6 class="color-brand-1 mb-5">Chennai Office</h6>
-	                        <p class="font-sm color-grey-400 mb-5">No. 11, 2nd Floor Rosy Tower, 7 Nungambakkam High Road, Chennai – 600 034, India</p>
-	                        <div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<span class="font-sm-bold color-brand-1 author-name"> +91 99164 66614</span>
-                      				<span class="font-xs color-grey-500 department">Phone</span>
-                      			</div>
-                    		</div>
-                    		<div class="box-author mb-5">
-                      			<div class="author-info">
-                      				<a href="mailto:kpcabengaluru@kirtanepandit.com"><span class="font-sm-bold color-brand-1 author-name">kpcabengaluru@kirtanepandit.com</span></a>
-                      				<span class="font-xs color-grey-500 department">Email</span>
-                      			</div>
-                    		</div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</section>
-
-    <section class="section mt-70 mb-50">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5">
-                    <h3 class="color-brand-1 mb-15">Write to us</h3>
-                    <p class="font-sm color-grey-500">Do you want to know more? Please provide your details, so we can get back to you.</p>
-                    <div class="mt-50">
-                        <div class="wow animate__animated animate__fadeInUp" data-wow-delay=".0s">
-                            <div class="card-offer card-we-do card-contact hover-up">
-                                <div class="card-image">
-                                    <img src="assets/imgs/page/contact/img2.png" alt="">
-                                </div>
-                                <div class="card-info">
-                                    <h6 class="color-brand-1 mb-10">Get call from us</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-                            <div class="card-offer card-we-do card-contact hover-up">
-                                <div class="card-image">
-                                    <img src="assets/imgs/page/contact/img1.png" alt="">
-                                </div>
-                                <div class="card-info">
-                                    <h6 class="color-brand-1 mb-10">Have any Enquiry or feedback</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wow animate__animated animate__fadeInUp" data-wow-delay=".4s">
-                            <div class="card-offer card-we-do card-contact hover-up">
-                                <div class="card-image">
-                                    <img src="assets/imgs/page/contact/img3.png" alt="">
-                                </div>
-                                <div class="card-info">
-                                    <h6 class="color-brand-1 mb-10">Connect with our team</h6>
-                                    {{-- <p class="font-md color-grey-500 mb-5">Let us talk about how we can help your enterprise.</p> --}}
-                                </div>
-                            </div>
-                        </div>
+    </div>
+</section>
+<section class="layout-pt-lg layout-pb-lg bg-blue-2">
+    <div class="container">
+        <div class="row justify-center text-center">
+            <div class="col-auto">
+                <div class="sectionTitle -md">
+                    <h2 class="sectionTitle__title">Why Choose Us</h2>
+                    <p class=" sectionTitle__text mt-5 sm:mt-0">These popular destinations have a lot to offer</p>
+                </div>
+            </div>
+        </div>
+        <div class="row y-gap-40 justify-between pt-50">
+            <div class="col-lg-3 col-sm-6">
+                <div class="featureIcon -type-1 ">
+                    <div class="d-flex justify-center">
+                        <img src="#" data-src="img/featureIcons/1/1.svg" alt="image" class="js-lazy">
+                    </div>
+                    <div class="text-center mt-30">
+                        <h4 class="text-18 fw-500">Best Price Guarantee</h4>
+                        <p class="text-15 mt-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                     </div>
                 </div>
-                <div class="col-lg-7">
-                    <div class="box-form-contact wow animate__animated animate__fadeIn" data-wow-delay=".6s">
-                    	<form action="" method="POST">@csrf
-	                        <div class="row">
-	                            <div class="col-lg-6 col-sm-6">
-	                                <div class="form-group mb-25">
-	                                    <input class="form-control icon-user" type="text" placeholder="Your name">
-	                                </div>
-	                            </div>
-	                            <div class="col-lg-6 col-sm-6">
-	                                <div class="form-group mb-25">
-	                                    <input class="form-control icon-email" type="text" placeholder="Email">
-	                                </div>
-	                            </div>
-	                            <div class="col-lg-6 col-sm-6">
-	                                <div class="form-group mb-25">
-	                                    <input class="form-control icon-phone" type="text" placeholder="Phone">
-	                                </div>
-	                            </div>
-	                            <div class="col-lg-6 col-sm-6">
-	                                <div class="form-group mb-25">
-	                                    <input class="form-control icon-company" type="text" placeholder="Company">
-	                                </div>
-	                            </div>
-	                            <div class="col-lg-12">
-	                                <div class="form-group mb-25">
-	                                    <input class="form-control" type="text" placeholder="Subject">
-	                                </div>
-	                            </div>
-	                            <div class="col-lg-12">
-	                                <div class="form-group mb-25">
-	                                    <textarea class="form-control textarea-control" placeholder="Write something"></textarea>
-	                                </div>
-	                            </div>
-	                            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6 col-9">
-	                                <div class="form-group">
-	                                    <button class="btn btn-brand-1-full font-sm" type="submit">Send message <svg class="w-6 h-6 icon-16 ml-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-	                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-	                                        </svg>
-	                                    </button>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </form>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="featureIcon -type-1 ">
+                    <div class="d-flex justify-center">
+                        <img src="#" data-src="img/featureIcons/1/2.svg" alt="image" class="js-lazy">
+                    </div>
+                    <div class="text-center mt-30">
+                        <h4 class="text-18 fw-500">Easy & Quick Booking</h4>
+                        <p class="text-15 mt-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="featureIcon -type-1 ">
+                    <div class="d-flex justify-center">
+                        <img src="#" data-src="img/featureIcons/1/3.svg" alt="image" class="js-lazy">
+                    </div>
+                    <div class="text-center mt-30">
+                        <h4 class="text-18 fw-500">Customer Care 24/7</h4>
+                        <p class="text-15 mt-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</main>
+    </div>
+</section>
 
 @endsection('content')
