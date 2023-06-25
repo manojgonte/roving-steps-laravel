@@ -1,6 +1,7 @@
-@php $url = url()->current(); @endphp 
+@php $url = url()->current(); @endphp
 
-<header data-add-bg="bg-dark-1" class="header bg-green js-header" data-x="header" data-x-toggle="is-menu-opened">
+<div class="header-margin"></div>
+<header data-add-bg="bg-dark-1" class="header js-header" data-x="header" data-x-toggle="is-menu-opened">
     <div data-anim="fade" class="header__container px-30 sm:px-20">
         <div class="row justify-between items-center">
             <div class="col-auto">
@@ -50,14 +51,17 @@
             <div class="col-auto">
                 <div class="d-flex items-center">
                     <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
-                        <a href="{{url('/sign-up')}}" class="button px-30 fw-400 text-14 text-white bg-warning-2 h-50">SIGN UP</a>
+                        <a href="{{url('/sign-up')}}"
+                            class="button px-30 fw-400 text-14 text-white bg-warning-2 h-50">SIGN UP</a>
                     </div>
-                    <div class="d-none xl:d-flex x-gap-20 items-center pl-30 text-white" data-x="header-mobile-icons" data-x-toggle="text-white">
+                    <div class="d-none xl:d-flex x-gap-20 items-center pl-30 text-white" data-x="header-mobile-icons"
+                        data-x-toggle="text-white">
                         <div>
                             <a href="login.html" class="d-flex items-center icon-user text-inherit text-22"></a>
                         </div>
                         <div>
-                            <button class="d-flex items-center icon-menu text-inherit text-20" data-x-click="html, header, header-logo, header-mobile-icons, mobile-menu"></button>
+                            <button class="d-flex items-center icon-menu text-inherit text-20"
+                                data-x-click="html, header, header-logo, header-mobile-icons, mobile-menu"></button>
                         </div>
                     </div>
                 </div>
