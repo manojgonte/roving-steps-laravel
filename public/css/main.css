@@ -13103,3 +13103,8 @@ CUSTOM CSS
   background-color: #051036;
   color: #FFFFFF;
 }
+
+
+a.button.bg-light-1:hover {
+  color: #FFFFFF;
+}

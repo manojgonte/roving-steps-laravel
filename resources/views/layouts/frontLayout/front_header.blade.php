@@ -36,7 +36,8 @@
                                         <a href="{{url('/cruise-booking')}}"> Cruise Booking </a>
                                     </li>
                                     <li>
-                                        <a href="{{url('/other-services')}}"> Other Services </a>
+                                        {{-- <a href="{{url('/other-services')}}"> Other Services </a> --}}
+                                        <a href="#"> Other Services </a>
                                     </li>
                                     <li>
                                         <a href="{{url('/contact-us')}}"> Contact Us </a>
