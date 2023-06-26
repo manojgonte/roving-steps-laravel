@@ -15,18 +15,17 @@ use Image;
 
 class AdminController extends Controller
 {
-    public function getLogin(){
-        
+    public function getLogin(){        
         return view('admin.auth.login');
     }
-    public function postLogin(Request $request){
 
+    public function postLogin(Request $request){
         if($request->isMethod('post')){
             $data = $request->input();
             
             // dd($adminCount);
             if(Auth::attempt(['email' => $data['email'],'password'=>md5($data['password'])])){
-                return redirect()->route('adminDashboard')->with('flash_message_error','You are Logged in sucessfully.');
+                return redirect()->route('adminDashboard')->with('flash_message_error','You are logged in sucessfully.');
             }
             else{
                 return back()->with('flash_message_error','Invalid Email or Password');
@@ -34,15 +33,15 @@ class AdminController extends Controller
         }
     }
 
-     public function login(Request $request){
+    public function login(Request $request){
         if($request->isMethod('post')){
             $data = $request->input();
             $adminCount = Admin::where(['email' => $data['email'],'password'=>md5($data['password'])])->count();
             if($adminCount > 0){
                 Session::put('adminSession', $data['email']);
-                return redirect('/admin-dashboard');
+                return redirect('/admin/dashboard');
             }else{
-                return redirect('/admin-login')->with('flash_message_error','Invalid Email or Password');
+                return redirect('/admin-login')->with('flash_message_error','Invalid email or password');
             }
         }
         return view('admin.admin_login');
@@ -50,8 +49,8 @@ class AdminController extends Controller
 
     public function logout(){
         auth()->guard('admin')->logout();
-            Session::flush();
-        return view('admin.admin_login')->with('flash_message_success','Logged Out Successfully');
+        Session::flush();
+        return view('admin.admin_login')->with('flash_message_success','loggedout successfully');
     }
 
 
@@ -179,7 +178,7 @@ class AdminController extends Controller
         return view('admin.clients.edit-client')->with(compact('clients'));
     }
 
-     public function viewClient(){
+    public function viewClient(){
         $clients = Clients::orderBy('id','DESC')->get();
         // dd($newsviewss);
         return view('admin.clients.view-client')->with(compact('clients'));

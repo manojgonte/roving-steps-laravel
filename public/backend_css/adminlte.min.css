@@ -194,7 +194,7 @@ th {
 }
 label {
 	display: inline-block;
-	margin-bottom: .5rem
+	margin-bottom: .2rem
 }
 button {
 	border-radius: 0
@@ -3987,8 +3987,8 @@ input[type=submit].btn-block {
 }
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
-	color: #fff;
-	background-color: #616161;
+	color: #ffffff !important;
+    background-color: #27A5BF;
 }
 .nav-fill .nav-item {
 	-ms-flex: 1 1 auto;
@@ -12638,7 +12638,7 @@ body.text-sm .control-sidebar {
 	line-height: calc(1.8125rem + 2px)
 }
 label:not(.form-check-label):not(.custom-file-label) {
-	font-weight: 700
+	font-weight: 500
 }
 .warning-feedback {
 	font-size: 80%;

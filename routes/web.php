@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\TourController;
 use App\Http\Middleware\AdminAuthenticated;
 
 Route::get('/clear', function () {
@@ -35,7 +36,7 @@ Route::post('/login', [AdminController::class, 'postLogin'])->name('adminLoginPo
 Auth::routes();
 Route::middleware([AdminAuthenticated::class])->group(function () {
     //Dashboard
-    Route::match(['get','post'], '/admin-dashboard', [AdminController::class, 'viewDashboard']);
+    Route::match(['get','post'], '/admin/dashboard', [AdminController::class, 'viewDashboard']);
     //Admin-Setting
     Route::match(['get','post'], 'admin/admin-setting/', [AdminController::class, 'setting']);
     Route::get('/logout', [AdminController::class, 'logout']);
@@ -44,6 +45,17 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], '/change-admin-status-zero/{id}', [AdminController::class, 'chnageAdminStatusZero']);
     Route::match(['get','post'], '/change-admin-status-one/{id}', [AdminController::class, 'chnageAdminStatusOne']);
     Route::match(['get','post'], '/admin/delete-admin/{id}', [AdminController::class, 'deleteAdmin']);
+
+    // tour
+    Route::match(['get','post'], 'admin/tours/{status?}', [TourController::class, 'viewTours']);
+
+    Route::match(['get','post'], 'admin/tour-planner/', [TourController::class, 'tourPlanner']);
+    Route::match(['get','post'], 'admin/add-tour/', [TourController::class, 'addTour'])->name('addTour');
+    Route::match(['get','post'], 'admin/itinerary-builder/{id}', [TourController::class, 'itineraryBuilder']);
+    Route::match(['get','post'], 'admin/edit-tour/{id}', [TourController::class, 'editTour']);
+    Route::match(['get','post'], 'admin/delete-tour/{id}', [TourController::class,'deleteTour']);
+    
+    Route::match(['get','post'], 'admin/tour-enquiries', [TourController::class,'tourEnquiries']);
 
     // News
     Route::match(['get','post'], 'admin/edit-news/{id}', [AdminController::class, 'editNews']);
