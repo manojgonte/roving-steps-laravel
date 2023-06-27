@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Tour extends Model
 {
     use HasFactory;
+
+    public function itinerary(){
+        return $this->hasMany(TourItinerary::class);
+    }
 }

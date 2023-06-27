@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TourItinerary;
 use App\Models\Tour;
-use Auth;
 use Image;
+use Auth;
 
 class TourController extends Controller
 {
@@ -118,8 +119,48 @@ class TourController extends Controller
     }
 
     public function itineraryBuilder(Request $request, $id){
-        $tour = Tour::where('id', $id)->first();
+        $tour = Tour::select('tours.*', 'destinations.name as dest_name')
+                ->leftJoin('destinations','destinations.id','tours.dest_id')
+                ->where('tours.id', $id)
+                ->first();
         return view('admin.tour.itinerary_builder')->with(compact('tour'));
+    }
+
+    public function addTourItinerary(Request $request, $id){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // dd($data);
+
+            foreach ($data['day'] as $key => $val){
+                if(!empty($val)){
+                    $itinerary = new TourItinerary;
+                    $itinerary->tour_id       = $id;
+                    $itinerary->day           = $val;
+                    $itinerary->visit_place   = $data['visit_place'][$key];
+                    $itinerary->activity      = $data['activity'][$key];
+                    $itinerary->travel_option = $data['travel_option'][$key];
+                    $itinerary->description   = $data['description'][$key];
+                    $itinerary->stay          = $data['stay'][$key];
+                    $itinerary->food          = $data['food'][$key];
+
+                    if($request->hasFile('image')) {
+                        $image_tmp = $data['image'][$key];
+                        $filename = time() . '.' . $image_tmp->clientExtension();
+                        if ($image_tmp->isValid()) {
+                            $extension = $image_tmp->getClientOriginalExtension();
+                            $filename = strtotime("now") . '.' . $extension;
+                            $file_path = 'img/tours/tour_itinerary/'.$filename;
+                            Image::make($image_tmp)->save($file_path);
+                            $itinerary->image = $filename;
+                        }
+                    }
+
+                    $itinerary->save();
+                }
+            }
+            return redirect()->back()->with('flash_message_success','Product attributes has been Added Successfully!');
+        }
+        return redirect('admin/add-tour-itinerary/'.$id);
     }
 
 }

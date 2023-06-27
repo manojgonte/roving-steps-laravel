@@ -30,32 +30,48 @@
         </div>
     </section>
 
+    {{-- <form id="myForm">
+        @for ($i = 0; $i < 3; $i++)
+            <div class="form-row">
+                <div class="fields-group">
+                    <input type="text" name="name[]" placeholder="Name">
+                    <input type="email" name="email[]" placeholder="Email">
+                </div>
+                @if ($i > 0)
+                    <button class="remove-field" type="button">Remove</button>
+                @endif
+                <button class="add-more" type="button" data-group="{{ $i }}">Add More</button>
+            </div>
+        @endfor
+        <button type="submit">Submit</button>
+    </form> --}}
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-default">
-                        <div class="card-header p-2">
+                        <div class="card-header p-2 d-none">
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a class="nav-link" href="{{url('admin/edit-tour/'.Request()->id)}}">Basic Information</a></li>
                                 <li class="nav-item"><a class="nav-link active">Itinerary Builder</a></li>
                             </ul>
                         </div>
 
-                        <div class="card">
+                        <div class="card d-none">
                             <h3 class="card-title text-muted pt-2 pl-3">
                                 Tour Details
                             </h3>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="card-body">
+                                    <div class="card-body border-right">
                                         <dl class="row">
                                             <dt class="col-sm-3">Tour ID</dt>
                                             <dd class="col-sm-9">{{$tour->id}}</dd>
                                             <dt class="col-sm-3">Tour Name</dt>
                                             <dd class="col-sm-9">{{$tour->tour_name}}</dd>
                                             <dt class="col-sm-3">Destination</dt>
-                                            <dd class="col-sm-9">{{$tour->dest_id}}</dd>
+                                            <dd class="col-sm-9">{{$tour->dest_name}}</dd>
                                             <dt class="col-sm-3">Tour Type</dt>
                                             <dd class="col-sm-9">{{$tour->type}}</dd>
                                             <dt class="col-sm-3">Price/Adult</dt>
@@ -79,97 +95,68 @@
                                 </div>
                             </div>
                         </div>
-                        <form method="POST" action="{{ route('addTour') }}" enctype="multipart/form-data" id="addTour">@csrf
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="form-group col-md-4">
-            	                        <label class="required">Tour Name</label>
-            	                        <input type="text" name="tour_name" class="form-control" placeholder="Enter Tour Name" required>
-                          	        </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="required">Destination</label>
-                                        <select class="form-control select2bs4" name="dest_id" required>
-                                            <option value="" selected>Select One</option>
-                                            @foreach(App\Models\Destination::where('status',1)->orderBy('name','ASC')->get() as $row)
-                                            <option value="{{$row->id}}">{{$row->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4">
-            	                      	<label class="required">Cover Image</label>
-            	                      	<input type="file" name="image" class="form-control p-1" accept="image/*" required>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="required">Tour Type</label>
-                                        <select class="form-control select2bs4" name="type" name="type">
-                                            <option value="Domestic">Domestic</option>
-                                            <option value="International">International</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="required">Price per perosn (Adult)</label>
-                                        <input type="text" name="adult_price" class="form-control" placeholder="Enter Price" required>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="required">Price per perosn (Child)</label>
-                                        <input type="text" name="child_price" class="form-control" placeholder="Enter Price" required>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="required">From Date</label>
-                                        <input type="date" name="from_date" class="form-control" placeholder="Enter Date" required>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="required">End Date</label>
-                                        <input type="date" name="end_date" class="form-control" placeholder="Enter Date" required>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="required">Day/s</label>
-                                        <select class="form-control select2bs4" name="days">
-                                            @for($i=1; $i<=15; $i++)
-                                            <option value="{{$i}}">{{$i}}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="required">Night/s</label>
-                                        <select class="form-control select2bs4" name="nights">
-                                            @for($i=1; $i<=15; $i++)
-                                            <option value="{{$i}}">{{$i}}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="required">Amenities</label>
-                                        <input type="text" name="amenities" class="form-control" placeholder="Enter Amenities" required>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label class="required">Overview</label>
-                                        <textarea name="description" class="form-control" rows="3" placeholder="Enter Overview" required></textarea>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="required">Inclusions</label>
-                                        <textarea name="inclusions" class="form-control" rows="3" placeholder="Enter Inclusions" required></textarea>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="required">Exclusions</label>
-                                        <textarea name="exclusions" class="form-control" rows="3" placeholder="Enter Exclusions" required></textarea>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label class="required">Note</label>
-                                        <input type="text" name="note" class="form-control" placeholder="Enter Note" required>
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="isPopular" name="is_popular" value="1">
-                                            <label class="form-check-label" for="isPopular">Popular Tour Package</label>
+
+                        <h3 class="card-title text-muted pt-2 pl-3">
+                            Add Itinerary
+                        </h3>
+
+                        <form method="POST" action="{{url('admin/add-tour-itinerary/'.Request()->id)}}" enctype="multipart/form-data" id="addTour">@csrf
+                        @for($i=0; $i<$tour->days; $i++)
+                        <div class="card m-3">
+                            <h4><span class="badge badge-secondary text-md font-weight-normal">Day {{$i+1}}</span></h4>
+                            <div class="card-body pt-1">
+                                <div class="form-row">
+                                    <div class="row fields-group border-bottom pb-2 pt-2">
+                                        <input type="hidden" name="day[]" value="{{$i+1}}"> 
+                                        <div class="form-group col-md-4">
+                	                        <label class="required">Places to Visit</label>
+                	                        <input type="text" name="visit_place[]" class="form-control" placeholder="Enter Place" value="Place {{$i+1}}" required>
+                              	        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="required">Activity of the Day</label>
+                                            <input type="text" name="activity[]" class="form-control" placeholder="Enter Activity" value="Activity {{$i+1}}" required>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="required">Travel Option</label>
+                                            <select class="form-control select2bs4" name="travel_option[]" required>
+                                                <option value="">Select One</option>
+                                                <option value="Bike" selected>Bike</option>
+                                                <option value="Private Car">Private Car</option>
+                                                <option value="Common Vehicle">Common Vehicle</option>
+                                                <option value="Train">Train</option>
+                                                <option value="Flight">Flight</option>
+                                                <option value="Cruise">Cruise</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label class="required">Overview</label>
+                                            <textarea name="description[]" class="form-control" rows="3" placeholder="Enter Overview" required>Overview {{$i+1}}</textarea>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="required">Stay</label>
+                                            <input type="text" name="stay[]" class="form-control" placeholder="Enter Stay" value="Stay {{$i+1}}" required>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="required">Food</label>
+                                            <input type="text" name="food[]" class="form-control" placeholder="Enter Food" value="Food {{$i+1}}" required>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                	                      	<label class="required">Image</label>
+                	                      	<input type="file" name="image[]" class="form-control p-1" required>
                                         </div>
                                     </div>
+                                    @if ($i > $tour->days)
+                                        <a class="remove-field" type="button"><i class="fa fa-times-circle"></i> Remove</a>
+                                    @endif
+                                    <a class="add-more pt-2 text-dark" type="button" data-group="{{ $i }}"><i class="fa fa-plus-circle"></i> Add More</a>
                                 </div>
                             </div>
-                            <div class="card-footer ">
-                                <button type="submit" class="btn btn-warning text-white"><i class="fa fa-check"></i> Add </button>
-                                <button type="reset" class="btn btn-default"> Reset </button>
-                            </div>
+                        </div>
+                        @endfor
+                        <div class="card-footer text-right">
+                            <button type="submit" class="btn btn-warning text-white"><i class="fa fa-check-circle"></i> Save </button>
+                            {{-- <button type="reset" class="btn btn-default"> Reset </button> --}}
+                        </div>
                         </form>
                     </div>
                 </div>
@@ -178,7 +165,37 @@
     </section>
 </div>
 
+
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+
+<script>
+    $(document).ready(function() {
+        // Add More button click event
+        $(document).on('click', '.add-more', function() {
+            var group = $(this).data('group');
+            var $formRow = $(this).closest('.form-row');
+            var $fieldsGroup = $formRow.find('.fields-group').last();
+            var $clone = $fieldsGroup.clone(); // Clone the fields group
+            
+            // Clear the values of the cloned input fields
+            // $clone.find('input').val('');
+            $clone.find('input:not(:hidden)').val('');
+            
+            // Append the cloned fields group after the current fields group
+            $fieldsGroup.after($clone);
+            
+            // Add a "Remove" button to the cloned fields group
+            var $removeButton = $('<a class="remove-field p-1" type="button"><i class="fa fa-times-circle"></i> Remove</a>');
+            $clone.append($removeButton);
+        });
+        
+        // Remove button click event
+        $(document).on('click', '.remove-field', function() {
+            $(this).closest('.fields-group').remove();
+        });
+    });
+</script>
+
 <script>
     $(document).ready(function() {
         $('#addTour').validate({
@@ -201,4 +218,5 @@
         });
     });
 </script>
+
 @endsection
