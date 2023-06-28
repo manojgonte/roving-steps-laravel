@@ -30,6 +30,7 @@ class IndexController extends Controller
             $enquiry = new Enquiry;
             $enquiry->name = $data['name'];
             $enquiry->email = $data['email'];
+            $enquiry->address = $data['address'];
             $enquiry->contact = $data['contact'];
             $enquiry->message = $data['message'];
             $enquiry->save();

@@ -26,6 +26,18 @@
                         <p>Tour Planner</p>
                     </a>
                 </li> 
+                <li class="nav-item">
+                    <a href="{{url('admin/tour-enquiries')}}" class="nav-link text-white @if(preg_match('#/admin/tour-enquiries#', $url)) active @endif">
+                        <i class="nav-icon fas fa-plane-departure"></i>
+                        <p>Tour Enquiries</p>
+                    </a>
+                </li> 
+                <li class="nav-item">
+                    <a href="{{url('admin/enquiries')}}" class="nav-link text-white @if(preg_match('#/admin/enquiries#', $url)) active @endif">
+                        <i class="nav-icon fas fa-plane-departure"></i>
+                        <p>Enquiries</p>
+                    </a>
+                </li> 
                 {{-- Projects --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link text-white ">
