@@ -60,7 +60,7 @@ class IndexController extends Controller
             ->where('tours.id', $id)
             ->orderBy('tours.id','DESC')
             ->first();
-        // dd($tour->itinerary);
+        
         $meta_title = $tour->tour_name . ' | ' . config('app.name');
         return view('tour_details',compact('meta_title','tour'));
     }

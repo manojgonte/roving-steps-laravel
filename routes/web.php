@@ -15,7 +15,6 @@ Route::get('/clear', function () {
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::match(['get','post'], '/contact-us', [IndexController::class, 'contact'])->name('contact');
 Route::get('/about-us', [IndexController::class, 'about'])->name('about');
-Route::get('/about-us', [IndexController::class, 'about'])->name('about');
 
 Route::get('/tours', [IndexController::class, 'tours']);
 Route::get('/tour-details/{id?}/{slug?}', [IndexController::class, 'tourDetails']);
