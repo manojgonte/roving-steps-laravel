@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TourItinerary;
 use App\Models\Tour;
+use App\Models\Enquiry;
+use App\Models\TourEnquiry;
 use Image;
 use Auth;
 
@@ -163,4 +165,13 @@ class TourController extends Controller
         return redirect('admin/add-tour-itinerary/'.$id);
     }
 
+    public function enquiries(Request $request, $status=null){
+        $enquiry = Enquiry::orderBy('id','DESC')->paginate(10);
+        return view('admin.enquiries.enquiries')->with(compact('enquiry'));
+    }
+
+    public function tourEnquiries(Request $request, $status=null){
+        $tour_enquiry = TourEnquiry::orderBy('id','DESC')->paginate(10);
+        return view('admin.tour.tour-enquiries')->with(compact('tour_enquiry'));
+    }
 }
