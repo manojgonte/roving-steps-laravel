@@ -333,6 +333,51 @@
                     <div class="border-top-light mt-10 mb-30"></div>
 
                     <div class="row y-gap-30">
+                        @foreach($tours as $tour)
+                        <div class="col-lg-4 col-sm-6">
+                            <a  href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="hotelsCard -type-1 ">
+                                <div class="hotelsCard__image">
+                                    <div class="cardImage ratio ratio-1:1">
+                                        <div class="cardImage__content">
+                                            <img class="rounded-4 col-12" src="{{asset('img/tours/'.$tour->image)}}" alt="{{$tour->tour_name}}">
+                                        </div>
+                                        {{-- <div class="cardImage__wishlist">
+                                            <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                                <i class="icon-heart text-12"></i>
+                                            </button>
+                                        </div> --}}
+                                    </div>
+                                </div>
+                                <div class="hotelsCard__content mt-10">
+                                    <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
+                                        <span>{{Str::limit($tour->tour_name, 45)}} | <span
+                                                class="text-light-1">{{$tour->days}}D-{{$tour->nights}}N</span></span>
+                                    </h4>
+                                    <div class="d-flex x-gap-5 items-center pt-5">
+                                        <div class="icon-star text-yellow-2 text-14"></div>
+                                        <div class="icon-star text-yellow-2 text-14"></div>
+                                        <div class="icon-star text-yellow-2 text-14"></div>
+                                        <div class="icon-star text-yellow-2 text-14"></div>
+                                        <div class="icon-star text-yellow-2 text-14"></div>
+                                    </div>
+                                    <p class="text-light-1 lh-14 text-14 mt-5">{{$tour->amenities}}</p>
+                                    <div class="mt-5">
+                                        <div class="fw-500">
+                                            <span class="text-14 text-light-1 fw-400">Starting from </span>
+                                            <span class="text-blue-1">₹{{$tour->adult_price}}</span>
+                                            <span class="text-14 text-light-1 fw-400">Per Person</span>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="d-flex items-center mt-10">
+                                        <a href="#" class="button -md text-white bg-warning-2">BOOK NOOW</a>
+                                    </div> --}}
+                                    <div class="d-flex items-center mt-10">
+                                        <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="button -md text-white bg-light-1">ENQUIRE</a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        @endforeach
 
                         <div class="col-lg-4 col-sm-6">
                             <a  href="{{url('/tour-details')}}" class="hotelsCard -type-1 ">
@@ -468,50 +513,6 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <a  href="{{url('/tour-details')}}" class="hotelsCard -type-1 ">
-                                <div class="hotelsCard__image">
-                                    <div class="cardImage ratio ratio-1:1">
-                                        <div class="cardImage__content">
-                                            <img class="rounded-4 col-12" src="img/hotels/1.png" alt="image">
-                                        </div>
-                                        {{-- <div class="cardImage__wishlist">
-                                            <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                                <i class="icon-heart text-12"></i>
-                                            </button>
-                                        </div> --}}
-                                    </div>
-                                </div>
-                                <div class="hotelsCard__content mt-10">
-                                    <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                                        <span>The Montcalm At Brewery London City | <span
-                                                class="text-light-1">5N-6D</span></span>
-                                    </h4>
-                                    <div class="d-flex x-gap-5 items-center pt-5">
-                                        <div class="icon-star text-yellow-2 text-14"></div>
-                                        <div class="icon-star text-yellow-2 text-14"></div>
-                                        <div class="icon-star text-yellow-2 text-14"></div>
-                                        <div class="icon-star text-yellow-2 text-14"></div>
-                                        <div class="icon-star text-yellow-2 text-14"></div>
-                                    </div>
-                                    <p class="text-light-1 lh-14 text-14 mt-5">4 Stay | Meal | Siteseeing | Private
-                                        Transport | Visa</p>
-                                    <div class="mt-5">
-                                        <div class="fw-500">
-                                            <span class="text-14 text-light-1 fw-400">Starting from </span>
-                                            <span class="text-blue-1">₹50,000</span>
-                                            <span class="text-14 text-light-1 fw-400">Per Person</span>
-                                        </div>
-                                    </div>
-                                    {{-- <div class="d-flex items-center mt-10">
-                                        <a href="#" class="button -md text-white bg-warning-2">BOOK NOOW</a>
-                                    </div> --}}
-                                    <div class="d-flex items-center mt-10">
-                                        <a href="#" class="button -md text-white bg-light-1">ENQUIRE</a>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
 
                         <div class="col-lg-4 col-sm-6">
                             <a  href="{{url('/tour-details')}}" class="hotelsCard -type-1 ">
@@ -602,6 +603,7 @@
                                 </div>
                             </a>
                         </div>
+
                         <div class="col-lg-4 col-sm-6">
                             <a  href="{{url('/tour-details')}}" class="hotelsCard -type-1 ">
                                 <div class="hotelsCard__image">
@@ -739,6 +741,10 @@
                         
 
                     </div>
+                    
+                    <div class="border-top-light mt-30 pt-30">
+                        {{ $tours->links("pagination::bootstrap-4") }}
+                    </div>    
 
                     {{-- <div class="border-top-light mt-30 pt-30">
                         <div class="row x-gap-10 y-gap-20 justify-between md:justify-center">

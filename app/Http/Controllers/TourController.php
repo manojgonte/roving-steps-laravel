@@ -158,7 +158,7 @@ class TourController extends Controller
                     $itinerary->save();
                 }
             }
-            return redirect()->back()->with('flash_message_success','Product attributes has been Added Successfully!');
+            return redirect()->back()->with('flash_message_success','Tour itinerary added successfully!');
         }
         return redirect('admin/add-tour-itinerary/'.$id);
     }

@@ -74,28 +74,6 @@
                                                         </div>
                                                     </button>
                                                 </div>
-                                                <div>
-                                                    <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
-                                                        <div class="d-flex">
-                                                            <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
-                                                            <div class="ml-10">
-                                                                <div class="text-15 lh-12 fw-500 js-search-option-target">Madrid</div>
-                                                                <div class="text-14 lh-12 text-light-1 mt-5">Spain</div>
-                                                            </div>
-                                                        </div>
-                                                    </button>
-                                                </div>
-                                                <div>
-                                                    <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
-                                                        <div class="d-flex">
-                                                            <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
-                                                            <div class="ml-10">
-                                                                <div class="text-15 lh-12 fw-500 js-search-option-target">Santorini</div>
-                                                                <div class="text-14 lh-12 text-light-1 mt-5">Greece</div>
-                                                            </div>
-                                                        </div>
-                                                    </button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -224,11 +202,11 @@
                     <div class="col-auto">
                         <div class="row x-gap-15 y-gap-15 items-center">
                             <div class="col-auto">
-                                <div class="text-14"> From <span class="text-22 text-dark-1 fw-500">₹50,000 <span class="text-14 text-right">/ Person</span></span>
+                                <div class="text-14"> From <span class="text-22 text-dark-1 fw-500">₹{{$tour->adult_price}} <span class="text-14 text-right">/ Person</span></span>
                                 </div>
                             </div>
                             <div class="col-auto d-flex">
-                                <a href="#" class="button h-50 px-24 -dark-1 bg-light-1 text-white mx-1" data-x-click="enquire"> ENQUIRE </a>
+                                <button class="button h-50 px-24 -dark-1 bg-light-1 text-white mx-1" data-x-click="enquire"> ENQUIRE </button>
                                 {{-- <a href="#" class="button h-50 px-24 -dark-1 bg-warning-2 text-white"> BOOK NOW </a> --}}
                             </div>
                         </div>
@@ -257,13 +235,13 @@
                         <div class="">></div>
                     </div>
                     <div class="col-auto">
-                        <div class="">Dubai</div>
+                        <div class="">{{$tour->dest_name}}</div>
                     </div>
                     <div class="col-auto">
                         <div class="">></div>
                     </div>
                     <div class="col-auto">
-                        <div class="text-dark-1">Mesmerizing Dubai with Abu Dhabi</div>
+                        <div class="text-dark-1">{{$tour->tour_name}}</div>
                     </div>
                 </div>
             </div>
@@ -279,7 +257,7 @@
                     <div class="col-auto">
                         <div class="row x-gap-20 y-gap-20 items-center">
                             <div class="col-auto">
-                                <h1 class="text-26 fw-600">Mesmerizing Dubai with Abu Dhabi</h1>
+                                <h1 class="text-26 fw-600">{{$tour->tour_name}}</h1>
                             </div>
                         </div>
                         {{-- <div class="row x-gap-20 y-gap-20 items-center">
@@ -289,7 +267,7 @@
                         </div> --}}
                     </div>
                     <div class="col-auto">
-                        <div class="text-14 text-right"> From <span class="text-22 text-dark-1 fw-500">₹50,000 <span class="text-14 text-right">/ Person</span></span>
+                        <div class="text-14 text-right"> From <span class="text-22 text-dark-1 fw-500">₹{{$tour->adult_price}} <span class="text-14 text-right">/ Person</span></span>
                         </div>
                         {{-- <div class="button h-50 px-24 -dark-1 bg-black-20 text-black mt-5"> 5N/6D</div> --}}
                     </div>
@@ -300,13 +278,13 @@
                             <div class="cardImage-slider rounded-4 overflow-hidden js-cardImage-slider">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <img class="col-12" src="img/banner/tour_slider1.jpg" alt="image">
+                                        <img class="col-12" src="{{asset('img/banner/tour_slider1.jpg')}}" alt="image">
                                     </div>
                                     <div class="swiper-slide">
-                                        <img class="col-12" src="img/banner/tour_slider1.jpg" alt="image">
+                                        <img class="col-12" src="{{asset('img/banner/tour_slider1.jpg')}}" alt="image">
                                     </div>
                                     <div class="swiper-slide">
-                                        <img class="col-12" src="img/banner/tour_slider1.jpg" alt="image">
+                                        <img class="col-12" src="{{asset('img/banner/tour_slider1.jpg')}}" alt="image">
                                     </div>
                                 </div>
                                 <div class="cardImage-slider__pagination js-pagination"></div>
@@ -327,8 +305,7 @@
                 <div id="overview" class="row y-gap-40">
                     <div class="col-12">
                         <h3 class="text-22 fw-500 pt-40 border-top-light">Overview</h3>
-                        <p class="text-dark-1 text-15 mt-20"> You can directly book the best price if your travel dates are available, all discounts are already included. In the following house description you will find all information about our listing. <br>
-                            <br> 2-room terraced house on 2 levels. Comfortable and cosy furnishings: 1 room with 1 french bed and radio. Shower, sep. WC. Upper floor: (steep stair) living/dining room with 1 sofabed (110 cm, length 180 cm), TV. Exit to the balcony. Small kitchen (2 hot plates, oven.
+                        <p class="text-dark-1 text-15 mt-20"> {!! $tour->description !!}
                         </p>
                     </div>
                 </div>
@@ -345,13 +322,13 @@
                         </div>
                         <div class="col-12">
                             <div class="d-flex items-center">
-                                <div class="text-14 fw-500">4 Stay | Meal | Siteseeing | Private Transport | Visa</div>
+                                <div class="text-14 fw-500">{!! $tour->amenities !!}</div>
                             </div>
                         </div>
                     </div>
                     <div class="border-top-light mt-15 mb-15"></div>
                     <div class="col-auto d-flex">
-                        <a href="#" class="button h-50 px-24 -dark-1 bg-light-1 text-white mx-1" data-x-click="enquire"> ENQUIRE </a>
+                        <button class="button h-50 px-24 -dark-1 bg-light-1 text-white mx-1" data-x-click="enquire"> ENQUIRE </button>
                         {{-- <a href="#" class="button h-50 px-24 -dark-1 bg-warning-2 text-white"> BOOK NOW </a> --}}
                     </div>
                 </div>
@@ -529,47 +506,9 @@
                         <div class="d-flex items-center">
                             <h3 class="text-22 fw-500">Inclusions</h3>
                         </div>
-                        <ul class="text-15 pt-10">
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Ex-Mumbai Airfare
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>5 nights accommodation in 3+ property
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>5 Breakfast and 2 Dinner
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Dhow Dinner Cruise
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Dubai city tour
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Burj Khalifa 124th Floor with Dubai Mall and Fountain Show
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Abu Dhabi city tour with Ferrari World
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Desert Safari with BBQ Dinner
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Global Village and Miracle Garden
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>All tours and transfers on SIC basis
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Airport Transfers on PVT Basis
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Visa
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Insurance upto 60 years
-                            </li>
-                        </ul>
+                        <div class="text-15 pt-10">
+                            {!! $tour->inclusions !!}
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6" id="exclusions">
@@ -577,29 +516,9 @@
                         <div class="d-flex items-center">
                             <h3 class="text-22 fw-500">Exclusions</h3>
                         </div>
-                        <ul class="text-15 pt-10">
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Tips and porter charges
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Cost of any excursions not included in the package
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Early check in and late check out will be as per hotel policy and availability. (Extra charges may be applicable)
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Items of any personal nature such as phone calls, pay movies, room services, mini bars, laundries or other expenditures during the tour
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Tours can be cancelled or postponed without prior notice in case of any natural calamities
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>SIC means seat in coach basis. Drivers would communicate with the guests if there is any change in assigned pick up time
-                            </li>
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>If guests fails to reach within the time arranged , there will be no replacement given. Any other services not specified above
-                            </li>
-                        </ul>
+                        <div class="text-15 pt-10">
+                            {!! $tour->exclusions !!}
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6" id="note">
@@ -607,11 +526,9 @@
                         <div class="d-flex items-center">
                             <h3 class="text-22 fw-500">Note</h3>
                         </div>
-                        <ul class="text-15 pt-10">
-                            <li class="d-flex items-center">
-                                <i class="icon-check text-10 mr-20"></i>Ø Please note that As per DTCM Rules, based on the Executive Council Resolution No 2 of 2014. With effective 31 March 2014, Every Guest has to pay Tourism Dirham that is AED 7/- per room per night for all 2* hotels, AED 10/- per room per night for all 3* Hotels, AED 15/- per room per night for all 4 * And AED 20/- per room per night for all 5* Hotels, at the time of check in.
-                            </li>
-                        </ul>
+                        <div class="text-15 pt-10">
+                            {!! $tour->note !!}
+                        </div>
                     </div>
                 </div>
             </div>

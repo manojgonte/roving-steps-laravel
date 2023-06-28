@@ -7,8 +7,8 @@
             <div class="col-auto">
                 <div class="d-flex items-center">
                     <a href="{{url('/')}}" class="header-logo mr-20" data-x="header-logo" data-x-toggle="is-logo-dark">
-                        <img src="img/logo/logo_trans.png" alt="logo icon">
-                        <img src="img/logo/logo_trans.png" alt="logo icon">
+                        <img src="{{asset('img/logo/logo_trans.png')}}" alt="logo">
+                        <img src="{{asset('img/logo/logo_trans.png')}}" alt="logo">
                     </a>
                 </div>
             </div>
@@ -61,8 +61,7 @@
                             <a href="login.html" class="d-flex items-center icon-user text-inherit text-22"></a>
                         </div> --}}
                         <div>
-                            <button class="d-flex items-center icon-menu text-inherit text-20"
-                                data-x-click="html, header, header-logo, header-mobile-icons, mobile-menu"></button>
+                            <button class="d-flex items-center icon-menu text-inherit text-20" data-x-click=""></button>
                         </div>
                     </div>
                 </div>

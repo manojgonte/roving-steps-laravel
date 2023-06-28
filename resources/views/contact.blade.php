@@ -30,42 +30,44 @@
             <div class="col-lg-7">
                 <div class="text-30 sm:text-24 fw-600">Keep in touch with us</div>
                 <div class="rounded-4">
-                    <div class="row y-gap-20">
-                        <div class="col-6">
-                            <div class="form-input ">
-                                <input type="text" required>
-                                <label class="lh-1 text-16 text-light-1">Full Name</label>
+                    <form action="{{url('contact')}}" method="POST">@csrf
+                        <div class="row y-gap-20">
+                            <div class="col-6">
+                                <div class="form-input">
+                                    <input type="text" name="name" placeholder="Enter Full Name" required>
+                                    <label class="lh-1 text-16 text-light-1">Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-input">
+                                    <input type="text" name="email" placeholder="Enter Email" required>
+                                    <label class="lh-1 text-16 text-light-1">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-input">
+                                    <input type="text" name="contact" placeholder="Enter Contact" required>
+                                    <label class="lh-1 text-16 text-light-1">Contact</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-input">
+                                    <input type="text" name="address" placeholder="Enter Address" required>
+                                    <label class="lh-1 text-16 text-light-1">Address</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-input">
+                                    <textarea name="message" placeholder="Write your message" rows="4" required></textarea>
+                                    <label class="lh-1 text-16 text-light-1">Your Messages</label>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="button px-24 h-50 -dark-1 bg-warning-2 text-white"> Send a Messsage <div class="icon-arrow-top-right ml-15"></div>
+                                </button>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-input ">
-                                <input type="text" required>
-                                <label class="lh-1 text-16 text-light-1">Email</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-input ">
-                                <input type="text" required>
-                                <label class="lh-1 text-16 text-light-1">Contact</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-input ">
-                                <input type="text" required>
-                                <label class="lh-1 text-16 text-light-1">Address</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-input ">
-                                <textarea required rows="4"></textarea>
-                                <label class="lh-1 text-16 text-light-1">Your Messages</label>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#" class="button px-24 h-50 -dark-1 bg-warning-2 text-white"> Send a Messsage <div class="icon-arrow-top-right ml-15"></div>
-                            </a>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div class="col-lg-5">

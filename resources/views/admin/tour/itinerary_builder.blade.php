@@ -7,18 +7,6 @@
             <div class="row">
                 <div class="col-sm-6">
                     <h4>Itinerary Builder Section</h4>
-                    @if(Session::has('flash_message_error'))
-                    <div class="alert alert-danger alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{!! session('flash_message_error') !!}</strong>
-                    </div>
-                    @endif
-                    @if(Session::has('flash_message_success'))
-                    <div class="alert alert-success alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{!! session('flash_message_success') !!}</strong>
-                    </div>
-                    @endif
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -30,24 +18,20 @@
         </div>
     </section>
 
-    {{-- <form id="myForm">
-        @for ($i = 0; $i < 3; $i++)
-            <div class="form-row">
-                <div class="fields-group">
-                    <input type="text" name="name[]" placeholder="Name">
-                    <input type="email" name="email[]" placeholder="Email">
-                </div>
-                @if ($i > 0)
-                    <button class="remove-field" type="button">Remove</button>
-                @endif
-                <button class="add-more" type="button" data-group="{{ $i }}">Add More</button>
-            </div>
-        @endfor
-        <button type="submit">Submit</button>
-    </form> --}}
-
     <section class="content">
         <div class="container-fluid">
+            @if(Session::has('flash_message_error'))
+            <div class="alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! session('flash_message_error') !!}</strong>
+            </div>
+            @endif
+            @if(Session::has('flash_message_success'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! session('flash_message_success') !!}</strong>
+            </div>
+            @endif
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-default">

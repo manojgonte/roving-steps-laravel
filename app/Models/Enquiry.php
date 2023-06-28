@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tour extends Model
+class Enquiry extends Model
 {
     use HasFactory;
 
-    public function itinerary(){
-        return $this->hasMany(TourItinerary::class, 'tour_id');
-    }
+    protected $table = 'enquiries';
 }

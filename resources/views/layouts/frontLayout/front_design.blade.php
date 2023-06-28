@@ -50,7 +50,7 @@
                     </clipPath>
                   </defs>
                 </svg> --}}
-                <img src="img/logo/globe.png">
+                <img src="{{asset('img/logo/globe.png')}}">
             </div>
         </div>
         <div class="preloader__title">{{config('app.name')}}</div>
