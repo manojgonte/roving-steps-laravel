@@ -74,6 +74,28 @@
                                                         </div>
                                                     </button>
                                                 </div>
+                                                <div>
+                                                    <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
+                                                        <div class="d-flex">
+                                                            <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
+                                                            <div class="ml-10">
+                                                                <div class="text-15 lh-12 fw-500 js-search-option-target">Madrid</div>
+                                                                <div class="text-14 lh-12 text-light-1 mt-5">Spain</div>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
+                                                        <div class="d-flex">
+                                                            <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
+                                                            <div class="ml-10">
+                                                                <div class="text-15 lh-12 fw-500 js-search-option-target">Santorini</div>
+                                                                <div class="text-14 lh-12 text-light-1 mt-5">Greece</div>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -206,7 +228,7 @@
                                 </div>
                             </div>
                             <div class="col-auto d-flex">
-                                <button class="button h-50 px-24 -dark-1 bg-light-1 text-white mx-1" data-x-click="enquire"> ENQUIRE </button>
+                                <a href="#" class="button h-50 px-24 -dark-1 bg-light-1 text-white mx-1" data-x-click="enquire"> ENQUIRE </a>
                                 {{-- <a href="#" class="button h-50 px-24 -dark-1 bg-warning-2 text-white"> BOOK NOW </a> --}}
                             </div>
                         </div>
@@ -344,21 +366,21 @@
                 <h3 class="text-22 fw-500 slanted d-flex">Itinerary</h3>
             </div>
         </div>
+
+        @foreach($tour->itinerary as $day)
         <div class="border-bottom-light rounded-4 py-10 sm:px-20 sm:py-20">
             <div class="row y-gap-10">
-                <h3 class="text-20 fw-500">Day 1: Arriving in Dubai</h3>
-                <div class="col-xl-4">
-                    <div class="col-12 col-md-4 col-xl-12">
-                        <img src="img/backgrounds/1.png" alt="image" class="rounded-4 img-border-style">
-                    </div>
+                <h3 class="text-18 fw-600">Day {{$day->day}}: {{$day->visit_place}}</h3>
+                <div class="col-xl-3">
+                    <img src="{{asset('img/tours/tour_itinerary/'.$day->image)}}" alt="" class="rounded-4 img-border-style img-repso">
                 </div>
-                <div class="col-xl-8">
+                <div class="col-xl-9">
                     <div class="bg-white rounded-4 px-30 py-30">
                         <div class="row y-gap-30">
-                            <div class="col-lg col-md-6">
-                                <p class="text-dark-1 text-15"> Welcome to Dubai!!! A land full of surprises and a complete destination. Dubai offers an extensive horizon of things to do, see, experience and learn. It is surrounded by mysterious deserts, sand dunes and within the city you will find amazing beach resorts, incredibly high tech buildings with old traditional houses and mosques. Upon arrival at the airport, you will be transferred to your hotel. And later in the evening will be proceed to Dhow cruise. Overnight at the hotel in Dubai</p>
+                            <div class="col-md-9">
+                                <p class="text-dark-1 text-15"> {{$day->description}}</p>
                             </div>
-                            <div class="col-lg-auto col-md-6 border-left-light lg:border-none text-right lg:text-left">
+                            <div class="col-md-3 border-left-light lg:border-none text-right lg:text-left py-0">
                                 <div class="y-gap-5">
                                     <div class="d-flex justify-start align-items-center">
                                         <div class="flex-center size-50 rounded-full bg-black-20">
@@ -366,7 +388,7 @@
                                         </div>
                                         <div class="text-left mt-10 pl-20">
                                             <h4 class="text-16 fw-500">Activity</h4>
-                                            <p class="text-15">Hotel Name</p>
+                                            <p class="text-15">{{$day->activity}}</p>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-start align-items-center">
@@ -375,7 +397,7 @@
                                         </div>
                                         <div class="text-left mt-10 pl-20">
                                             <h4 class="text-16 fw-500">Stay</h4>
-                                            <p class="text-15">Hotel Name</p>
+                                            <p class="text-15">{{$day->stay}}</p>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-start align-items-center">
@@ -384,7 +406,7 @@
                                         </div>
                                         <div class="text-left mt-10 pl-20">
                                             <h4 class="text-16 fw-500">Food</h4>
-                                            <p class="text-15">Breakfast | Lunch | Dinner</p>
+                                            <p class="text-15">{{$day->food}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -394,106 +416,7 @@
                 </div>
             </div>
         </div>
-        <div class="border-bottom-light rounded-4 py-10 sm:px-20 sm:py-20 mt-10">
-            <div class="row y-gap-10">
-                <h3 class="text-20 fw-500">Day 2: Dubai City tour with Burj Khalifa</h3>
-                <div class="col-xl-4">
-                    <div class="col-12 col-md-4 col-xl-12">
-                        <img src="img/backgrounds/1.png" alt="image" class="rounded-4 img-border-style">
-                    </div>
-                </div>
-                <div class="col-xl-8">
-                    <div class="bg-white rounded-4 px-30 py-30">
-                        <div class="row y-gap-30">
-                            <div class="col-lg col-md-6">
-                                <p class="text-dark-1 text-15"> Today after breakfast enjoy the city tour of Dubai. Visit Palm Island, take a photo at the famous iconic Burj Al Arab, see Dubai Marina Skylines. Drive to Dubai Creek, Jumeirah Mosque, Burj Al Arab (Photo Stop), Atlantis the Palm, Burj Khalifa (No entrance), Dubai Mall, Jumeirah Beach, Shaikh Zayed Road. Later proceed to 124th Floor – At the Top Burj Khalifa. Overnight at the hotel in Dubai.</p>
-                            </div>
-                            <div class="col-lg-auto col-md-6 border-left-light lg:border-none text-right lg:text-left">
-                                <div class="y-gap-5">
-                                    <div class="d-flex justify-start align-items-center">
-                                        <div class="flex-center size-50 rounded-full bg-black-20">
-                                            <i class="icon-customer text-white text-30"></i>
-                                        </div>
-                                        <div class="text-left mt-10 pl-20">
-                                            <h4 class="text-16 fw-500">Activity</h4>
-                                            <p class="text-15">Hotel Name</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-start align-items-center">
-                                        <div class="flex-center size-50 rounded-full bg-black-20">
-                                            <i class="icon-bed text-white text-30"></i>
-                                        </div>
-                                        <div class="text-left mt-10 pl-20">
-                                            <h4 class="text-16 fw-500">Stay</h4>
-                                            <p class="text-15">Hotel Name</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-start align-items-center">
-                                        <div class="flex-center size-50 rounded-full bg-black-20">
-                                            <i class="icon-food text-white text-30"></i>
-                                        </div>
-                                        <div class="text-left mt-10 pl-20">
-                                            <h4 class="text-16 fw-500">Food</h4>
-                                            <p class="text-15">Breakfast | Lunch | Dinner</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="border-bottom-light rounded-4 py-10 sm:px-20 sm:py-20 mt-10">
-            <div class="row y-gap-10">
-                <h3 class="text-20 fw-500">Day 3: Abu Dhabi - City tour with Ferrari World</h3>
-                <div class="col-xl-4">
-                    <div class="col-12 col-md-4 col-xl-12">
-                        <img src="img/backgrounds/1.png" alt="image" class="rounded-4 img-border-style">
-                    </div>
-                </div>
-                <div class="col-xl-8">
-                    <div class="bg-white rounded-4 px-30 py-30">
-                        <div class="row y-gap-30">
-                            <div class="col-lg col-md-6">
-                                <p class="text-dark-1 text-15">Today after breakfast proceed to Abu dhabi. Visit Sheikh Zayed Grand Mosque - This architectural work of art is one of the world largest mosques, with a capacity for an astonishing 41,000 worshipers. Later visit the world most famous Ferrari Park. Overnight at the hotel in Dubai.</p>
-                            </div>
-                            <div class="col-lg-auto col-md-6 border-left-light lg:border-none text-right lg:text-left">
-                                <div class="y-gap-5">
-                                    <div class="d-flex justify-start align-items-center">
-                                        <div class="flex-center size-50 rounded-full bg-black-20">
-                                            <i class="icon-customer text-white text-30"></i>
-                                        </div>
-                                        <div class="text-left mt-10 pl-20">
-                                            <h4 class="text-16 fw-500">Activity</h4>
-                                            <p class="text-15">Hotel Name</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-start align-items-center">
-                                        <div class="flex-center size-50 rounded-full bg-black-20">
-                                            <i class="icon-bed text-white text-30"></i>
-                                        </div>
-                                        <div class="text-left mt-10 pl-20">
-                                            <h4 class="text-16 fw-500">Stay</h4>
-                                            <p class="text-15">Hotel Name</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-start align-items-center">
-                                        <div class="flex-center size-50 rounded-full bg-black-20">
-                                            <i class="icon-food text-white text-30"></i>
-                                        </div>
-                                        <div class="text-left mt-10 pl-20">
-                                            <h4 class="text-16 fw-500">Food</h4>
-                                            <p class="text-15">Breakfast | Lunch | Dinner</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
 </section>
 
@@ -503,8 +426,8 @@
             <div class="row x-gap-50 y-gap-30 pt-20">
                 <div class="col-lg-6 col-md-6" id="inclusions">
                     <div class="">
-                        <div class="d-flex items-center">
-                            <h3 class="text-22 fw-500">Inclusions</h3>
+                        <div class="d-flex items-center d-block">
+                            <h3 class="text-22 fw-500 border-bottom-light">Inclusions</h3>
                         </div>
                         <div class="text-15 pt-10">
                             {!! $tour->inclusions !!}
@@ -513,8 +436,8 @@
                 </div>
                 <div class="col-lg-6 col-md-6" id="exclusions">
                     <div class="">
-                        <div class="d-flex items-center">
-                            <h3 class="text-22 fw-500">Exclusions</h3>
+                        <div class="d-flex items-center d-block">
+                            <h3 class="text-22 fw-500 border-bottom-light">Exclusions</h3>
                         </div>
                         <div class="text-15 pt-10">
                             {!! $tour->exclusions !!}
@@ -523,8 +446,8 @@
                 </div>
                 <div class="col-lg-6 col-md-6" id="note">
                     <div class="">
-                        <div class="d-flex items-center">
-                            <h3 class="text-22 fw-500">Note</h3>
+                        <div class="d-flex items-center d-block">
+                            <h3 class="text-22 fw-500 border-bottom-light">Note</h3>
                         </div>
                         <div class="text-15 pt-10">
                             {!! $tour->note !!}
@@ -536,27 +459,8 @@
     </div>
 </section>
 
-<section class="layout-pt-md layout-pb-md bg-dark-2">
+<section class="layout-pt-md layout-pb-md bg-blue-1">
     <div class="container">
-        <div class="row y-gap-30 justify-between items-center">
-            <div class="col-auto">
-                <div class="row y-gap-20  flex-wrap items-center">
-                    <div class="col-auto">
-                        <div class="icon-newsletter text-60 sm:text-40 text-white"></div>
-                    </div>
-                    <div class="col-auto">
-                        <h4 class="text-26 text-white fw-600">Your Travel Journey Starts Here</h4>
-                        <div class="text-white">Sign up and we'll send the best deals to you</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="currencyMenu is-hidden js-currencyMenu" data-x="enquire" data-x-toggle="is-hidden">
-    <div class="currencyMenu__bg" data-x-click="enquire"></div>
-    <div class="currencyMenu__content bg-white rounded-4">
         <div class="row d-flex justify-between">
             <div class="col-lg-5 bg-blue-1 items-center d-flex">
                 <div class="">
@@ -566,54 +470,53 @@
             </div>
             <div class="col-lg-7 py-20">
                 <div class="rounded-4 container">
-                    <div class="row y-gap-20 x-gap-20">
-                        <div class="col-12">
-                            <div class="form-input ">
-                                <input type="text" required>
-                                <label class="lh-1 text-16 text-light-1">Full Name</label>
+                    <form action="{{url('tour-enquiry')}}" method="POST">@csrf
+                        <div class="row y-gap-20 x-gap-20">
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">Contact</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">No. of Tourist</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">Current City</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    <textarea required rows="4"></textarea>
+                                    <label class="lh-1 text-16 text-light-1">Your Messages</label>
+                                </div>
+                            </div>
+                            <div class="col-auto d-flex">
+                                <button type="submit" class="button px-24 h-50 -dark-1 bg-warning-2 text-white mx-1"> ENQUIRE</button>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-input ">
-                                <input type="text" required>
-                                <label class="lh-1 text-16 text-light-1">Contact</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-input ">
-                                <input type="text" required>
-                                <label class="lh-1 text-16 text-light-1">Email</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-input ">
-                                <input type="text" required>
-                                <label class="lh-1 text-16 text-light-1">No. of Tourist</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-input ">
-                                <input type="text" required>
-                                <label class="lh-1 text-16 text-light-1">Current City</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-input ">
-                                <textarea required rows="4"></textarea>
-                                <label class="lh-1 text-16 text-light-1">Your Messages</label>
-                            </div>
-                        </div>
-                        <div class="col-auto d-flex">
-                            <a href="#" class="button px-24 h-50 -dark-1 bg-warning-2 text-white mx-1"> ENQUIRE</a>
-                            <button href="#" class="button px-24 h-50 -dark-1 bg-light-1 text-white pointer" data-x-click="enquire"> Cancel &nbsp; <i class="icon-close"></i></button>
-                                
-                            </button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 @endsection('content')
