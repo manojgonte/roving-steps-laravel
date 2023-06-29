@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Rules\Recaptcha;
+use App\Models\Destination;
+use App\Models\TourEnquiry;
 use App\Models\Enquiry;
 use App\Models\Tour;
 use Mail;
@@ -19,13 +21,8 @@ class IndexController extends Controller
     public function contact(Request $request){
         if($request->isMethod('post')){
 
-            // $this -> validate($request, [
-            //     'g-recaptcha-response' => ['required', new Recaptcha()]
-            // ]);
-
             $data = $request->all();
             Log::info($data);
-            // dd($data);
 
             $enquiry = new Enquiry;
             $enquiry->name = $data['name'];
@@ -47,12 +44,17 @@ class IndexController extends Controller
     }
 
     public function tours(Request $request){
-        $tours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights')
-            ->orderBy('id','DESC')
-            ->paginate(9);
+        $tours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id')->orderBy('id','DESC');
+            
+        if($request->dest_id){
+            $tours = $tours->where('dest_id', $request->dest_id);
+        }
 
+        $tours = $tours->paginate(9);
+
+        $destinations = Destination::where('status',1)->get();
         $meta_title = 'Tours';
-        return view('tours')->with(compact('meta_title','tours'));
+        return view('tours')->with(compact('meta_title','tours','destinations'));
     }
 
     public function tourDetails(Request $request, $id=null){
@@ -69,7 +71,23 @@ class IndexController extends Controller
     public function tourEnquiry(Request $request) {
         if($request->isMethod('post')) {
             $data = $request->all();
-            dd($data);
+
+            Log::info($data);
+
+            $enquiry = new TourEnquiry;
+            $enquiry->name = $data['name'];
+            $enquiry->email = $data['email'];
+            $enquiry->contact = $data['contact'];
+            $enquiry->tourist_no = $data['tourist_no'];
+            $enquiry->current_city = $data['current_city'];
+            $enquiry->from_date = $data['from_date'];
+            $enquiry->end_date = $data['end_date'];
+            $enquiry->message = $data['message'];
+            if($enquiry->save()){
+                return redirect()->back()->with('success_message','Tour enquiry submitted successfully.');
+            }else{
+                return redirect()->back()->with('error_message','Something went wrong, please try again.');
+            }
         }
     }
 

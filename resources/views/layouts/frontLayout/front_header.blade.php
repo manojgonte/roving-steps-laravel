@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-auto">
+            {{-- <div class="col-auto">
                 <div class="d-flex items-center">
                     <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
                         <a href="{{url('/sign-up')}}"
@@ -57,15 +57,15 @@
                     </div>
                     <div class="d-none xl:d-flex x-gap-20 items-center pl-30 text-white" data-x="header-mobile-icons"
                         data-x-toggle="text-white">
-                        {{-- <div>
+                        <div>
                             <a href="login.html" class="d-flex items-center icon-user text-inherit text-22"></a>
-                        </div> --}}
+                        </div>
                         <div>
                             <button class="d-flex items-center icon-menu text-inherit text-20" data-x-click=""></button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </header>

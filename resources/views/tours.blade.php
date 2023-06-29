@@ -46,182 +46,50 @@
                             </div> --}}
                         </div>
 
+                        <form action="{{url('tours/')}}" method="GET">
                         <div class="sidebar__item">
                             <h5 class="text-18 fw-500 mb-10">Domestic tours</h5>
                             <div class="sidebar-checkbox">
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
+                                    @foreach ($destinations->filter(function($destination) {
+                                        return $destination->type == 'Domestic';
+                                    }) as $destination)
+                                    <div class="row y-gap-10 items-center justify-between">
+                                        <div class="col-auto">
+                                            <div class="d-flex items-center">
+                                                <div class="form-checkbox">
+                                                    <input type="radio" name="dest_id" value="{{$destination->id}}" @if(Request()->dest_id == $destination->id) checked @endif onclick="javascript:this.form.submit();">
+                                                    <div class="form-checkbox__mark">
+                                                        <div class="form-checkbox__icon icon-check"></div>
+                                                    </div>
                                                 </div>
+                                                <div class="text-15 ml-10">{{$destination->name}}</div>
                                             </div>
-                                            <div class="text-15 ml-10">Andman</div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Andhra Pradesh</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Chardham</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Goa</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Himachal</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Kailash Man sarover</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Karnataka</div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                    @endforeach
                             </div>
                         </div>
 
                         <div class="sidebar__item">
                             <h5 class="text-18 fw-500 mb-10">International tours</h5>
                             <div class="sidebar-checkbox">
-
+                                @foreach ($destinations->filter(function($destination) {
+                                    return $destination->type == 'International';
+                                }) as $destination)
                                 <div class="row y-gap-10 items-center justify-between">
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="checkbox">
+                                                <input type="checkbox" name="dest_id" value="{{$destination->id}}" @if(Request()->dest_id == $destination->id) checked @endif onclick="javascript:this.form.submit();">
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
                                             </div>
-                                            <div class="text-15 ml-10">Africa</div>
+                                            <div class="text-15 ml-10">{{$destination->name}}</div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">America</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Australia Newzealand</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Bhutan</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Dubai & middle east</div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                @endforeach
                             </div>
                         </div>
 
@@ -301,6 +169,8 @@
 
                             </div>
                         </div>
+                        
+                        </form>
                     </aside>
                 </div>
 
@@ -364,7 +234,7 @@
                                     <div class="mt-5">
                                         <div class="fw-500">
                                             <span class="text-14 text-light-1 fw-400">Starting from </span>
-                                            <span class="text-blue-1">₹{{$tour->adult_price}}</span>
+                                            <span class="text-blue-1">₹{{number_format($tour->adult_price)}}</span>
                                             <span class="text-14 text-light-1 fw-400">Per Person</span>
                                         </div>
                                     </div>
