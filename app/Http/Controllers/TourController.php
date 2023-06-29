@@ -9,6 +9,7 @@ use App\Models\Enquiry;
 use App\Models\TourEnquiry;
 use Image;
 use Auth;
+use Mail;
 
 class TourController extends Controller
 {
@@ -34,7 +35,7 @@ class TourController extends Controller
             $tour->exclusions = $data['exclusions'];
             $tour->note = $data['note'];
             $tour->is_popular = !empty($data['is_popular']) ? $data['is_popular'] : '0' ;
-            $tour->status = '1';
+            $tour->status = '0';
 
             if($request->hasFile('image')) {
                 $image_tmp = $request->image;
@@ -48,7 +49,7 @@ class TourController extends Controller
                 }
             }
             $tour->save();
-            return redirect('itinerary-builder/'.$tour->id)->with('flash_message_success','New tour added successfully');
+            return redirect('admin/itinerary-builder/'.$tour->id)->with('flash_message_success','New tour added successfully');
         }
         return view('admin.tour.add_tour');
     }
@@ -174,4 +175,31 @@ class TourController extends Controller
         $tour_enquiry = TourEnquiry::orderBy('id','DESC')->paginate(10);
         return view('admin.tour.tour-enquiries')->with(compact('tour_enquiry'));
     }
+
+    public function shareTour(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $email = $data['email'];
+            $subject = $data['subject'];
+
+            $tourDetails = Tour::with('itinerary')->select('tours.*','destinations.name as dest_name')
+                ->leftJoin('destinations','destinations.id','tours.dest_id')
+                ->where('tours.id', $data['tour_id'])
+                ->orderBy('tours.id','DESC')
+                ->first();
+
+            $email = [$email];
+            $messageData = [
+                'data' => $data,
+                'tour' => $tourDetails
+            ];
+            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject){
+                $message->to($email)->subject($subject . ' | '. config('app.name'));
+            });
+
+            return redirect()->back()->with('flash_message_success','Mail sent');
+        }
+        return redirect()->back();
+    }
+
 }

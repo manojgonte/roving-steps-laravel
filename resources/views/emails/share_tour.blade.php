@@ -9,23 +9,15 @@
 	<table border="2">
 		<tr>
 			<td>Name</td>
-			<td>{{$data['name']}}</td>
-		</tr>
-		<tr>
-			<td>Email</td>
 			<td>{{$data['email']}}</td>
 		</tr>
 		<tr>
-			<td>Phone</td>
-			<td>{{$data['phone']}}</td>
+			<td>Email</td>
+			<td>{{$data['tour_id']}}</td>
 		</tr>
 		<tr>
-			<td>Message</td>
-			<td>{{$data['comment']}}</td>
-		</tr>
-		<tr>
-			<td>Resume</td>
-			<td><a href="{{asset('resume/'.$resume)}}" download>Click Here</a></td>
+			<td>Tour</td>
+			<td>{{$tour['tour_name']}}</td>
 		</tr>
 	</table>
 </body>

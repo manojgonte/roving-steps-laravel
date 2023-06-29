@@ -29,7 +29,7 @@
 		            </div>
 		            @endif
 		            @if(Session::has('flash_message_success'))
-		            <div class="alert alert-success alert-block w-50">
+		            <div class="alert alert-success alert-block">
 		                <button type="button" class="close" data-dismiss="alert">×</button>
 		                <strong>{!! session('flash_message_success') !!}</strong>
 		            </div>
@@ -67,7 +67,7 @@
                                         <td>{{date('d/m/Y', strtotime($row->end_date))}}</td> 
 	                                    <td>
                                             <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp;
-                                            <a class="btn btn-default" href="{{ url('/admin/share-tour/'.$row->id) }}"><i class="fa fa-share"></i></a>
+                                            <button class="btn btn-default" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i></button>
 	                                    </td>
 	                                </tr>
                                 @endforeach
@@ -81,4 +81,45 @@
         </div>
     </section>
 </div>
+
+<div class="modal fade" id="tour-share">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Share Tour on Mail</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{url('admin/share-tour/')}}" method="POST">@csrf
+                <input type="hidden" id="tourId" name="tour_id" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail">Emails</label>
+                        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Enter Email" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSubject">Subject</label>
+                        <input type="text" name="subject" id="inputSubject" class="form-control" placeholder="Enter Subject" value="" required>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-info">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section('scripts')
+<script>
+    function getTourId(el){
+        tourId = $(el).attr('tourId');
+        $('#tourId').val(tourId);
+    }
+</script>
+@endsection
+
+
 @endsection

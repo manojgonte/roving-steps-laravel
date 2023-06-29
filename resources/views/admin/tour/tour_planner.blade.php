@@ -36,7 +36,7 @@
 			                <ul class="nav nav-pills">
 			                  	<li class="nav-item"><a class="nav-link active" href="{{url('admin/tours/ongoing')}}">Planned</a></li>
 			                  	<li class="nav-item"><a class="nav-link" href="{{url('admin/tour-enquiries')}}">Tour Enquiries</a></li>
-			                  	<li class="nav-item"><a class="nav-link" href="{{url('admin/tours/completed')}}">Draft</a></li>
+			                  	<li class="nav-item"><a class="nav-link" href="#">Draft</a></li>
 			                </ul>
 			            </div>
 
@@ -66,7 +66,7 @@
 	                                    <td>{{date('d/m/Y', strtotime($row->updated_at))}}</td> 
 	                                    <td>
 	                                        <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp;
-	                                        <a class="btn btn-default" href="{{ url('/admin/share-tour/'.$row->id) }}"><i class="fa fa-share"></i></a> &nbsp;
+	                                        <button class="btn btn-default" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i></button> &nbsp;
 	                                        <a class="btn btn-default" href="{{ url('/admin/edit-tour/'.$row->id) }}"><i class="fa fa-edit" style="color: #000;"></i></a> &nbsp;
 	                                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a> &nbsp;
 	                                        <a class="btn btn-primary" href="{{ url('/admin/itinerary-builder/'.$row->id) }}"><i class="fa fa-th"></i></a>
@@ -83,4 +83,44 @@
         </div>
     </section>
 </div>
+
+<div class="modal fade" id="tour-share">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Share Tour on Mail</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{url('admin/share-tour/')}}" method="POST">@csrf
+                <input type="hidden" id="tourId" name="tour_id" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail">Emails</label>
+                        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Enter Email" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSubject">Subject</label>
+                        <input type="text" name="subject" id="inputSubject" class="form-control" placeholder="Enter Subject" value="" required>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-info">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section('scripts')
+<script>
+    function getTourId(el){
+        tourId = $(el).attr('tourId');
+        $('#tourId').val(tourId);
+    }
+</script>
+@endsection
+
 @endsection

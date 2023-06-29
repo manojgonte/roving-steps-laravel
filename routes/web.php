@@ -57,6 +57,8 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/edit-tour/{id}', [TourController::class, 'editTour']);
     Route::match(['get','post'], 'admin/delete-tour/{id}', [TourController::class,'deleteTour']);
     
+    Route::match(['get','post'], 'admin/share-tour/', [TourController::class,'shareTour']);
+    
     Route::match(['get','post'], 'admin/enquiries', [TourController::class,'enquiries']);
     Route::match(['get','post'], 'admin/tour-enquiries', [TourController::class,'tourEnquiries']);
 

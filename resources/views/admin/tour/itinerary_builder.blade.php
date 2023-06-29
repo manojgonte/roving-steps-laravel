@@ -35,14 +35,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-default">
-                        <div class="card-header p-2 d-none">
+                        <div class="card-header p-2">
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a class="nav-link" href="{{url('admin/edit-tour/'.Request()->id)}}">Basic Information</a></li>
                                 <li class="nav-item"><a class="nav-link active">Itinerary Builder</a></li>
                             </ul>
                         </div>
 
-                        <div class="card d-none">
+                        <div class="card">
                             <h3 class="card-title text-muted pt-2 pl-3">
                                 Tour Details
                             </h3>
