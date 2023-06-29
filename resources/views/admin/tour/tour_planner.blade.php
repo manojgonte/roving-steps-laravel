@@ -60,7 +60,16 @@
 	                                    <td>{{ $row->id }}</td>
 	                                    <td>{{ Str::limit($row->tour_name, 30) }}</td>
 	                                    <td>{{ $row->type }}</td>
-	                                    <td>@if($row->status == 1) Published @else Yet to Publish @endif</td>
+	                                    <td>
+                                            <form action="{{ url('admin/update-tour-status/'.$row->id) }}" method="post">@csrf
+                                            <div class="form-group">
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" name="status" value="1" @if($row->status=="1") checked @endif class="custom-control-input" id="customSwitch1{{$row->id}}" onchange="javascript:this.form.submit();">
+                                                    <label class="custom-control-label" for="customSwitch1{{$row->id}}"></label>
+                                                </div>
+                                            </div>
+                                            </form>
+                                        </td>
 	                                    <td>NA</td>
 	                                    <td>NA</td>
 	                                    <td>{{date('d/m/Y', strtotime($row->updated_at))}}</td> 

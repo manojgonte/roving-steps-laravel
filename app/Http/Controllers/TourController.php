@@ -121,6 +121,16 @@ class TourController extends Controller
         return view('admin.tour.tour_planner')->with(compact('tours'));
     }
 
+    public function updateTourStatus(Request $request, $id){
+        if($request->status == '1'){
+            $status='1';
+        }else{
+            $status='0';
+        }
+        Tour::where(['id'=>$id])->update(['status'=>$status]);
+        return redirect()->back();
+    }
+
     public function itineraryBuilder(Request $request, $id){
         $tour = Tour::select('tours.*', 'destinations.name as dest_name')
                 ->leftJoin('destinations','destinations.id','tours.dest_id')
