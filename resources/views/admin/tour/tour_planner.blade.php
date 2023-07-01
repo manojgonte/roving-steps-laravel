@@ -77,7 +77,7 @@
 	                                        {{-- <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp; --}}
 	                                        <button class="btn btn-default" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i></button> &nbsp;
 	                                        <a class="btn btn-default" href="{{ url('/admin/edit-tour/'.$row->id) }}"><i class="fa fa-edit" style="color: #000;"></i></a> &nbsp;
-	                                        <a class="btn btn-default" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a> &nbsp;
+	                                        <a class="btn btn-default" onclick="return confirm('Are you sure? All associated data with this tour will be get deleted.')" href="{{ url('/admin/delete-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a> &nbsp;
 	                                    </td>
 	                                </tr>
                                 @endforeach

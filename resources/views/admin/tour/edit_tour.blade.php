@@ -84,11 +84,12 @@
                                         <label class="">Special Tour</label>
                                         <select class="form-control select2bs4" name="special_tour_type" name="special_tour_type">
                                             <option value="">Select One</option>
-                                            <option value="Adventure Tour" @if($tour->special_tour_type == 'Adventure Tour') selected @endif>Adventure Tour</option>
+                                            <option value="Adventures Tour" @if($tour->special_tour_type == 'Adventures Tour') selected @endif>Adventures Tour</option>
+                                            <option value="Student Special" @if($tour->special_tour_type == 'Student Special ') selected @endif>Student Special </option>
                                             <option value="Bike Tour" @if($tour->special_tour_type == 'Bike Tour') selected @endif>Bike Tour</option>
-                                            <option value="Chardham" @if($tour->special_tour_type == 'Chardham') selected @endif>Chardham</option>
-                                            <option value="Goa" @if($tour->special_tour_type == 'Goa') selected @endif>Goa</option>
-                                            <option value="Gujrat" @if($tour->special_tour_type == 'Gujrat') selected @endif>Gujrat</option>
+                                            <option value="Honeymoon Special" @if($tour->special_tour_type == 'Honeymoon Special') selected @endif>Honeymoon Special</option>
+                                            <option value="Second Innings" @if($tour->special_tour_type == 'Second Innings') selected @endif>Second Innings</option>
+                                            <option value="Young Age" @if($tour->special_tour_type == 'Young Age') selected @endif>Young Age</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -140,7 +141,7 @@
                                         <textarea name="exclusions" class="form-control" rows="3" placeholder="Enter Exclusions" required>{{$tour->exclusions}}</textarea>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label class="required">Note</label>
+                                        <label class="">Note</label>
                                         <input type="text" name="note" class="form-control" placeholder="Enter Note" @if(!empty($tour->note)) value="{{$tour->note}}" @endif>
                                     </div>
                                     <div class="form-group col-md-12">
@@ -152,7 +153,7 @@
                                 </div>
                             </div>
                             <div class="card-footer ">
-                                <button type="submit" class="btn btn-warning text-white"><i class="fa fa-check"></i> Update </button>
+                                <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check"></i> Update </button>
                                 <button type="reset" class="btn btn-default"> Reset </button>
                             </div>
                         </form>
@@ -170,16 +171,26 @@
             ignore: [],
             debug: false,
             rules: {
-                title: {
+                tour_name: {
                     required: true,
+                    maxlength:120,
+                },
+                adult_price: {
+                    required: true,
+                    number:true,
+                },
+                child_price: {
+                    required: true,
+                    number:true,
                 },
                 image: {
                     accept: 'png|jpg|jpeg',
                 },
-                
             },
             messages: {},
             submitHandler: function(form) {
+                $(".submit").attr("disabled", true);
+                $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
                 form.submit();
             }
         });

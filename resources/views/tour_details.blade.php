@@ -106,17 +106,25 @@
             <div class="col-auto">
                 <h1 class="text-30 fw-600">{{$tour->tour_name}}</h1>
                 <div class="row x-gap-20 y-gap-20 items-center pt-10">
+                    @if($tour->rating)
                     <div class="col-auto">
                         <div class="d-flex items-center">
-                            <div class="d-flex x-gap-5 items-center">
-                                <i class="icon-star text-10 text-yellow-1"></i>
-                                <i class="icon-star text-10 text-yellow-1"></i>
-                                <i class="icon-star text-10 text-yellow-1"></i>
-                                <i class="icon-star text-10 text-yellow-1"></i>
-                                <i class="icon-star text-10 text-yellow-1"></i>
+                            @php
+                                $fullStars = floor($tour->rating);
+                                $hasHalfStar = ($tour->rating - $fullStars) >= 0.5;
+                            @endphp
+                            <div class="d-flex x-gap-5 items-center pt-5">
+                                @for ($i = 1; $i <= $fullStars; $i++)
+                                <div class="fa fa-star text-yellow-2 text-14"></div>
+                                @endfor
+
+                                @if ($hasHalfStar)
+                                <div class="fa fa-star-half-alt text-yellow-2 text-14"></div>
+                                @endif
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

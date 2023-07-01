@@ -14,7 +14,7 @@ use Log;
 class IndexController extends Controller
 {
     public function index(){
-        $popularTours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id')
+        $popularTours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id','rating')
             ->orderBy('id','DESC')
             ->where(['status'=>1,'is_popular'=>1])
             ->take(10)

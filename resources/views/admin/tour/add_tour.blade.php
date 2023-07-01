@@ -80,11 +80,12 @@
                                         <label class="">Special Tour</label>
                                         <select class="form-control select2bs4" name="special_tour_type" name="special_tour_type">
                                             <option value="">Select One</option>
-                                            <option value="Adventure Tour">Adventure Tour</option>
+                                            <option value="Adventures Tour">Adventures Tour</option>
+                                            <option value="Student Special ">Student Special </option>
                                             <option value="Bike Tour">Bike Tour</option>
-                                            <option value="Chardham">Chardham</option>
-                                            <option value="Goa">Goa</option>
-                                            <option value="Gujrat">Gujrat</option>
+                                            <option value="Honeymoon Special">Honeymoon Special</option>
+                                            <option value="Second Innings">Second Innings</option>
+                                            <option value="Young Age">Young Age</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -148,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="card-footer ">
-                                <button type="submit" class="btn btn-warning text-white"><i class="fa fa-check-circle"></i> Add </button>
+                                <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check-circle"></i> Add </button>
                                 <button type="reset" class="btn btn-default"> Reset </button>
                             </div>
                         </form>
@@ -166,8 +167,17 @@
             ignore: [],
             debug: false,
             rules: {
-                title: {
+                tour_name: {
                     required: true,
+                    maxlength:120,
+                },
+                adult_price: {
+                    required: true,
+                    number:true,
+                },
+                child_price: {
+                    required: true,
+                    number:true,
                 },
                 image: {
                     required: true,
@@ -177,6 +187,8 @@
             },
             messages: {},
             submitHandler: function(form) {
+                $(".submit").attr("disabled", true);
+                $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
                 form.submit();
             }
         });

@@ -58,14 +58,18 @@
                                             <dd class="col-sm-9">{{$tour->dest_name}}</dd>
                                             <dt class="col-sm-3">Tour Type</dt>
                                             <dd class="col-sm-9">{{$tour->type}}</dd>
+                                            <dt class="col-sm-3">Special Tour</dt>
+                                            <dd class="col-sm-9">{{ ($tour->special_tour_type) ?  $tour->special_tour_type : 'NA'}}</dd>
                                             <dt class="col-sm-3">Price/Adult</dt>
-                                            <dd class="col-sm-9">{{$tour->adult_price}}</dd>
+                                            <dd class="col-sm-9">₹{{number_format($tour->adult_price)}}</dd>
                                             <dt class="col-sm-3">Child/Price</dt>
-                                            <dd class="col-sm-9">{{$tour->child_price}}</dd>
+                                            <dd class="col-sm-9">₹{{number_format($tour->child_price)}}</dd>
                                             <dt class="col-sm-3">Date</dt>
                                             <dd class="col-sm-9">@if(!empty($tour->from_date) || !empty($tour->from_date)) {{date('d/m/Y', strtotime($tour->from_date))}} - {{date('d/m/Y', strtotime($tour->end_date))}} @else NA @endif</dd>
                                             <dt class="col-sm-3">Duration</dt>
                                             <dd class="col-sm-9">{{$tour->days}}D - {{$tour->nights}}N</dd>
+                                            <dt class="col-sm-3">Star Ratings</dt>
+                                            <dd class="col-sm-9">{{$tour->rating}} Star</dd>
                                         </dl>
                                     </div>
                                 </div>
@@ -85,12 +89,12 @@
                         </h3>
 
                         <form method="POST" action="{{url('admin/add-tour-itinerary/'.Request()->id)}}" enctype="multipart/form-data" id="addTour">@csrf
-                        @for($i=0; $i<$tour->days; $i++)
+                        @foreach (range(0, $tour->days) as $i)
                         <div class="card m-3">
                             <h4><span class="badge badge-secondary text-md font-weight-normal">Day {{$i+1}}</span></h4>
                             <div class="card-body pt-1">
                                 <div class="form-row">
-                                    <div class="row fields-group border-bottom pb-2 pt-2">
+                                    <div class="row fields-group border-bottom border-dark pb-2 pt-2">
                                         <input type="hidden" name="day[]" value="{{$i+1}}"> 
                                         <div class="form-group col-md-4">
                 	                        <label class="required">Places to Visit</label>
@@ -136,7 +140,7 @@
                                 </div>
                             </div>
                         </div>
-                        @endfor
+                        @endforeach
                         <div class="card-footer text-right">
                             <button type="submit" class="btn btn-warning text-white"><i class="fa fa-check-circle"></i> Save </button>
                             {{-- <button type="reset" class="btn btn-default"> Reset </button> --}}

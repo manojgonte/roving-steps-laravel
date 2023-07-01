@@ -250,12 +250,18 @@
                             <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
                                 <span>{{$tour->tour_name}} | <span class="text-light-1">{{$tour->days}}N-{{$tour->nights}}D</span></span>
                             </h4>
+                            @php
+                                $fullStars = floor($tour->rating);
+                                $hasHalfStar = ($tour->rating - $fullStars) >= 0.5;
+                            @endphp
                             <div class="d-flex x-gap-5 items-center pt-5">
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
+                                @for ($i = 1; $i <= $fullStars; $i++)
+                                <div class="fa fa-star text-yellow-2 text-14"></div>
+                                @endfor
+
+                                @if ($hasHalfStar)
+                                <div class="fa fa-star-half-alt text-yellow-2 text-14"></div>
+                                @endif
                             </div>
                             <p class="text-light-1 lh-14 text-14 mt-5">{{Str::limit($tour->amenities, 40)}}</p>
                             <div class="mt-5">
