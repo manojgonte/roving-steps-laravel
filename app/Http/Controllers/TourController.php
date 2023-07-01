@@ -91,7 +91,7 @@ class TourController extends Controller
                 'note' => $data['note'],
                 'is_popular' => !empty($data['is_popular']) ? $data['is_popular'] : '0',
             ]);
-            return redirect('admin/tours')->with('flash_message_success','New record updated successfully');
+            return redirect('admin/tours')->with('flash_message_success','Tour details updated successfully');
         }
         $tour = Tour::where('id',$id)->first();
         return view('admin.tour.edit_tour')->with(compact('tour'));

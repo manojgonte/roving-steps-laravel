@@ -129,7 +129,7 @@
                                 </div>
                             </div>
                             <div class="card-footer ">
-                                <button type="submit" class="btn btn-warning text-white"><i class="fa fa-check"></i> Add </button>
+                                <button type="submit" class="btn btn-warning text-white"><i class="fa fa-check-circle"></i> Add </button>
                                 <button type="reset" class="btn btn-default"> Reset </button>
                             </div>
                         </form>

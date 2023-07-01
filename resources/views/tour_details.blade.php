@@ -128,18 +128,11 @@
             <div class="col-lg-8">
                 <div class="relative d-flex justify-center overflow-hidden js-section-slider" data-slider-cols="base-1" data-nav-prev="js-img-prev" data-nav-next="js-img-next">
                     <div class="swiper-wrapper">
+                        @foreach($tour->itinerary as $image)
                         <div class="swiper-slide">
-                            <img src="{{asset('img/lists/tour/single/1.png')}}" alt="image" class="rounded-4 col-12 h-full object-cover">
+                            <img src="{{asset('img/tours/tour_itinerary/'.$image->image)}}" alt="" class="rounded-4 col-12 h-full object-cover">
                         </div>
-                        <div class="swiper-slide">
-                            <img src="{{asset('img/gallery/1/2.png')}}" alt="image" class="rounded-4 col-12 h-full object-cover">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="{{asset('img/gallery/1/3.png')}}" alt="image" class="rounded-4 col-12 h-full object-cover">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="{{asset('img/gallery/1/4.png')}}" alt="image" class="rounded-4 col-12 h-full object-cover">
-                        </div>
+                        @endforeach
                     </div>
                     <div class="absolute h-full col-11">
                         <button class="section-slider-nav -prev flex-center button -blue-1 bg-white shadow-1 size-40 rounded-full sm:d-none js-img-prev">

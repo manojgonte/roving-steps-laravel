@@ -28,18 +28,18 @@
                 </li> 
                 <li class="nav-item">
                     <a href="{{url('admin/tour-enquiries')}}" class="nav-link text-white @if(preg_match('#/admin/tour-enquiries#', $url)) active @endif">
-                        <i class="nav-icon fas fa-plane-departure"></i>
+                        <i class="nav-icon fas fa-comment-dots"></i>
                         <p>Tour Enquiries</p>
                     </a>
                 </li> 
                 <li class="nav-item">
                     <a href="{{url('admin/enquiries')}}" class="nav-link text-white @if(preg_match('#/admin/enquiries#', $url)) active @endif">
-                        <i class="nav-icon fas fa-plane-departure"></i>
+                        <i class="nav-icon fas fa-comment-dots"></i>
                         <p>Enquiries</p>
                     </a>
                 </li> 
                 {{-- Projects --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="#" class="nav-link text-white ">
                         <i class="nav-icon fas fa-user-cog"></i>
                         <p>Projects <i class="fas fa-angle-left right"></i></p>
@@ -58,55 +58,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-
-                {{-- clients --}}
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white ">
-                        <i class="nav-icon fas fa-user-cog"></i>
-                            <p>Clients
-                        <i class="fas fa-angle-left right"></i>
-                           </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{url('/admin/add-client/')}}" class="nav-link text-white @if(preg_match('/add-client/', $url)) active @endif">
-                                <i class="nav-icon fas fa-arrow-right" style="color: #7c7c7c;"></i> <p style="color: #7c7c7c;"> Add Client</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{url('/admin/view-client/')}}" class="nav-link text-white @if(preg_match('/view-client/', $url)) active @endif">
-                                <i class="nav-icon fas fa-arrow-right" style="color: #7c7c7c;"></i> <p style="color: #7c7c7c;"> View Clients </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                {{-- News --}}
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white ">
-                        <i class="nav-icon fas fa-user-cog"></i>
-                            <p>Media
-                        <i class="fas fa-angle-left right"></i>
-                           </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{url('/admin/add-news/')}}" class="nav-link text-white @if(preg_match('/add-news/', $url)) active @endif">
-                                <i class="nav-icon fas fa-arrow-right" style="color: #7c7c7c;"></i> <p style="color: #7c7c7c;"> Add News</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{url('/admin/view-news/')}}" class="nav-link text-white @if(preg_match('/view-news/', $url)) active @endif">
-                                <i class="nav-icon fas fa-arrow-right" style="color: #7c7c7c;"></i> <p style="color: #7c7c7c;"> View News </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                </li> --}}
             </ul>
         </nav>  
     </div>
