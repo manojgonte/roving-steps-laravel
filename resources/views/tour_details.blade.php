@@ -279,12 +279,14 @@
                 <div class="fw-500 mb-10 border-bottom-light">Exclusions</div>
                 <div class="text-15">{!! nl2br($tour->exclusions) !!}</div>
             </div>
+            @if($tour->note)
             <div class="col-12">
                 <div class="fw-500 mb-10 border-bottom-light">Note</div>
                 <div class="text-15">
                     {!! nl2br($tour->note) !!}
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </section>

@@ -34,33 +34,33 @@
                         <div class="row y-gap-20">
                             <div class="col-6">
                                 <div class="form-input">
-                                    <input type="text" name="name" placeholder="Enter Full Name *" required>
-                                    {{-- <label class="lh-1 text-16 text-light-1">Full Name</label> --}}
+                                    <input type="text" name="name" required>
+                                    <label class="lh-1 text-16 text-light-1">Full Name *</label>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-input">
-                                    <input type="text" name="email" placeholder="Enter Email *" required>
-                                    {{-- <label class="lh-1 text-16 text-light-1">Email</label> --}}
+                                    <input type="text" name="email" required>
+                                    <label class="lh-1 text-16 text-light-1">Email *</label>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-input">
-                                    <input type="text" name="contact" placeholder="Enter Contact *" required>
-                                    {{-- <label class="lh-1 text-16 text-light-1">Contact</label> --}}
+                                    <input type="text" name="contact" required>
+                                    <label class="lh-1 text-16 text-light-1">Contact</label>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-input">
-                                    <input type="text" name="address" placeholder="Enter Address" required>
-                                    {{-- <label class="lh-1 text-16 text-light-1">Address</label> --}}
+                                    <input type="text" name="address">
+                                    <label class="lh-1 text-16 text-light-1">Address</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-input">
-                                    <textarea name="message" placeholder="Write your message *" rows="4"
+                                    <textarea name="message" rows="4"
                                         required></textarea>
-                                    {{-- <label class="lh-1 text-16 text-light-1">Your Messages</label> --}}
+                                    <label class="lh-1 text-16 text-light-1">Your Messages</label>
                                 </div>
                             </div>
                             <div class="col-auto">

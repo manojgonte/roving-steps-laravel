@@ -13118,3 +13118,7 @@ a.button.bg-light-1:hover {
     height: 185px;
     object-fit: contain;
 }
+
+.testimonials__text {
+  min-height: 175px;
+}

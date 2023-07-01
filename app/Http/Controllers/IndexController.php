@@ -14,8 +14,13 @@ use Log;
 class IndexController extends Controller
 {
     public function index(){
+        $popularTours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id')
+            ->orderBy('id','DESC')
+            ->where(['status'=>1,'is_popular'=>1])
+            ->take(10)
+            ->get();
         $meta_title = config('app.name');
-        return view('index',compact('meta_title'));
+        return view('index',compact('meta_title','popularTours'));
     }
     
     public function contact(Request $request){
@@ -27,9 +32,9 @@ class IndexController extends Controller
             $enquiry = new Enquiry;
             $enquiry->name = $data['name'];
             $enquiry->email = $data['email'];
-            $enquiry->address = $data['address'];
-            $enquiry->contact = $data['contact'];
-            $enquiry->message = $data['message'];
+            $enquiry->address = !empty($data['address']) ? $data['address'] : null;
+            $enquiry->contact = !empty($data['contact']) ? $data['contact'] : null;
+            $enquiry->message = !empty($data['message']) ? $data['message'] : null;
             $enquiry->save();
 
             return redirect()->back()->with('success_message','Form submitted successfully.');
@@ -44,12 +49,16 @@ class IndexController extends Controller
     }
 
     public function tours(Request $request){
-        $tours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id')
+        $tours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id','rating')
+            ->orderBy('is_popular','DESC')
             ->orderBy('id','DESC')
             ->where('status','1');
-            
+        
         if($request->dest_id){
             $tours = $tours->where('dest_id', $request->dest_id);
+        }
+        if($request->special_tour_type){
+            $tours = $tours->where('special_tour_type', $request->special_tour_type);
         }
 
         $tours = $tours->paginate(9);

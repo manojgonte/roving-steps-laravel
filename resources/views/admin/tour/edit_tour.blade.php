@@ -48,13 +48,21 @@
             	                        <label class="required">Tour Name</label>
             	                        <input type="text" name="tour_name" class="form-control" placeholder="Enter Tour Name" value="{{$tour->tour_name}}" required>
                           	        </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-2">
                                         <label class="required">Destination</label>
                                         <select class="form-control select2bs4" name="dest_id" required>
                                             <option value="" selected>Select One</option>
                                             @foreach(App\Models\Destination::where('status',1)->orderBy('name','ASC')->get() as $row)
                                             <option value="{{$row->id}}" @if($tour->id == $row->id) selected @endif>{{$row->name}}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="required">Star Ratings</label>
+                                        <select class="form-control select2bs4" name="rating" required>
+                                            @for ($i = 1; $i <= 5; $i += 0.5)
+                                                <option value="{{$i}}" @if($tour->rating == $i) selected @endif>{{$i}}</option>
+                                            @endfor
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -65,11 +73,22 @@
                                         <input type="file" name="image" class="form-control p-1" id="image" value="{{ $tour->image }}">
                                         <img class="mt-2" style="width: 15%;" src="{{ asset('img/tours/'.$tour->image) }}" alt="">
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-2">
                                         <label class="required">Tour Type</label>
                                         <select class="form-control select2bs4" name="type" name="type">
                                             <option value="Domestic" @if($tour->type == 'Domestic') selected @endif>Domestic</option>
                                             <option value="International" @if($tour->type == 'International') selected @endif>International</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="">Special Tour</label>
+                                        <select class="form-control select2bs4" name="special_tour_type" name="special_tour_type">
+                                            <option value="">Select One</option>
+                                            <option value="Adventure Tour" @if($tour->special_tour_type == 'Adventure Tour') selected @endif>Adventure Tour</option>
+                                            <option value="Bike Tour" @if($tour->special_tour_type == 'Bike Tour') selected @endif>Bike Tour</option>
+                                            <option value="Chardham" @if($tour->special_tour_type == 'Chardham') selected @endif>Chardham</option>
+                                            <option value="Goa" @if($tour->special_tour_type == 'Goa') selected @endif>Goa</option>
+                                            <option value="Gujrat" @if($tour->special_tour_type == 'Gujrat') selected @endif>Gujrat</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -91,7 +110,7 @@
                                     <div class="form-group col-md-2">
                                         <label class="required">Day/s</label>
                                         <select class="form-control select2bs4" name="days">
-                                            @for($i=1; $i<=15; $i++)
+                                            @for($i=1; $i<=30; $i++)
                                             <option value="{{$i}}" @if($tour->days == $i) selected @endif>{{$i}}</option>
                                             @endfor
                                         </select>
@@ -99,7 +118,7 @@
                                     <div class="form-group col-md-2">
                                         <label class="required">Night/s</label>
                                         <select class="form-control select2bs4" name="nights">
-                                            @for($i=1; $i<=15; $i++)
+                                            @for($i=1; $i<=30; $i++)
                                             <option value="{{$i}}" @if($tour->nights == $i) selected @endif>{{$i}}</option>
                                             @endfor
                                         </select>

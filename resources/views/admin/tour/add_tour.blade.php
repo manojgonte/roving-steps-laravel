@@ -48,7 +48,7 @@
             	                        <label class="required">Tour Name</label>
             	                        <input type="text" name="tour_name" class="form-control" placeholder="Enter Tour Name" required>
                           	        </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-2">
                                         <label class="required">Destination</label>
                                         <select class="form-control select2bs4" name="dest_id" required>
                                             <option value="" selected>Select One</option>
@@ -57,15 +57,34 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="required">Star Ratings</label>
+                                        <select class="form-control select2bs4" name="rating" required>
+                                            @for ($i = 1; $i <= 5; $i += 0.5)
+                                                <option value="{{$i}}">{{$i}}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
                                     <div class="form-group col-md-4">
             	                      	<label class="required">Cover Image <small>(Size: 600 X 500px)</small></label>
             	                      	<input type="file" name="image" class="form-control p-1" accept="image/*" required>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-2">
                                         <label class="required">Tour Type</label>
                                         <select class="form-control select2bs4" name="type" name="type">
                                             <option value="Domestic">Domestic</option>
                                             <option value="International">International</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="">Special Tour</label>
+                                        <select class="form-control select2bs4" name="special_tour_type" name="special_tour_type">
+                                            <option value="">Select One</option>
+                                            <option value="Adventure Tour">Adventure Tour</option>
+                                            <option value="Bike Tour">Bike Tour</option>
+                                            <option value="Chardham">Chardham</option>
+                                            <option value="Goa">Goa</option>
+                                            <option value="Gujrat">Gujrat</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -87,7 +106,7 @@
                                     <div class="form-group col-md-2">
                                         <label class="required">Day/s</label>
                                         <select class="form-control select2bs4" name="days">
-                                            @for($i=1; $i<=15; $i++)
+                                            @for($i=1; $i<=30; $i++)
                                             <option value="{{$i}}">{{$i}}</option>
                                             @endfor
                                         </select>
@@ -95,7 +114,7 @@
                                     <div class="form-group col-md-2">
                                         <label class="required">Night/s</label>
                                         <select class="form-control select2bs4" name="nights">
-                                            @for($i=1; $i<=15; $i++)
+                                            @for($i=1; $i<=30; $i++)
                                             <option value="{{$i}}">{{$i}}</option>
                                             @endfor
                                         </select>

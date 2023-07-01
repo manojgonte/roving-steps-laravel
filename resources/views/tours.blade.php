@@ -82,7 +82,7 @@
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="checkbox" name="dest_id" value="{{$destination->id}}" @if(Request()->dest_id == $destination->id) checked @endif onclick="javascript:this.form.submit();">
+                                                <input type="radio" name="dest_id" value="{{$destination->id}}" @if(Request()->dest_id == $destination->id) checked @endif onclick="javascript:this.form.submit();">
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
@@ -103,12 +103,12 @@
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="checkbox">
+                                                <input type="checkbox" name="special_tour_type" value="Adventure Tour" @if(Request()->special_tour_type == "Adventure Tour") checked @endif onclick="javascript:this.form.submit();">
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
                                             </div>
-                                            <div class="text-15 ml-10">Adventure</div>
+                                            <div class="text-15 ml-10">Adventure Tour</div>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="checkbox">
+                                                <input type="checkbox" name="special_tour_type" value="Bike Tour" @if(Request()->special_tour_type == "Bike Tour") checked @endif onclick="javascript:this.form.submit();">
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
@@ -131,7 +131,7 @@
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="checkbox">
+                                                <input type="checkbox" name="special_tour_type" value="Chardham" @if(Request()->special_tour_type == "Chardham") checked @endif onclick="javascript:this.form.submit();">
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
@@ -145,7 +145,7 @@
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="checkbox">
+                                                <input type="checkbox" name="special_tour_type" value="Goa" @if(Request()->special_tour_type == "Goa") checked @endif onclick="javascript:this.form.submit();">
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
@@ -159,7 +159,7 @@
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="checkbox">
+                                                <input type="checkbox" name="special_tour_type" value="Gujrat" @if(Request()->special_tour_type == "Gujrat") checked @endif onclick="javascript:this.form.submit();">
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
@@ -180,26 +180,7 @@
                     <div class="row y-gap-10 items-center justify-between">
                         <div class="col-auto">
                             <div class="text-20"><span class="fw-500">{{$tours->total()}} popular tour packages found</span> </div>
-                        </div>                        
-                        {{-- <div class="col-auto">
-                            <div class="row x-gap-20 y-gap-20">
-                                <div class="col-auto">
-                                    <button
-                                        class="button -blue-1 h-40 px-20 rounded-100 bg-blue-1-05 text-15 text-blue-1">
-                                        <i class="icon-up-down text-14 mr-10"></i>
-                                        Top picks for your search
-                                    </button>
-                                </div>
-
-                                <div class="col-auto d-none lg:d-block">
-                                    <button data-x-click="filterPopup"
-                                        class="button -blue-1 h-40 px-20 rounded-100 bg-blue-1-05 text-15 text-blue-1">
-                                        <i class="icon-up-down text-14 mr-10"></i>
-                                        Filter
-                                    </button>
-                                </div>
-                            </div>
-                        </div> --}}
+                        </div>
                     </div>
 
                     <div class="border-top-light mt-10 mb-30"></div>
@@ -207,7 +188,7 @@
                     <div class="row y-gap-30">
                         @foreach($tours as $tour)
                         <div class="col-lg-4 col-sm-6">
-                            <a  href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="hotelsCard -type-1 ">
+                            <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="hotelsCard -type-1 ">
                                 <div class="hotelsCard__image">
                                     <div class="cardImage ratio ratio-1:1">
                                         <div class="cardImage__content">
@@ -222,17 +203,22 @@
                                 </div>
                                 <div class="hotelsCard__content mt-10">
                                     <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                                        <span>{{Str::limit($tour->tour_name, 45)}} | <span
-                                                class="text-light-1">{{$tour->days}}D-{{$tour->nights}}N</span></span>
+                                        <span>{{Str::limit($tour->tour_name, 45)}} | <span class="text-light-1">{{$tour->days}}D-{{$tour->nights}}N</span></span>
                                     </h4>
+                                    @php
+                                        $fullStars = floor($tour->rating);
+                                        $hasHalfStar = ($tour->rating - $fullStars) >= 0.5;
+                                    @endphp
                                     <div class="d-flex x-gap-5 items-center pt-5">
-                                        <div class="icon-star text-yellow-2 text-14"></div>
-                                        <div class="icon-star text-yellow-2 text-14"></div>
-                                        <div class="icon-star text-yellow-2 text-14"></div>
-                                        <div class="icon-star text-yellow-2 text-14"></div>
-                                        <div class="icon-star text-yellow-2 text-14"></div>
+                                        @for ($i = 1; $i <= $fullStars; $i++)
+                                        <div class="fa fa-star text-yellow-2 text-14"></div>
+                                        @endfor
+
+                                        @if ($hasHalfStar)
+                                        <div class="fa fa-star-half-alt text-yellow-2 text-14"></div>
+                                        @endif
                                     </div>
-                                    <p class="text-light-1 lh-14 text-14 mt-5">{{$tour->amenities}}</p>
+                                    <p class="text-light-1 lh-14 text-14 mt-5">{{Str::limit($tour->amenities, 40)}}</p>
                                     <div class="mt-5">
                                         <div class="fw-500">
                                             <span class="text-14 text-light-1 fw-400">Starting from </span>
@@ -252,6 +238,10 @@
                         @endforeach
 
                     </div>
+
+                    @if(count($tours) < 1)
+                    <div class="alert mt-10 fw-500">No tour packages found!</div>
+                    @endif
                     
                     <div class="border-top-light mt-30 pt-30">
                         {{ $tours->links("pagination::bootstrap-4") }}

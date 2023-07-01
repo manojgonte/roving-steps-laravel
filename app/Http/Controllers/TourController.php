@@ -22,7 +22,9 @@ class TourController extends Controller
             $tour = new Tour;
             $tour->tour_name = $data['tour_name'];
             $tour->type = $data['type'];
+            $tour->special_tour_type = !empty($data['special_tour_type']) ? $data['special_tour_type'] : null;
             $tour->dest_id = $data['dest_id'];
+            $tour->rating = $data['rating'];
             $tour->description = $data['description'];
             $tour->adult_price = $data['adult_price'];
             $tour->child_price = $data['child_price'];
@@ -80,6 +82,8 @@ class TourController extends Controller
                 'tour_name'=>$data['tour_name'],
                 'image'=>$filename,
                 'type' => $data['type'],
+                'special_tour_type' => !empty($data['special_tour_type']) ? $data['special_tour_type'] : null,
+                'rating' => $data['rating'],
                 'dest_id' => $data['dest_id'],
                 'description' => $data['description'],
                 'adult_price' => $data['adult_price'],
@@ -94,7 +98,7 @@ class TourController extends Controller
                 'note' => !empty($data['note']) ? $data['note'] : null,
                 'is_popular' => !empty($data['is_popular']) ? $data['is_popular'] : '0',
             ]);
-            return redirect('admin/tours')->with('flash_message_success','Tour details updated successfully');
+            return redirect('admin/tour-planner')->with('flash_message_success','Tour details updated successfully');
         }
         $tour = Tour::where('id',$id)->first();
         return view('admin.tour.edit_tour')->with(compact('tour'));

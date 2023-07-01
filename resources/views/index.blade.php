@@ -70,18 +70,6 @@
             </button>
         </div>
     </div>
-    <a href="#secondSection" class="masthead__scroll">
-        <div class="d-flex items-center">
-            <div class="text-white lh-15 text-right mr-10">
-                <div class="fw-500">Scroll Down</div>
-                <div class="text-15">to discover more</div>
-            </div>
-            <div class="-icon">
-                <div></div>
-                <div></div>
-            </div>
-        </div>
-    </a>
 </section>
 
 <section class="layout-pt-md layout-pb-md">
@@ -115,8 +103,7 @@
                 </div>
             </div>
             <div class="col-auto md:d-none">
-                <a href="#" class="button -md -blue-1 bg-blue-1-05 text-blue-1"> View All Destinations <div class="icon-arrow-top-right ml-15"></div>
-                </a>
+                {{-- <a href="#" class="button -md -blue-1 bg-blue-1-05 text-blue-1"> View All Destinations <div class="icon-arrow-top-right ml-15"></div></a> --}}
             </div>
         </div>
         <div class="relative pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="base-2 xl-4 lg-3 md-2 sm-2 base-1" data-anim="slide-up delay-2">
@@ -237,30 +224,31 @@
             </div>
             <div class="col-sm-auto">
                 <div class="d-inline-block">
-                    <a href="#" class="button -md -blue-1 bg-blue-1-05 text-blue-1"> View All <div class="icon-arrow-top-right ml-15"></div>
+                    <a href="{{url('tours/')}}" class="button -md -blue-1 bg-blue-1-05 text-blue-1"> View All <div class="icon-arrow-top-right ml-15"></div>
                     </a>
                 </div>
             </div>
         </div>
         <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-4 lg-3 md-2 sm-2 base-1" data-nav-prev="js-hotels-prev" data-pagination="js-hotels-pag" data-nav-next="js-hotels-next">
             <div class="swiper-wrapper">
+                @foreach($popularTours as $tour)
                 <div class="swiper-slide">
-                    <a href="#" class="hotelsCard -type-1 ">
+                    <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="hotelsCard -type-1 ">
                         <div class="hotelsCard__image">
                             <div class="cardImage ratio ratio-1:1">
                                 <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="img/hotels/1.png" alt="image">
+                                    <img class="rounded-4 col-12" src="{{asset('img/tours/'.$tour->image)}}" alt="{{$tour->tour_name}}">
                                 </div>
-                                <div class="cardImage__wishlist">
+                                {{-- <div class="cardImage__wishlist">
                                     <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
                                         <i class="icon-heart text-12"></i>
                                     </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="hotelsCard__content mt-10">
                             <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                                <span>The Montcalm At Brewery London City | <span class="text-light-1">5N-6D</span></span>
+                                <span>{{$tour->tour_name}} | <span class="text-light-1">{{$tour->days}}N-{{$tour->nights}}D</span></span>
                             </h4>
                             <div class="d-flex x-gap-5 items-center pt-5">
                                 <div class="icon-star text-yellow-2 text-14"></div>
@@ -269,176 +257,21 @@
                                 <div class="icon-star text-yellow-2 text-14"></div>
                                 <div class="icon-star text-yellow-2 text-14"></div>
                             </div>
-                            <p class="text-light-1 lh-14 text-14 mt-5">4 Stay | Meal | Siteseeing | Private Transport | Visa</p>
+                            <p class="text-light-1 lh-14 text-14 mt-5">{{Str::limit($tour->amenities, 40)}}</p>
                             <div class="mt-5">
                                 <div class="fw-500"> 
                                     <span class="text-14 text-light-1 fw-400">Starting from </span>
-                                    <span class="text-blue-1">₹50,000</span>
+                                    <span class="text-blue-1">₹{{number_format($tour->adult_price)}}</span>
                                     <span class="text-14 text-light-1 fw-400">Per Person</span> 
                                 </div>
                             </div>
                             <div class="d-flex items-center mt-10">
-                                <a href="#" class="button -md text-white bg-warning-2">BOOK NOOW</a>
+                                <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="button p-2 text-white bg-light-1">Read More</a>
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="swiper-slide">
-                    <a href="#" class="hotelsCard -type-1 ">
-                        <div class="hotelsCard__image">
-                            <div class="cardImage ratio ratio-1:1">
-                                <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="img/hotels/2.png" alt="image">
-                                </div>
-                                <div class="cardImage__wishlist">
-                                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                        <i class="icon-heart text-12"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hotelsCard__content mt-10">
-                            <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                                <span>Staycity Aparthotels Deptford Bridge Station | <span class="text-light-1">5N-6D</span></span>
-                            </h4>
-                            <div class="d-flex x-gap-5 items-center pt-5">
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                            </div>
-                            <p class="text-light-1 lh-14 text-14 mt-5">4 Stay | Meal | Siteseeing | Private Transport | Visa</p>
-                            <div class="mt-5">
-                                <div class="fw-500"> 
-                                    <span class="text-14 text-light-1 fw-400">Starting from </span>
-                                    <span class="text-blue-1">₹50,000</span>
-                                    <span class="text-14 text-light-1 fw-400">Per Person</span> 
-                                </div>
-                            </div>
-                            <div class="d-flex items-center mt-10">
-                                <a href="#" class="button -md text-white bg-warning-2">BOOK NOOW</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="#" class="hotelsCard -type-1 ">
-                        <div class="hotelsCard__image">
-                            <div class="cardImage ratio ratio-1:1">
-                                <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="img/hotels/3.png" alt="image">
-                                </div>
-                                <div class="cardImage__wishlist">
-                                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                        <i class="icon-heart text-12"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hotelsCard__content mt-10">
-                            <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                                <span>The Westin New York at Times Square | <span class="text-light-1">5N-6D</span></span>
-                            </h4>
-                            <div class="d-flex x-gap-5 items-center pt-5">
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                            </div>
-                            <p class="text-light-1 lh-14 text-14 mt-5">4 Stay | Meal | Siteseeing | Private Transport | Visa</p>
-                            <div class="mt-5">
-                                <div class="fw-500"> 
-                                    <span class="text-14 text-light-1 fw-400">Starting from </span>
-                                    <span class="text-blue-1">₹50,000</span>
-                                    <span class="text-14 text-light-1 fw-400">Per Person</span> 
-                                </div>
-                            </div>
-                            <div class="d-flex items-center mt-10">
-                                <a href="#" class="button -md text-white bg-warning-2">BOOK NOOW</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="#" class="hotelsCard -type-1 ">
-                        <div class="hotelsCard__image">
-                            <div class="cardImage ratio ratio-1:1">
-                                <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="img/hotels/4.png" alt="image">
-                                </div>
-                                <div class="cardImage__wishlist">
-                                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                        <i class="icon-heart text-12"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hotelsCard__content mt-10">
-                            <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                                <span>DoubleTree by Hilton Hotel New York Times Square West | <span class="text-light-1">5N-6D</span></span>
-                            </h4>
-                            <div class="d-flex x-gap-5 items-center pt-5">
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                            </div>
-                            <p class="text-light-1 lh-14 text-14 mt-5">4 Stay | Meal | Siteseeing | Private Transport | Visa</p>
-                            <div class="mt-5">
-                                <div class="fw-500"> 
-                                    <span class="text-14 text-light-1 fw-400">Starting from </span>
-                                    <span class="text-blue-1">₹50,000</span>
-                                    <span class="text-14 text-light-1 fw-400">Per Person</span> 
-                                </div>
-                            </div>
-                            <div class="d-flex items-center mt-10">
-                                <a href="#" class="button -md text-white bg-warning-2">BOOK NOOW</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="#" class="hotelsCard -type-1 ">
-                        <div class="hotelsCard__image">
-                            <div class="cardImage ratio ratio-1:1">
-                                <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="img/hotels/1.png" alt="image">
-                                </div>
-                                <div class="cardImage__wishlist">
-                                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                        <i class="icon-heart text-12"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hotelsCard__content mt-10">
-                            <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                                <span>The Montcalm At Brewery London City | <span class="text-light-1">5N-6D</span></span>
-                            </h4>
-                            <div class="d-flex x-gap-5 items-center pt-5">
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                                <div class="icon-star text-yellow-2 text-14"></div>
-                            </div>
-                            <p class="text-light-1 lh-14 text-14 mt-5">4 Stay | Meal | Siteseeing | Private Transport | Visa</p>
-                            <div class="mt-5">
-                                <div class="fw-500"> 
-                                    <span class="text-14 text-light-1 fw-400">Starting from </span>
-                                    <span class="text-blue-1">₹50,000</span>
-                                    <span class="text-14 text-light-1 fw-400">Per Person</span> 
-                                </div>
-                            </div>
-                            <div class="d-flex items-center mt-10">
-                                <a href="#" class="button -md text-white bg-warning-2">BOOK NOOW</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                @endforeach
             </div>
             <div class="d-flex x-gap-15 items-center justify-center sm:justify-start pt-40 sm:pt-20">
                 <div class="col-auto">
@@ -535,88 +368,63 @@
                 </div>
             </div>
         </div>
-        <div class="overflow-hidden pt-40 js-section-slider" data-gap="30" data-slider-cols="xl-3 lg-3 md-2 sm-1 base-1">
+        <div class="overflow-hidden pt-20 js-section-slider" data-gap="30" data-slider-cols="xl-3 lg-3 md-2 sm-1 base-1">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40">
-                        <h4 class="text-16 fw-500 text-blue-1 mb-20">Hotel Equatorial Melaka</h4>
-                        <p class="testimonials__text lh-18 fw-500 text-dark-1">&quot;Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic.&quot;</p>
-                        <div class="pt-20 mt-28 border-top-light">
+                    <div class="testimonials -type-1 bg-white rounded-4 pt-20 pb-20 px-20">
+                        <p class="testimonials__text lh-18 fw-400 text-dark-1">&quot;We owe a lot to roving steps, thanks for making it happen. Service was at par and we respect what you gave and the way you treated our people. 100% Recommend 100% value for money&quot;</p>
+                        <div class="pt-10 mt-10 border-top-light">
                             <div class="row x-gap-20 y-gap-20 items-center">
                                 <div class="col-auto">
-                                    <img class="size-60" src="img/avatars/1.png" alt="image">
+                                    <img class="size-40" src="img/avatars/1.png" alt="image">
                                 </div>
                                 <div class="col-auto">
-                                    <div class="text-15 fw-500 lh-14">Courtney Henry</div>
-                                    <div class="text-14 lh-14 text-light-1 mt-5">Web Designer</div>
+                                    <div class="text-15 fw-500 lh-14">Yogita</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40">
-                        <h4 class="text-16 fw-500 text-blue-1 mb-20">Hotel Equatorial Melaka</h4>
-                        <p class="testimonials__text lh-18 fw-500 text-dark-1">&quot;Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic.&quot;</p>
-                        <div class="pt-20 mt-28 border-top-light">
+                    <div class="testimonials -type-1 bg-white rounded-4 pt-20 pb-20 px-20">
+                        <p class="testimonials__text lh-18 fw-400 text-dark-1">&quot;Thank you Roving Step! For Making Our Singapore Trip Too Special. All Places, Management & Timing is Perfect. Thank you For Always there for Support. Lalit Varma Saheb… We Enjoy Each & Every Moments… And Specially Indian Food….&quot;</p>
+                        <div class="pt-10 mt-10 border-top-light">
                             <div class="row x-gap-20 y-gap-20 items-center">
                                 <div class="col-auto">
-                                    <img class="size-60" src="img/avatars/1.png" alt="image">
+                                    <img class="size-40" src="img/avatars/1.png" alt="image">
                                 </div>
                                 <div class="col-auto">
-                                    <div class="text-15 fw-500 lh-14">Courtney Henry</div>
-                                    <div class="text-14 lh-14 text-light-1 mt-5">Web Designer</div>
+                                    <div class="text-15 fw-500 lh-14">Sagar Zunjurke</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40">
-                        <h4 class="text-16 fw-500 text-blue-1 mb-20">Hotel Equatorial Melaka</h4>
-                        <p class="testimonials__text lh-18 fw-500 text-dark-1">&quot;Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic.&quot;</p>
-                        <div class="pt-20 mt-28 border-top-light">
+                    <div class="testimonials -type-1 bg-white rounded-4 pt-20 pb-20 px-20">
+                        <p class="testimonials__text lh-18 fw-400 text-dark-1">&quot;Amazing team in planning holidays/ trips. Had a wonderful experience with them every time they planned our first international trip with family. The only thing I would say is just go with what he suggests as per your budget and you won't be disappointed. 🙂 Kudos!! to the team.&quot;</p>
+                        <div class="pt-10 mt-10 border-top-light">
                             <div class="row x-gap-20 y-gap-20 items-center">
                                 <div class="col-auto">
-                                    <img class="size-60" src="img/avatars/1.png" alt="image">
+                                    <img class="size-40" src="img/avatars/1.png" alt="image">
                                 </div>
                                 <div class="col-auto">
-                                    <div class="text-15 fw-500 lh-14">Courtney Henry</div>
-                                    <div class="text-14 lh-14 text-light-1 mt-5">Web Designer</div>
+                                    <div class="text-15 fw-500 lh-14">Abhishek Bairwan</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40">
-                        <h4 class="text-16 fw-500 text-blue-1 mb-20">Hotel Equatorial Melaka</h4>
-                        <p class="testimonials__text lh-18 fw-500 text-dark-1">&quot;Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic.&quot;</p>
-                        <div class="pt-20 mt-28 border-top-light">
+                    <div class="testimonials -type-1 bg-white rounded-4 pt-20 pb-20 px-20">
+                        <p class="testimonials__text lh-18 fw-400 text-dark-1">&quot;I had booked the cab services plus attraction passes for my parents for Dubai trip. I really liked how they got all the passes on time without any follow ups and the cab drivers treated them nicely, gave information about the tourist spots. The pick and drop was on time.&quot;</p>
+                        <div class="pt-10 mt-10 border-top-light">
                             <div class="row x-gap-20 y-gap-20 items-center">
                                 <div class="col-auto">
-                                    <img class="size-60" src="img/avatars/1.png" alt="image">
+                                    <img class="size-40" src="img/avatars/1.png" alt="image">
                                 </div>
                                 <div class="col-auto">
-                                    <div class="text-15 fw-500 lh-14">Courtney Henry</div>
-                                    <div class="text-14 lh-14 text-light-1 mt-5">Web Designer</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40">
-                        <h4 class="text-16 fw-500 text-blue-1 mb-20">Hotel Equatorial Melaka</h4>
-                        <p class="testimonials__text lh-18 fw-500 text-dark-1">&quot;Our family was traveling via bullet train between cities in Japan with our luggage - the location for this hotel made that so easy. Agoda price was fantastic.&quot;</p>
-                        <div class="pt-20 mt-28 border-top-light">
-                            <div class="row x-gap-20 y-gap-20 items-center">
-                                <div class="col-auto">
-                                    <img class="size-60" src="img/avatars/1.png" alt="image">
-                                </div>
-                                <div class="col-auto">
-                                    <div class="text-15 fw-500 lh-14">Courtney Henry</div>
-                                    <div class="text-14 lh-14 text-light-1 mt-5">Web Designer</div>
+                                    <div class="text-15 fw-500 lh-14">Shweta Patil</div>
                                 </div>
                             </div>
                         </div>
