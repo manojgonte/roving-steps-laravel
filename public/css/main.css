@@ -5288,10 +5288,6 @@ div[data-slider]>input[type=range]::-ms-tooltip {
   z-index: 2;
 }
 
-.hotelsCard__title {
-  min-height: 58px;
-}
-
 .hotelsCard.-type-1 .hotelsCard__title span {
   background-image: linear-gradient(transparent 24px, black 20px);
   background-size: 0;
@@ -5302,6 +5298,10 @@ div[data-slider]>input[type=range]::-ms-tooltip {
 .hotelsCard.-type-1:hover .hotelsCard__image .cardImage__content>img,
 .hotelsCard.-type-1:hover .hotelsCard__image .swiper-slide {
   transform: scale(1.15);
+}
+
+.hotelsCard__title {
+  min-height: 58px;
 }
 
 .hotelsCard.-type-1:hover .hotelsCard__title span {
@@ -11608,7 +11608,7 @@ div[data-slider]>input[type=range]::-ms-tooltip {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 1;
+  z-index: 5;
 }
 
 .section-slider-nav.-prev {
@@ -12102,7 +12102,7 @@ div[data-slider]>input[type=range]::-ms-tooltip {
 .form-input label {
   position: absolute;
   top: 0;
-  top: 18px;
+  top: 26px;
   padding: 0 15px;
   pointer-events: none;
   font-size: 14px;
@@ -12114,8 +12114,8 @@ div[data-slider]>input[type=range]::-ms-tooltip {
   border: 1px solid var(--color-border);
   border-radius: 4px;
   padding: 0 15px;
-  padding-top: 20px;
-  min-height: 60px;
+  padding-top: 25px;
+  min-height: 70px;
   transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
