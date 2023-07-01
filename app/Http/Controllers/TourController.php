@@ -26,17 +26,18 @@ class TourController extends Controller
             $tour->description = $data['description'];
             $tour->adult_price = $data['adult_price'];
             $tour->child_price = $data['child_price'];
-            $tour->from_date = $data['from_date'];
-            $tour->end_date = $data['end_date'];
+            $tour->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
+            $tour->end_date = !empty($data['end_date']) ? $data['end_date'] : null;
             $tour->days = $data['days'];
             $tour->nights = $data['nights'];
             $tour->amenities = $data['amenities'];
             $tour->inclusions = $data['inclusions'];
             $tour->exclusions = $data['exclusions'];
-            $tour->note = $data['note'];
+            $tour->note = !empty($data['note']) ? $data['note'] : null;
             $tour->is_popular = !empty($data['is_popular']) ? $data['is_popular'] : '0' ;
             $tour->status = '0';
 
+            // image save in folder
             if($request->hasFile('image')) {
                 $image_tmp = $request->image;
                 $filename = time() . '.' . $image_tmp->clientExtension();
@@ -58,6 +59,7 @@ class TourController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
             // dd($data);
+            // image save in folder
             if ($request->hasFile('image')) {
                 $image_tmp = $request->image;
                 $filename = time() . '.' . $image_tmp->clientExtension();
@@ -73,6 +75,7 @@ class TourController extends Controller
                 $filename = '';
             }
 
+            // detail update
             Tour::where('id',$id)->update([
                 'tour_name'=>$data['tour_name'],
                 'image'=>$filename,
@@ -81,14 +84,14 @@ class TourController extends Controller
                 'description' => $data['description'],
                 'adult_price' => $data['adult_price'],
                 'child_price' => $data['child_price'],
-                'from_date' => $data['from_date'],
-                'end_date' => $data['end_date'],
+                'from_date' => !empty($data['from_date']) ? $data['from_date'] : null,
+                'end_date' => !empty($data['end_date']) ? $data['end_date'] : null,
                 'days' => $data['days'],
                 'nights' => $data['nights'],
                 'amenities' => $data['amenities'],
                 'inclusions' => $data['inclusions'],
                 'exclusions' => $data['exclusions'],
-                'note' => $data['note'],
+                'note' => !empty($data['note']) ? $data['note'] : null,
                 'is_popular' => !empty($data['is_popular']) ? $data['is_popular'] : '0',
             ]);
             return redirect('admin/tours')->with('flash_message_success','Tour details updated successfully');

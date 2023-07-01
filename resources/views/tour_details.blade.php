@@ -156,26 +156,29 @@
                 <div class="d-flex justify-end js-pin-content">
                     <div class="w-360 lg:w-full d-flex flex-column items-center">
                         <div class="px-30 py-30 rounded-4 border-light bg-white shadow-4">
-                            <div class="text-20 fw-500 text-dark-1 mr-5"> ₹{{number_format($tour->adult_price)}} <span class="text-14 text-light-1">Per Person</span></div>
+                            <div class="text-22 fw-500 text-dark-1 mr-5"> ₹{{number_format($tour->adult_price)}} <span class="text-14 text-light-1">Per Person</span></div>
 
                             <div class="row y-gap-30 justify-between pt-20">
                                 <div class="col-md-auto col-6">
                                     <div class="d-flex">
                                         <i class="icon-nature text-22 text-blue-1 mr-10"></i>
-                                        <div class="text-15 lh-15"> Days: <br><span class="text-25 fw-600"> {{ $tour->days }}</span> </div>
+                                        <div class="text-15 lh-15"> Days: <br><span class="text-22 fw-500"> {{ $tour->days }}</span> </div>
                                     </div>
                                 </div>
                                 <div class="col-md-auto col-6">
                                     <div class="d-flex">
                                         <i class="icon-fire text-22 text-blue-1 mr-10"></i>
-                                        <div class="text-15 lh-15"> Nights: <br> <span class="text-25 fw-600"> {{ $tour->nights }}</span> </div>
+                                        <div class="text-15 lh-15"> Nights: <br> <span class="text-22 fw-500"> {{ $tour->nights }}</span> </div>
                                     </div>
+                                </div>
+                                <div class="col-md-auto col-12">
+                                    <h6 class="fw-500">{{$tour->amenities}}</h6>
                                 </div>
                             </div>
 
                             <div class="row y-gap-20 pt-30">
                                 <div class="col-12">
-                                    <button class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white" id="openModal"> ENQUIRE </button>
+                                    <button class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white" id="openModal"> <i class="fa fa-comment-alt"></i>&nbsp; ENQUIRE </button>
                                 </div>
                             </div>
                             <div class="d-flex items-center pt-20">
@@ -269,17 +272,17 @@
             <div class="col-lg-6 col-md-6">
                 <div class="fw-500 mb-10 border-bottom-light">Inclusions</div>
                 <div class="text-15">
-                    {!! $tour->inclusions !!}
+                    {!! nl2br($tour->inclusions) !!}
                 </div>
             </div>
             <div class="col-lg-5 col-md-6">
                 <div class="fw-500 mb-10 border-bottom-light">Exclusions</div>
-                <div class="text-15">{!! $tour->exclusions !!}</div>
+                <div class="text-15">{!! nl2br($tour->exclusions) !!}</div>
             </div>
             <div class="col-12">
                 <div class="fw-500 mb-10 border-bottom-light">Note</div>
                 <div class="text-15">
-                    {!! $tour->note !!}
+                    {!! nl2br($tour->note) !!}
                 </div>
             </div>
         </div>
@@ -299,7 +302,7 @@
                     </div>
                     <div class="col-auto">
                         <h4 class="text-26 text-white fw-600">Your Travel Journey Starts Here</h4>
-                        <div class="text-white">Sign up and we'll send the best deals to you</div>
+                        <div class="text-white">Enquire and we'll send the best deals to you</div>
                     </div>
                 </div>
             </div>
@@ -310,7 +313,7 @@
 
 <div id="modal" class="modal">
     <div class="modal-content p-0">
-        <div class="container">
+        <div class="">
             <div class="row d-flex justify-between">
                 <div class="col-lg-5 bg-blue-1 justify-center items-center d-flex bg-blue-1">
                     <div class="">

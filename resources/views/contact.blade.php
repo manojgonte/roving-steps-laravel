@@ -34,25 +34,19 @@
                         <div class="row y-gap-20">
                             <div class="col-6">
                                 <div class="form-input">
-                                    <input type="text" name="name" placeholder="Enter Full Name" required>
+                                    <input type="text" name="name" placeholder="Enter Full Name *" required>
                                     {{-- <label class="lh-1 text-16 text-light-1">Full Name</label> --}}
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-input">
-                                    <input type="text" name="email" placeholder="Enter Email" required>
+                                    <input type="text" name="email" placeholder="Enter Email *" required>
                                     {{-- <label class="lh-1 text-16 text-light-1">Email</label> --}}
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-input">
-                                    <input type="text" name="address" placeholder="Enter Address" required>
-                                    {{-- <label class="lh-1 text-16 text-light-1">Email</label> --}}
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-input">
-                                    <input type="text" name="contact" placeholder="Enter Contact" required>
+                                    <input type="text" name="contact" placeholder="Enter Contact *" required>
                                     {{-- <label class="lh-1 text-16 text-light-1">Contact</label> --}}
                                 </div>
                             </div>
@@ -64,7 +58,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-input">
-                                    <textarea name="message" placeholder="Write your message" rows="4"
+                                    <textarea name="message" placeholder="Write your message *" rows="4"
                                         required></textarea>
                                     {{-- <label class="lh-1 text-16 text-light-1">Your Messages</label> --}}
                                 </div>
@@ -82,17 +76,21 @@
                 <div class="text-30 sm:text-24 fw-600">Contact Us</div>
                 <div class="row d-flex x-gap-80 y-gap-20">
                     <div class="col-12">
-                        <div class="text-18 fw-500 mt-10">Address</div>
+                        <div class="text-18 fw-500 mt-5">Address</div>
                         <div class="text-14 text-light-1">Sr. No. 31, 1st floor, Gosavi Building, Kundan Nagar,
                             Dhankawadi, Pune - 411043</div>
                     </div>
                     <div class="col-12">
-                        <div class="text-18 fw-500 mt-10">Contact</div>
+                        <div class="text-18 fw-500 mt-5">Contact</div>
                         <div class="text-14 text-light-1">+91 8600031545</div>
                         <div class="text-14 text-light-1">+91 8600321645</div>
                     </div>
+                    <div class="col-12">
+                        <div class="text-18 fw-500 mt-5">Email</div>
+                        <div class="text-14 text-light-1">info@rovingsteps.com</div>
+                    </div>
                     <div class="col-auto">
-                        <div class="text-18 fw-500 mt-10">Follow us on social media</div>
+                        <div class="text-18 fw-500 mt-5">Follow us on social media</div>
                         <div class="d-flex x-gap-20 items-center mt-10">
                             <a href="#">
                                 <i class="icon-facebook text-30"></i>

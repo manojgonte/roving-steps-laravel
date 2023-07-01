@@ -5288,6 +5288,10 @@ div[data-slider]>input[type=range]::-ms-tooltip {
   z-index: 2;
 }
 
+.hotelsCard__title {
+  min-height: 58px;
+}
+
 .hotelsCard.-type-1 .hotelsCard__title span {
   background-image: linear-gradient(transparent 24px, black 20px);
   background-size: 0;

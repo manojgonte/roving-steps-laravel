@@ -33,10 +33,10 @@
             <div class="row y-gap-30">
 
                 <div class="col-xl-3 col-lg-4 lg:d-none">
-                    <aside class="sidebar y-gap-40">
+                    <aside class="sidebar y-gap-10">
 
-                        <div class="sidebar__item -no-border">
-                            <h5 class="text-18 fw-500 mb-10 text-dark-1">320 Tour Options</h5>
+                        <div class="sidebar__item -no-border d-flex justify-content-between">
+                            <h5 class="text-18 fw-500 mb-10 text-dark-1">{{$tours->total()}} Tour Options</h5>
                             {{-- <div class="single-field relative d-flex items-center py-10">
                                 <input class="pl-50 border-light text-dark-1 h-50 rounded-8" type="email"
                                     placeholder="e.g. Best Western">
@@ -44,34 +44,36 @@
                                     <i class="icon-search text-20 px-15 text-dark-1"></i>
                                 </button>
                             </div> --}}
+                            <a href="{{url('/tours')}}" class="underline"><i class="fa fa-times"></i> Clear Filters</a>
                         </div>
+
 
                         <form action="{{url('tours/')}}" method="GET">
                         <div class="sidebar__item">
-                            <h5 class="text-18 fw-500 mb-10">Domestic tours</h5>
+                            <h5 class="text-18 fw-500 mb-10 mt-10">Domestic tours</h5>
                             <div class="sidebar-checkbox">
-                                    @foreach ($destinations->filter(function($destination) {
-                                        return $destination->type == 'Domestic';
-                                    }) as $destination)
-                                    <div class="row y-gap-10 items-center justify-between">
-                                        <div class="col-auto">
-                                            <div class="d-flex items-center">
-                                                <div class="form-checkbox">
-                                                    <input type="radio" name="dest_id" value="{{$destination->id}}" @if(Request()->dest_id == $destination->id) checked @endif onclick="javascript:this.form.submit();">
-                                                    <div class="form-checkbox__mark">
-                                                        <div class="form-checkbox__icon icon-check"></div>
-                                                    </div>
+                                @foreach ($destinations->filter(function($destination) {
+                                    return $destination->type == 'Domestic';
+                                }) as $destination)
+                                <div class="row y-gap-10 items-center justify-between">
+                                    <div class="col-auto">
+                                        <div class="d-flex items-center">
+                                            <div class="form-checkbox">
+                                                <input type="radio" name="dest_id" value="{{$destination->id}}" @if(Request()->dest_id == $destination->id) checked @endif onclick="javascript:this.form.submit();">
+                                                <div class="form-checkbox__mark">
+                                                    <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
-                                                <div class="text-15 ml-10">{{$destination->name}}</div>
                                             </div>
+                                            <div class="text-15 ml-10">{{$destination->name}}</div>
                                         </div>
                                     </div>
-                                    @endforeach
+                                </div>
+                                @endforeach
                             </div>
                         </div>
 
                         <div class="sidebar__item">
-                            <h5 class="text-18 fw-500 mb-10">International tours</h5>
+                            <h5 class="text-18 fw-500 mb-10 mt-10">International tours</h5>
                             <div class="sidebar-checkbox">
                                 @foreach ($destinations->filter(function($destination) {
                                     return $destination->type == 'International';
@@ -94,7 +96,7 @@
                         </div>
 
                         <div class="sidebar__item">
-                            <h5 class="text-18 fw-500 mb-10">Special tours</h5>
+                            <h5 class="text-18 fw-500 mb-10 mt-10">Special tours</h5>
                             <div class="sidebar-checkbox">
 
                                 <div class="row y-gap-10 items-center justify-between">
@@ -177,7 +179,7 @@
                 <div class="col-xl-9 col-lg-8">
                     <div class="row y-gap-10 items-center justify-between">
                         <div class="col-auto">
-                            <div class="text-25"><span class="fw-500">3,269 popular tour packages found</span> </div>
+                            <div class="text-20"><span class="fw-500">{{$tours->total()}} popular tour packages found</span> </div>
                         </div>                        
                         {{-- <div class="col-auto">
                             <div class="row x-gap-20 y-gap-20">
@@ -242,7 +244,7 @@
                                         <a href="#" class="button -md text-white bg-warning-2">BOOK NOOW</a>
                                     </div> --}}
                                     <div class="d-flex items-center mt-10">
-                                        <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="button -md text-white bg-light-1">ENQUIRE</a>
+                                        <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="button p-2 text-white bg-light-1">Read More</a>
                                     </div>
                                 </div>
                             </a>

@@ -58,7 +58,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-            	                      	<label class="required">Cover Image</label>
+            	                      	<label class="required">Cover Image <small>(Size: 600 X 500px)</small></label>
             	                      	<input type="file" name="image" class="form-control p-1" accept="image/*" required>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -77,12 +77,12 @@
                                         <input type="text" name="child_price" class="form-control" placeholder="Enter Price" required>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="required">From Date</label>
-                                        <input type="date" name="from_date" class="form-control" placeholder="Enter Date" required>
+                                        <label class="">From Date</label>
+                                        <input type="date" name="from_date" class="form-control" placeholder="Enter Date">
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="required">End Date</label>
-                                        <input type="date" name="end_date" class="form-control" placeholder="Enter Date" required>
+                                        <label class="">End Date</label>
+                                        <input type="date" name="end_date" class="form-control" placeholder="Enter Date">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="required">Day/s</label>
@@ -117,8 +117,8 @@
                                         <textarea name="exclusions" class="form-control" rows="3" placeholder="Enter Exclusions" required></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label class="required">Note</label>
-                                        <input type="text" name="note" class="form-control" placeholder="Enter Note" required>
+                                        <label class="">Note</label>
+                                        <input type="text" name="note" class="form-control" placeholder="Enter Note">
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="form-check">

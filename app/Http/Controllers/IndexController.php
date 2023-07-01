@@ -44,7 +44,9 @@ class IndexController extends Controller
     }
 
     public function tours(Request $request){
-        $tours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id')->orderBy('id','DESC');
+        $tours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id')
+            ->orderBy('id','DESC')
+            ->where('status','1');
             
         if($request->dest_id){
             $tours = $tours->where('dest_id', $request->dest_id);

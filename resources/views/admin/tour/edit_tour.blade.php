@@ -81,18 +81,18 @@
                                         <input type="text" name="child_price" class="form-control" placeholder="Enter Price" value="{{$tour->child_price}}" required>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="required">From Date</label>
-                                        <input type="date" name="from_date" class="form-control" placeholder="Enter Date" value="{{date('Y-m-d', strtotime($tour->from_date))}}" required>
+                                        <label class="">From Date</label>
+                                        <input type="date" name="from_date" class="form-control" placeholder="Enter Date" @if(!empty($tour->from_date)) value="{{date('Y-m-d', strtotime($tour->from_date))}}" @endif>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="required">End Date</label>
-                                        <input type="date" name="end_date" class="form-control" placeholder="Enter Date" value="{{date('Y-m-d', strtotime($tour->end_date))}}" required>
+                                        <label class="">End Date</label>
+                                        <input type="date" name="end_date" class="form-control" placeholder="Enter Date" @if(!empty($tour->end_date)) value="{{date('Y-m-d', strtotime($tour->end_date))}}" @endif>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="required">Day/s</label>
                                         <select class="form-control select2bs4" name="days">
                                             @for($i=1; $i<=15; $i++)
-                                            <option value="{{$i}}">{{$i}}</option>
+                                            <option value="{{$i}}" @if($tour->days == $i) selected @endif>{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -100,7 +100,7 @@
                                         <label class="required">Night/s</label>
                                         <select class="form-control select2bs4" name="nights">
                                             @for($i=1; $i<=15; $i++)
-                                            <option value="{{$i}}">{{$i}}</option>
+                                            <option value="{{$i}}" @if($tour->nights == $i) selected @endif>{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -122,7 +122,7 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="required">Note</label>
-                                        <input type="text" name="note" class="form-control" placeholder="Enter Note" value="{{$tour->note}}" required>
+                                        <input type="text" name="note" class="form-control" placeholder="Enter Note" @if(!empty($tour->note)) value="{{$tour->note}}" @endif>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="form-check">

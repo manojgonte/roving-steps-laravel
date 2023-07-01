@@ -63,11 +63,11 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/enquiries', [TourController::class,'enquiries']);
     Route::match(['get','post'], 'admin/tour-enquiries', [TourController::class,'tourEnquiries']);
 
-    // News
-    Route::match(['get','post'], 'admin/edit-news/{id}', [AdminController::class, 'editNews']);
-    Route::match(['get','post'], 'admin/view-news/', [AdminController::class, 'viewNews']);
-    Route::match(['get','post'], 'admin/add-news/', [AdminController::class, 'addNews']);
-    Route::match(['get','post'], 'admin/delete-news/{id}', [AdminController::class,'deleteNews']);
+    // Destinations
+    Route::match(['get','post'], 'admin/edit-destination/{id}', [TourController::class, 'editDestination']);
+    Route::match(['get','post'], 'admin/view-destinations/', [TourController::class, 'viewDestinations']);
+    Route::match(['get','post'], 'admin/add-destination/', [TourController::class, 'addDestination']);
+    Route::match(['get','post'], 'admin/delete-destination/{id}', [TourController::class,'deleteDestination']);
 
     // Clients
     Route::match(['get','post'], 'admin/edit-client/{id}', [AdminController::class, 'editClient']);

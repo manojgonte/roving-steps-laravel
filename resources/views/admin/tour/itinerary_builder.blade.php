@@ -63,7 +63,7 @@
                                             <dt class="col-sm-3">Child/Price</dt>
                                             <dd class="col-sm-9">{{$tour->child_price}}</dd>
                                             <dt class="col-sm-3">Date</dt>
-                                            <dd class="col-sm-9">{{date('d/m/Y', strtotime($tour->from_date))}} - {{date('d/m/Y', strtotime($tour->end_date))}}</dd>
+                                            <dd class="col-sm-9">@if(!empty($tour->from_date) || !empty($tour->from_date)) {{date('d/m/Y', strtotime($tour->from_date))}} - {{date('d/m/Y', strtotime($tour->end_date))}} @else NA @endif</dd>
                                             <dt class="col-sm-3">Duration</dt>
                                             <dd class="col-sm-9">{{$tour->days}}D - {{$tour->nights}}N</dd>
                                         </dl>
@@ -125,7 +125,7 @@
                                             <input type="text" name="food[]" class="form-control" placeholder="Enter Food" value="Food {{$i+1}}" required>
                                         </div>
                                         <div class="form-group col-md-4">
-                	                      	<label class="required">Image</label>
+                	                      	<label class="required">Image <small>(Size: 800 X 530px)</small></label>
                 	                      	<input type="file" name="image[]" class="form-control p-1" required>
                                         </div>
                                     </div>
