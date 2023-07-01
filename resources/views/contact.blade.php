@@ -30,7 +30,8 @@
             <div class="col-lg-7">
                 <div class="text-30 sm:text-24 fw-600">Keep in touch with us</div>
                 <div class="rounded-4">
-                    <form action="{{url('contact-us')}}" method="POST">@csrf
+                    <div class="error-container"></div>
+                    <form action="{{url('contact-us')}}" method="POST" class="contactEnqForm">@csrf
                         <div class="row y-gap-20">
                             <div class="col-6">
                                 <div class="form-input">
@@ -58,8 +59,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-input">
-                                    <textarea name="message" rows="4"
-                                        required></textarea>
+                                    <textarea name="message" rows="4" required></textarea>
                                     <label class="lh-1 text-16 text-light-1">Your Messages</label>
                                 </div>
                             </div>
@@ -111,5 +111,61 @@
         </div>
     </div>
 </section>
+
+@section('scripts')
+<script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{asset('backend_js/jquery.validate.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        var container = $('div.error-container');
+        $(".contactEnqForm").validate({
+            rules:{
+                name:{
+                    required:true,
+                },
+                contact:{
+                    required:true,
+                    number:true,
+                    minlength:10,
+                    maxlength:10,
+                },
+                email:{
+                    required:true,
+                    email:true,
+                },
+                message:{
+                    required:true,
+                    maxlength:1000,
+                },
+            },
+            messages:{
+                name:{ 
+                    required: "Please enter name",
+                },
+                contact:{ 
+                    required: "Please enter valid contact number",
+                    minlength: "Please enter {0} digit phone number",
+                    maxlength: "Please enter {0} digit phone number",
+                    number: "Please enter valid phone number",
+                },
+                email:{ 
+                    required: "Please enter email",
+                    email: "Please enter valid email",
+                },
+                message:{ 
+                    required: "Please enter message",
+                    maxlength: "Please enter no more than {0} characters",
+                },
+            },
+            errorLabelContainer: $("div.error-container"),
+            submitHandler: function(form) {
+                $(".button").attr("disabled", true);
+                $(".button").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
+                form.submit();
+            }
+        });
+    });
+</script>
+@endsection('scripts')
 
 @endsection('content')

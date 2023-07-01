@@ -1,28 +1,3 @@
-{{-- <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
-</head>
-<body>
-	<table border="2">
-		<tr>
-			<td>Name</td>
-			<td>{{$data['email']}}</td>
-		</tr>
-		<tr>
-			<td>Email</td>
-			<td>{{$data['tour_id']}}</td>
-		</tr>
-		<tr>
-			<td>Tour</td>
-			<td>{{$tour['tour_name']}}</td>
-		</tr>
-	</table>
-</body>
-</html> --}}
-
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
     <head>
@@ -671,12 +646,12 @@
                                                     <ul>
                                                         <li>
                                                             <a href="">
-                                                                <span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span>
+                                                                <span class="text">Sr No 31, 1st floor, Gosavi Building, Kundan nagar, Dhankwadi, Pune - 411043</span>
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="tel:">
-                                                                <span class="text">+91 98798 98712</span>
+                                                            <a href="javascript:void">
+                                                                <span class="text">+91 8600031545  |  +91 8600321645</span>
                                                             </a>
                                                         </li>
                                                         <li>
@@ -702,7 +677,7 @@
                                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                             <tr>
                                                 <td style="text-align: left; padding-right: 10px;">
-                                                    <p>&copy; {{date('Y')}} Rovings Steps. All Rights Reserved</p>
+                                                    <p>&copy; {{date('Y')}} | {{config('app.name')}}. All Rights Reserved</p>
                                                 </td>
                                             </tr>
                                         </table>

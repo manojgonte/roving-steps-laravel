@@ -38,7 +38,7 @@
                             <div class="col-xl-6 col-lg-6 col-sm-12 mt-24">
                                 <h5 class="text-16 fw-500 mb-5 text-warning-2">Address</h5>
                                 <div class="d-flex flex-column text-white">
-                                    <span>Sr No 31, 1st floor, Gosavi Building, Kundan nagar, Dhankwadi, Pune -411043</span>
+                                    <span>Sr No 31, 1st floor, Gosavi Building, Kundan nagar, Dhankwadi, Pune - 411043</span>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-sm-12 mt-24">
@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                             <div class="col-12 pt-20">
-                                <div class="d-flex items-center text-white"> © {{date('Y')}} | Designed & Developed by &nbsp;<a herf="#" target="_blank"> MI</a> </div>
+                                <div class="d-flex items-center text-white"> © {{date('Y')}} | {{config('app.name')}}. All Rights Reserved </div>
                             </div>
                         </div>
                     </div>

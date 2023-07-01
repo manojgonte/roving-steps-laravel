@@ -129,76 +129,21 @@
                         <div class="sidebar__item">
                             <h5 class="text-18 fw-500 mb-10 mt-10">Special tours</h5>
                             <div class="sidebar-checkbox">
-
+                                @foreach(App\Models\SpecialTour::where('status',1)->get() as $row)
                                 <div class="row y-gap-10 items-center justify-between">
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="checkbox" name="special_tour_type" value="Adventure Tour" @if(Request()->special_tour_type == "Adventure Tour") checked @endif onclick="javascript:this.form.submit();">
+                                                <input type="checkbox" name="special_tour_type" value="{{$row->id}}" @if(Request()->special_tour_type == $row->title) checked @endif onclick="javascript:this.form.submit();">
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
                                             </div>
-                                            <div class="text-15 ml-10">Adventure Tour</div>
+                                            <div class="text-15 ml-10">{{$row->title}}</div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox" name="special_tour_type" value="Bike Tour" @if(Request()->special_tour_type == "Bike Tour") checked @endif onclick="javascript:this.form.submit();">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Bike Tour</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox" name="special_tour_type" value="Chardham" @if(Request()->special_tour_type == "Chardham") checked @endif onclick="javascript:this.form.submit();">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Chardham</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox" name="special_tour_type" value="Goa" @if(Request()->special_tour_type == "Goa") checked @endif onclick="javascript:this.form.submit();">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Goa</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row y-gap-10 items-center justify-between">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="form-checkbox">
-                                                <input type="checkbox" name="special_tour_type" value="Gujrat" @if(Request()->special_tour_type == "Gujrat") checked @endif onclick="javascript:this.form.submit();">
-                                                <div class="form-checkbox__mark">
-                                                    <div class="form-checkbox__icon icon-check"></div>
-                                                </div>
-                                            </div>
-                                            <div class="text-15 ml-10">Gujrat</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
 
                             </div>
                         </div>

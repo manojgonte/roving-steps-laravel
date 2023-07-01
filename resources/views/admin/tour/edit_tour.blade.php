@@ -84,12 +84,9 @@
                                         <label class="">Special Tour</label>
                                         <select class="form-control select2bs4" name="special_tour_type" name="special_tour_type">
                                             <option value="">Select One</option>
-                                            <option value="Adventures Tour" @if($tour->special_tour_type == 'Adventures Tour') selected @endif>Adventures Tour</option>
-                                            <option value="Student Special" @if($tour->special_tour_type == 'Student Special ') selected @endif>Student Special </option>
-                                            <option value="Bike Tour" @if($tour->special_tour_type == 'Bike Tour') selected @endif>Bike Tour</option>
-                                            <option value="Honeymoon Special" @if($tour->special_tour_type == 'Honeymoon Special') selected @endif>Honeymoon Special</option>
-                                            <option value="Second Innings" @if($tour->special_tour_type == 'Second Innings') selected @endif>Second Innings</option>
-                                            <option value="Young Age" @if($tour->special_tour_type == 'Young Age') selected @endif>Young Age</option>
+                                            @foreach(App\Models\SpecialTour::where('status',1)->get() as $row)
+                                            <option value="{{$row->id}}" @if($tour->special_tour_type == $row->id) selected @endif>{{$row->title}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">

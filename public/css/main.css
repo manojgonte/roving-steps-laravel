@@ -13122,3 +13122,8 @@ a.button.bg-light-1:hover {
 .testimonials__text {
   min-height: 175px;
 }
+
+.error-container label {
+  display: block;
+  color: red;
+}

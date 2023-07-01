@@ -80,12 +80,9 @@
                                         <label class="">Special Tour</label>
                                         <select class="form-control select2bs4" name="special_tour_type" name="special_tour_type">
                                             <option value="">Select One</option>
-                                            <option value="Adventures Tour">Adventures Tour</option>
-                                            <option value="Student Special ">Student Special </option>
-                                            <option value="Bike Tour">Bike Tour</option>
-                                            <option value="Honeymoon Special">Honeymoon Special</option>
-                                            <option value="Second Innings">Second Innings</option>
-                                            <option value="Young Age">Young Age</option>
+                                            @foreach(App\Models\SpecialTour::where('status',1)->get() as $row)
+                                            <option value="{{$row->id}}">{{$row->title}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">

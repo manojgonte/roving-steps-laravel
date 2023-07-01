@@ -59,7 +59,7 @@
                                             <dt class="col-sm-3">Tour Type</dt>
                                             <dd class="col-sm-9">{{$tour->type}}</dd>
                                             <dt class="col-sm-3">Special Tour</dt>
-                                            <dd class="col-sm-9">{{ ($tour->special_tour_type) ?  $tour->special_tour_type : 'NA'}}</dd>
+                                            <dd class="col-sm-9">{{ ($tour->special_tour) ?  $tour->special_tour : 'NA'}}</dd>
                                             <dt class="col-sm-3">Price/Adult</dt>
                                             <dd class="col-sm-9">₹{{number_format($tour->adult_price)}}</dd>
                                             <dt class="col-sm-3">Child/Price</dt>

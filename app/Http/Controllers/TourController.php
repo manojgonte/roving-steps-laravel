@@ -140,8 +140,9 @@ class TourController extends Controller
 
     public function itineraryBuilder(Request $request, $id){
         $tour = Tour::with('itinerary')
-                ->select('tours.*', 'destinations.name as dest_name')
+                ->select('tours.*', 'destinations.name as dest_name', 'special_tours.title as special_tour')
                 ->leftJoin('destinations','destinations.id','tours.dest_id')
+                ->leftJoin('special_tours','special_tours.id','tours.special_tour_type')
                 ->where('tours.id', $id)
                 ->first();
         return view('admin.tour.itinerary_builder')->with(compact('tour'));
