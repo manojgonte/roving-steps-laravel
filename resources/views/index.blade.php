@@ -20,31 +20,40 @@
                 <div class="container">
                     <div class="row justify-center">
                         <div class="col-xl-9">
-                            @include('layouts/frontLayout/home_banner_bar')
+                            <div class="text-center">
+                                <h2 class="text-60 lg:text-60 sm:text-40 text-white">Explore the Huge World and Enjoy it's Beauty</h2>
+                                <div class="text-white fw-500 mb-10">Let's experience moments which leave us stunned and gives us goosebumps and so much more that we cannot express when we travel to places we always wished for.</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="masthead__bg bg-dark-3">
-                    <img src="img/masthead/9/bg.png" alt="image">
+                    <img src="img/banner/banner1.webp" alt="image">
                 </div>
                 <div class="container">
                     <div class="row justify-center">
                         <div class="col-xl-9">
-                            @include('layouts/frontLayout/home_banner_bar')
+                            <div class="text-center">
+                                <h2 class="text-60 lg:text-60 sm:text-40 text-white">Explore the Huge World and Enjoy it's Beauty</h2>
+                                <div class="text-white fw-500 mb-10">Let's experience moments which leave us stunned and gives us goosebumps and so much more that we cannot express when we travel to places we always wished for.</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="swiper-slide">
                 <div class="masthead__bg bg-dark-3">
-                    <img src="img/masthead/9/bg.png" alt="image">
+                    <img src="img/banner/banner1.webp" alt="image">
                 </div>
                 <div class="container">
                     <div class="row justify-center">
                         <div class="col-xl-9">
-                            @include('layouts/frontLayout/home_banner_bar')
+                            <div class="text-center">
+                                <h2 class="text-60 lg:text-60 sm:text-40 text-white">Explore the Huge World and Enjoy it's Beauty</h2>
+                                <div class="text-white fw-500 mb-10">Let's experience moments which leave us stunned and gives us goosebumps and so much more that we cannot express when we travel to places we always wished for.</div>
+                            </div>
                         </div>
                     </div>
                 </div>
