@@ -38,6 +38,12 @@
                         <p>Enquiries</p>
                     </a>
                 </li> 
+                <li class="nav-item">
+                    <a href="{{url('admin/view-destinations')}}" class="nav-link text-white @if(preg_match('#/admin/view-destinations#', $url)) active @endif">
+                        <i class="nav-icon fas fa-comment-dots"></i>
+                        <p>Destinations</p>
+                    </a>
+                </li> 
                 {{-- Projects --}}
                 {{-- <li class="nav-item">
                     <a href="#" class="nav-link text-white ">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Destination;
 use Illuminate\Http\Request;
 use App\Models\TourItinerary;
 use App\Models\Tour;
@@ -221,4 +222,75 @@ class TourController extends Controller
         return redirect()->back();
     }
 
+    public function viewDestinations() {
+        $destinations = Destination::orderBy('id','DESC')->paginate(10);
+        return view('admin.destinations.view-destinations')->with(compact('destinations'));
+    }
+
+    public function addDestination(Request $request) {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // dd($data);
+            $destination = new Destination;
+            $destination->name = $data['destination_name'];
+            $destination->desciption = $data['destination_desc'];
+            $destination->type = $data['type'];
+            $destination->status = '1';
+
+            // image save in folder
+            if($request->hasFile('image')) {
+                $image_tmp = $request->image;
+                $filename = time() . '.' . $image_tmp->clientExtension();
+                if ($image_tmp->isValid()) {
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    $filename = strtotime("now") . '.' . $extension;
+                    $file_path = 'img/tours/'.$filename;
+                    Image::make($image_tmp)->save($file_path);
+                    $destination->image = $filename;
+                }
+            }
+            $destination->save();
+            return redirect('admin/add-destination/'.$destination->id)->with('flash_message_success','New destination added successfully');
+        }
+        return view('admin.destinations.add-destination');
+    }
+
+    public function editDestination(Request $request, $id) {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // image save in folder
+            if ($request->hasFile('image')) {
+                $image_tmp = $request->image;
+                $filename = time() . '.' . $image_tmp->clientExtension();
+                if ($image_tmp->isValid()) {
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    $filename = strtotime("now") . '.' . $extension;
+                    $file_path = 'img/tours/' . $filename;
+                    Image::make($image_tmp)->save($file_path);
+                }
+            } else if (!empty($data['current_image'])) {
+                $filename = $data['current_image'];
+            } else {
+                $filename = '';
+            }
+
+            // detail update
+            Destination::where('id',$id)->update([
+                'name'=>$data['destination_name'],
+                'image'=>$filename,
+                'desciption'=>$data['destination_desc'],
+                'type'=>$data['type'],
+                'status'=>$data['status']
+            ]);
+            
+            return redirect('admin/edit-destination')->with('flash_message_success','Destination details updated successfully');
+        }
+        $destination = Destination::where('id',$id)->first();
+        return view('admin.destinations.edit-destination')->with(compact('destination'));
+    }
+
+    public function deleteDestination(Request $request, $id) {
+        Destination::where('id',$id)->delete();
+        return redirect()->back()->with('flash_message_success','Destionation deleted successfully');
+    }
 }
