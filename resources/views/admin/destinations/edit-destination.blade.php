@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h4>Add destination Section</h4>
+                    <h4>Edit destination Section</h4>
                     @if(Session::has('flash_message_error'))
                     <div class="alert alert-error alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -41,32 +41,36 @@
                                 <li class="nav-item"><a class="nav-link disabled" disabled>Destination List</a></li>
                             </ul>
                         </div>
-                        <form method="POST" action="{{ route('editDestination') }}" enctype="multipart/form-data" id="addDestination">@csrf
+                        <form method="POST" action="{{ url('admin/edit-destionation') }}" enctype="multipart/form-data" id="addDestination">@csrf
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-4">
             	                        <label class="required">Destination Name</label>
-            	                        <input type="text" name="destination_name" class="form-control" placeholder="Enter destination Name" required>
+            	                        <input type="text" name="destination_name" class="form-control" placeholder="Enter destination Name" value="{{$destination->name}}" required>
                           	        </div>
                                     <div class="form-group col-md-4">
             	                        <label class="required">Destination desciption</label>
-            	                        <input type="text" name="destination_desc" class="form-control" placeholder="Enter destination desciption" required>
+            	                        <input type="text" name="destination_desc" class="form-control" placeholder="Enter destination desciption" value="{{$destination->description}}" required>
                           	        </div>
+                                      <div class="form-group col-md-4">
+                                        <label class="required">Cover Image <small>(Size: 600 X 500px)</small></label>
+                                        <input type="file" name="image" class="form-control p-1" accept="image/*" value="{{$destination->image}}">
+                                    </div>
                                     <div class="form-group col-md-2">
                                         <label class="required">Destination Type</label>
-                                        <select class="form-control select2bs4" name="type" name="type">
+                                        <select class="form-control select2bs4" name="type" name="type" value="{{$destination->type}}">
                                             <option value="Domestic">Domestic</option>
                                             <option value="International">International</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="required">Destination status</label>
-                                        <input type="text" name="destination_status" class="form-control" placeholder="Enter destination status" value="1">
+                                        <input type="text" name="destination_status" class="form-control" placeholder="Enter destination status" value="{{$destination->status}}" value="1">
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer ">
-                                <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check-circle"></i> Add </button>
+                                <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check-circle"></i> Edit </button>
                                 <button type="reset" class="btn btn-default"> Reset </button>
                             </div>
                         </form>

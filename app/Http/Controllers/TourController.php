@@ -233,7 +233,7 @@ class TourController extends Controller
             // dd($data);
             $destination = new Destination;
             $destination->name = $data['destination_name'];
-            $destination->desciption = $data['destination_desc'];
+            $destination->description = $data['destination_desc'];
             $destination->type = $data['type'];
             $destination->status = '1';
 
@@ -244,13 +244,13 @@ class TourController extends Controller
                 if ($image_tmp->isValid()) {
                     $extension = $image_tmp->getClientOriginalExtension();
                     $filename = strtotime("now") . '.' . $extension;
-                    $file_path = 'img/tours/'.$filename;
+                    $file_path = 'img/destination/'.$filename;
                     Image::make($image_tmp)->save($file_path);
                     $destination->image = $filename;
                 }
             }
             $destination->save();
-            return redirect('admin/add-destination/'.$destination->id)->with('flash_message_success','New destination added successfully');
+            return redirect('admin/view-destination/')->with('flash_message_success','New destination added successfully');
         }
         return view('admin.destinations.add-destination');
     }
@@ -283,7 +283,7 @@ class TourController extends Controller
                 'status'=>$data['status']
             ]);
             
-            return redirect('admin/edit-destination')->with('flash_message_success','Destination details updated successfully');
+            return redirect('admin/view-destinations')->with('flash_message_success','Destination details updated successfully');
         }
         $destination = Destination::where('id',$id)->first();
         return view('admin.destinations.edit-destination')->with(compact('destination'));
