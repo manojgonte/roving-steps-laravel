@@ -73,7 +73,9 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{ $tours->links("pagination::bootstrap-4") }}
+                            <div class="mt-2 d-flex justify-content-center">
+                                {{ $tours->links("pagination::bootstrap-4") }}
+                            </div>
                         </div>
                     </div>
                 </div>

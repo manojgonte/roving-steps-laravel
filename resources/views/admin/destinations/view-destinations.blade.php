@@ -9,23 +9,7 @@
                     <h4>Destination list</h4>
                 </div>
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Destination List </li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h4>Destination</h4>
-                </div>
-                <div class="col-sm-6">
-                    <a href="{{ url('/admin/add-destination') }}" style="float: right; margin: 3px 3px;" class="btn btn-warning text-white"><i class="fa fa-plus-circle"></i> Add Tour</a>
+                    <a href="{{ url('/admin/add-destination') }}" style="float: right; margin: 3px 3px;" class="btn btn-warning text-white"><i class="fa fa-plus-circle"></i> Add Destination</a>
                 </div>
             </div>
         </div>
@@ -42,7 +26,7 @@
 		            </div>
 		            @endif
 		            @if(Session::has('flash_message_success'))
-		            <div class="alert alert-success alert-block w-50">
+		            <div class="alert alert-success alert-block">
 		                <button type="button" class="close" data-dismiss="alert">×</button>
 		                <strong>{!! session('flash_message_success') !!}</strong>
 		            </div>
@@ -55,9 +39,9 @@
                                 <thead>
                                     <tr>
                                         <th>destination ID</th>
+                                        <th>Image</th>
                                         <th>Name</th>
                                         <th>Description</th>
-                                        <th>Image</th>
                                         <th>Type</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -67,20 +51,22 @@
                                 @foreach($destinations as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
+	                                    <td>@if($row->image)<img src="{{asset('img/destinations/'.$row->image)}}" width="50"> @else NA @endif</td>
 	                                    <td>{{ Str::limit($row->name, 30) }}</td>
-	                                    <td>{{ Str::limit($row->description, 30) }}</td>
-	                                    <td>{{ $row->image }}</td>
+	                                    <td>@if($row->description){{ Str::limit($row->description, 30) }} @else NA @endif</td>
 	                                    <td>{{ $row->type }}</td>
-	                                    <td>{{ $row->status }}</td>
+	                                    <td>{{ ($row->status == '1') ? 'Published' : 'Not Published' }}</td>
 	                                    <td>
                                             <a class="btn btn-default" href="{{ url('/admin/edit-destination/'.$row->id) }}"><i class="fa fa-edit" style="color: #000;"></i></a> &nbsp;
-                                            <a class="btn btn-default" onclick="return confirm('Are you sure? All associated data with this destination will be get deleted.')" href="{{ url('/admin/delete-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a> &nbsp;
+                                            <a class="btn btn-default" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-destination/'.$row->id) }}"><i class="fa fa-trash"></i></a> &nbsp;
 	                                    </td>
 	                                </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{ $destinations->links("pagination::bootstrap-4") }}
+                            <div class="mt-2 d-flex justify-content-center">
+                                {{ $destinations->links("pagination::bootstrap-4") }}
+                            </div>
                         </div>
                     </div>
                 </div>

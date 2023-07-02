@@ -94,8 +94,8 @@
                                         <input type="text" name="adult_price" class="form-control" placeholder="Enter Price" value="{{$tour->adult_price}}" required>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="required">Price per perosn (Child)</label>
-                                        <input type="text" name="child_price" class="form-control" placeholder="Enter Price" value="{{$tour->child_price}}" required>
+                                        <label class="">Price per perosn (Child)</label>
+                                        <input type="text" name="child_price" class="form-control" placeholder="Enter Price" @if(!empty($tour->child_price)) value="{{$tour->child_price}}" @endif>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="">From Date</label>
@@ -181,7 +181,7 @@
                     number:true,
                 },
                 image: {
-                    accept: 'png|jpg|jpeg',
+                    accept: 'png|jpg|jpeg|webp',
                 },
             },
             messages: {},

@@ -28,7 +28,7 @@ class TourController extends Controller
             $tour->rating = $data['rating'];
             $tour->description = $data['description'];
             $tour->adult_price = $data['adult_price'];
-            $tour->child_price = $data['child_price'];
+            $tour->child_price = !empty($data['child_price']) ? $data['child_price'] : null;
             $tour->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
             $tour->end_date = !empty($data['end_date']) ? $data['end_date'] : null;
             $tour->days = $data['days'];
@@ -88,7 +88,7 @@ class TourController extends Controller
                 'dest_id' => $data['dest_id'],
                 'description' => $data['description'],
                 'adult_price' => $data['adult_price'],
-                'child_price' => $data['child_price'],
+                'child_price' => !empty($data['child_price']) ? $data['child_price'] : null,
                 'from_date' => !empty($data['from_date']) ? $data['from_date'] : null,
                 'end_date' => !empty($data['end_date']) ? $data['end_date'] : null,
                 'days' => $data['days'],
@@ -233,9 +233,10 @@ class TourController extends Controller
             // dd($data);
             $destination = new Destination;
             $destination->name = $data['destination_name'];
-            $destination->description = $data['destination_desc'];
+            $destination->description = !empty($data['description']) ? $data['description'] : null;
             $destination->type = $data['type'];
-            $destination->status = '1';
+            $destination->is_popular = !empty($data['is_popular']) ? $data['is_popular'] : '0' ;
+            $destination->status = !empty($data['status']) ? $data['status'] : '0' ;
 
             // image save in folder
             if($request->hasFile('image')) {
@@ -244,13 +245,13 @@ class TourController extends Controller
                 if ($image_tmp->isValid()) {
                     $extension = $image_tmp->getClientOriginalExtension();
                     $filename = strtotime("now") . '.' . $extension;
-                    $file_path = 'img/destination/'.$filename;
+                    $file_path = 'img/destinations/'.$filename;
                     Image::make($image_tmp)->save($file_path);
                     $destination->image = $filename;
                 }
             }
             $destination->save();
-            return redirect('admin/view-destination/')->with('flash_message_success','New destination added successfully');
+            return redirect('admin/view-destinations/')->with('flash_message_success','New destination added successfully');
         }
         return view('admin.destinations.add-destination');
     }
@@ -265,7 +266,7 @@ class TourController extends Controller
                 if ($image_tmp->isValid()) {
                     $extension = $image_tmp->getClientOriginalExtension();
                     $filename = strtotime("now") . '.' . $extension;
-                    $file_path = 'img/tours/' . $filename;
+                    $file_path = 'img/destinations/' . $filename;
                     Image::make($image_tmp)->save($file_path);
                 }
             } else if (!empty($data['current_image'])) {
@@ -278,9 +279,10 @@ class TourController extends Controller
             Destination::where('id',$id)->update([
                 'name'=>$data['destination_name'],
                 'image'=>$filename,
-                'desciption'=>$data['destination_desc'],
+                'description'=>!empty($data['description']) ? $data['description'] : null,
                 'type'=>$data['type'],
-                'status'=>$data['status']
+                'status'=>!empty($data['status']) ? $data['status'] : '0',
+                'is_popular' => !empty($data['is_popular']) ? $data['is_popular'] : '0'
             ]);
             
             return redirect('admin/view-destinations')->with('flash_message_success','Destination details updated successfully');

@@ -35,13 +35,6 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-default">
-                        <div class="card-header p-2">
-                            <ul class="nav nav-pills">
-                                <li class="nav-item"><a class="nav-link active"
-                                        href="{{url('admin/add-destination')}}">Destination</a></li>
-                                <li class="nav-item"><a class="nav-link disabled" disabled>Destination List</a></li>
-                            </ul>
-                        </div>
                         <form method="POST" action="{{ url('admin/add-destination') }}" enctype="multipart/form-data"
                             id="addDestination">@csrf
                             <div class="card-body">
@@ -49,34 +42,40 @@
                                     <div class="form-group col-md-4">
                                         <label class="required">Destination Name</label>
                                         <input type="text" name="destination_name" class="form-control"
-                                            placeholder="Enter destination Name" required>
+                                            placeholder="Enter Destination Name" required>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="required">Destination desciption</label>
-                                        <input type="text" name="destination_desc" class="form-control"
-                                            placeholder="Enter destination desciption" required>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="required">Cover Image <small>(Size: 600 X 500px)</small></label>
+                                        <label class="required">Cover Image <small>(Size: 450 X 600px)</small></label>
                                         <input type="file" name="image" class="form-control p-1" accept="image/*">
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-4">
                                         <label class="required">Destination Type</label>
                                         <select class="form-control select2bs4" name="type" name="type">
                                             <option value="Domestic">Domestic</option>
                                             <option value="International">International</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="required">Destination status</label>
-                                        <input type="text" name="destination_status" class="form-control"
-                                            placeholder="Enter destination status" value="1">
+                                    <div class="form-group col-md-12">
+                                        <label class="">Destination Description</label>
+                                        <input type="text" name="description" class="form-control"
+                                            placeholder="Enter Description">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="isPopular" name="is_popular" value="1">
+                                            <label class="form-check-label" for="isPopular">Popular Destination</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="destination_status" name="status" value="1">
+                                            <label class="form-check-label" for="destination_status">Publish</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer ">
-                                <button type="submit" class="btn btn-warning text-white submit"><i
-                                        class="fa fa-check-circle"></i> Add </button>
+                                <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check-circle"></i> Add </button>
                                 <button type="reset" class="btn btn-default"> Reset </button>
                             </div>
                         </form>
@@ -97,6 +96,10 @@
                 destination_name: {
                     required: true,
                     maxlength:120,
+                },
+                image: {
+                    required: true,
+                    accept: 'png|jpg|jpeg|webp',
                 },
             },
             messages: {},

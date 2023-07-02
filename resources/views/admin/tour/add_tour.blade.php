@@ -90,8 +90,8 @@
                                         <input type="text" name="adult_price" class="form-control" placeholder="Enter Price" required>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="required">Price per perosn (Child)</label>
-                                        <input type="text" name="child_price" class="form-control" placeholder="Enter Price" required>
+                                        <label class="">Price per perosn (Child)</label>
+                                        <input type="text" name="child_price" class="form-control" placeholder="Enter Price">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="">From Date</label>
@@ -178,7 +178,7 @@
                 },
                 image: {
                     required: true,
-                    accept: 'png|jpg|jpeg',
+                    accept: 'png|jpg|jpeg|webp',
                 },
                 
             },
