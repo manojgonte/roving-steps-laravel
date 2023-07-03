@@ -45,7 +45,7 @@
                                             placeholder="Enter Destination Name" required>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="required">Cover Image <small>(Size: 450 X 600px)</small></label>
+                                        <label class="">Cover Image <small>(Size: 450 X 600px)</small></label>
                                         <input type="file" name="image" class="form-control p-1" accept="image/*">
                                     </div>
                                     <div class="form-group col-md-4">
@@ -98,7 +98,6 @@
                     maxlength:120,
                 },
                 image: {
-                    required: true,
                     accept: 'png|jpg|jpeg|webp',
                 },
             },

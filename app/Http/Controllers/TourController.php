@@ -155,7 +155,7 @@ class TourController extends Controller
             // dd($data);
 
             foreach ($data['day'] as $key => $val){
-                if(!empty($val)){
+                if(!empty($val) && !empty($data['visit_place'][$key])){
                     $itinerary = new TourItinerary;
                     $itinerary->tour_id       = $id;
                     $itinerary->day           = $val;
@@ -168,10 +168,9 @@ class TourController extends Controller
 
                     if($request->hasFile('image')) {
                         $image_tmp = $data['image'][$key];
-                        $filename = time() . '.' . $image_tmp->clientExtension();
+                        // $filename = time() . '.' . $image_tmp->getClientOriginalName();
                         if ($image_tmp->isValid()) {
-                            $extension = $image_tmp->getClientOriginalExtension();
-                            $filename = strtotime("now") . '.' . $extension;
+                            $filename = strtotime("now").'-'. $image_tmp->getClientOriginalName();
                             $file_path = 'img/tours/tour_itinerary/'.$filename;
                             Image::make($image_tmp)->save($file_path);
                             $itinerary->image = $filename;
@@ -184,6 +183,63 @@ class TourController extends Controller
             return redirect()->back()->with('flash_message_success','Tour itinerary added successfully!');
         }
         return redirect('admin/add-tour-itinerary/'.$id);
+    }
+
+    public function editTourItinerary(Request $request, $id){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // dd($data);
+
+            foreach ($data['day'] as $key => $val){
+                if(!empty($val)){
+                    $visit_place   = $data['visit_place'][$key];
+                    $activity      = $data['activity'][$key];
+                    $travel_option = $data['travel_option'][$key];
+                    $description   = $data['description'][$key];
+                    $stay          = $data['stay'][$key];
+                    $food          = $data['food'][$key];
+
+                    if ($request->hasFile('image')) {
+                        $image_tmp = $request->image[$key];
+                        if ($image_tmp->isValid()) {
+                            $filename = strtotime("now").'-'. $image_tmp->getClientOriginalName();
+                            $file_path = 'img/tours/tour_itinerary/' . $filename;
+                            Image::make($image_tmp)->save($file_path);
+                        }
+                    } else if (!empty($data['current_image'][$key])) {
+                        $filename = $data['current_image'][$key];
+                    } else {
+                        $filename = '';
+                    }
+
+                    // detail update
+                    TourItinerary::where(['id'=>$data['itinerary_id'][$key]])->update([
+                        'visit_place' => $visit_place,
+                        'activity' => $activity,
+                        'travel_option' => $travel_option,
+                        'description' => $description,
+                        'stay' => $stay,
+                        'food' => $food,
+                        'image'=>$filename,
+                    ]);
+                }
+            }
+            return redirect()->back()->with('flash_message_success','Tour itinerary updated successfully!');
+        }
+
+        $tour = Tour::with('itinerary')
+                ->select('tours.*', 'destinations.name as dest_name', 'special_tours.title as special_tour')
+                ->leftJoin('destinations','destinations.id','tours.dest_id')
+                ->leftJoin('special_tours','special_tours.id','tours.special_tour_type')
+                ->where('tours.id', $id)
+                ->first();
+        return view('admin.tour.edit_itinerary_builder', ['id' => $id, 'tour' => $tour]);
+
+    }
+
+    public function deleteItinerary(Request $request, $id){
+        TourItinerary::where('id',$id)->delete();
+        return redirect()->back()->with('flash_message_success','Itinerary deleted successfully');
     }
 
     public function enquiries(Request $request, $status=null){

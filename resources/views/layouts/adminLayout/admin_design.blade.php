@@ -88,7 +88,7 @@
     </script>
     
     {{-- Summernote --}}
-    <script>
+    {{-- <script>
         $(function () {
             $('.textarea').summernote()
         })
@@ -96,7 +96,7 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
-    </script>
+    </script> --}}
 
     @yield('scripts')
 

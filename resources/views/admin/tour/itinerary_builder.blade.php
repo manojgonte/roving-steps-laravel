@@ -46,71 +46,42 @@
                             <h3 class="card-title text-muted pt-2 pl-3">
                                 Tour Details
                             </h3>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card-body border-right">
-                                        <dl class="row">
-                                            <dt class="col-sm-3">Tour ID</dt>
-                                            <dd class="col-sm-9">{{$tour->id}}</dd>
-                                            <dt class="col-sm-3">Tour Name</dt>
-                                            <dd class="col-sm-9">{{$tour->tour_name}}</dd>
-                                            <dt class="col-sm-3">Destination</dt>
-                                            <dd class="col-sm-9">{{$tour->dest_name}}</dd>
-                                            <dt class="col-sm-3">Tour Type</dt>
-                                            <dd class="col-sm-9">{{$tour->type}}</dd>
-                                            <dt class="col-sm-3">Special Tour</dt>
-                                            <dd class="col-sm-9">{{ ($tour->special_tour) ?  $tour->special_tour : 'NA'}}</dd>
-                                            <dt class="col-sm-3">Price/Adult</dt>
-                                            <dd class="col-sm-9">₹{{number_format($tour->adult_price)}}</dd>
-                                            <dt class="col-sm-3">Child/Price</dt>
-                                            <dd class="col-sm-9">₹{{number_format($tour->child_price)}}</dd>
-                                            <dt class="col-sm-3">Date</dt>
-                                            <dd class="col-sm-9">@if(!empty($tour->from_date) || !empty($tour->from_date)) {{date('d/m/Y', strtotime($tour->from_date))}} - {{date('d/m/Y', strtotime($tour->end_date))}} @else NA @endif</dd>
-                                            <dt class="col-sm-3">Duration</dt>
-                                            <dd class="col-sm-9">{{$tour->days}}D - {{$tour->nights}}N</dd>
-                                            <dt class="col-sm-3">Star Ratings</dt>
-                                            <dd class="col-sm-9">{{$tour->rating}} Star</dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card-body">
-                                        <dl class="row">
-                                            <dt class="col-sm-2">Overview</dt>
-                                            <dd class="col-sm-10">{{$tour->description}}</dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </div>
+                            @include('admin/tour/tour_basic_info', ['tour' => $tour])
                         </div>
 
                         <h3 class="card-title text-muted pt-2 pl-3">
-                            Add Itinerary
+                            <ul class="nav nav-pills">
+                                <li class="nav-item"><a class="nav-link text-white bg-gradient-dark btn btn-sm"><i class="fa fa-plus-circle"></i> Add Itinerary</a></li>
+                                <li class="nav-item"><a class="nav-link bg-light btn btn-sm ml-2" href="{{url('admin/edit-tour-itinerary/'.Request()->id)}}"><i class="fa fa-pencil-alt"></i> Edit Itinerary</a></li>
+                            </ul>
                         </h3>
 
-                        <form method="POST" action="{{url('admin/add-tour-itinerary/'.Request()->id)}}" enctype="multipart/form-data" id="addTour">@csrf
-                        @foreach (range(0, $tour->days) as $i)
+                        <form method="POST" action="{{url('admin/add-tour-itinerary/'.Request()->id)}}" enctype="multipart/form-data" id="TourItinerary">@csrf
+                        @for($i=0; $i<$tour->days; $i++)
                         <div class="card m-3">
-                            <h4><span class="badge badge-secondary text-md font-weight-normal">Day {{$i+1}}</span></h4>
-                            <div class="card-body pt-1">
+                            <div class="card-body bg-light pt-1">
+                                <h4><span class="badge badge-secondary text-md font-weight-normal">Day {{$i+1}}</span></h4>
                                 <div class="form-row">
+
+                                    {{-- new itinerary --}}
                                     <div class="row fields-group border-bottom border-dark pb-2 pt-2">
                                         <input type="hidden" name="day[]" value="{{$i+1}}"> 
                                         <div class="form-group col-md-4">
                 	                        <label class="required">Places to Visit</label>
-                	                        <input type="text" name="visit_place[]" class="form-control" placeholder="Enter Place" value="Place {{$i+1}}" required>
+                	                        <input type="text" name="visit_place[]" class="form-control" placeholder="Enter Place" value="" required>
                               	        </div>
                                         <div class="form-group col-md-4">
                                             <label class="required">Activity of the Day</label>
-                                            <input type="text" name="activity[]" class="form-control" placeholder="Enter Activity" value="Activity {{$i+1}}" required>
+                                            <input type="text" name="activity[]" class="form-control" placeholder="Enter Activity" value="" required>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="required">Travel Option</label>
                                             <select class="form-control select2bs4" name="travel_option[]" required>
                                                 <option value="">Select One</option>
-                                                <option value="Bike" selected>Bike</option>
+                                                <option value="Bike">Bike</option>
                                                 <option value="Private Car">Private Car</option>
                                                 <option value="Common Vehicle">Common Vehicle</option>
+                                                <option value="Train / Flight">Train / Flight</option>
                                                 <option value="Train">Train</option>
                                                 <option value="Flight">Flight</option>
                                                 <option value="Cruise">Cruise</option>
@@ -118,15 +89,15 @@
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label class="required">Overview</label>
-                                            <textarea name="description[]" class="form-control" rows="3" placeholder="Enter Overview" required>Overview {{$i+1}}</textarea>
+                                            <textarea name="description[]" class="form-control" rows="3" placeholder="Enter Overview" required></textarea>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="required">Stay</label>
-                                            <input type="text" name="stay[]" class="form-control" placeholder="Enter Stay" value="Stay {{$i+1}}" required>
+                                            <input type="text" name="stay[]" class="form-control" placeholder="Enter Stay" value="" required>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="required">Food</label>
-                                            <input type="text" name="food[]" class="form-control" placeholder="Enter Food" value="Food {{$i+1}}" required>
+                                            <input type="text" name="food[]" class="form-control" placeholder="Enter Food" value="" required>
                                         </div>
                                         <div class="form-group col-md-4">
                 	                      	<label class="required">Image <small>(Size: 800 X 530px)</small></label>
@@ -140,9 +111,9 @@
                                 </div>
                             </div>
                         </div>
-                        @endforeach
+                        @endfor
                         <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-warning text-white"><i class="fa fa-check-circle"></i> Save </button>
+                            <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check-circle"></i> Save </button>
                             {{-- <button type="reset" class="btn btn-default"> Reset </button> --}}
                         </div>
                         </form>
@@ -155,7 +126,6 @@
 
 
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
-
 <script>
     $(document).ready(function() {
         // Add More button click event
@@ -186,21 +156,34 @@
 
 <script>
     $(document).ready(function() {
-        $('#addTour').validate({
+        $('#TourItinerary').validate({
             ignore: [],
             debug: false,
             rules: {
-                title: {
+                'visit_place[]': {
                     required: true,
                 },
-                image: {
-                    required: true,
-                    accept: 'png|jpg|jpeg',
+                // 'activity[]': {
+                //     required: true,
+                // },
+                // 'description[]': {
+                //     required: true,
+                // },
+                // 'stay[]': {
+                //     required: true,
+                // },
+                // 'food[]': {
+                //     required: true,
+                // },
+                'image[]': {
+                    // required: true,
+                    accept: 'png|jpg|jpeg|webp',
                 },
-                
             },
             messages: {},
             submitHandler: function(form) {
+                $(".submit").attr("disabled", true);
+                $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
                 form.submit();
             }
         });

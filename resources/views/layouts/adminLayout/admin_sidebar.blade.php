@@ -22,7 +22,7 @@
                 </li> 
                 <li class="nav-item">
                     <a href="{{url('admin/tour-planner')}}" class="nav-link text-white @if(preg_match('#/admin/tour-planner#', $url)) active @endif">
-                        <i class="nav-icon fas fa-plane-departure"></i>
+                        <i class="nav-icon fas fa-user-ninja"></i>
                         <p>Tour Planner</p>
                     </a>
                 </li> 
@@ -40,7 +40,7 @@
                 </li> 
                 <li class="nav-item">
                     <a href="{{url('admin/view-destinations')}}" class="nav-link text-white @if(preg_match('#/admin/view-destinations#', $url)) active @endif">
-                        <i class="nav-icon fas fa-comment-dots"></i>
+                        <i class="nav-icon fas fa-campground"></i>
                         <p>Destinations</p>
                     </a>
                 </li> 

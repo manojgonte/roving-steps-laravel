@@ -99,7 +99,6 @@
                     maxlength:120,
                 },
                 image: {
-                    required: true,
                     accept: 'png|jpg|jpeg|webp',
                 },
             },
