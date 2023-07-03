@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Middleware\AdminAuthenticated;
+use App\Http\Middleware\Userlogin;
 
 Route::get('/clear', function () {
     $exitCode = Artisan::call('optimize');
@@ -26,14 +28,19 @@ Route::get('/flight-booking', [IndexController::class, 'flightBooking']);
 Route::get('/cruise-booking', [IndexController::class, 'cruiseBooking']);
 Route::get('/other-services', [IndexController::class, 'otherServices']);
 
-Route::get('/sign-in', [IndexController::class, 'userLogin']);
-Route::get('/sign-up', [IndexController::class, 'userRegister']);
+Route::match(['get','post'], '/sign-in', [UserController::class, 'userLogin']);
+Route::match(['get','post'], '/sign-up', [UserController::class, 'userRegister']);
+
+Route::middleware([Userlogin::class])->group(function () {
+    Route::get('user/dashboard', [UserController::class, 'dashboard']);
+    Route::get('user/logout', [UserController::class, 'userLogout']);
+});
 
 // Admin Routes
 Auth::routes();
 Route::get('/admin', function () { return view('admin/admin_login'); });
-Route::get('/login', [AdminController::class, 'getLogin'])->name('adminLogin');
-Route::post('/login', [AdminController::class, 'postLogin'])->name('adminLoginPost');
+// Route::get('/login', [AdminController::class, 'getLogin'])->name('adminLogin');
+// Route::post('/login', [AdminController::class, 'postLogin'])->name('adminLoginPost');
 Auth::routes();
 Route::middleware([AdminAuthenticated::class])->group(function () {
     //Dashboard
@@ -71,24 +78,6 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/view-destinations/', [TourController::class, 'viewDestinations']);
     Route::match(['get','post'], 'admin/add-destination/', [TourController::class, 'addDestination']);
     Route::match(['get','post'], 'admin/delete-destination/{id}', [TourController::class,'deleteDestination']);
-
-    // Clients
-    Route::match(['get','post'], 'admin/edit-client/{id}', [AdminController::class, 'editClient']);
-    Route::match(['get','post'], 'admin/view-client/', [AdminController::class, 'viewClient']);
-    Route::match(['get','post'], 'admin/add-client/', [AdminController::class, 'addClient']);
-    Route::match(['get','post'], 'admin/delete-client/{id}', [AdminController::class,'deleteClient']);    
-
-    // Events
-    Route::match(['get','post'], 'admin/edit-event/{id}', [AdminController::class, 'editEvent']);
-    Route::match(['get','post'], 'admin/view-event/', [AdminController::class, 'viewEvent']);
-    Route::match(['get','post'], 'admin/add-event/', [AdminController::class, 'addEvent']);
-    Route::match(['get','post'], 'admin/delete-event/{id}', [AdminController::class,'deleteEvent']);
-
-    // Expo
-    Route::match(['get','post'], 'admin/edit-expo/{id}', [AdminController::class, 'editExpo']);
-    Route::match(['get','post'], 'admin/view-expo/', [AdminController::class, 'viewExpo']);
-    Route::match(['get','post'], 'admin/add-expo/', [AdminController::class, 'addExpo']);
-    Route::match(['get','post'], 'admin/delete-expo/{id}', [AdminController::class,'deleteExpo']);
 });
 
 
@@ -103,3 +92,7 @@ Route::get('/admin-forgot-password', function () {
 Route::get('/admin-login', function () {
     return view('admin/admin_login');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

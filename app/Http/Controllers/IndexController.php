@@ -131,15 +131,5 @@ class IndexController extends Controller
         $meta_title = 'Blog Detail';
         return view('blog_detail',compact('meta_title'));
     }
-
-    public function userLogin(Request $request){
-        $meta_title = 'Sign In';
-        return view('login',compact('meta_title'));
-    }
-
-    public function userRegister(Request $request){
-        $meta_title = 'Sign Up';
-        return view('register',compact('meta_title'));
-    }
     
 }
