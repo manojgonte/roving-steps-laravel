@@ -52,8 +52,11 @@
             <div class="col-auto">
                 <div class="d-flex items-center">
                     <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
-                        <a href="{{url('/sign-up')}}"
-                            class="button px-30 fw-400 text-14 text-white bg-warning-2 h-50">SIGN UP</a>
+                        @auth
+                        <a href="{{url('/user/dashboard')}}" class="button px-30 fw-400 text-14 text-white bg-warning-2 h-50">{{Auth::User()->name}}</a>
+                        @else
+                        <a href="{{url('/sign-up')}}" class="button px-30 fw-400 text-14 text-white bg-warning-2 h-50">SIGN UP</a>
+                        @endauth
                     </div>
                     <div class="d-none xl:d-flex x-gap-20 items-center pl-30 text-white" data-x="header-mobile-icons"
                         data-x-toggle="text-white">

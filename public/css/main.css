@@ -11608,7 +11608,7 @@ div[data-slider]>input[type=range]::-ms-tooltip {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 5;
+  z-index: 1;
 }
 
 .section-slider-nav.-prev {
@@ -12101,8 +12101,7 @@ div[data-slider]>input[type=range]::-ms-tooltip {
 
 .form-input label {
   position: absolute;
-  top: 0;
-  top: 26px;
+  top: 24px;
   padding: 0 15px;
   pointer-events: none;
   font-size: 14px;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TourEnquiry;
 use App\Models\User;
 use Session;
 use Auth;
@@ -81,8 +82,13 @@ class UserController extends Controller
     }
 
     public function dashboard(Request $request){
-        // dd(Auth::User());
+        $tour_enquiry = TourEnquiry::select('tour_enquiry.*','tours.id as tour_id','tours.tour_name')
+            ->leftJoin('tours','tour_enquiry.tour_id','tours.id')
+            ->where('tour_enquiry.user_id',Auth::id())
+            ->orWhere('tour_enquiry.email',Auth::User()->email)
+            ->orderBy('tour_enquiry.id','DESC')
+            ->paginate(10);
         $meta_title = 'Dashboard | '.config('app.name');
-        return view('users.dashboard', compact('meta_title'));
+        return view('users.dashboard', compact('meta_title','tour_enquiry'));
     }
 }

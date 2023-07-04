@@ -334,22 +334,24 @@
                 <div class="col-lg-7 py-20">
                     <div class="rounded-4 container">
                         <form action="{{url('tour-enquiry')}}" method="POST">@csrf
+                            <input type="hidden" name="tour_id" value="{{Request()->id}}">
+                            <input type="hidden" name="user_id" @auth value="{{Auth::User()->id}}" @endauth>
                             <div class="row y-gap-20 x-gap-20">
                                 <div class="col-12">
                                     <div class="form-input ">
-                                        <input type="text" name="name" required>
+                                        <input type="text" name="name" @auth value="{{Auth::User()->name}}" @endauth required>
                                         <label class="lh-1 text-16 text-light-1">Full Name</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-input ">
-                                        <input type="text" name="contact" required>
+                                        <input type="text" name="contact" @auth value="{{Auth::User()->contact}}" @endauth required>
                                         <label class="lh-1 text-16 text-light-1">Contact</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-input ">
-                                        <input type="email" name="email" required>
+                                        <input type="email" name="email" @auth value="{{Auth::User()->email}}" @endauth required>
                                         <label class="lh-1 text-16 text-light-1">Email</label>
                                     </div>
                                 </div>

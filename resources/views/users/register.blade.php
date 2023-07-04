@@ -198,7 +198,7 @@
                 },
                 submitHandler: function(form) {
                     $(".submit").attr("disabled", true);
-                    $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
+                    $(".submit").html("<span class='fa fa-spinner fa-spin'></span>&nbsp; Please wait...");
                     form.submit();
                 }
             });

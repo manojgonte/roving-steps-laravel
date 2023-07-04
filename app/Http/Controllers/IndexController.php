@@ -86,6 +86,7 @@ class IndexController extends Controller
             Log::info($data);
 
             $enquiry = new TourEnquiry;
+            $enquiry->tour_id = $data['tour_id'];
             $enquiry->name = $data['name'];
             $enquiry->email = $data['email'];
             $enquiry->contact = $data['contact'];
