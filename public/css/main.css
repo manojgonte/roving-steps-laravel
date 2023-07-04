@@ -13123,7 +13123,8 @@ a.button.bg-light-1:hover {
   min-height: 175px;
 }
 
-.error-container label {
+.error-message label {
+  font-size: 85%;
   display: block;
   color: red;
 }

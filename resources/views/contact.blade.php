@@ -30,7 +30,6 @@
             <div class="col-lg-7">
                 <div class="text-30 sm:text-24 fw-600">Keep in touch with us</div>
                 <div class="rounded-4">
-                    <div class="error-container"></div>
                     <form action="{{url('contact-us')}}" method="POST" class="contactEnqForm">@csrf
                         <div class="row y-gap-20">
                             <div class="col-6">
@@ -38,30 +37,35 @@
                                     <input type="text" name="name" required>
                                     <label class="lh-1 text-16 text-light-1">Full Name *</label>
                                 </div>
+                                <div class="error-message"></div>
                             </div>
                             <div class="col-6">
                                 <div class="form-input">
                                     <input type="text" name="email" required>
                                     <label class="lh-1 text-16 text-light-1">Email *</label>
                                 </div>
+                                <div class="error-message"></div>
                             </div>
                             <div class="col-6">
                                 <div class="form-input">
                                     <input type="text" name="contact" required>
-                                    <label class="lh-1 text-16 text-light-1">Contact</label>
+                                    <label class="lh-1 text-16 text-light-1">Contact *</label>
                                 </div>
+                                <div class="error-message"></div>
                             </div>
                             <div class="col-6">
                                 <div class="form-input">
                                     <input type="text" name="address">
                                     <label class="lh-1 text-16 text-light-1">Address</label>
                                 </div>
+                                <div class="error-message"></div>
                             </div>
                             <div class="col-12">
                                 <div class="form-input">
                                     <textarea name="message" rows="4" required></textarea>
-                                    <label class="lh-1 text-16 text-light-1">Your Messages</label>
+                                    <label class="lh-1 text-16 text-light-1">Your Messages *</label>
                                 </div>
+                                <div class="error-message"></div>
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="button px-24 h-50 -dark-1 bg-warning-2 text-white">
@@ -157,7 +161,9 @@
                     maxlength: "Please enter no more than {0} characters",
                 },
             },
-            errorLabelContainer: $("div.error-container"),
+            errorPlacement: function(error, element) {
+                error.appendTo(element.closest('.col-12, .col-6').find('.error-message'));
+            },
             submitHandler: function(form) {
                 $(".button").attr("disabled", true);
                 $(".button").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");

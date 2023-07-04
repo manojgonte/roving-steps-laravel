@@ -45,54 +45,61 @@
                     <div class="container">
                         <img src="{{asset('img/elements/get_started.png')}}" width="200">
                         <div class="py-20 sm:px-20 sm:py-20 ">
-                            <form action="{{url('sign-up')}}" method="POST">@csrf
+                            {{-- <div class="error-container"></div> --}}
+                            <form action="{{url('sign-up')}}" method="POST" id="signUp">@csrf
                                 <div class="row y-gap-20">
                                     <div class="col-12">
                                         <h1 class="text-22 fw-500">Create an account</h1>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-input ">
-                                            <input type="text" name="name" required>
+                                            <input type="text" name="name" value="" required>
                                             <label class="lh-1 text-14 text-light-1">Name *</label>
                                         </div>
+                                        <div class="error-message"></div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-input ">
-                                            <input type="text" name="contact" required>
+                                            <input type="text" name="contact" value="" required>
                                             <label class="lh-1 text-14 text-light-1">Contact *</label>
                                         </div>
+                                        <div class="error-message"></div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-input ">
-                                            <input type="email" name="email" required>
+                                            <input type="email" name="email" value="" required>
                                             <label class="lh-1 text-14 text-light-1">Email *</label>
                                         </div>
+                                        <div class="error-message"></div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-input ">
-                                            <input type="password" name="password" required>
+                                            <input type="password" name="password" id="password" value="" required>
                                             <label class="lh-1 text-14 text-light-1">Password *</label>
                                         </div>
+                                        <div class="error-message"></div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-input ">
-                                            <input type="password" name="confirm_password" required>
+                                            <input type="password" name="confirm_password" value="" required>
                                             <label class="lh-1 text-14 text-light-1">Confirm Password *</label>
                                         </div>
+                                        <div class="error-message"></div>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-flex ">
                                             <div class="form-checkbox mt-5">
-                                                <input type="checkbox" name="name">
+                                                <input type="checkbox" name="agree_check" checked>
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
                                             </div>
                                             <div class="text-15 lh-15 text-light-1 ml-10">I agree to <a href="#" class="underline">Terms of Service</a> and <a href="#" class="underline">Privacy Policy</a>.</div>
                                         </div>
+                                        <div class="error-message"></div>
                                     </div>
                                     <div class="col-12">
-                                        <button type="submit" class="button col-12 py-20 -dark-1 bg-blue-1 text-white"> Sign Up <div class="icon-arrow-top-right ml-15"></div>
+                                        <button type="submit" class="button col-12 py-20 -dark-1 bg-blue-1 text-white submit"> Sign Up <div class="icon-arrow-top-right ml-15"></div>
                                         </button>
                                     </div>
                                 </div>
@@ -117,11 +124,86 @@
     </main>
 
     <!-- JavaScript -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM"></script>
-    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
 
     <script src="{{asset('js/vendors.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
+
+    <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('backend_js/jquery.validate.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#signUp').validate({
+                ignore: [],
+                debug: false,
+                rules: {
+                    name: {
+                        required: true,
+                        maxlength:40,
+                    },
+                    contact: {
+                        required: true,
+                        number:true,
+                        maxlength:10,
+                        minlength:10,
+                    },
+                    email: {
+                        required: true,
+                        email:true,
+                        remote: "{{url('check-user-exist')}}"
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    confirm_password: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#password"
+                    },
+                    agree_check: {
+                        required: true,
+                    },
+                    
+                },
+                messages:{
+                    name:{ 
+                        required: "Please enter name",
+                    },
+                    contact:{ 
+                        required: "Please enter valid contact number",
+                        number: "Please enter valid phone number",
+                        minlength: "Please enter {0} digit phone number",
+                        maxlength: "Please enter {0} digit phone number",
+                    },
+                    email:{ 
+                        required: "Please enter email",
+                        email: "Please enter valid email",
+                        remote: "Account already exist"
+                    },
+                    password:{ 
+                        required: "Please enter password",
+                        minlength: "Please enter more than {0} characters",
+                    },
+                    confirm_password:{ 
+                        required: "Please confirm password",
+                        minlength: "Please enter more than {0} characters",
+                        equalTo: "Password does not match",
+                    },
+                    agree_check:{ 
+                        required: "Please agree policies checkbox",
+                    },
+                },
+                errorPlacement: function(error, element) {
+                    error.appendTo(element.closest('.col-12, .col-6').find('.error-message'));
+                },
+                submitHandler: function(form) {
+                    $(".submit").attr("disabled", true);
+                    $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
+                    form.submit();
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

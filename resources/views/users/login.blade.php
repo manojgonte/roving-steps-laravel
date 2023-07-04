@@ -58,25 +58,27 @@
 				                <span>{!! session('flash_message_success') !!}</span>
 				            </div>
 				            @endif
-		                	<form action="{{url('sign-in')}}" method="POST">@csrf
+		                	<form action="{{url('sign-in')}}" method="POST" id="signIn">@csrf
 			                    <div class="row y-gap-20">
 			                        <div class="col-12">
 			                            <div class="form-input ">
 			                                <input type="text" name="email" required>
 			                                <label class="lh-1 text-14 text-light-1">Email *</label>
 			                            </div>
+                                        <div class="error-message"></div>
 			                        </div>
 			                        <div class="col-12">
 			                            <div class="form-input ">
 			                                <input type="password" name="password" required>
 			                                <label class="lh-1 text-14 text-light-1">Password *</label>
 			                            </div>
+                                        <div class="error-message"></div>
 			                        </div>
 			                        <div class="col-12">
 			                            <a href="#" class="text-14 fw-500 text-blue-1 underline">Forgot your password?</a>
 			                        </div>
 			                        <div class="col-12">
-			                            <button type="submit" class="button col-12 py-20 -dark-1 bg-blue-1 text-white"> Sign In <div class="icon-arrow-top-right ml-15"></div>
+			                            <button type="submit" class="button col-12 py-20 -dark-1 bg-blue-1 text-white submit"> Sign In <div class="icon-arrow-top-right ml-15"></div>
 			                            </button>
 			                        </div>
 			                    </div>
@@ -101,11 +103,45 @@
 	</main>
 
     <!-- JavaScript -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM"></script>
-    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-
     <script src="{{asset('js/vendors.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
-
+    <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('backend_js/jquery.validate.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#signIn').validate({
+                ignore: [],
+                debug: false,
+                rules: {
+                    email: {
+                        required: true,
+                        email:true,
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                    },
+                    
+                },
+                messages:{
+                    email:{ 
+                        required: "Please enter email",
+                        email: "Please enter valid email",
+                    },
+                    password:{ 
+                        required: "Please enter password",
+                    },
+                },
+                errorPlacement: function(error, element) {
+                    error.appendTo(element.closest('.col-12, .col-6').find('.error-message'));
+                },
+                submitHandler: function(form) {
+                    $(".submit").attr("disabled", true);
+                    $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
+                    form.submit();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -30,6 +30,7 @@ Route::get('/other-services', [IndexController::class, 'otherServices']);
 
 Route::match(['get','post'], '/sign-in', [UserController::class, 'userLogin']);
 Route::match(['get','post'], '/sign-up', [UserController::class, 'userRegister']);
+Route::match(['get','post'], '/check-user-exist', [UserController::class, 'checkUserExist']);
 
 Route::middleware([Userlogin::class])->group(function () {
     Route::get('user/dashboard', [UserController::class, 'dashboard']);

@@ -33,42 +33,45 @@ class UserController extends Controller
     public function userRegister(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
-            // dd($data);
-            $userCount = User::where('email',$data['email'])->count();
-            // dd($userCount);
-            if($userCount>0){
-                return redirect()->back()->with('flash_message_error','Email already exists. Please user another email.'); 
-            }else{
-                $user = new User;
-                $user->name = $data['name'];
-                $user->email = $data['email'];
-                $user->phone = $data['phone'];
-                $user->password = bcrypt($data['password']);
-                $user->status = 0;
-                
-                Session::put('userRegister',$user);
-                // $userRegister = Session::get('userRegister');
-                $mobile = $data['phone'];
-                $otp = mt_rand(100000, 999999);
-                Session::put('otp', $otp);
+            dd($data);
 
-                // send otp message
-                // $this->usersendOTP($mobile, $otp);
+            if(User::where('email',$data['email'])->first()){
+                return redirect()->back()->with('flash_message_error','Account already exists. Please login or use another email.'); 
+            }
 
+            $user = new User;
+            $user->name = $data['name'];
+            $user->email = $data['email'];
+            $user->contact = $data['contact'];
+            $user->password = bcrypt($data['password']);
+            $user->status = 1;
+            if($user->save()){
                 //send register email
                 $email = $data['email'];
                 $messageData = ['email'=>$data['email'],'name'=>$data['name']];
                 // Mail::send('emails.register',$messageData,function($message) use($email){
-                //     $message->to($email)->subject('Registration with Giftiyo Account');
+                //     $message->to($email)->subject('Registration with Roving Steps');
                 // });
-                // dd($user);
-                Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>'1']);
-                return redirect('/user/enter-otp');
+
+                Auth::attempt(['email'=>$data['email'],'password'=>$data['password']]);
+                Session::put('userSession',$data['email']);
+                return redirect('/user/dashboard');
             }
+            return redirect()->back()->with('flash_message_error','Something went wrong, please try again.');
         }
 
         $meta_title = 'Sign Up';
         return view('users.register',compact('meta_title'));
+    }
+
+    public function checkUserExist(Request $request){
+        $data = $request->all();
+        $usersCount = User::where('email',$data['email'])->count();
+        if($usersCount>0){
+            echo "false";
+        } else{
+            echo "true"; die;
+        }
     }
 
     public function userLogout(Request $request){
