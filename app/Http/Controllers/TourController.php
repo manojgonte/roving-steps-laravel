@@ -248,8 +248,8 @@ class TourController extends Controller
     }
 
     public function tourEnquiries(Request $request, $status=null){
-        $tour_enquiry = TourEnquiry::select('tour_enquiry.*','tours.tour_name')
-            ->leftJoin('tour_enquiry','tour_enquiry.tour_id','tours.id')
+        $tour_enquiry = TourEnquiry::select('tour_enquiry.*','tours.id as tour_id','tours.tour_name')
+            ->leftJoin('tours','tour_enquiry.tour_id','tours.id')
             ->orderBy('tour_enquiry.id','DESC')
             ->paginate(10);
         return view('admin.tour.tour-enquiries')->with(compact('tour_enquiry'));

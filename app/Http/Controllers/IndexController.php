@@ -19,8 +19,11 @@ class IndexController extends Controller
             ->where(['status'=>1,'is_popular'=>1])
             ->take(10)
             ->get();
+
+        $destinations = Destination::where(['status'=>1,'is_popular'=>1])->take(8)->get();
+
         $meta_title = config('app.name');
-        return view('index',compact('meta_title','popularTours'));
+        return view('index',compact('meta_title','popularTours','destinations'));
     }
     
     public function contact(Request $request){

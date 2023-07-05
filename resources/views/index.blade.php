@@ -15,7 +15,7 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <div class="masthead__bg bg-dark-3">
-                    <img src="img/banner/banner1.webp" alt="image">
+                    <img src="{{asset('img/banner/banner1.webp')}}" alt="image">
                 </div>
                 <div class="container">
                     <div class="row justify-center">
@@ -30,7 +30,7 @@
             </div>
             <div class="swiper-slide">
                 <div class="masthead__bg bg-dark-3">
-                    <img src="img/banner/banner1.webp" alt="image">
+                    <img src="{{asset('img/banner/banner2.webp')}}" alt="image">
                 </div>
                 <div class="container">
                     <div class="row justify-center">
@@ -45,7 +45,7 @@
             </div>
             <div class="swiper-slide">
                 <div class="masthead__bg bg-dark-3">
-                    <img src="img/banner/banner1.webp" alt="image">
+                    <img src="{{asset('img/banner/banner3.webp')}}" alt="image">
                 </div>
                 <div class="container">
                     <div class="row justify-center">
@@ -108,10 +108,11 @@
         </div>
         <div class="relative pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="base-2 xl-4 lg-3 md-2 sm-2 base-1" data-anim="slide-up delay-2">
             <div class="swiper-wrapper">
+                @foreach($destinations as $row)
                 <div class="swiper-slide">
-                    <a href="#" class="citiesCard -type-1 d-block rounded-4 ">
+                    <a href="{{url('tours/?dest_id='.$row->id)}}" class="citiesCard -type-1 d-block rounded-4 ">
                         <div class="citiesCard__image ratio ratio-3:4">
-                            <img src="#" data-src="{{asset('img/destinations/1.webp')}}" alt="image" class="js-lazy">
+                            <img src="#" data-src="{{asset('img/destinations/'.$row->image)}}" alt="image" class="js-lazy">
                         </div>
                         <div class="citiesCard__content d-flex flex-column justify-between text-center pt-30 pb-20 px-20">
                             <div class="citiesCard__bg"></div>
@@ -119,80 +120,13 @@
                                 {{-- <div class="text-14 text-white">14 Hotel - 22 Cars - 18 Tours - 95 Activity</div> --}}
                             </div>
                             <div class="citiesCard__bottom">
-                                <h4 class="text-26 md:text-20 lh-13 text-white mb-20">New York</h4>
+                                <h4 class="text-26 md:text-20 lh-13 text-white mb-20">{{$row->name}}</h4>
                                 <button class="button col-12 h-60 -blue-1 bg-white text-dark-1">Discover</button>
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="swiper-slide">
-                    <a href="#" class="citiesCard -type-1 d-block rounded-4 ">
-                        <div class="citiesCard__image ratio ratio-3:4">
-                            <img src="#" data-src="{{asset('img/destinations/2.webp')}}" alt="image" class="js-lazy">
-                        </div>
-                        <div class="citiesCard__content d-flex flex-column justify-between text-center pt-30 pb-20 px-20">
-                            <div class="citiesCard__bg"></div>
-                            <div class="citiesCard__top">
-                                {{-- <div class="text-14 text-white">14 Hotel - 22 Cars - 18 Tours - 95 Activity</div> --}}
-                            </div>
-                            <div class="citiesCard__bottom">
-                                <h4 class="text-26 md:text-20 lh-13 text-white mb-20">London</h4>
-                                <button class="button col-12 h-60 -blue-1 bg-white text-dark-1">Discover</button>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="#" class="citiesCard -type-1 d-block rounded-4 ">
-                        <div class="citiesCard__image ratio ratio-3:4">
-                            <img src="#" data-src="{{asset('img/destinations/3.webp')}}" alt="image" class="js-lazy">
-                        </div>
-                        <div class="citiesCard__content d-flex flex-column justify-between text-center pt-30 pb-20 px-20">
-                            <div class="citiesCard__bg"></div>
-                            <div class="citiesCard__top">
-                                {{-- <div class="text-14 text-white">14 Hotel - 22 Cars - 18 Tours - 95 Activity</div> --}}
-                            </div>
-                            <div class="citiesCard__bottom">
-                                <h4 class="text-26 md:text-20 lh-13 text-white mb-20">Barcelona</h4>
-                                <button class="button col-12 h-60 -blue-1 bg-white text-dark-1">Discover</button>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="#" class="citiesCard -type-1 d-block rounded-4 ">
-                        <div class="citiesCard__image ratio ratio-3:4">
-                            <img src="#" data-src="{{asset('img/destinations/4.webp')}}" alt="image" class="js-lazy">
-                        </div>
-                        <div class="citiesCard__content d-flex flex-column justify-between text-center pt-30 pb-20 px-20">
-                            <div class="citiesCard__bg"></div>
-                            <div class="citiesCard__top">
-                                {{-- <div class="text-14 text-white">14 Hotel - 22 Cars - 18 Tours - 95 Activity</div> --}}
-                            </div>
-                            <div class="citiesCard__bottom">
-                                <h4 class="text-26 md:text-20 lh-13 text-white mb-20">Sydney</h4>
-                                <button class="button col-12 h-60 -blue-1 bg-white text-dark-1">Discover</button>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="#" class="citiesCard -type-1 d-block rounded-4 ">
-                        <div class="citiesCard__image ratio ratio-3:4">
-                            <img src="#" data-src="{{asset('img/destinations/5.webp')}}" alt="image" class="js-lazy">
-                        </div>
-                        <div class="citiesCard__content d-flex flex-column justify-between text-center pt-30 pb-20 px-20">
-                            <div class="citiesCard__bg"></div>
-                            <div class="citiesCard__top">
-                                {{-- <div class="text-14 text-white">14 Hotel - 22 Cars - 18 Tours - 95 Activity</div> --}}
-                            </div>
-                            <div class="citiesCard__bottom">
-                                <h4 class="text-26 md:text-20 lh-13 text-white mb-20">Rome</h4>
-                                <button class="button col-12 h-60 -blue-1 bg-white text-dark-1">Discover</button>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                @endforeach
             </div>
             <button class="section-slider-nav -prev flex-center button -blue-1 bg-white shadow-1 size-40 rounded-full sm:d-none js-prev">
                 <i class="icon icon-chevron-left text-12"></i>

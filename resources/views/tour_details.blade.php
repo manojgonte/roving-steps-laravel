@@ -136,7 +136,7 @@
             <div class="col-lg-8">
                 <div class="relative d-flex justify-center overflow-hidden js-section-slider" data-slider-cols="base-1" data-nav-prev="js-img-prev" data-nav-next="js-img-next">
                     <div class="swiper-wrapper">
-                        @foreach($tour->itinerary as $image)
+                        @foreach($tour->itinerary->take(4) as $image)
                         <div class="swiper-slide">
                             <img src="{{asset('img/tours/tour_itinerary/'.$image->image)}}" alt="" class="rounded-4 col-12 h-full object-cover">
                         </div>

@@ -594,6 +594,32 @@
                                 </tr>
                                 <!-- end: tr -->
                                 <tr>
+                                    <td class="bg_white">
+                                        <div class="heading-section" style="text-align: center; padding: 0 30px;">
+                                            <h2>Our Blog</h2>
+                                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                                        </div>
+                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            @foreach($tour->itinerary as $day)
+                                            <tr>
+                                                <td valign="top" width="50%" style="padding: 0 20px;">
+                                                    <table role="presentation" cellspacing="0" cellpadding="10" border="0" width="100%">
+                                                        <tr>
+                                                            <td class="text-services" style="text-align: left;">
+                                                                <h5 style="margin-bottom: 0px;">Day {{$day->day}}</h5>
+                                                                <h3>{{$day->visit_place}}</h3>
+                                                                <p>{{$day->description}}</p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- end: tr -->
+                                <tr>
                                     <td class="primary email-section" style="text-align:center;">
                                         <div class="heading-section heading-section-white">
                                             <h2>Click Below to Know More...</h2>

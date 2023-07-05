@@ -1592,6 +1592,7 @@ function mastheadSlider8() {
 
 function mastheadSlider9() {
   new Swiper('.js-masthead-slider-9', {
+    autoplay: {delay: 2000},
     speed: 600,
     loop: true,
     lazy: {

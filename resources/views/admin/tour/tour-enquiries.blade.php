@@ -47,28 +47,27 @@
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
                                     <tr>
-                                        <th>Tour ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Torist No</th>
+                                        <th>ID</th>
+                                        <th>Tour Name</th>
+                                        <th>Customer Details</th>
+                                        <th>Tourist No</th>
                                         <th>Current city</th>
-                                        <th>From date</th>
-                                        <th>To date</th>
+                                        <th>Travel Date</th>
                                         <th>Message</th>
-                                        {{-- <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($tour_enquiry as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td>{{ Str::limit($row->name, 30) }}</td>
-	                                    <td>{{ $row->email }}</td>
-	                                    <td>{{ $row->contact }}</td>
+                                        <td><a href="{{url('tour-details/'.$row->tour_id.'/'.Str::slug($row->tour_name))}}" target="_blank" noreferrer noopener> {{ $row->tour_name }} </a></td>
+	                                    <td class="text-left"><i class="fa fa-user"></i> {{ Str::limit($row->name, 30) }} <br> 
+                                            <i class="fa fa-envelope"></i> {{ $row->email }} <br> 
+                                            <i class="fa fa-phone"></i> {{ $row->contact }}
+                                        </td>
 	                                    <td>{{ $row->tourist_no }}</td>
 	                                    <td>{{ $row->current_city }}</td>
-	                                    <td>{{ $row->from_date }}</td>
-	                                    <td>{{ $row->end_date }}</td>
+	                                    <td>{{ date('d/m/Y', strtotime($row->from_date)) }} - <br>{{ date('d/m/Y', strtotime($row->end_date)) }}</td>
 	                                    <td>{{ $row->message }}</td>
 	                                    {{-- <td>
                                             <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp;
