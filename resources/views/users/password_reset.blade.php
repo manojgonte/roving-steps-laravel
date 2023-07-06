@@ -41,12 +41,12 @@
 		            	<p class="text-white">Explore the Huge World and Enjoy it's Beauty</p>
 		            </a>
 	            </div>
-	            <div class="col-xl-5 col-lg-5 col-md-6">
+	            <div class="col-xl-5 col-lg-5 col-md-6 itemc-center d-flex">
 	            	<div class="container">
-	            		<img src="{{asset('img/elements/welcome_back.png')}}" width="200">
+	            		<img src="{{asset('img/elements/get_started.png')}}" width="200">
 		                <div class="py-50 sm:px-20 sm:py-20 ">
 	                    	<div class="col-12 mb-10">
-                                <h1 class="text-22 fw-500">Sign in to your account</h1>
+                                <h1 class="text-22 fw-500">Reset Password</h1>
                             </div>
 		                	@if(Session::has('flash_message_error'))
 				            <div class="bg-red-2 text-white p-1 mb-15 px-15">
@@ -58,7 +58,7 @@
 				                <span>{!! session('flash_message_success') !!}</span>
 				            </div>
 				            @endif
-		                	<form action="{{url('sign-in')}}" method="POST" id="signIn">@csrf
+		                	<form action="{{url('password-reset')}}" method="POST" id="signIn">@csrf
 			                    <div class="row y-gap-20">
 			                        <div class="col-12">
 			                            <div class="form-input ">
@@ -69,23 +69,34 @@
 			                        </div>
 			                        <div class="col-12">
 			                            <div class="form-input ">
-			                                <input type="password" name="password" required>
-			                                <label class="lh-1 text-14 text-light-1">Password *</label>
+			                                <input type="number" name="code" required>
+			                                <label class="lh-1 text-14 text-light-1">Code *</label>
 			                            </div>
                                         <div class="error-message"></div>
 			                        </div>
+                                    <div class="col-12">
+                                        <div class="form-input ">
+                                            <input type="password" name="password" id="password" value="" required>
+                                            <label class="lh-1 text-14 text-light-1">New Password *</label>
+                                        </div>
+                                        <div class="error-message"></div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-input ">
+                                            <input type="password" name="confirm_password" value="" required>
+                                            <label class="lh-1 text-14 text-light-1">Confirm New Password *</label>
+                                        </div>
+                                        <div class="error-message"></div>
+                                    </div>
 			                        <div class="col-12">
-			                            <a href="{{url('forgot-password')}}" class="text-14 fw-500 text-blue-1 underline">Forgot your password?</a>
-			                        </div>
-			                        <div class="col-12">
-			                            <button type="submit" class="button col-12 py-20 -dark-1 bg-blue-1 text-white submit"> Sign In <div class="icon-arrow-top-right ml-15"></div>
+			                            <button type="submit" class="button col-12 py-20 -dark-1 bg-blue-1 text-white submit"> Submit <div class="icon-arrow-right ml-15"></div>
 			                            </button>
 			                        </div>
 			                    </div>
 			                </form>
 		                    <div class="row y-gap-10 pt-20">
                                 <div class="col-12">
-                                    <p class="mt-5">Don't have an account yet? <a href="{{url('sign-up')}}" class="text-blue-1">Sign Up</a></p>
+                                    <p class="mt-5"><i class="fa fa-arrow-left"></i> Go to <a href="{{url('sign-up')}}" class="text-blue-1">Sign In</a> Page</p>
 		                        </div>
 		                        {{-- <div class="col-12">
 		                            <div class="text-center">or sign in with</div>
@@ -117,19 +128,38 @@
                         required: true,
                         email:true,
                     },
+                    code: {
+                        required: true,
+                        number:true,
+                        maxlength:6,
+                        minlength:6,
+                    },
                     password: {
                         required: true,
                         minlength: 6,
                     },
-                    
+                    confirm_password: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#password"
+                    },
                 },
                 messages:{
                     email:{ 
                         required: "Please enter email",
                         email: "Please enter valid email",
                     },
+                    code:{ 
+                        required: "Please enter code",
+                    },
                     password:{ 
                         required: "Please enter password",
+                        minlength: "Please enter more than {0} characters",
+                    },
+                    confirm_password:{ 
+                        required: "Please confirm password",
+                        minlength: "Please enter more than {0} characters",
+                        equalTo: "Password does not match",
                     },
                 },
                 errorPlacement: function(error, element) {

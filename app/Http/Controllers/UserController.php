@@ -7,6 +7,8 @@ use App\Models\TourEnquiry;
 use App\Models\User;
 use Session;
 use Auth;
+use Mail;
+use Hash;
 
 class UserController extends Controller
 {
@@ -34,7 +36,6 @@ class UserController extends Controller
     public function userRegister(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
-            dd($data);
 
             if(User::where('email',$data['email'])->first()){
                 return redirect()->back()->with('flash_message_error','Account already exists. Please login or use another email.'); 
@@ -79,6 +80,53 @@ class UserController extends Controller
         Session::forget('userSession');
         Auth::logout();
         return redirect('sign-in');
+    }
+
+    public function forgotPassword(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            if($user = User::select('id','email','name')->where('email',$data['email'])->first()){
+                $user->remember_token = rand(100000,999999);
+                $user->save();
+
+                // $email = $user->email;
+                // $messageData = [
+                //     'user' => $user
+                // ];
+                // Mail::send('emails.forgot_password_otp',$messageData,function($message) use($email){
+                //     $message->to($email)->subject('Password Reset Code');
+                // });
+
+                return redirect('password-reset')->with('flash_message_success','Please enter code received on email'); 
+            }else{
+                return redirect()->back()->with('flash_message_error','Email address not found'); 
+            }
+        }
+        $meta_title = 'Forgot Password';
+        return view('users.forgot_password', compact('meta_title'));
+    }
+
+    public function resetPassword(Request $request) {
+        if($request->isMethod('post')){
+            if (($user = User::where('email', $request->email)->where('remember_token', $request->code)->first()) != null) {
+                if ($request->password == $request->confirm_password) {
+                    $user->password = Hash::make($request->password);
+                    $user->email_verified_at = date('Y-m-d h:m:s');
+                    $user->save();
+                    auth()->login($user, true);
+                    Session::put('userSession',$request->email);
+
+                    return redirect('/user/dashboard');
+                } else {
+                    return redirect()->back()->with("flash_message_error","Password and confirm password didn't match"); 
+                }
+            } else {
+                return redirect()->back()->with("flash_message_error","Verification code mismatch"); 
+            }
+        }else{
+            return view('users.password_reset');
+        }
     }
 
     public function dashboard(Request $request){

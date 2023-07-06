@@ -31,6 +31,8 @@ Route::get('/other-services', [IndexController::class, 'otherServices']);
 Route::match(['get','post'], '/sign-in', [UserController::class, 'userLogin']);
 Route::match(['get','post'], '/sign-up', [UserController::class, 'userRegister']);
 Route::match(['get','post'], '/check-user-exist', [UserController::class, 'checkUserExist']);
+Route::match(['get','post'], '/forgot-password', [UserController::class, 'forgotPassword']);
+Route::match(['get','post'], '/password-reset', [UserController::class, 'resetPassword']);
 
 Route::middleware([Userlogin::class])->group(function () {
     Route::get('user/dashboard', [UserController::class, 'dashboard']);
