@@ -63,40 +63,20 @@
 
 	<script src="{{ asset('backend_js/demo.js') }}"></script>
 	<script src="{{ asset('backend_js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('backend_plugins/summernote/summernote-bs4.min.js') }}"></script>
 
     <script src="{{ asset('backend_plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 
     <script src="{{ asset('backend_js/jquery.validate.js') }}"></script>
 
-    <script src="{{ asset('backend_js/main2.js') }}"></script> 
-    <script>
-        $(function () {
-            $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                // "buttons": [ "csv", "excel", "pdf"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-        });
-    </script>
+    <script src="{{ asset('backend_js/main2.js') }}"></script>
     
     {{-- Summernote --}}
-    {{-- <script>
+    <script>
         $(function () {
-            $('.textarea').summernote()
+            $('.summernote').summernote()
         })
-      
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script> --}}
+    </script>
 
     @yield('scripts')
 

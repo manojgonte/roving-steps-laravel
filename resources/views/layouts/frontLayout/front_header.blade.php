@@ -53,15 +53,17 @@
                 <div class="d-flex items-center">
                     <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
                         @auth
-                        <a href="{{url('/user/dashboard')}}" class="button px-30 fw-400 text-14 text-white bg-warning-2 h-50">{{Auth::User()->name}}</a>
+                        <a href="{{url('/')}}" class="button px-30 fw-400 text-14 text-white bg-warning-2 h-50">{{Auth::User()->name}}</a>
                         @else
                         <a href="{{url('/sign-up')}}" class="button px-30 fw-400 text-14 text-white bg-warning-2 h-50">SIGN UP</a>
                         @endauth
                     </div>
-                    <div class="d-none xl:d-flex x-gap-20 items-center pl-30 text-white" data-x="header-mobile-icons"
-                        data-x-toggle="text-white">
+                    <div class="d-none xl:d-flex x-gap-20 items-center pl-30 text-white" data-x="header-mobile-icons" data-x-toggle="text-white">
                         <div>
                             <a href="{{url('sign-in')}}" class="d-flex items-center icon-user text-inherit text-22"></a>
+                        </div>
+                        <div>
+                            <button class="d-flex items-center icon-menu text-inherit text-20" data-x-click="html, header, header-logo, header-mobile-icons, mobile-menu"></button>
                         </div>
                     </div>
                 </div>

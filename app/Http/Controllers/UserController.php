@@ -20,7 +20,8 @@ class UserController extends Controller
                 if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>'1'])){
                     Session::put('userSession',$user->email);
                     // dd(Auth::User());
-                    return redirect('/user/dashboard');
+                    return redirect('/');
+                    // return redirect('/user/dashboard');
                 }else{
                     return redirect()->back()->with('flash_message_error','Invalid username or password.');
                 }
@@ -57,7 +58,8 @@ class UserController extends Controller
 
                 Auth::attempt(['email'=>$data['email'],'password'=>$data['password']]);
                 Session::put('userSession',$data['email']);
-                return redirect('/user/dashboard');
+                return redirect('/');
+                // return redirect('/user/dashboard');
             }
             return redirect()->back()->with('flash_message_error','Something went wrong, please try again.');
         }
@@ -116,8 +118,8 @@ class UserController extends Controller
                     $user->save();
                     auth()->login($user, true);
                     Session::put('userSession',$request->email);
-
-                    return redirect('/user/dashboard');
+                    return redirect('/');
+                    // return redirect('/user/dashboard');
                 } else {
                     return redirect()->back()->with("flash_message_error","Password and confirm password didn't match"); 
                 }
