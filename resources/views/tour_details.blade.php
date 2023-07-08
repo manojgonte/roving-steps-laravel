@@ -90,7 +90,7 @@
     </div>
 </section>
 
-<section class="pt-40">
+<section class="pt-20">
     <div class="container">
         @if(Session::has('success_message'))
         <div class="p-2 mb-2 bg-info-2 rounded-4">
@@ -130,7 +130,7 @@
         </div>
     </div>
 </section>
-<section class="pt-40 js-pin-container">
+<section class="pt-20 js-pin-container">
     <div class="container">
         <div class="row y-gap-30">
             <div class="col-lg-8">
@@ -212,47 +212,46 @@
         <h3 class="text-22 fw-500 slanted d-flex my-10">Itinerary</h3>
         <div class="row y-gap-30 mt-20">
             
-            @foreach($tour->itinerary as $day)
-                <div class="border-bottom-light rounded-4 py-10 sm:px-20 sm:py-20">
-                    <div class="row y-gap-10">
-                        <h3 class="text-18 fw-600">Day {{$day->day}}: {{$day->visit_place}}</h3>
-                        <div class="col-xl-3">
-                            <img src="{{asset('img/tours/tour_itinerary/'.$day->image)}}" alt="" class="rounded-4 img-border-style img-repso">
-                        </div>
-                        <div class="col-xl-9">
-                            <div class="bg-white rounded-4 px-10 py-10">
-                                <div class="row y-gap-30">
-                                    <div class="col-md-9">
-                                        <p class="text-dark-1 text-15"> {{$day->description}}</p>
-                                    </div>
-                                    <div class="col-md-3 border-left-light lg:border-none text-right lg:text-left py-0">
-                                        <div class="y-gap-5">
-                                            <div class="d-flex justify-start align-items-center">
-                                                <div class="flex-center size-50 rounded-full bg-black-20">
-                                                    <i class="icon-customer text-white text-30"></i>
-                                                </div>
-                                                <div class="text-left mt-5 pl-20">
-                                                    <h4 class="text-16 fw-500">Activity</h4>
-                                                    <p class="text-15">{{$day->activity}}</p>
-                                                </div>
+            @foreach($tour->itinerary->sortBy([['day','asc'],['created_at','asc']]) as $day)
+            <div class="border-bottom-light rounded-4 py-20 sm:px-20 sm:py-20">
+                <div class="row y-gap-10">
+                    <h3 class="text-18 fw-600">Day {{$day->day}}: {{$day->visit_place}}</h3>
+                    <div class="col-xl-3">
+                        <img src="{{asset('img/tours/tour_itinerary/'.$day->image)}}" alt="" class="rounded-4 img-repso">
+                    </div>
+                    <div class="col-xl-9">
+                        <div class="bg-white rounded-4 px-10 py-10">
+                            <div class="row y-gap-30">
+                                <div class="col-md-9">
+                                    <p class="text-dark-1 text-15"> {{$day->description}}</p>
+                                </div>
+                                <div class="col-md-3 border-left-light lg:border-none text-right lg:text-left py-0">
+                                    <div class="y-gap-5">
+                                        <div class="d-flex justify-start align-items-center">
+                                            <div class="flex-center size-50 rounded-full bg-black-20">
+                                                <i class="icon-customer text-white text-30"></i>
                                             </div>
-                                            <div class="d-flex justify-start align-items-center">
-                                                <div class="flex-center size-50 rounded-full bg-black-20">
-                                                    <i class="icon-bed text-white text-30"></i>
-                                                </div>
-                                                <div class="text-left mt-5 pl-20">
-                                                    <h4 class="text-16 fw-500">Stay</h4>
-                                                    <p class="text-15">{{$day->stay}}</p>
-                                                </div>
+                                            <div class="text-left mt-5 pl-20">
+                                                <h4 class="text-16 fw-500">Activity</h4>
+                                                <p class="text-15">{{$day->activity}}</p>
                                             </div>
-                                            <div class="d-flex justify-start align-items-center">
-                                                <div class="flex-center size-50 rounded-full bg-black-20">
-                                                    <i class="icon-food text-white text-30"></i>
-                                                </div>
-                                                <div class="text-left mt-5 pl-20">
-                                                    <h4 class="text-16 fw-500">Food</h4>
-                                                    <p class="text-15">{{$day->food}}</p>
-                                                </div>
+                                        </div>
+                                        <div class="d-flex justify-start align-items-center">
+                                            <div class="flex-center size-50 rounded-full bg-black-20">
+                                                <i class="icon-bed text-white text-30"></i>
+                                            </div>
+                                            <div class="text-left mt-5 pl-20">
+                                                <h4 class="text-16 fw-500">Stay</h4>
+                                                <p class="text-15">{{$day->stay}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-start align-items-center">
+                                            <div class="flex-center size-50 rounded-full bg-black-20">
+                                                <i class="icon-food text-white text-30"></i>
+                                            </div>
+                                            <div class="text-left mt-5 pl-20">
+                                                <h4 class="text-16 fw-500">Food</h4>
+                                                <p class="text-15">{{$day->food}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -261,15 +260,13 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
+            </div>
+            @endforeach
         </div>
     </div>
 </section>
-<div class="container mt-40 mb-40">
-    <div class="border-top-light"></div>
-</div>
 
-<section class="pt-20">
+<section class="pt-40">
     <div class="container">
         <div class="row x-gap-10 y-gap-10">
             <div class="col-auto">
@@ -325,69 +322,77 @@
     <div class="modal-content p-0">
         <div class="">
             <div class="row d-flex justify-between">
-                <div class="col-lg-5 bg-blue-1 justify-center items-center d-flex bg-blue-1">
+                <div class="col-lg-4 bg-blue-1 justify-center items-center d-flex bg-blue-1">
                     <div class="">
                         <img src="{{asset('img/elements/need_help.png')}}" style="height: 100px;" alt="">
-                        <p class="text-white-50 text-center">Will help yoy to plan your dream holidays</p>
+                        <p class="text-white-50 text-center">Will help you to plan your dream holidays</p>
                     </div>
                 </div>
-                <div class="col-lg-7 py-20">
+                <div class="col-lg-8 py-20">
                     <div class="rounded-4 container">
-                        <form action="{{url('tour-enquiry')}}" method="POST">@csrf
+                        <form action="{{url('tour-enquiry')}}" method="POST" class="tourEnqForm">@csrf
                             <input type="hidden" name="tour_id" value="{{Request()->id}}">
-                            <input type="hidden" name="user_id" @auth value="{{Auth::User()->id}}" @endauth>
+                            <input type="hidden" name="user_id" @auth value="{{Auth::id()}}" @endauth>
                             <div class="row y-gap-20 x-gap-20">
                                 <div class="col-12">
                                     <div class="form-input ">
                                         <input type="text" name="name" @auth value="{{Auth::User()->name}}" @endauth required>
-                                        <label class="lh-1 text-16 text-light-1">Full Name</label>
+                                        <label class="lh-1 text-16 text-light-1">Full Name *</label>
                                     </div>
+                                    <div class="error-message"></div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-input ">
-                                        <input type="text" name="contact" @auth value="{{Auth::User()->contact}}" @endauth required>
+                                        <input type="text" name="contact" @auth value="{{Auth::User()->contact}}" @endauth>
                                         <label class="lh-1 text-16 text-light-1">Contact</label>
                                     </div>
+                                    <div class="error-message"></div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-input ">
                                         <input type="email" name="email" @auth value="{{Auth::User()->email}}" @endauth required>
-                                        <label class="lh-1 text-16 text-light-1">Email</label>
+                                        <label class="lh-1 text-16 text-light-1">Email *</label>
                                     </div>
+                                    <div class="error-message"></div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-input ">
-                                        <input type="text" name="tourist_no" required>
+                                        <input type="text" name="tourist_no">
                                         <label class="lh-1 text-16 text-light-1">No. of Tourist</label>
                                     </div>
+                                    <div class="error-message"></div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-input ">
                                         <input type="text" name="current_city" required>
-                                        <label class="lh-1 text-16 text-light-1">Current City</label>
+                                        <label class="lh-1 text-16 text-light-1">Current City *</label>
                                     </div>
+                                    <div class="error-message"></div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-input ">
-                                        <input type="date" name="from_date" required>
-                                        <label class="lh-1 text-16 text-light-1">Travel: From Date</label>
+                                        <input type="date" name="from_date" min="{{date("Y-m-d")}}">
+                                        <label class="lh-1 text-16 text-light-1">From</label>
                                     </div>
+                                    <div class="error-message"></div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-input ">
-                                        <input type="date" name="end_date" required>
-                                        <label class="lh-1 text-16 text-light-1">Travel: To Date</label>
+                                        <input type="date" name="end_date" min="{{date("Y-m-d")}}">
+                                        <label class="lh-1 text-16 text-light-1">To</label>
                                     </div>
+                                    <div class="error-message"></div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-input ">
-                                        <textarea name="message" placeholder="" required rows="2"></textarea>
-                                        <label class="lh-1 text-16 text-light-1">Your Messages</label>
+                                        <textarea name="message" required rows="2"></textarea>
+                                        <label class="lh-1 text-16 text-light-1">Messages *</label>
                                     </div>
+                                    <div class="error-message"></div>
                                 </div>
                                 <div class="col-auto d-flex">
                                     <button type="submit" class="button px-24 h-50 -dark-1 bg-warning-2 text-white mx-1"> ENQUIRE</button>
-                                    <button class="button bg-light-2 text-black px-24 close">&times;</button>
+                                    {{-- <button class="button bg-light-2 text-black px-24 close">&times;</button> --}}
                                 </div>
                             </div>
                         </form>
@@ -399,6 +404,62 @@
 </div>
 
 @section('scripts')
+<script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{asset('backend_js/jquery.validate.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        var container = $('div.error-container');
+        $(".tourEnqForm").validate({
+            rules:{
+                name:{
+                    required:true,
+                },
+                contact:{
+                    // required:true,
+                    number:true,
+                    minlength:10,
+                    maxlength:10,
+                },
+                email:{
+                    required:true,
+                    email:true,
+                },
+                message:{
+                    required:true,
+                    maxlength:1000,
+                },
+            },
+            messages:{
+                name:{ 
+                    required: "Please enter name",
+                },
+                contact:{ 
+                    // required: "Please enter valid contact number",
+                    minlength: "Please enter {0} digit phone number",
+                    maxlength: "Please enter {0} digit phone number",
+                    number: "Please enter valid phone number",
+                },
+                email:{ 
+                    required: "Please enter email",
+                    email: "Please enter valid email",
+                },
+                message:{ 
+                    required: "Please enter message",
+                    maxlength: "Please enter no more than {0} characters",
+                },
+            },
+            errorPlacement: function(error, element) {
+                error.appendTo(element.closest('.col-12, .col-6').find('.error-message'));
+            },
+            submitHandler: function(form) {
+                $(".button").attr("disabled", true);
+                $(".button").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
+                form.submit();
+            }
+        });
+    });
+</script>
+
 <script>
     const modal = document.getElementById("modal");
     const openModalBtn = document.getElementById("openModal");
@@ -408,9 +469,9 @@
         modal.style.display = "block";
     });
 
-    closeModalBtn.addEventListener("click", function() {
-        modal.style.display = "none";
-    });
+    // closeModalBtn.addEventListener("click", function() {
+    //     modal.style.display = "none";
+    // });
 
     window.addEventListener("click", function(event) {
         if (event.target === modal) {

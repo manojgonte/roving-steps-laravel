@@ -21,7 +21,7 @@
                     </a>
                 </li> 
                 <li class="nav-item">
-                    <a href="{{url('admin/tour-planner')}}" class="nav-link text-white @if(preg_match('#/admin/tour-planner#', $url)) active @endif">
+                    <a href="{{url('admin/tour-planner/1')}}" class="nav-link text-white @if(preg_match('#/admin/tour-planner#', $url)) active @endif">
                         <i class="nav-icon fas fa-user-ninja"></i>
                         <p>Tour Planner</p>
                     </a>

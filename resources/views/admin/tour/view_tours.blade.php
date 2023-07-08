@@ -53,7 +53,7 @@
                                         <th>Tourist Count</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
-                                        <th>Action</th>
+                                        {{-- <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,10 +65,10 @@
 	                                    <td>NA</td>
 	                                    <td>{{date('d/m/Y', strtotime($row->from_date))}}</td> 
                                         <td>{{date('d/m/Y', strtotime($row->end_date))}}</td> 
-	                                    <td>
-                                            {{-- <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp; --}}
+	                                    {{-- <td>
+                                            <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp;
                                             <button class="btn btn-default" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i></button>
-	                                    </td>
+	                                    </td> --}}
 	                                </tr>
                                 @endforeach
                                 </tbody>

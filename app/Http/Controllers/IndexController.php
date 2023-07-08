@@ -90,13 +90,14 @@ class IndexController extends Controller
 
             $enquiry = new TourEnquiry;
             $enquiry->tour_id = $data['tour_id'];
+            $enquiry->user_id = !empty($data['user_id']) ? $data['user_id'] : null;
             $enquiry->name = $data['name'];
             $enquiry->email = $data['email'];
-            $enquiry->contact = $data['contact'];
-            $enquiry->tourist_no = $data['tourist_no'];
+            $enquiry->contact = !empty($data['contact']) ? $data['contact'] : null;
+            $enquiry->tourist_no = !empty($data['tourist_no']) ? $data['tourist_no'] : null;
             $enquiry->current_city = $data['current_city'];
-            $enquiry->from_date = $data['from_date'];
-            $enquiry->end_date = $data['end_date'];
+            $enquiry->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
+            $enquiry->end_date = !empty($data['end_date']) ? $data['end_date'] : null;
             $enquiry->message = $data['message'];
             if($enquiry->save()){
                 return redirect()->back()->with('success_message','Tour enquiry submitted successfully.');

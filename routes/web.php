@@ -60,7 +60,7 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     // tour
     Route::match(['get','post'], 'admin/tours/{status?}', [TourController::class, 'viewTours']);
 
-    Route::match(['get','post'], 'admin/tour-planner/', [TourController::class, 'tourPlanner']);
+    Route::match(['get','post'], 'admin/tour-planner/{status?}', [TourController::class, 'tourPlanner']);
     Route::match(['get','post'], 'admin/add-tour/', [TourController::class, 'addTour'])->name('addTour');
     Route::match(['get','post'], 'admin/edit-tour/{id}', [TourController::class, 'editTour']);
     Route::get('admin/delete-tour/{id}', [TourController::class,'deleteTour']);

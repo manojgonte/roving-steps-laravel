@@ -49,7 +49,7 @@
                             <div class="col-6">
                                 <div class="form-input">
                                     <input type="text" name="contact" required>
-                                    <label class="lh-1 text-16 text-light-1">Contact *</label>
+                                    <label class="lh-1 text-16 text-light-1">Contact</label>
                                 </div>
                                 <div class="error-message"></div>
                             </div>
@@ -128,7 +128,7 @@
                     required:true,
                 },
                 contact:{
-                    required:true,
+                    // required:true,
                     number:true,
                     minlength:10,
                     maxlength:10,
@@ -147,7 +147,7 @@
                     required: "Please enter name",
                 },
                 contact:{ 
-                    required: "Please enter valid contact number",
+                    // required: "Please enter valid contact number",
                     minlength: "Please enter {0} digit phone number",
                     maxlength: "Please enter {0} digit phone number",
                     number: "Please enter valid phone number",

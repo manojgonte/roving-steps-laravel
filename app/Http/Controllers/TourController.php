@@ -99,7 +99,7 @@ class TourController extends Controller
                 'note' => !empty($data['note']) ? $data['note'] : null,
                 'is_popular' => !empty($data['is_popular']) ? $data['is_popular'] : '0',
             ]);
-            return redirect('admin/tour-planner')->with('flash_message_success','Tour details updated successfully');
+            return redirect('admin/itinerary-builder/'.$id)->with('flash_message_success','Tour details updated successfully');
         }
         $tour = Tour::where('id',$id)->first();
         return view('admin.tour.edit_tour')->with(compact('tour'));
@@ -125,7 +125,8 @@ class TourController extends Controller
     }
 
     public function tourPlanner(Request $request, $status=null){
-        $tours = Tour::orderBy('id','DESC')->paginate(10);
+        $status = (empty($status) || $status == 0) ? 0 : 1; 
+        $tours = Tour::where('status',$status)->orderBy('id','DESC')->paginate(10);
         return view('admin.tour.tour_planner')->with(compact('tours'));
     }
 
@@ -154,32 +155,27 @@ class TourController extends Controller
             $data = $request->all();
             // dd($data);
 
-            foreach ($data['day'] as $key => $val){
-                if(!empty($val) && !empty($data['visit_place'][$key])){
-                    $itinerary = new TourItinerary;
-                    $itinerary->tour_id       = $id;
-                    $itinerary->day           = $val;
-                    $itinerary->visit_place   = $data['visit_place'][$key];
-                    $itinerary->activity      = $data['activity'][$key];
-                    $itinerary->travel_option = $data['travel_option'][$key];
-                    $itinerary->description   = $data['description'][$key];
-                    $itinerary->stay          = $data['stay'][$key];
-                    $itinerary->food          = $data['food'][$key];
+            $itinerary = new TourItinerary;
+            $itinerary->tour_id       = $id;
+            $itinerary->day           = $data['day'];
+            $itinerary->visit_place   = $data['visit_place'];
+            $itinerary->activity      = $data['activity'];
+            $itinerary->travel_option = $data['travel_option'];
+            $itinerary->description   = $data['description'];
+            $itinerary->stay          = $data['stay'];
+            $itinerary->food          = $data['food'];
 
-                    if($request->hasFile('image')) {
-                        $image_tmp = $data['image'][$key];
-                        // $filename = time() . '.' . $image_tmp->getClientOriginalName();
-                        if ($image_tmp->isValid()) {
-                            $filename = strtotime("now").'-'. $image_tmp->getClientOriginalName();
-                            $file_path = 'img/tours/tour_itinerary/'.$filename;
-                            Image::make($image_tmp)->save($file_path);
-                            $itinerary->image = $filename;
-                        }
-                    }
-
-                    $itinerary->save();
+            if($request->hasFile('image')) {
+                $image_tmp = $data['image'];
+                if ($image_tmp->isValid()) {
+                    $filename = strtotime("now").'-'. $image_tmp->getClientOriginalName();
+                    $file_path = 'img/tours/tour_itinerary/'.$filename;
+                    Image::make($image_tmp)->save($file_path);
+                    $itinerary->image = $filename;
                 }
             }
+
+            $itinerary->save();
             return redirect()->back()->with('flash_message_success','Tour itinerary added successfully!');
         }
         return redirect('admin/add-tour-itinerary/'.$id);
@@ -190,54 +186,49 @@ class TourController extends Controller
             $data = $request->all();
             // dd($data);
 
-            foreach ($data['day'] as $key => $val){
-                if(!empty($val)){
-                    $visit_place   = $data['visit_place'][$key];
-                    $activity      = $data['activity'][$key];
-                    $travel_option = $data['travel_option'][$key];
-                    $description   = $data['description'][$key];
-                    $stay          = $data['stay'][$key];
-                    $food          = $data['food'][$key];
+            $visit_place   = $data['visit_place'];
+            $activity      = $data['activity'];
+            $travel_option = $data['travel_option'];
+            $description   = $data['description'];
+            $stay          = $data['stay'];
+            $food          = $data['food'];
 
-                    if ($request->hasFile('image')) {
-                        $image_tmp = $request->image[$key];
-                        if ($image_tmp->isValid()) {
-                            $filename = strtotime("now").'-'. $image_tmp->getClientOriginalName();
-                            $file_path = 'img/tours/tour_itinerary/' . $filename;
-                            Image::make($image_tmp)->save($file_path);
-                        }
-                    } else if (!empty($data['current_image'][$key])) {
-                        $filename = $data['current_image'][$key];
-                    } else {
-                        $filename = '';
-                    }
-
-                    // detail update
-                    TourItinerary::where(['id'=>$data['itinerary_id'][$key]])->update([
-                        'visit_place' => $visit_place,
-                        'activity' => $activity,
-                        'travel_option' => $travel_option,
-                        'description' => $description,
-                        'stay' => $stay,
-                        'food' => $food,
-                        'image'=>$filename,
-                    ]);
+            if ($request->hasFile('image')) {
+                $image_tmp = $request->image;
+                if ($image_tmp->isValid()) {
+                    $filename = strtotime("now").'-'. $image_tmp->getClientOriginalName();
+                    $file_path = 'img/tours/tour_itinerary/' . $filename;
+                    Image::make($image_tmp)->save($file_path);
                 }
+            } else if (!empty($data['current_image'])) {
+                $filename = $data['current_image'];
+            } else {
+                $filename = '';
             }
-            return redirect()->back()->with('flash_message_success','Tour itinerary updated successfully!');
+
+            // detail update
+            TourItinerary::where(['id'=>$id])->update([
+                'visit_place' => $visit_place,
+                'activity' => $activity,
+                'travel_option' => $travel_option,
+                'description' => $description,
+                'stay' => $stay,
+                'food' => $food,
+                'image'=>$filename,
+            ]);
+            return redirect('admin/itinerary-builder/'.$data['tour_id'])->with('flash_message_success','Itinerary updated successfully!');
         }
 
-        $tour = Tour::with('itinerary')
-                ->select('tours.*', 'destinations.name as dest_name', 'special_tours.title as special_tour')
-                ->leftJoin('destinations','destinations.id','tours.dest_id')
-                ->leftJoin('special_tours','special_tours.id','tours.special_tour_type')
-                ->where('tours.id', $id)
-                ->first();
-        return view('admin.tour.edit_itinerary_builder', ['id' => $id, 'tour' => $tour]);
-
+        $itinerary = TourItinerary::where('id', $id)->first();
+        return view('admin.tour.edit_itinerary_builder', ['id' => $id, 'itinerary' => $itinerary]);
     }
 
     public function deleteItinerary(Request $request, $id){
+        $itinerary = TourItinerary::select('id','image')->where('id',$id)->first();
+        if(file_exists('img/tours/tour_itinerary/'.$itinerary->image)){
+            unlink('img/tours/tour_itinerary/'.$itinerary->image);
+        }
+
         TourItinerary::where('id',$id)->delete();
         return redirect()->back()->with('flash_message_success','Itinerary deleted successfully');
     }

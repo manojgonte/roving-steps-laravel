@@ -58,9 +58,9 @@
         </div>
       </form>
 
-       <p class="mb-1 d-flex justify-content-center mt-2">
+       {{-- <p class="mb-1 d-flex justify-content-center mt-2">
         <a href="{{ url('admin-forgot-password') }}">I forgot my password</a>
-      </p> 
+      </p>  --}}
     </div>
   </div>
 </div>

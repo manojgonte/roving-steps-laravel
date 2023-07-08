@@ -34,9 +34,8 @@
                     <div class="card">
                         <div class="card-header p-2">
 			                <ul class="nav nav-pills">
-			                  	<li class="nav-item"><a class="nav-link active" href="{{url('admin/tours/ongoing')}}">Planned</a></li>
-			                  	<li class="nav-item"><a class="nav-link" href="{{url('admin/tour-enquiries')}}">Tour Enquiries</a></li>
-			                  	<li class="nav-item"><a class="nav-link disabled" href="#">Draft</a></li>
+			                  	<li class="nav-item"><a class="nav-link @if(Request()->status == 1) active @endif" href="{{url('admin/tour-planner/1')}}">Planned</a></li>
+			                  	<li class="nav-item"><a class="nav-link @if(Request()->status == 0) active @endif" href="{{url('admin/tour-planner/0')}}">Draft</a></li>
 			                </ul>
 			            </div>
 
