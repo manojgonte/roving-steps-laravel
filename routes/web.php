@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AssociateController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TourController;
@@ -81,6 +82,16 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/view-destinations/', [TourController::class, 'viewDestinations']);
     Route::match(['get','post'], 'admin/add-destination/', [TourController::class, 'addDestination']);
     Route::match(['get','post'], 'admin/delete-destination/{id}', [TourController::class,'deleteDestination']);
+
+    // Registered Users
+    Route::match(['get','post'], 'admin/registered-users/', [UserController::class, 'viewUsers']);
+
+    // Associated Users
+    Route::match(['get','post'], 'admin/associated-users/', [AssociateController::class, 'viewAssociates']);
+    Route::match(['get','post'], 'admin/add-associate/', [AssociateController::class, 'addAssociate']);
+    Route::match(['get','post'], 'admin/edit-associate/{id}', [AssociateController::class, 'editAssociates']);
+    Route::match(['get','post'], 'admin/delete-associate/{id}', [AssociateController::class, 'deleteAssociates']);
+
 });
 
 

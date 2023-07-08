@@ -141,4 +141,9 @@ class UserController extends Controller
         $meta_title = 'Dashboard | '.config('app.name');
         return view('users.dashboard', compact('meta_title','tour_enquiry'));
     }
+
+    public function viewUsers(Request $request){
+        $users = User::orderBy('id','DESC')->paginate(10);
+        return view('admin.users.registered-users')->with(compact('users'));
+    }
 }
