@@ -44,6 +44,18 @@
                         <p>Destinations</p>
                     </a>
                 </li> 
+                <li class="nav-item">
+                    <a href="{{url('admin/registered-users')}}" class="nav-link text-white @if(preg_match('#/admin/registered-users#', $url)) active @endif">
+                        <i class="nav-icon fas fa-user-plus"></i>
+                        <p>Registered Users</p>
+                    </a>
+                </li> 
+                <li class="nav-item">
+                    <a href="{{url('admin/associated-users')}}" class="nav-link text-white @if(preg_match('#/admin/associated-users#', $url)) active @endif">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Associated Users</p>
+                    </a>
+                </li> 
                 {{-- Projects --}}
                 {{-- <li class="nav-item">
                     <a href="#" class="nav-link text-white ">
