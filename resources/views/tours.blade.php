@@ -155,7 +155,7 @@
                 <div class="col-xl-9 col-lg-8">
                     <div class="row y-gap-10 items-center justify-between">
                         <div class="col-auto">
-                            <div class="text-20"><span class="fw-500">{{$tours->total()}} popular tour packages found</span> </div>
+                            <div class="text-20"><span class="fw-500">Popular Destinations </span> </div>
                         </div>
                     </div>
 
@@ -198,6 +198,12 @@
                                     <i class="icon icon-arrow-right"></i>
                                 </button>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row y-gap-10 items-center justify-between">
+                        <div class="col-auto">
+                            <div class="text-20"><span class="fw-500">{{$tours->total()}} popular tour packages found</span> </div>
                         </div>
                     </div>
 

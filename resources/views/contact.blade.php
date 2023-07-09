@@ -100,9 +100,6 @@
                                 <i class="icon-facebook text-30"></i>
                             </a>
                             <a href="#">
-                                <i class="icon-twitter text-30"></i>
-                            </a>
-                            <a href="#">
                                 <i class="icon-instagram text-30"></i>
                             </a>
                             <a href="#">
