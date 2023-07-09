@@ -7,6 +7,7 @@ use App\Rules\Recaptcha;
 use App\Models\Destination;
 use App\Models\TourEnquiry;
 use App\Models\Enquiry;
+use App\Models\Gallery;
 use App\Models\Tour;
 use Mail;
 use Log;
@@ -60,6 +61,16 @@ class IndexController extends Controller
         if($request->dest_id){
             $tours = $tours->where('dest_id', $request->dest_id);
         }
+
+        if($request->q){
+            $q = $request->q;
+            $tours = $tours->where(function($query) use($q){
+                $query->where('tour_name','like','%'.$q.'%')
+                ->orWhere('description','like','%'.$q.'%')
+                ->orWhere('type','like','%'.$q.'%');
+            });
+        }
+
         if($request->special_tour_type){
             $tours = $tours->where('special_tour_type', $request->special_tour_type);
         }
@@ -108,8 +119,9 @@ class IndexController extends Controller
     }
 
     public function gallery(Request $request){
-        $meta_title = 'gallery';
-        return view('gallery',compact('meta_title'));
+        $photos = Gallery::paginate(12);
+        $meta_title = 'Gallery';
+        return view('gallery',compact('meta_title','photos'));
     }
 
     public function flightBooking(Request $request){

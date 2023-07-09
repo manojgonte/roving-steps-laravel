@@ -7,6 +7,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Middleware\AdminAuthenticated;
 use App\Http\Middleware\Userlogin;
 
@@ -92,10 +93,16 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/edit-associate/{id}', [AssociateController::class, 'editAssociates']);
     Route::match(['get','post'], 'admin/delete-associate/{id}', [AssociateController::class, 'deleteAssociates']);
 
+    // Associated Users
+    Route::get('admin/gallery/', [GalleryController::class, 'viewPhotos']);
+    Route::post('admin/add-photos/', [GalleryController::class, 'addPhotos']);
+    Route::post('admin/edit-photo/', [GalleryController::class, 'editPhoto']);
+    Route::get('admin/delete-photo/{id}', [GalleryController::class, 'deletePhoto']);
+
 });
 
 
-//OTHER ROUTES
+//ADMIN AUTH ROUTES
 Route::match(['get','post'], '/admin-login-check', [AdminController::class, 'login']);
 Route::post('/admin-reset-password', [AdminController::class, 'resetPassword']);
 

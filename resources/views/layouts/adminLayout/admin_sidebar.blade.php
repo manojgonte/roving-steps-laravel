@@ -55,6 +55,12 @@
                         <i class="nav-icon fas fa-users"></i>
                         <p>Associated Users</p>
                     </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('admin/gallery')}}" class="nav-link text-white @if(preg_match('#/admin/gallery#', $url)) active @endif">
+                        <i class="nav-icon fas fa-photo-video"></i>
+                        <p>Gallery</p>
+                    </a>
                 </li> 
                 {{-- Projects --}}
                 {{-- <li class="nav-item">

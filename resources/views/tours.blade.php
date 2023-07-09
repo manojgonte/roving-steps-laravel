@@ -23,12 +23,12 @@
                     <div class="col-xl-9">
                         <div class="mainSearch -w-900 bg-white px-10 py-10 lg:px-20 lg:pt-5 lg:pb-20 rounded-100">
                             <form action="{{url('tours')}}" method="GET">
-                            <div class="button-grid items-center">
-                                <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
+                            <div class="button-grid items-center" style="grid-template-columns: 1fr 250px 0px auto;">
+                                {{-- <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
                                     <div data-x-dd-click="searchMenu-loc">
                                         <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
                                         <div class="text-15 text-light-1 ls-2 lh-16">
-                                            <select name="dest_id" class="form-select" aria-label="Destinations" required>
+                                            <select name="dest_id" class="form-select" aria-label="Destinations">
                                                 <option value="">-- Select --</option>
                                                 @foreach(App\Models\Destination::where('status',1)->get() as $row)
                                                 <option value="{{$row->id}}">{{$row->name}}</option>
@@ -36,17 +36,17 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="searchMenu-date px-30 lg:py-20 lg:px-0 js-form-dd js-calendar">
                                     <div data-x-dd-click="searchMenu-date">
                                         <h4 class="text-15 fw-500 ls-2 lh-16">Search </h4>
                                         <div class="text-15 text-light-1 ls-2 lh-16">
-                                            <input autocomplete="off" type="search" name="keyword" placeholder="Search Keyword" class="js-search js-dd-focus" />
+                                            <input autocomplete="off" type="search" name="q" placeholder="Search..." @if(Request()->q) value="{{Request()->q}}" @endif class="js-search js-dd-focus" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="button-item">
-                                    <button class="mainSearch__submit button -dark-1 h-60 px-35 col-12 rounded-100 bg-blue-1 text-white">
+                                    <button type="submit" class="mainSearch__submit button -dark-1 h-60 px-35 col-12 rounded-100 bg-blue-1 text-white">
                                         <i class="icon-search text-20 mr-10"></i> Search 
                                     </button>
                                 </div>

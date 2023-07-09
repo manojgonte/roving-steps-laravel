@@ -1,5 +1,6 @@
 /node_modules
 /public/img/tours
+/public/img/gallery
 /public/hot
 /public/storage
 /storage/*.key
