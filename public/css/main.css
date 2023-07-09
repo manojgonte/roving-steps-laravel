@@ -87,6 +87,7 @@
   --text-14: 14px;
   --text-15: 15px;
   --text-16: 16px;
+  --text-17: 17px;
   --text-18: 18px;
   --text-20: 20px;
   --text-22: 22px;
@@ -1462,6 +1463,10 @@ h6 {
 
 .text-16 {
   font-size: var(--text-16) !important;
+}
+
+.text-17 {
+  font-size: var(--text-17) !important;
 }
 
 .text-18 {
@@ -5300,9 +5305,9 @@ div[data-slider]>input[type=range]::-ms-tooltip {
   transform: scale(1.15);
 }
 
-.hotelsCard__title {
+/*.hotelsCard__title {
   min-height: 58px;
-}
+}*/
 
 .hotelsCard.-type-1:hover .hotelsCard__title span {
   background-size: 100% !important;
@@ -13126,4 +13131,46 @@ a.button.bg-light-1:hover {
   font-size: 85%;
   display: block;
   color: red;
+}
+
+.pagination {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+}
+.page-link {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #1B2C60;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-item:first-child .page-link {
+    margin-left: 0;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+.page-link:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #1B2C60;
+    border-color: #1B2C60;
+}
+.page-link:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+
+.sidebar-checkbox {
+    max-height: 165px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

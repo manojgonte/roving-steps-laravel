@@ -64,7 +64,7 @@ class IndexController extends Controller
             $tours = $tours->where('special_tour_type', $request->special_tour_type);
         }
 
-        $tours = $tours->paginate(9);
+        $tours = $tours->paginate(12);
 
         $destinations = Destination::where('status',1)->get();
         $meta_title = 'Tours';

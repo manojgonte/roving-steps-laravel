@@ -48,9 +48,6 @@
                                         <i class="icon-facebook text-white text-30"></i>
                                     </a>
                                     <a href="#">
-                                        <i class="icon-twitter text-white text-30"></i>
-                                    </a>
-                                    <a href="#">
                                         <i class="icon-instagram text-white text-30"></i>
                                     </a>
                                     <a href="#">

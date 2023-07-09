@@ -66,7 +66,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-            	                      	<label class="required">Cover Image</label>
+            	                      	<label class="required">Cover Image <small>(Size: 600X500px)</small></label>
                                         @if(!empty($tour->image))
                                         <input type="hidden" name="current_image" value="{{ $tour->image }}">
                                         @endif

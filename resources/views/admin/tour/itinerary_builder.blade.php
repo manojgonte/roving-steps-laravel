@@ -142,7 +142,7 @@
                                         {{-- <td>{{ Str::limit($row->description, 30) }}</td> --}}
                                         <td>{{ $row->stay }}</td>
                                         <td>{{ $row->food }}</td>
-                                        <td>
+                                        <td class="d-flex border-0 justify-content-center">
                                             <a class="btn btn-default" href="{{ url('/admin/edit-tour-itinerary/'.$row->id) }}"><i class="fa fa-edit"></i></a> &nbsp;
                                             <a class="btn btn-default" onclick="return confirm('Are you sure?')" href="{{url('admin/delete-itinerary/'.$row->id)}}"><i class="fa fa-trash"></i></a>
                                         </td>

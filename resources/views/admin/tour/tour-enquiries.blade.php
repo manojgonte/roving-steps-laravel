@@ -43,7 +43,8 @@
 			                </ul>
 			            </div> --}}
 
-                        <div class="card-body">
+                        <div class="card-body">                            
+                            @if(count($tour_enquiry) > 0)
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
                                     <tr>
@@ -77,7 +78,12 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{ $tour_enquiry->links("pagination::bootstrap-4") }}
+                            <div class="mt-2 d-flex justify-content-center">
+                                {{ $tour_enquiry->links("pagination::bootstrap-4") }}
+                            </div>
+                            @else
+                            <div class="alert alert-dark">No tour enquiries found</div>
+                            @endif
                         </div>
                     </div>
                 </div>

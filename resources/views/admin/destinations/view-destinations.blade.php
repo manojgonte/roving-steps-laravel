@@ -33,14 +33,15 @@
 		            @endif
 
                     <div class="card">
-
                         <div class="card-body">
+
+                            @if(count($destinations) > 0)
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
                                     <tr>
-                                        <th>destination ID</th>
+                                        <th>ID</th>
                                         <th>Image</th>
-                                        <th>Name</th>
+                                        <th>Destination</th>
                                         <th>Description</th>
                                         <th>Type</th>
                                         <th>Status</th>
@@ -67,6 +68,9 @@
                             <div class="mt-2 d-flex justify-content-center">
                                 {{ $destinations->links("pagination::bootstrap-4") }}
                             </div>
+                            @else
+                            <div class="alert alert-dark">No destinations found</div>
+                            @endif
                         </div>
                     </div>
                 </div>

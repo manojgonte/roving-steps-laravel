@@ -153,7 +153,6 @@
             <div class="col-auto">
                 <div class="sectionTitle -md">
                     <h2 class="sectionTitle__title">Popular Tour Packages</h2>
-                    <p class=" sectionTitle__text mt-5 sm:mt-0">Interdum et malesuada fames ac ante ipsum</p>
                 </div>
             </div>
             <div class="col-sm-auto">
@@ -181,7 +180,7 @@
                             </div>
                         </div>
                         <div class="hotelsCard__content mt-10">
-                            <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
+                            <h4 class="hotelsCard__title text-dark-1 text-17 lh-16 fw-500">
                                 <span>{{$tour->tour_name}} | <span class="text-light-1">{{$tour->days}}N-{{$tour->nights}}D</span></span>
                             </h4>
                             @php

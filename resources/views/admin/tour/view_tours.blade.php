@@ -44,6 +44,7 @@
 			            </div>
 
                         <div class="card-body">
+                            @if(count($tours) > 0)
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
                                     <tr>
@@ -76,6 +77,9 @@
                             <div class="mt-2 d-flex justify-content-center">
                                 {{ $tours->links("pagination::bootstrap-4") }}
                             </div>
+                            @else
+                            <div class="alert alert-dark">No tours found</div>
+                            @endif
                         </div>
                     </div>
                 </div>
