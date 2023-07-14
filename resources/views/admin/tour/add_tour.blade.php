@@ -135,7 +135,7 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Note</label>
-                                        <input type="text" name="note" class="form-control" placeholder="Enter Note">
+                                        <textarea name="note" class="form-control" rows="3" placeholder="Enter Note"></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="form-check">

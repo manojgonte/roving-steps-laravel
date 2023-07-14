@@ -79,6 +79,7 @@
                                             <label class="required">Travel Option</label>
                                             <select class="form-control select2bs4" name="travel_option" required>
                                                 <option value="">Select One</option>
+                                                <option value="NA">NA</option>
                                                 <option value="Bike">Bike</option>
                                                 <option value="Private Car">Private Car</option>
                                                 <option value="Common Vehicle">Common Vehicle</option>
@@ -86,6 +87,7 @@
                                                 <option value="Train">Train</option>
                                                 <option value="Flight">Flight</option>
                                                 <option value="Cruise">Cruise</option>
+                                                <option value="Private Boat">Private Boat</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-12">

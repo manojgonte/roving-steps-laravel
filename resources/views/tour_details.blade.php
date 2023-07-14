@@ -156,7 +156,7 @@
                 <div class="row x-gap-40 y-gap-40">
                     <div class="col-12">
                         <h3 class="text-22 fw-500">Overview</h3>
-                        <p class="text-dark-1 text-15 mt-20"> {!! $tour->description !!}</p>
+                        <p class="text-dark-1 text-15 mt-20"> {!! nl2br($tour->description) !!}</p>
                     </div>
                 </div>
             </div>
@@ -223,7 +223,7 @@
                         <div class="bg-white rounded-4 px-10 py-10">
                             <div class="row y-gap-30">
                                 <div class="col-md-9">
-                                    <p class="text-dark-1 text-15"> {{$day->description}}</p>
+                                    <p class="text-dark-1 text-15"> {!! nl2br($day->description) !!}</p>
                                 </div>
                                 <div class="col-md-3 border-left-light lg:border-none text-right lg:text-left py-0">
                                     <div class="y-gap-5">

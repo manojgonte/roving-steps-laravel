@@ -139,7 +139,7 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Note</label>
-                                        <input type="text" name="note" class="form-control" placeholder="Enter Note" @if(!empty($tour->note)) value="{{$tour->note}}" @endif>
+                                        <textarea name="note" class="form-control" rows="3" placeholder="Enter Note">@if(!empty($tour->note)) {{$tour->note}} @endif</textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="form-check">

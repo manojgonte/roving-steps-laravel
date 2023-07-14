@@ -242,7 +242,7 @@
                                         <div class="fa fa-star-half-alt text-yellow-2 text-14"></div>
                                         @endif
                                     </div>
-                                    <p class="text-light-1 lh-14 text-14 mt-5">{{Str::limit($tour->amenities, 40)}}</p>
+                                    <p class="text-light-1 lh-14 text-14 mt-5" title="{{$tour->amenities}}">{{Str::limit($tour->amenities, 40)}}</p>
                                     <div class="mt-5">
                                         <div class="fw-500">
                                             <span class="text-14 text-light-1 fw-400">Starting from </span>

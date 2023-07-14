@@ -55,6 +55,7 @@
                                         <label class="required">Travel Option</label>
                                         <select class="form-control select2bs4" name="travel_option" required>
                                             <option value="">Select One</option>
+                                            <option value="NA" @if($itinerary->travel_option == 'NA') selected @endif>NA</option>
                                             <option value="Bike" @if($itinerary->travel_option == 'Bike') selected @endif>Bike</option>
                                             <option value="Private Car" @if($itinerary->travel_option == 'Private Car') selected @endif>Private Car</option>
                                             <option value="Common Vehicle" @if($itinerary->travel_option == 'Common Vehicle') selected @endif>Common Vehicle</option>
@@ -62,6 +63,7 @@
                                             <option value="Train" @if($itinerary->travel_option == 'Train') selected @endif>Train</option>
                                             <option value="Flight" @if($itinerary->travel_option == 'Flight') selected @endif>Flight</option>
                                             <option value="Cruise" @if($itinerary->travel_option == 'Cruise') selected @endif>Cruise</option>
+                                            <option value="Private Boat" @if($itinerary->travel_option == 'Private Boat') selected @endif>Private Boat</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12">
