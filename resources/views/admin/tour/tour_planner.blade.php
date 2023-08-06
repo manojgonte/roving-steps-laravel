@@ -39,17 +39,50 @@
 			                </ul>
 			            </div>
 
+                        <div class="card-header">
+                            <form action="" method="GET">
+                                <div class="row d-flex justify-content-start">
+                                    <div class="col-auto">
+                                        <select class="form-control select2bs4" name="dest_id" onchange="javascript:this.form.submit();">
+                                            <option value="" selected>-- All Destinations --</option>
+                                            @foreach($destinations as $dest)
+                                            <option value="{{$dest->dest_id}}" @if(Request()->dest_id == $dest->dest_id) selected @endif>{{$dest->destination}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <select class="form-control select2bs4" name="type" onchange="javascript:this.form.submit();">
+                                            <option value="" selected>-- Tour Type --</option>
+                                            <option value="Domestic" @if(Request()->type == 'Domestic') selected @endif>Domestic</option>
+                                            <option value="International" @if(Request()->type == 'International') selected @endif>International</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input class="form-control" name="q" placeholder="Search..." value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-default"> Submit</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="{{url('admin/tour-planner/'.Request()->status)}}" class="btn btn-default"> Clear</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                         <div class="card-body">
                             @if(count($tours) > 0)
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
                                     <tr>
                                         <th>Tour ID</th>
-                                        <th>Tour Name</th>
-                                        <th>Tour Type</th>
+                                        <th class="text-left">Tour Name</th>
+                                        <th>Type</th>
+                                        <th>Destination</th>
+                                        <th>Duration</th>
                                         <th>Status</th>
-                                        <th>Likes</th>
-                                        <th>Booked</th>
+                                        {{-- <th>Likes</th> --}}
+                                        {{-- <th>Booked</th> --}}
                                         <th>Updated On</th>
                                         <th>Action</th>
                                     </tr>
@@ -58,8 +91,10 @@
                                 @foreach($tours as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td>{{ Str::limit($row->tour_name, 30) }}</td>
+	                                    <td class="text-left">{{ Str::limit($row->tour_name, 40) }}</td>
 	                                    <td>{{ $row->type }}</td>
+                                        <td>{{ Str::limit($row->destination, 20) }}</td>
+                                        <td>{{ $row->days }}D | {{ $row->nights }}N</td>
 	                                    <td>
                                             <form action="{{ url('admin/update-tour-status/'.$row->id) }}" method="post">@csrf
                                             <div class="form-group">
@@ -70,14 +105,20 @@
                                             </div>
                                             </form>
                                         </td>
-	                                    <td>NA</td>
-	                                    <td>NA</td>
+	                                    {{-- <td>NA</td> --}}
+	                                    {{-- <td>NA</td> --}}
 	                                    <td>{{date('d/m/Y', strtotime($row->updated_at))}}</td> 
 	                                    <td>
-	                                        {{-- <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp; --}}
-	                                        <button class="btn btn-default" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i></button> &nbsp;
-	                                        <a class="btn btn-default" href="{{ url('/admin/edit-tour/'.$row->id) }}"><i class="fa fa-edit" style="color: #000;"></i></a> &nbsp;
-	                                        <a class="btn btn-default" onclick="return confirm('Are you sure? All associated data with this tour will be get deleted.')" href="{{ url('/admin/delete-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a> &nbsp;
+                                            <div class="btn-group dropleft">
+                                                <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-download"></i> &nbsp; Download</a>
+                                                    <a class="dropdown-item" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i> &nbsp; Share</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="{{ url('/admin/edit-tour/'.$row->id) }}"><i class="fa fa-edit"></i> &nbsp; Edit</a>
+                                                    <a class="dropdown-item" href="{{ url('/admin/delete-tour/'.$row->id) }}" onclick="return confirm('Are you sure? All associated data with this tour will be get deleted.')"> <i class="fa fa-trash"></i> &nbsp; Delete </a>
+                                                </div>
+                                            </div>
 	                                    </td>
 	                                </tr>
                                 @endforeach

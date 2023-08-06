@@ -112,22 +112,71 @@ class TourController extends Controller
 
     public function viewTours(Request $request, $status=null){
         $now = date('Y-m-d');
-        $tours = Tour::orderBy('id','DESC');
+        $tours = Tour::select('tours.id','tours.tour_name','tours.type','tours.dest_id','tours.from_date','tours.end_date','tours.days','tours.nights','tours.status','tours.updated_at','destinations.name as destination')
+            ->leftJoin('destinations','destinations.id','tours.dest_id')
+            ->orderBy('tours.id','DESC');
+
+        // filters
+        if($request->dest_id){
+            $tours = $tours->where('tours.dest_id', $request->dest_id);
+        }
+        if($request->type){
+            $tours = $tours->where('tours.type', $request->type);
+        }
+        if($request->q){
+            $q = $request->q;
+            $tours = $tours->where(function($query) use($q){
+                $query->where('tours.tour_name','like','%'.$q.'%')
+                ->orWhere('tours.description','like','%'.$q.'%');
+            });
+        }
+
         if (empty($status) || $status == 'ongoing') {
-            $tours = $tours->whereRaw('? between from_date and end_date', [$now]);
+            $tours = $tours->whereRaw('? between tours.from_date and tours.end_date', [$now]);
         } elseif ($status == 'upcoming') {
-            $tours = $tours->where('from_date', '>', $now);
+            $tours = $tours->where('tours.from_date', '>', $now);
         } elseif ($status == 'completed') {
-            $tours = $tours->where('end_date', '<', $now);
+            $tours = $tours->where('tours.end_date', '<', $now);
         }
         $tours = $tours->paginate(10);
-        return view('admin.tour.view_tours')->with(compact('tours'));
+
+        $destinations = Tour::select('tours.id','tours.dest_id','destinations.name as destination')
+            ->leftJoin('destinations','destinations.id','tours.dest_id')
+            ->orderBy('destinations.name','ASC')
+            ->groupBy('tours.dest_id')
+            ->get();
+        return view('admin.tour.view_tours')->with(compact('tours','destinations'));
     }
 
     public function tourPlanner(Request $request, $status=null){
         $status = (empty($status) || $status == 0) ? 0 : 1; 
-        $tours = Tour::where('status',$status)->orderBy('id','DESC')->paginate(10);
-        return view('admin.tour.tour_planner')->with(compact('tours'));
+        $tours = Tour::select('tours.id','tours.tour_name','tours.type','tours.dest_id','tours.from_date','tours.end_date','tours.days','tours.nights','tours.status','tours.updated_at','destinations.name as destination')
+            ->leftJoin('destinations','destinations.id','tours.dest_id')
+            ->orderBy('tours.id','DESC')
+            ->where('tours.status',$status);
+
+        if($request->dest_id){
+            $tours = $tours->where('tours.dest_id', $request->dest_id);
+        }
+        if($request->type){
+            $tours = $tours->where('tours.type', $request->type);
+        }
+        if($request->q){
+            $q = $request->q;
+            $tours = $tours->where(function($query) use($q){
+                $query->where('tours.tour_name','like','%'.$q.'%')
+                ->orWhere('tours.description','like','%'.$q.'%');
+            });
+        }
+        $tours = $tours->paginate(10);
+
+        $destinations = Tour::select('tours.id','tours.dest_id','destinations.name as destination')
+            ->leftJoin('destinations','destinations.id','tours.dest_id')
+            ->orderBy('destinations.name','ASC')
+            ->groupBy('tours.dest_id')
+            ->get();
+
+        return view('admin.tour.tour_planner')->with(compact('tours','destinations'));
     }
 
     public function updateTourStatus(Request $request, $id){
@@ -241,9 +290,28 @@ class TourController extends Controller
     public function tourEnquiries(Request $request, $status=null){
         $tour_enquiry = TourEnquiry::select('tour_enquiry.*','tours.id as tour_id','tours.tour_name')
             ->leftJoin('tours','tour_enquiry.tour_id','tours.id')
+            ->orderBy('tour_enquiry.id','DESC');
+
+        if($request->tour_id){
+            $tour_enquiry = $tour_enquiry->where('tour_enquiry.tour_id', $request->tour_id);
+        }
+        if($request->q){
+            $q = $request->q;
+            $tour_enquiry = $tour_enquiry->where(function($query) use($q){
+                $query->where('tour_enquiry.name','like','%'.$q.'%')
+                ->orWhere('tour_enquiry.contact','like','%'.$q.'%')
+                ->orWhere('tour_enquiry.email','like','%'.$q.'%')
+                ->orWhere('tour_enquiry.message','like','%'.$q.'%');
+            });
+        }
+        $tour_enquiry = $tour_enquiry->paginate(10);
+
+        $tours = TourEnquiry::select('tour_enquiry.id','tour_enquiry.tour_id','tours.tour_name')
+            ->leftJoin('tours','tours.id','tour_enquiry.tour_id')
             ->orderBy('tour_enquiry.id','DESC')
-            ->paginate(10);
-        return view('admin.tour.tour-enquiries')->with(compact('tour_enquiry'));
+            ->groupBy('tour_enquiry.tour_id')
+            ->get();
+        return view('admin.tour.tour-enquiries')->with(compact('tour_enquiry','tours'));
     }
 
     public function shareTour(Request $request){
@@ -272,8 +340,24 @@ class TourController extends Controller
         return redirect()->back();
     }
 
-    public function viewDestinations() {
-        $destinations = Destination::orderBy('id','DESC')->paginate(10);
+    public function viewDestinations(Request $request) {
+        $destinations = Destination::orderBy('name','ASC');
+
+        if($request->status){
+            $status = (empty($request->status) || $request->status == 'inactive') ? 0 : 1; 
+            $destinations = $destinations->where('status', $status);
+        }
+        if($request->type){
+            $destinations = $destinations->where('type', $request->type);
+        }
+        if($request->q){
+            $q = $request->q;
+            $destinations = $destinations->where(function($query) use($q){
+                $query->where('name','like','%'.$q.'%')
+                ->orWhere('description','like','%'.$q.'%');
+            });
+        }
+        $destinations = $destinations->paginate(10);
         return view('admin.destinations.view-destinations')->with(compact('destinations'));
     }
 

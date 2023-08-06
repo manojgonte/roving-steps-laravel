@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4>Destination list</h4>
+                    <h4>Destinations list</h4>
                 </div>
                 <div class="col-sm-6">
                     <a href="{{ url('/admin/add-destination') }}" style="float: right; margin: 3px 3px;" class="btn btn-warning text-white"><i class="fa fa-plus-circle"></i> Add Destination</a>
@@ -33,8 +33,36 @@
 		            @endif
 
                     <div class="card">
+                        <div class="card-header">
+                            <form action="" method="GET">
+                                <div class="row d-flex justify-content-start">
+                                    <div class="col-auto">
+                                        <select class="form-control select2bs4" name="type" onchange="javascript:this.form.submit();">
+                                            <option value="" selected>-- Tour Type --</option>
+                                            <option value="Domestic" @if(Request()->type == 'Domestic') selected @endif>Domestic</option>
+                                            <option value="International" @if(Request()->type == 'International') selected @endif>International</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <select class="form-control select2bs4" name="status" onchange="javascript:this.form.submit();">
+                                            <option value="" selected>-- Status --</option>
+                                            <option value="active" @if(Request()->status == 'active') selected @endif>Published</option>
+                                            <option value="inactive" @if(Request()->status == 'inactive') selected @endif>Not Published</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input class="form-control" name="q" placeholder="Search..." value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-default"> Submit</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="{{url('admin/view-destinations/')}}" class="btn btn-default"> Clear</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <div class="card-body">
-
                             @if(count($destinations) > 0)
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>

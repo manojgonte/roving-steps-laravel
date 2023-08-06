@@ -33,7 +33,21 @@
 		            @endif
 
                     <div class="card">
-
+                        <div class="card-header">
+                            <form action="" method="GET">
+                                <div class="row d-flex justify-content-start">
+                                    <div class="col-auto">
+                                        <input class="form-control" name="q" placeholder="Search..." value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-default"> Submit</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="{{url('admin/registered-users/')}}" class="btn btn-default"> Clear</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
@@ -49,9 +63,9 @@
                                 @foreach($users as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td>{{ Str::limit($row->name, 30) }}</td>
-	                                    <td>{{ Str::limit($row->email, 30) }}</td>
-	                                    <td>{{ $row->contact }}</td>
+	                                    <td>{{ $row->name ? $row->name : 'NA' }}</td>
+	                                    <td>{{ $row->email ? $row->email : 'NA' }}</td>
+                                        <td>{{ $row->contact ? $row->contact : 'NA' }}</td>
 	                                </tr>
                                 @endforeach
                                 </tbody>

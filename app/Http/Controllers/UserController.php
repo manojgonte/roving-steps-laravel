@@ -143,7 +143,16 @@ class UserController extends Controller
     }
 
     public function viewUsers(Request $request){
-        $users = User::orderBy('id','DESC')->paginate(10);
+        $users = User::orderBy('id','DESC');
+        if($request->q){
+            $q = $request->q;
+            $users = $users->where(function($query) use($q){
+                $query->where('name','like','%'.$q.'%')
+                ->orWhere('contact','like','%'.$q.'%')
+                ->orWhere('email','like','%'.$q.'%');
+            });
+        };
+        $users = $users->paginate(10);
         return view('admin.users.registered-users')->with(compact('users'));
     }
 }

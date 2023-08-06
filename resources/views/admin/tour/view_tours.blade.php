@@ -43,14 +43,46 @@
 			                </ul>
 			            </div>
 
+                        <div class="card-header">
+                            <form action="" method="GET">
+                                <div class="row d-flex justify-content-start">
+                                    <div class="col-auto">
+                                        <select class="form-control select2bs4" name="dest_id" onchange="javascript:this.form.submit();">
+                                            <option value="" selected>-- All Destinations --</option>
+                                            @foreach($destinations as $dest)
+                                            <option value="{{$dest->dest_id}}" @if(Request()->dest_id == $dest->dest_id) selected @endif>{{$dest->destination}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <select class="form-control select2bs4" name="type" onchange="javascript:this.form.submit();">
+                                            <option value="" selected>-- Tour Type --</option>
+                                            <option value="Domestic" @if(Request()->type == 'Domestic') selected @endif>Domestic</option>
+                                            <option value="International" @if(Request()->type == 'International') selected @endif>International</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input class="form-control" name="q" placeholder="Search..." value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-default"> Submit</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="{{url('admin/tours/'.Request()->status)}}" class="btn btn-default"> Clear</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                         <div class="card-body">
                             @if(count($tours) > 0)
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
                                     <tr>
                                         <th>Tour ID</th>
-                                        <th>Tour Name</th>
-                                        <th>Tour Type</th>
+                                        <th class="text-left">Tour Name</th>
+                                        <th>Tour</th>
+                                        <th>Destination</th>
                                         <th>Tourist Count</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
@@ -61,8 +93,9 @@
                                 @foreach($tours as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td>{{ Str::limit($row->tour_name, 30) }}</td>
+	                                    <td class="text-left">{{ Str::limit($row->tour_name, 40) }}</td>
 	                                    <td>{{ $row->type }}</td>
+                                        <td>{{ Str::limit($row->destination, 20) }}</td>
 	                                    <td>NA</td>
 	                                    <td>{{date('d/m/Y', strtotime($row->from_date))}}</td> 
                                         <td>{{date('d/m/Y', strtotime($row->end_date))}}</td> 

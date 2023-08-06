@@ -136,7 +136,7 @@
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="checkbox" name="special_tour_type" value="{{$row->id}}" @if(Request()->special_tour_type == $row->title) checked @endif onclick="javascript:this.form.submit();">
+                                                <input type="checkbox" name="special_tour_type" value="{{$row->id}}" @if(Request()->special_tour_type == $row->id) checked @endif onclick="javascript:this.form.submit();">
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
@@ -153,6 +153,7 @@
                 </div>
 
                 <div class="col-xl-9 col-lg-8">
+                    @if(!Request()->all())
                     <div class="row y-gap-10 items-center justify-between">
                         <div class="col-auto">
                             <div class="text-20"><span class="fw-500">Popular Destinations </span> </div>
@@ -200,6 +201,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
 
                     <div class="row y-gap-10 items-center justify-between">
                         <div class="col-auto">

@@ -53,7 +53,7 @@
                                         <select class="form-control select2bs4" name="dest_id" required>
                                             <option value="" selected>Select One</option>
                                             @foreach(App\Models\Destination::where('status',1)->orderBy('name','ASC')->get() as $row)
-                                            <option value="{{$row->id}}" @if($tour->id == $row->id) selected @endif>{{$row->name}}</option>
+                                            <option value="{{$row->id}}" @if($tour->dest_id == $row->id) selected @endif>{{$row->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -176,7 +176,7 @@
                     number:true,
                 },
                 child_price: {
-                    required: true,
+                    required: false,
                     number:true,
                 },
                 image: {

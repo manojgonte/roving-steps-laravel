@@ -35,15 +35,31 @@
 		            </div>
 		            @endif
                     <div class="card">
-                        {{-- <div class="card-header p-2">
-			                <ul class="nav nav-pills">
-			                  	<li class="nav-item"><a class="nav-link @if(empty(Request()->status) || Request()->status == 'ongoing') active @endif" href="{{url('admin/tours/ongoing')}}">Ongoing</a></li>
-			                  	<li class="nav-item"><a class="nav-link @if(Request()->status == 'upcoming') active @endif" href="{{url('admin/tours/upcoming')}}">Upcoming</a></li>
-			                  	<li class="nav-item"><a class="nav-link @if(Request()->status == 'completed') active @endif" href="{{url('admin/tours/completed')}}">Completed</a></li>
-			                </ul>
-			            </div> --}}
+                        <div class="card-header">
+                            <form action="" method="GET">
+                                <div class="row d-flex justify-content-start">
+                                    <div class="col-auto">
+                                        <select class="form-control select2bs4" name="tour_id" onchange="javascript:this.form.submit();">
+                                            <option value="" selected>-- All Tours --</option>
+                                            @foreach($tours as $tour)
+                                            <option value="{{$tour->tour_id}}" @if(Request()->tour_id == $tour->tour_id) selected @endif>{{Str::limit($tour->tour_name, 30)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input class="form-control" name="q" placeholder="Search..." value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-default"> Submit</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="{{url('admin/tour-enquiries/')}}" class="btn btn-default"> Clear</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
-                        <div class="card-body">                            
+                        <div class="card-body">
                             @if(count($tour_enquiry) > 0)
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
