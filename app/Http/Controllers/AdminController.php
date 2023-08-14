@@ -48,8 +48,8 @@ class AdminController extends Controller
     }
 
     public function logout(){
-        auth()->guard('admin')->logout();
-        Session::flush();
+        // auth()->guard('admin')->logout();
+        Session::flush('adminSession');
         return view('admin.admin_login')->with('flash_message_success','loggedout successfully');
     }
 

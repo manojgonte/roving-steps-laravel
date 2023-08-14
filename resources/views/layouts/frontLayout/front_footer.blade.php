@@ -42,6 +42,15 @@
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-sm-12 mt-24">
+                                <h5 class="text-16 fw-500 mb-5 text-warning-2">Associated by</h5>
+                                <div class="d-flex row align-items-center text-white">
+                                    <div class="col-auto"><img src="{{asset('img/home/TAAI.jpg')}}" width="50" title="TRAVEL AGENTS ASSOCIATION OF INDIA" /></div>
+                                    <div class="col-auto"><img src="{{asset('img/home/TAFI.png')}}" width="50" title="TRAVEL AGENTS FEDERATION OF INDIA" /></div>
+                                    <div class="col-auto"><img src="{{asset('img/home/TAAP.jpg')}}" width="50" title="TRAVEL AGENTS ASSOCIATION OF PUNE" /></div>
+                                    <div class="col-auto"><img src="{{asset('img/home/SKAL.jpg')}}" width="50" title="SKAL" /></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12 mt-24">
                                 <h5 class="text-16 fw-500 mb-5 text-warning-2">Follow Us</h5>
                                 <div class="d-flex x-gap-20 items-center">
                                     <a href="#">

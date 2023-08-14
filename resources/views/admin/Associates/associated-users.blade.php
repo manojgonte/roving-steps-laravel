@@ -35,7 +35,7 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
+                            <table id="example1" class="table table-bordered table-striped table-responsive" style="overflow-x: auto;">
                                 <thead>
                                     <tr>
                                         <th>Associate ID</th>
