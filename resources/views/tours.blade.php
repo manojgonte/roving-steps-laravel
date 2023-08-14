@@ -41,7 +41,7 @@
                                     <div data-x-dd-click="searchMenu-date">
                                         <h4 class="text-15 fw-500 ls-2 lh-16">Search </h4>
                                         <div class="text-15 text-light-1 ls-2 lh-16">
-                                            <input autocomplete="off" type="search" name="q" placeholder="Search..." @if(Request()->q) value="{{Request()->q}}" @endif class="js-search js-dd-focus" />
+                                            <input autocomplete="off" type="search" name="q" placeholder="Search with destination..." @if(Request()->q) value="{{Request()->q}}" @endif class="js-search js-dd-focus" />
                                         </div>
                                     </div>
                                 </div>
@@ -80,19 +80,27 @@
                             @endif
                         </div>
 
-
-                        <form action="{{url('tours/')}}" method="GET">
+                        <form action="{{url('tours-filter/')}}" method="POST">@csrf
                         <div class="sidebar__item">
                             <h5 class="text-18 fw-500 mb-10 mt-10">Domestic tours</h5>
                             <div class="sidebar-checkbox">
                                 @foreach ($destinations->filter(function($destination) {
                                     return $destination->type == 'Domestic';
                                 }) as $destination)
+                                @if(!empty($_GET['dest']))
+                                    @if(in_array($destination->id, $destArray))
+                                        <?php $destCheck = "checked"; ?>
+                                    @else
+                                        <?php $destCheck = ""; ?>
+                                    @endif
+                                @else
+                                    <?php $destCheck = ""; ?>
+                                @endif
                                 <div class="row y-gap-10 items-center justify-between">
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="radio" name="dest_id" value="{{$destination->id}}" @if(Request()->dest_id == $destination->id) checked @endif onclick="javascript:this.form.submit();">
+                                                <input type="checkbox" name="dest_id[]" id="d{{$destination->id}}" value="{{$destination->id}}" onclick="javascript:this.form.submit();" @if(!empty($destArray) && in_array($destination->id, $destArray)) {{ $destCheck }} @endif>
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
@@ -111,11 +119,20 @@
                                 @foreach ($destinations->filter(function($destination) {
                                     return $destination->type == 'International';
                                 }) as $destination)
+                                @if(!empty($_GET['dest']))
+                                    @if(in_array($destination->id, $destArray))
+                                        <?php $destCheck = "checked"; ?>
+                                    @else
+                                        <?php $destCheck = ""; ?>
+                                    @endif
+                                @else
+                                    <?php $destCheck = ""; ?>
+                                @endif
                                 <div class="row y-gap-10 items-center justify-between">
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="radio" name="dest_id" value="{{$destination->id}}" @if(Request()->dest_id == $destination->id) checked @endif onclick="javascript:this.form.submit();">
+                                                <input type="checkbox" name="dest_id[]" id="i{{$destination->id}}" value="{{$destination->id}}" onclick="javascript:this.form.submit();" @if(!empty($destArray) && in_array($destination->id, $destArray)) {{ $destCheck }} @endif>
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
@@ -131,12 +148,21 @@
                         <div class="sidebar__item">
                             <h5 class="text-18 fw-500 mb-10 mt-10">Special tours</h5>
                             <div class="sidebar-checkbox">
-                                @foreach(App\Models\SpecialTour::where('status',1)->get() as $row)
+                                @foreach($specialToursArray = App\Models\SpecialTour::where('status',1)->get() as $row)
+                                @if(!empty($_GET['special_tour_type']))
+                                    @if(in_array($row->id, $specTourArray))
+                                        <?php $specTourCheck = "checked"; ?>
+                                    @else
+                                        <?php $specTourCheck = ""; ?>
+                                    @endif
+                                @else
+                                    <?php $specTourCheck = ""; ?>
+                                @endif
                                 <div class="row y-gap-10 items-center justify-between">
                                     <div class="col-auto">
                                         <div class="d-flex items-center">
                                             <div class="form-checkbox">
-                                                <input type="checkbox" name="special_tour_type" value="{{$row->id}}" @if(Request()->special_tour_type == $row->id) checked @endif onclick="javascript:this.form.submit();">
+                                                <input type="checkbox" name="special_tour_type[]" value="{{$row->id}}" onclick="javascript:this.form.submit();" @if(!empty($specTourArray) && in_array($row->id, $specTourArray)) {{ $specTourCheck }} @endif>
                                                 <div class="form-checkbox__mark">
                                                     <div class="form-checkbox__icon icon-check"></div>
                                                 </div>
@@ -262,12 +288,15 @@
                             </a>
                         </div>
                         @endforeach
-
+                        
+                        @if(count($tours) < 1)
+                        <div class="text-center mt-10 fw-500">
+                            <img src="{{asset('img/tours_nf.png')}}" width="450">
+                            <h5>Coming Soon!</h5>
+                        </div>
+                        @endif
                     </div>
 
-                    @if(count($tours) < 1)
-                    <div class="alert mt-10 fw-500">No tour packages found!</div>
-                    @endif
                     
                     <div class="border-top-light mt-30 pt-30">
                         <nav aria-label="Page navigation example">

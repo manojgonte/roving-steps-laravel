@@ -9,6 +9,10 @@ class Tour extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'special_tour_type' => 'array'
+    ];
+
     public function itinerary(){
         return $this->hasMany(TourItinerary::class, 'tour_id');
     }

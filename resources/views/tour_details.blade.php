@@ -164,7 +164,7 @@
                 <div class="d-flex justify-end js-pin-content">
                     <div class="w-360 lg:w-full d-flex flex-column items-center">
                         <div class="px-30 py-30 rounded-4 border-light bg-white shadow-4">
-                            <div class="text-22 fw-500 text-dark-1 mr-5"> ₹{{number_format($tour->adult_price)}} <span class="text-14 text-light-1">Per Person</span></div>
+                            <div class="text-22 fw-500 text-dark-1 mr-5"> ₹{{number_format($tour->adult_price)}}* <span class="text-14 text-light-1">Per Person</span></div>
 
                             <div class="row y-gap-30 justify-between pt-20">
                                 <div class="col-md-auto col-6">

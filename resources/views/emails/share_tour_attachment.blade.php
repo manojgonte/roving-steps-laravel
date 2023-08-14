@@ -483,7 +483,7 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
                                     <td width="100%" class="logo" style="text-align: center;">
-                                        <a href="#"><img src="{{asset('img/logo/logo_trans.png')}}" style="width: 200px;" alt="logo" /></a>
+                                        {{-- <a href="#"><img src="{{asset('img/logo/logo_trans.png')}}" style="width: 200px;" alt="logo" /></a> --}}
                                     </td>
                                 </tr>
                             </table>

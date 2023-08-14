@@ -113,7 +113,7 @@
                                                 <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item" href="#"><i class="fa fa-download"></i> &nbsp; Download</a>
-                                                    <a class="dropdown-item" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i> &nbsp; Share</a>
+                                                    <a class="dropdown-item" style="cursor: pointer;" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i> &nbsp; Share</a>
                                                     <div class="dropdown-divider"></div>
                                                     <a class="dropdown-item" href="{{ url('/admin/edit-tour/'.$row->id) }}"><i class="fa fa-edit"></i> &nbsp; Edit</a>
                                                     <a class="dropdown-item" href="{{ url('/admin/delete-tour/'.$row->id) }}" onclick="return confirm('Are you sure? All associated data with this tour will be get deleted.')"> <i class="fa fa-trash"></i> &nbsp; Delete </a>

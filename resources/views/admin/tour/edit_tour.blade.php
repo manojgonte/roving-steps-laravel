@@ -1,6 +1,11 @@
 @extends('layouts/adminLayout/admin_design')
 @section('content')
 
+@section('styles')
+<link rel="stylesheet" href="{{asset('backend_plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('backend_plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+@endsection('styles')
+
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
@@ -82,10 +87,10 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="">Special Tour</label>
-                                        <select class="form-control select2bs4" name="special_tour_type" name="special_tour_type">
+                                        <select class="form-control select2" name="special_tour_type[]" multiple data-placeholder="Select one" style="width: 100%;">
                                             <option value="">Select One</option>
                                             @foreach(App\Models\SpecialTour::where('status',1)->get() as $row)
-                                            <option value="{{$row->id}}" @if($tour->special_tour_type == $row->id) selected @endif>{{$row->title}}</option>
+                                            <option value="{{$row->id}}" @if($tour->special_tour_type && in_array($row->id, $tour->special_tour_type)) selected @endif>{{$row->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -126,16 +131,16 @@
                                         <input type="text" name="amenities" class="form-control" placeholder="Enter Amenities" value="{{$tour->amenities}}" required>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label class="required">Overview</label>
-                                        <textarea name="description" class="form-control" rows="3" placeholder="Enter Overview" required>{{$tour->description}}</textarea>
+                                        <label class="">Overview</label>
+                                        <textarea name="description" class="form-control" rows="3" placeholder="Enter Overview">{{$tour->description}}</textarea>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="required">Inclusions</label>
-                                        <textarea name="inclusions" class="form-control" rows="3" placeholder="Enter Inclusions" required>{{$tour->inclusions}}</textarea>
+                                        <label class="">Inclusions</label>
+                                        <textarea name="inclusions" class="form-control" rows="3" placeholder="Enter Inclusions">{{$tour->inclusions}}</textarea>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="required">Exclusions</label>
-                                        <textarea name="exclusions" class="form-control" rows="3" placeholder="Enter Exclusions" required>{{$tour->exclusions}}</textarea>
+                                        <label class="">Exclusions</label>
+                                        <textarea name="exclusions" class="form-control" rows="3" placeholder="Enter Exclusions">{{$tour->exclusions}}</textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Note</label>
@@ -161,6 +166,14 @@
 </div>
 
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+@section('scripts')
+<script src="{{asset('backend_plugins/select2/js/select2.full.min.js')}}"></script>
+<script>
+    $(function () {
+        $('.select2').select2()
+    });
+</script>
+@endsection('scripts')
 <script>
     $(document).ready(function() {
         $('#addTour').validate({

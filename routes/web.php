@@ -22,6 +22,7 @@ Route::match(['get','post'], '/contact-us', [IndexController::class, 'contact'])
 Route::get('/about-us', [IndexController::class, 'about'])->name('about');
 
 Route::get('/tours', [IndexController::class, 'tours']);
+Route::post('/tours-filter', [IndexController::class, 'filter']);
 Route::get('/tour-details/{id?}/{slug?}', [IndexController::class, 'tourDetails']);
 Route::post('/tour-enquiry', [IndexController::class, 'tourEnquiry']);
 Route::get('/gallery', [IndexController::class, 'gallery']);

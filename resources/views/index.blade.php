@@ -245,7 +245,7 @@
                         <div data-anim-child="slide-up delay-1" class="col-lg-6 col-sm-6">
                             <div class="featureIcon -type-1 ">
                                 <div class="d-flex justify-center align-items-center">
-                                    <i class="fa fa-fingerprint text-50"></i>
+                                    <i class="fa fa-zap text-50"></i>
                                     <div class="text-left mt-10 pl-20">
                                         <h4 class="text-18 fw-500">Easy Booking</h4>
                                         <p class="text-15">We offer easy and convenient flight bookings with attractive offers</p>
@@ -256,7 +256,7 @@
                         <div data-anim-child="slide-up delay-2" class="col-lg-6 col-sm-6">
                             <div class="featureIcon -type-1 ">
                                 <div class="d-flex justify-center align-items-center">
-                                    <i class="fa fa-earth-asia text-50"></i>
+                                    <i class="fa fa-certificate text-50"></i>
                                     <div class="text-left mt-10 pl-20">
                                         <h4 class="text-18 fw-500">Exciting Deals</h4>
                                         <p class="text-15">Enjoy exciting deals on flights, hotels, buses, car rental and tour packages</p>
@@ -267,7 +267,7 @@
                         <div data-anim-child="slide-up delay-3" class="col-lg-6 col-sm-6">
                             <div class="featureIcon -type-1 ">
                                 <div class="d-flex justify-center align-items-center">
-                                    <i class="fa fa-cutlery text-50"></i>
+                                    <i class="fa fa-money-bill-1-wave text-50"></i>
                                     <div class="text-left mt-10 pl-20">
                                         <h4 class="text-18 fw-500">Pocket Friendly Pricing</h4>
                                         <p class="text-15">We ensure low rates on hotel reservation, holiday packages and on flight tickets.</p>
@@ -278,7 +278,7 @@
                         <div data-anim-child="slide-up delay-3" class="col-lg-6 col-sm-6">
                             <div class="featureIcon -type-1 ">
                                 <div class="d-flex justify-center align-items-center">
-                                    <i class="fa fa-phone text-50"></i>
+                                    <i class="fa fa-phone-volume text-50"></i>
                                     <div class="text-left mt-10 pl-20">
                                         <h4 class="text-18 fw-500">24/7 Support</h4>
                                         <p class="text-15">Get assistance 24/7 on any kind of travel related query, We are happy to assist you</p>
@@ -288,9 +288,18 @@
                         </div>
                     </div>
                 </div>
-
-                <p class="text-dark-1 text-15 mt-20 lg:mt-40 md:mt-20"> Lorem ipsum dolor sit amet. Ea magnam dolorum est totam quia aut perferendis cumque. Ea dolor similique sit illo temporibus ea pariatur recusandae et recusandae nemo sit optio libero. In placeat numquam sit eaque illo in illum culpa At praesentium amet qui expedita veniam nam error quis ut quod dolorum. Qui ipsum laboriosam ex galisum perspiciatis vel dignissimos rerum et voluptatem dolorum. Lorem ipsum dolor sit amet. Ea magnam dolorum est totam quia aut perferendis cumque. Ea dolor similique sit illo temporibus ea pariatur recusandae et recusandae nemo sit optio libero. In placeat numquam sit eaque illo in illum culpa At praesentium amet qui expedita veniam nam error quis ut quod dolorum.
-                </p>
+                {{-- <h5 class="text-18 fw-500 mt-3">Certified by</h5><hr class="my-1">
+                <div class="text-dark-1 text-15 mt-5 lg:mt-40 md:mt-5 row d-flex">
+                    <div class="col-4 col-md-3 col-sm-4">
+                        <img src="{{asset('img/logo/globe.png')}}">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                        <img src="{{asset('img/logo/globe.png')}}">
+                    </div>
+                    <div class="col-4 col-md-3 col-sm-4">
+                        <img src="{{asset('img/logo/globe.png')}}">
+                    </div>
+                </div> --}}
             </div>
         </div>
     </div>

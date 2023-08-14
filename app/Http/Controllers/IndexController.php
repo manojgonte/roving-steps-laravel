@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Rules\Recaptcha;
 use App\Models\Destination;
 use App\Models\TourEnquiry;
@@ -53,14 +54,10 @@ class IndexController extends Controller
     }
 
     public function tours(Request $request){
-        $tours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id','rating')
+        $tours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id','rating','special_tour_type')
             ->orderBy('is_popular','DESC')
             ->orderBy('id','DESC')
             ->where('status','1');
-        
-        if($request->dest_id){
-            $tours = $tours->where('dest_id', $request->dest_id);
-        }
 
         if($request->q){
             $q = $request->q;
@@ -71,15 +68,65 @@ class IndexController extends Controller
             });
         }
 
+        // if($request->special_tour_type){
+        //     $tours = $tours->whereIn('special_tour_type', $request->special_tour_type);
+        // }
+
+        $destArray = null;
+        if($request->dest){
+            $destArray = explode("-",$request->dest);
+            $tours = $tours->whereIn('dest_id',$destArray);
+        }
+
+        $specTourArray = null;
         if($request->special_tour_type){
-            $tours = $tours->where('special_tour_type', $request->special_tour_type);
+            $specialTourType  = $request->special_tour_type;
+            $specTourArray = explode("-",$request->special_tour_type);
+            // $tours = $tours->whereIn('special_tour_type',$specTourArray);
+            
+            $tours = $tours->where(function ($query) use ($specTourArray) {
+                foreach ($specTourArray as $type) {
+                    $query->orWhere(function ($query) use ($type) {
+                        $query->where('special_tour_type', 'LIKE', '%"'.$type.'"%');
+                    });
+                }
+            });
         }
 
         $tours = $tours->paginate(12);
-
+        
         $destinations = Destination::where('status',1)->get();
         $meta_title = 'Tours';
-        return view('tours')->with(compact('meta_title','tours','destinations'));
+        return view('tours')->with(compact('meta_title','tours','destinations','specTourArray','destArray'));
+    }
+
+    public function filter(Request $request){
+        $data = $request->all();
+
+        $destUrl="";
+        if(!empty($data['dest_id'])){
+            foreach($data['dest_id'] as $dest){
+                if(empty($destUrl)){
+                    $destUrl = "&dest=".$dest;
+                }else{
+                    $destUrl .= "-".$dest;
+                }
+            }
+        }
+
+        $specTourUrl="";
+        if(!empty($data['special_tour_type'])){
+            foreach($data['special_tour_type'] as $specTour){
+                if(empty($specTourUrl)){
+                    $specTourUrl = "&special_tour_type=".$specTour;
+                }else{
+                    $specTourUrl .= "-".$specTour;
+                }
+            }
+        }
+        // dd($specTourUrl);
+        $finalUrl = "tours/"."?".$destUrl.$specTourUrl;
+        return redirect::to($finalUrl);
     }
 
     public function tourDetails(Request $request, $id=null){

@@ -1,6 +1,11 @@
 @extends('layouts/adminLayout/admin_design')
 @section('content')
 
+@section('styles')
+<link rel="stylesheet" href="{{asset('backend_plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('backend_plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+@endsection('styles')
+
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
@@ -69,27 +74,27 @@
             	                      	<label class="required">Cover Image <small>(Size: 600 X 500px)</small></label>
             	                      	<input type="file" name="image" class="form-control p-1" accept="image/*" required>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3">
                                         <label class="required">Tour Type</label>
                                         <select class="form-control select2bs4" name="type" name="type">
                                             <option value="Domestic">Domestic</option>
                                             <option value="International">International</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="">Special Tour</label>
-                                        <select class="form-control select2bs4" name="special_tour_type" name="special_tour_type">
+                                    <div class="form-group col-md-3">
+                                        <label>Special Tour</label>
+                                        <select class="select2" name="special_tour_type[]" multiple="multiple" data-placeholder="Select one" style="width: 100%;">
                                             <option value="">Select One</option>
                                             @foreach(App\Models\SpecialTour::where('status',1)->get() as $row)
                                             <option value="{{$row->id}}">{{$row->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
                                         <label class="required">Price per perosn (Adult)</label>
                                         <input type="text" name="adult_price" class="form-control" placeholder="Enter Price" required>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
                                         <label class="">Price per perosn (Child)</label>
                                         <input type="text" name="child_price" class="form-control" placeholder="Enter Price">
                                     </div>
@@ -122,16 +127,16 @@
                                         <input type="text" name="amenities" class="form-control" placeholder="Enter Amenities" required>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <label class="required">Overview</label>
-                                        <textarea name="description" class="form-control" rows="3" placeholder="Enter Overview" required></textarea>
+                                        <label class="">Overview</label>
+                                        <textarea name="description" class="form-control" rows="3" placeholder="Enter Overview"></textarea>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="required">Inclusions</label>
-                                        <textarea name="inclusions" class="form-control" rows="3" placeholder="Enter Inclusions" required></textarea>
+                                        <label class="">Inclusions</label>
+                                        <textarea name="inclusions" class="form-control" rows="3" placeholder="Enter Inclusions"></textarea>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="required">Exclusions</label>
-                                        <textarea name="exclusions" class="form-control" rows="3" placeholder="Enter Exclusions" required></textarea>
+                                        <label class="">Exclusions</label>
+                                        <textarea name="exclusions" class="form-control" rows="3" placeholder="Enter Exclusions"></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Note</label>
@@ -158,6 +163,14 @@
 </div>
 
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+@section('scripts')
+<script src="{{asset('backend_plugins/select2/js/select2.full.min.js')}}"></script>
+<script>
+    $(function () {
+        $('.select2').select2()
+    });
+</script>
+@endsection('scripts')
 <script>
     $(document).ready(function() {
         $('#addTour').validate({
@@ -173,7 +186,7 @@
                     number:true,
                 },
                 child_price: {
-                    required: true,
+                    required: false,
                     number:true,
                 },
                 image: {

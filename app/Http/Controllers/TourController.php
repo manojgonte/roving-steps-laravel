@@ -11,6 +11,7 @@ use App\Models\TourEnquiry;
 use Image;
 use Auth;
 use Mail;
+use PDF;
 
 class TourController extends Controller
 {
@@ -23,10 +24,10 @@ class TourController extends Controller
             $tour = new Tour;
             $tour->tour_name = $data['tour_name'];
             $tour->type = $data['type'];
-            $tour->special_tour_type = !empty($data['special_tour_type']) ? $data['special_tour_type'] : null;
+            $tour->special_tour_type = !empty($data['special_tour_type']) ? request('special_tour_type') : null;
             $tour->dest_id = $data['dest_id'];
             $tour->rating = $data['rating'];
-            $tour->description = $data['description'];
+            $tour->description = !empty($data['description']) ? $data['description'] : null;
             $tour->adult_price = $data['adult_price'];
             $tour->child_price = !empty($data['child_price']) ? $data['child_price'] : null;
             $tour->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
@@ -34,8 +35,8 @@ class TourController extends Controller
             $tour->days = $data['days'];
             $tour->nights = $data['nights'];
             $tour->amenities = $data['amenities'];
-            $tour->inclusions = $data['inclusions'];
-            $tour->exclusions = $data['exclusions'];
+            $tour->inclusions = !empty($data['inclusions']) ? $data['inclusions'] : null;;
+            $tour->exclusions = !empty($data['exclusions']) ? $data['exclusions'] : null;;
             $tour->note = !empty($data['note']) ? $data['note'] : null;
             $tour->is_popular = !empty($data['is_popular']) ? $data['is_popular'] : '0' ;
             $tour->status = '0';
@@ -320,19 +321,24 @@ class TourController extends Controller
             $email = $data['email'];
             $subject = $data['subject'];
 
-            $tourDetails = Tour::with('itinerary')->select('tours.*','destinations.name as dest_name')
+            $tour = Tour::with('itinerary')->select('tours.*','destinations.name as dest_name')
                 ->leftJoin('destinations','destinations.id','tours.dest_id')
                 ->where('tours.id', $data['tour_id'])
                 ->orderBy('tours.id','DESC')
                 ->first();
 
+            $pdf = PDF::loadView('emails.share_tour_attachment', compact('data','tour'));
+            $pdf = $pdf->output();
+            // return $pdf->stream();
+
             $email = [$email];
             $messageData = [
                 'data' => $data,
-                'tour' => $tourDetails
+                'tour' => $tour
             ];
-            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject){
+            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject,$pdf){
                 $message->to($email)->subject($subject . ' | '. config('app.name'));
+                // $message->attachData($pdf, 'tour-details.pdf');
             });
 
             return redirect()->back()->with('flash_message_success','Mail sent');

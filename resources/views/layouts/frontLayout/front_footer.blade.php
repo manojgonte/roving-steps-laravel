@@ -14,18 +14,18 @@
                                 <h5 class="text-16 fw-500 mb-5 text-warning-2">Information</h5>
                                 <div class="d-flex flex-column text-white">
                                     <a href="{{url('/')}}">Home</a>
-                                    <a href="#">Our Services</a>
-                                    <a href="#">About Us</a>
-                                    <a href="#">Contact Us</a>
+                                    <a href="javascript:void">Our Services</a>
+                                    <a href="{{url('about-us')}}">About Us</a>
+                                    <a href="{{url('contact-us')}}">Contact Us</a>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-sm-12">
                                 <h5 class="text-16 fw-500 mb-5 text-warning-2">Helpful Links</h5>
                                 <div class="d-flex flex-column text-white">
-                                    <a href="#">Tours</a>
-                                    <a href="#">Support</a>
-                                    <a href="#">Terms & Conditions</a>
-                                    <a href="#">Privacy</a>
+                                    <a href="{{url('tours')}}">Tours</a>
+                                    <a href="javascript:void">Support</a>
+                                    <a href="javascript:void">Terms & Conditions</a>
+                                    <a href="javascript:void">Privacy</a>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-sm-12 mt-24">
