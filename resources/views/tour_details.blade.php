@@ -152,6 +152,7 @@
                     </div>
                 </div>
 
+                @if($tour->description)
                 <div class="border-top-light mt-40 mb-40"></div>
                 <div class="row x-gap-40 y-gap-40">
                     <div class="col-12">
@@ -159,6 +160,7 @@
                         <p class="text-dark-1 text-15 mt-20"> {!! nl2br($tour->description) !!}</p>
                     </div>
                 </div>
+                @endif
             </div>
             <div class="col-lg-4">
                 <div class="d-flex justify-end js-pin-content">
@@ -274,16 +276,20 @@
             </div>
         </div>
         <div class="row x-gap-10 y-gap-10 justify-between pt-10">
+            @if($tour->inclusions)
             <div class="col-lg-6 col-md-6">
                 <div class="fw-500 mb-10 border-bottom-light">Inclusions</div>
                 <div class="text-15">
                     {!! nl2br($tour->inclusions) !!}
                 </div>
             </div>
+            @endif
+            @if($tour->exclusions)
             <div class="col-lg-5 col-md-6">
                 <div class="fw-500 mb-10 border-bottom-light">Exclusions</div>
                 <div class="text-15">{!! nl2br($tour->exclusions) !!}</div>
             </div>
+            @endif
             @if($tour->note)
             <div class="col-12">
                 <div class="fw-500 mb-10 border-bottom-light">Note</div>

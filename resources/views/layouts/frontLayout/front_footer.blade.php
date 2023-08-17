@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-sm-12 mt-24">
-                                <h5 class="text-16 fw-500 mb-5 text-warning-2">Associated by</h5>
+                                <h5 class="text-16 fw-500 mb-5 text-warning-2">Associated with</h5>
                                 <div class="d-flex row align-items-center text-white">
                                     <div class="col-auto"><img src="{{asset('img/home/TAAI.jpg')}}" width="50" title="TRAVEL AGENTS ASSOCIATION OF INDIA" /></div>
                                     <div class="col-auto"><img src="{{asset('img/home/TAFI.png')}}" width="50" title="TRAVEL AGENTS FEDERATION OF INDIA" /></div>
