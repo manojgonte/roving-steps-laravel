@@ -336,7 +336,7 @@ class TourController extends Controller
                 'data' => $data,
                 'tour' => $tour
             ];
-            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject,$pdf){
+            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject){
                 $message->to($email)->subject($subject . ' | '. config('app.name'));
                 $message->attachData($pdf, 'tour-details.pdf');
             });
