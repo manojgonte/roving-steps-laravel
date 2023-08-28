@@ -62,6 +62,12 @@
                         <p>Gallery</p>
                     </a>
                 </li> 
+                <li class="nav-item">
+                    <a href="{{url('admin/testimonials')}}" class="nav-link text-white @if(preg_match('#/admin/testimonials#', $url)) active @endif">
+                        <i class="nav-icon fa fa-user-edit"></i>
+                        <p>Testimonials</p>
+                    </a>
+                </li> 
                 {{-- Projects --}}
                 {{-- <li class="nav-item">
                     <a href="#" class="nav-link text-white ">

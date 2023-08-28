@@ -327,8 +327,8 @@ class TourController extends Controller
                 ->orderBy('tours.id','DESC')
                 ->first();
 
-            // $pdf = PDF::loadView('emails.share_tour_attachment', compact('data','tour'));
-            // $pdf = $pdf->output();
+            $pdf = PDF::loadView('emails.share_tour_attachment', compact('data','tour'));
+            $pdf = $pdf->output();
             // return $pdf->stream();
 
             $email = [$email];
@@ -336,9 +336,9 @@ class TourController extends Controller
                 'data' => $data,
                 'tour' => $tour
             ];
-            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject){
+            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject,$pdf){
                 $message->to($email)->subject($subject . ' | '. config('app.name'));
-                // $message->attachData($pdf, 'tour-details.pdf');
+                $message->attachData($pdf, 'tour-details.pdf');
             });
 
             return redirect()->back()->with('flash_message_success','Mail sent');

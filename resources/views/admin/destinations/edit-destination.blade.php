@@ -53,8 +53,8 @@
                                     <div class="form-group col-md-4">
                                         <label class="required">Destination Type</label>
                                         <select class="form-control select2bs4" name="type" name="type" value="{{$destination->type}}">
-                                            <option value="Domestic">Domestic</option>
-                                            <option value="International">International</option>
+                                            <option @if($destination->type == 'Domestic') selected @endif value="Domestic">Domestic</option>
+                                            <option @if($destination->type == 'International') selected @endif value="International">International</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12">

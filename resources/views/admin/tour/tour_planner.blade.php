@@ -147,7 +147,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('admin/share-tour/')}}" method="POST">@csrf
+            <form action="{{url('admin/share-tour/')}}" method="POST" id="shareTour">@csrf
                 <input type="hidden" id="tourId" name="tour_id" value="">
                 <div class="modal-body">
                     <div class="form-group">
@@ -161,7 +161,7 @@
                 </div>
                 <div class="modal-footer justify-content-end">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-info">Send</button>
+                    <button type="submit" class="btn btn-info submit">Send</button>
                 </div>
             </form>
         </div>
@@ -174,6 +174,33 @@
         tourId = $(el).attr('tourId');
         $('#tourId').val(tourId);
     }
+</script>
+@endsection
+
+<script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('#shareTour').validate({
+            ignore: [],
+            debug: false,
+            rules: {
+                email: {
+                    required: true,
+                    email:true,
+                },
+                subject: {
+                    required: true,
+                    maxlength:200,
+                },
+            },
+            messages: {},
+            submitHandler: function(form) {
+                $(".submit").attr("disabled", true);
+                $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
+                form.submit();
+            }
+        });
+    });
 </script>
 @endsection
 

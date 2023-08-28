@@ -255,7 +255,7 @@
                                 </div>
                                 <div class="hotelsCard__content mt-10">
                                     <h4 class="hotelsCard__title text-dark-1 text-17 lh-16 fw-500">
-                                        <span>{{Str::limit($tour->tour_name, 45)}} | <span class="text-light-1">{{$tour->days}}D-{{$tour->nights}}N</span></span>
+                                        <span>{{Str::limit($tour->tour_name, 45)}} | <span class="text-light-1">{{$tour->nights}}N-{{$tour->days}}D</span></span>
                                     </h4>
                                     @php
                                         $fullStars = floor($tour->rating);

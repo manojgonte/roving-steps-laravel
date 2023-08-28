@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Models\Testimonial;
 use App\Models\Admin;
 use App\Models\News;
 use App\Models\Clients;
@@ -150,6 +151,44 @@ class AdminController extends Controller
             return redirect('admin/view-client')->with('flash_message_success','New record added successfully');
         }
         return view('admin.clients.add-client');
+    }
+
+    public function viewTestimonials(Request $request) {
+        $testimonials = Testimonial::orderBy('id','DESC')->paginate(10);
+        return view('admin.testimonials.view_testimonials')->with(compact('testimonials'));
+    }
+
+    public function addTestimonial(Request $request) {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // dd($data);
+            $destination = new Testimonial;
+            $destination->user_name = $data['user_name'];
+            $destination->testimonial = $data['testimonial'];
+            $destination->save();
+            return redirect('admin/testimonials/')->with('flash_message_success','Testimonial added successfully');
+        }
+        return view('admin.testimonials.add_testimonial');
+    }
+
+    public function editTestimonial(Request $request, $id) {
+        if($request->isMethod('post')){
+            $data = $request->all();
+          
+            Testimonial::where('id',$id)->update([
+                'user_name'=>$data['user_name'],
+                'testimonial'=>$data['testimonial']
+            ]);
+            
+            return redirect('admin/testimonials')->with('flash_message_success','Testimonial updated successfully');
+        }
+        $testimonial = Testimonial::where('id',$id)->first();
+        return view('admin.testimonials.edit_testimonial')->with(compact('testimonial'));
+    }
+
+    public function deleteTestimonial(Request $request, $id) {
+        Testimonial::where('id',$id)->delete();
+        return redirect()->back()->with('flash_message_success','Testimonial deleted successfully');
     }
     
 }

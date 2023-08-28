@@ -13174,3 +13174,17 @@ a.button.bg-light-1:hover {
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
+.avatar {
+    align-items: center;
+    background-color: #737f9e;
+    border-radius: 100%;
+    color: #fff;
+    display: flex;
+    font-size: 18px;
+    font-weight: 600;
+    height: 40px;
+    justify-content: center;
+    position: relative;
+    width: 40px;
+}

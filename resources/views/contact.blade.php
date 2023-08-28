@@ -80,30 +80,27 @@
                 <div class="text-30 sm:text-24 fw-600">Contact Us</div>
                 <div class="row d-flex x-gap-80 y-gap-20">
                     <div class="col-12">
-                        <div class="text-18 fw-500 mt-5">Address</div>
-                        <div class="text-14 text-light-1">Sr. No. 31, 1st floor, Gosavi Building, Kundan Nagar,
+                        <div class="text-18 fw-500 mt-5"><i class="fa fa-map-marker-alt"></i> Address</div>
+                        <div class="text-15 text-light-1">Sr. No. 31, 1st floor, Gosavi Building, Kundan Nagar,
                             Dhankawadi, Pune - 411043</div>
                     </div>
                     <div class="col-12">
-                        <div class="text-18 fw-500 mt-5">Contact</div>
-                        <div class="text-14 text-light-1">+91 8600031545</div>
-                        <div class="text-14 text-light-1">+91 8600321645</div>
+                        <div class="text-18 fw-500 mt-5"><i class="fa fa-phone"></i> Contact</div>
+                        <div class="text-15 text-light-1"><a href="tel:918600031545"> +91 8600031545</a></div>
+                        <div class="text-15 text-light-1"><a href="tel:918600321645"> +91 8600321645</a></div>
                     </div>
                     <div class="col-12">
-                        <div class="text-18 fw-500 mt-5">Email</div>
-                        <div class="text-14 text-light-1">info@rovingsteps.com</div>
+                        <div class="text-18 fw-500 mt-5"><i class="fa fa-envelope"></i> Email</div>
+                        <div class="text-16 text-light-1"><a href="mailto:info@rovingsteps.com"> info@rovingsteps.com </a></div>
                     </div>
                     <div class="col-auto">
                         <div class="text-18 fw-500 mt-5">Follow us on social media</div>
                         <div class="d-flex x-gap-20 items-center mt-10">
-                            <a href="#">
+                            <a href="https://www.facebook.com/RovingStepsPvtLtd?mibextid=LQQJ4d" target="_blank">
                                 <i class="icon-facebook text-30"></i>
                             </a>
-                            <a href="#">
+                            <a href="https://instagram.com/roving_steps?igshid=OGQ5ZDc2ODk2ZA==" target="_blank">
                                 <i class="icon-instagram text-30"></i>
-                            </a>
-                            <a href="#">
-                                <i class="icon-linkedin text-30"></i>
                             </a>
                         </div>
                     </div>

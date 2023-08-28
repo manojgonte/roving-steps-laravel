@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Rules\Recaptcha;
 use App\Models\Destination;
 use App\Models\TourEnquiry;
+use App\Models\Testimonial;
 use App\Models\Enquiry;
 use App\Models\Gallery;
 use App\Models\Tour;
@@ -22,10 +23,11 @@ class IndexController extends Controller
             ->take(10)
             ->get();
 
+        $testimonials = Testimonial::orderBy('id','DESC')->take(12)->get();
         $destinations = Destination::where(['status'=>1,'is_popular'=>1])->take(8)->get();
 
         $meta_title = config('app.name');
-        return view('index',compact('meta_title','popularTours','destinations'));
+        return view('index',compact('meta_title','popularTours','destinations','testimonials'));
     }
     
     public function contact(Request $request){

@@ -53,14 +53,11 @@
                             <div class="col-xl-6 col-lg-6 col-sm-12 mt-24">
                                 <h5 class="text-16 fw-500 mb-5 text-warning-2">Follow Us</h5>
                                 <div class="d-flex x-gap-20 items-center">
-                                    <a href="#">
+                                    <a href="https://www.facebook.com/RovingStepsPvtLtd?mibextid=LQQJ4d" target="_blank">
                                         <i class="icon-facebook text-white text-30"></i>
                                     </a>
-                                    <a href="#">
+                                    <a href="https://instagram.com/roving_steps?igshid=OGQ5ZDc2ODk2ZA==" target="_blank">
                                         <i class="icon-instagram text-white text-30"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="icon-linkedin text-white text-30"></i>
                                     </a>
                                 </div>
                             </div>

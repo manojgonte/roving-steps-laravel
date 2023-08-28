@@ -171,14 +171,14 @@
                             <div class="row y-gap-30 justify-between pt-20">
                                 <div class="col-md-auto col-6">
                                     <div class="d-flex">
-                                        <i class="icon-nature text-22 text-blue-1 mr-10"></i>
-                                        <div class="text-15 lh-15"> Days: <br><span class="text-22 fw-500"> {{ $tour->days }}</span> </div>
+                                        <i class="icon-fire text-22 text-blue-1 mr-10"></i>
+                                        <div class="text-15 lh-15"> Nights: <br> <span class="text-22 fw-500"> {{ $tour->nights }}</span> </div>
                                     </div>
                                 </div>
                                 <div class="col-md-auto col-6">
                                     <div class="d-flex">
-                                        <i class="icon-fire text-22 text-blue-1 mr-10"></i>
-                                        <div class="text-15 lh-15"> Nights: <br> <span class="text-22 fw-500"> {{ $tour->nights }}</span> </div>
+                                        <i class="icon-nature text-22 text-blue-1 mr-10"></i>
+                                        <div class="text-15 lh-15"> Days: <br><span class="text-22 fw-500"> {{ $tour->days }}</span> </div>
                                     </div>
                                 </div>
                                 <div class="col-md-auto col-12">

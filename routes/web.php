@@ -100,6 +100,11 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::post('admin/edit-photo/', [GalleryController::class, 'editPhoto']);
     Route::get('admin/delete-photo/{id}', [GalleryController::class, 'deletePhoto']);
 
+    // testimonial
+    Route::match(['get','post'], 'admin/edit-testimonial/{id}', [AdminController::class, 'editTestimonial']);
+    Route::match(['get','post'], 'admin/testimonials/', [AdminController::class, 'viewTestimonials']);
+    Route::match(['get','post'], 'admin/add-testimonial/', [AdminController::class, 'addTestimonial']);
+    Route::match(['get','post'], 'admin/delete-testimonial/{id}', [AdminController::class,'deleteTestimonial']);
 });
 
 

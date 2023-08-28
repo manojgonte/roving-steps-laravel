@@ -181,7 +181,7 @@
                         </div>
                         <div class="hotelsCard__content mt-10">
                             <h4 class="hotelsCard__title text-dark-1 text-17 lh-16 fw-500">
-                                <span>{{$tour->tour_name}} | <span class="text-light-1">{{$tour->days}}N-{{$tour->nights}}D</span></span>
+                                <span>{{$tour->tour_name}} | <span class="text-light-1">{{$tour->nights}}N-{{$tour->days}}D</span></span>
                             </h4>
                             @php
                                 $fullStars = floor($tour->rating);
@@ -318,66 +318,23 @@
         </div>
         <div class="overflow-hidden pt-20 js-section-slider" data-gap="30" data-slider-cols="xl-3 lg-3 md-2 sm-1 base-1">
             <div class="swiper-wrapper">
+                @foreach($testimonials as $testimonial)
                 <div class="swiper-slide">
                     <div class="testimonials -type-1 bg-white rounded-4 pt-20 pb-20 px-20">
-                        <p class="testimonials__text lh-18 fw-400 text-dark-1">&quot;We owe a lot to roving steps, thanks for making it happen. Service was at par and we respect what you gave and the way you treated our people. 100% Recommend 100% value for money&quot;</p>
+                        <p class="testimonials__text lh-18 fw-400 text-dark-1">{{$testimonial->testimonial}}</p>
                         <div class="pt-10 mt-10 border-top-light">
                             <div class="row x-gap-20 y-gap-20 items-center">
                                 <div class="col-auto">
-                                    <img class="size-40" src="img/avatars/1.png" alt="image">
+                                    <div class="avatar avatar-md bg-info">{{mb_substr(ucfirst($testimonial->user_name) , 0, 1)}}</div>
                                 </div>
                                 <div class="col-auto">
-                                    <div class="text-15 fw-500 lh-14">Yogita</div>
+                                    <div class="text-15 fw-500 lh-14">{{$testimonial->user_name}}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="testimonials -type-1 bg-white rounded-4 pt-20 pb-20 px-20">
-                        <p class="testimonials__text lh-18 fw-400 text-dark-1">&quot;Thank you Roving Step! For Making Our Singapore Trip Too Special. All Places, Management & Timing is Perfect. Thank you For Always there for Support. Lalit Varma Saheb… We Enjoy Each & Every Moments… And Specially Indian Food….&quot;</p>
-                        <div class="pt-10 mt-10 border-top-light">
-                            <div class="row x-gap-20 y-gap-20 items-center">
-                                <div class="col-auto">
-                                    <img class="size-40" src="img/avatars/1.png" alt="image">
-                                </div>
-                                <div class="col-auto">
-                                    <div class="text-15 fw-500 lh-14">Sagar Zunjurke</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="testimonials -type-1 bg-white rounded-4 pt-20 pb-20 px-20">
-                        <p class="testimonials__text lh-18 fw-400 text-dark-1">&quot;Amazing team in planning holidays/ trips. Had a wonderful experience with them every time they planned our first international trip with family. The only thing I would say is just go with what he suggests as per your budget and you won't be disappointed. 🙂 Kudos!! to the team.&quot;</p>
-                        <div class="pt-10 mt-10 border-top-light">
-                            <div class="row x-gap-20 y-gap-20 items-center">
-                                <div class="col-auto">
-                                    <img class="size-40" src="img/avatars/1.png" alt="image">
-                                </div>
-                                <div class="col-auto">
-                                    <div class="text-15 fw-500 lh-14">Abhishek Bairwan</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="testimonials -type-1 bg-white rounded-4 pt-20 pb-20 px-20">
-                        <p class="testimonials__text lh-18 fw-400 text-dark-1">&quot;I had booked the cab services plus attraction passes for my parents for Dubai trip. I really liked how they got all the passes on time without any follow ups and the cab drivers treated them nicely, gave information about the tourist spots. The pick and drop was on time.&quot;</p>
-                        <div class="pt-10 mt-10 border-top-light">
-                            <div class="row x-gap-20 y-gap-20 items-center">
-                                <div class="col-auto">
-                                    <img class="size-40" src="img/avatars/1.png" alt="image">
-                                </div>
-                                <div class="col-auto">
-                                    <div class="text-15 fw-500 lh-14">Shweta Patil</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
