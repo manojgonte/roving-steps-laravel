@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Destination;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\TourItinerary;
 use App\Models\Tour;
 use App\Models\Enquiry;
@@ -326,6 +327,7 @@ class TourController extends Controller
                 ->where('tours.id', $data['tour_id'])
                 ->orderBy('tours.id','DESC')
                 ->first();
+            $tourname = Str::slug($tour->tour_name);
 
             $pdf = PDF::loadView('emails.share_tour_attachment', compact('data','tour'));
             $pdf = $pdf->output();
@@ -336,14 +338,26 @@ class TourController extends Controller
                 'data' => $data,
                 'tour' => $tour
             ];
-            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject,$pdf){
+            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject,$pdf,$tourname){
                 $message->to($email)->subject($subject . ' | '. config('app.name'));
-                $message->attachData($pdf, 'tour-details.pdf');
+                $message->attachData($pdf, $tourname.'-tour-details.pdf');
             });
 
             return redirect()->back()->with('flash_message_success','Mail sent');
         }
         return redirect()->back();
+    }
+
+    public function downloadTour(Request $request, $id){
+            $tour = Tour::with('itinerary')->select('tours.*','destinations.name as dest_name')
+                ->leftJoin('destinations','destinations.id','tours.dest_id')
+                ->where('tours.id', $id)
+                ->orderBy('tours.id','DESC')
+                ->first();
+            $tourname = Str::slug($tour->tour_name);
+            $pdf = PDF::loadView('emails.share_tour_attachment', compact('tour'));
+            return $pdf->download($tourname.'-tour-details.pdf');
+            // $pdf = $pdf->output();
     }
 
     public function viewDestinations(Request $request) {

@@ -52,7 +52,8 @@ class IndexController extends Controller
 
     public function about(Request $request){
         $meta_title = 'About Us';
-        return view('about',compact('meta_title'));
+        $testimonials = Testimonial::orderBy('id','DESC')->take(40)->get();
+        return view('about',compact('meta_title','testimonials'));
     }
 
     public function tours(Request $request){

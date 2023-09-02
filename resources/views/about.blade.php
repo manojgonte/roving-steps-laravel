@@ -110,6 +110,41 @@
             </div>
         </div>
     </section>
+
+    <section class="section-bg layout-pt-md layout-pb-md">
+        <div class="section-bg__item -mx-20 bg-light-2"></div>
+        <div class="container">
+            <div class="row justify-center text-center">
+                <div class="col-auto">
+                    <div class="sectionTitle -md">
+                        <h2 class="sectionTitle__title">What Travelers are Saying About Us?</h2>
+                        <p class=" sectionTitle__text mt-5 sm:mt-0">These popular destinations have a lot to offer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-hidden pt-20 js-section-slider" data-gap="30" data-slider-cols="xl-3 lg-3 md-2 sm-1 base-1">
+                <div class="swiper-wrapper">
+                    @foreach($testimonials as $testimonial)
+                    <div class="swiper-slide">
+                        <div class="testimonials -type-1 bg-white rounded-4 pt-20 pb-20 px-20">
+                            <p class="testimonials__text lh-18 fw-400 text-dark-1">{{$testimonial->testimonial}}</p>
+                            <div class="pt-10 mt-10 border-top-light">
+                                <div class="row x-gap-20 y-gap-20 items-center">
+                                    <div class="col-auto">
+                                        <div class="avatar avatar-md bg-info">{{mb_substr(ucfirst($testimonial->user_name) , 0, 1)}}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-15 fw-500 lh-14">{{$testimonial->user_name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 
 @endsection('content')

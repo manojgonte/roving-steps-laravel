@@ -501,6 +501,11 @@
                                 <tr>
                                     <td class="bg_white email-section">
                                         <div class="heading-section" style="text-align: center; padding: 0 30px;">
+                                            <p>Hello,</p>
+                                            <p>Greetings from Roving Steps!!!</p>
+                                            <p>Thank you for choosing us as your tourist partner. We are glad to help you to make your tour more exciting & amazing.</p>
+                                            <p>Considering all your requirements we are presenting with a very exciting plan which will make your tour memorable.</p>
+                                            <p>Please find the attached tour itinerary for your reference.</p>
                                             <h2>{{$tour['tour_name']}}</h2>
                                             <h5>{{$tour['amenities']}}</h5>
                                             <p>{!! $tour['description'] !!}</p>
@@ -558,39 +563,6 @@
                                 </tr>
                                 <!-- end: tr -->
                                 <tr>
-                                    <td class="bg_light email-section" style="width: 100%;">
-                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-                                            <tr>
-                                                <td valign="middle" width="80%">
-                                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                                        <tr>
-                                                            <td class="text-services" style="text-align: left; padding-left:25px;">
-                                                                <div class="heading-section">
-                                                                    <h3>Inclusions</h3>
-                                                                    <div>{!! $tour['inclusions'] !!}</div>
-                                                                    <!-- <p>
-                                                                        <a href="#" class="btn btn-primary">Read more</a>
-                                                                    </p> -->
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <!-- end: tr -->
-                                <tr>
-                                    <td class="bg_white email-section">
-                                        <div class="heading-section" style="text-align: left; padding: 0 30px;">
-                                            <h3>Exclusions</h3>
-                                            <div>{!! $tour['exclusions'] !!}</div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- end: tr -->
-                                <tr>
                                     <td class="bg_white">
                                         <div class="heading-section" style="text-align: center; padding: 0 30px;">
                                             {{-- <h2>Our Blog</h2> --}}
@@ -642,7 +614,7 @@
                                         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                             <tr>
                                                 <td style="text-align: left; padding-left: 10px;">
-                                                    <h3 class="heading">Useful Links</h3>
+                                                    <h3 class="heading">Quick Links</h3>
                                                     <ul>
                                                         <li>
                                                             <a href="{{url('/')}}">Home</a>
@@ -668,18 +640,18 @@
                                                     <h3 class="heading">Contact Info</h3>
                                                     <ul>
                                                         <li>
-                                                            <a href="">
-                                                                <span class="text">Sr No 31, 1st floor, Gosavi Building, Kundan nagar, Dhankwadi, Pune - 411043</span>
+                                                            <a href="javascript:void">
+                                                                <span class="text">Address: Sr No 31, 1st floor, Gosavi Building, Kundan nagar, Dhankwadi, Pune - 411043</span>
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void">
-                                                                <span class="text">+91 8600031545  |  +91 8600321645</span>
+                                                            <a href="tel:+918600031545">
+                                                                <span class="text">Call/WhatsApp: +91 86000 31545 </span>
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <a href="mailto:@rovingsteps.com">
-                                                                <span class="text">info@rovingsteps.com</span>
+                                                                <span class="text">Email: info@rovingsteps.com</span>
                                                             </a>
                                                         </li>
                                                     </ul>

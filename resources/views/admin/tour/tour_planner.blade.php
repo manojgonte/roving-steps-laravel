@@ -112,7 +112,7 @@
                                             <div class="btn-group dropleft">
                                                 <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="#"><i class="fa fa-download"></i> &nbsp; Download</a>
+                                                    <a class="dropdown-item" href="{{url('admin/download-tour/'.$row->id)}}"><i class="fa fa-download"></i> &nbsp; Download</a>
                                                     <a class="dropdown-item" style="cursor: pointer;" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i> &nbsp; Share</a>
                                                     <div class="dropdown-divider"></div>
                                                     <a class="dropdown-item" href="{{ url('/admin/edit-tour/'.$row->id) }}"><i class="fa fa-edit"></i> &nbsp; Edit</a>
@@ -151,7 +151,7 @@
                 <input type="hidden" id="tourId" name="tour_id" value="">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="inputEmail">Emails</label>
+                        <label for="inputEmail">Email</label>
                         <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Enter Email" value="" required>
                     </div>
                     <div class="form-group">
@@ -175,7 +175,7 @@
         $('#tourId').val(tourId);
     }
 </script>
-@endsection
+@endsection('scripts')
 
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
 <script>
@@ -202,6 +202,5 @@
         });
     });
 </script>
-@endsection
 
 @endsection
