@@ -35,14 +35,14 @@ class AssociateController extends Controller
     }
 
     public function editAssociates(Request $request, $id){
-        if($request->isMethod('post')){ 
+        if($request->isMethod('post')){
             $data = $request->all();
             // dd($data);
             // detail update
             Associates::where('id',$id)->update([
                 'name'=>$data['associates_name'],
                 'email'=>$data['associates_email'],
-                'conatct'=>$data['associates_contact'],
+                'contact'=>$data['associates_contact'],
             ]);
 
             return redirect('admin/associated-users/')->with('flash_message_success','Associated updated successfully');

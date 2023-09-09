@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>CodePen - Static Page Layout Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http - equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <style>
         body {
@@ -13,7 +14,7 @@
 
         .wrapper {
           color: #000;
-          font-family: Poppins;
+          /* font-family: Poppins; */
           text-align: center;
           width: 98%;
           margin: 0 10px;
@@ -88,11 +89,13 @@
 <body>
     <!-- partial:index.partial.html -->
     <div class="wrapper">
-        <img src="{{public_path('img/logo/logo_trans.png')}}" height="80">
+        <!-- <img src="{{public_path('img/logo/logo_trans.png')}}" height="80"> -->
+        <h1>Roving Steps</h1>
         <p>Call/WhatsApp: <a href="tel:+918600031545">+91 8600031545</a> | Email: <a href="mailto:info@rovingsteps.com">info@rovingsteps.com</a> | Website: <a href="https://rovingsteps.com">www.rovingsteps.com</a></p>
         <hr>
         <h1 style="text-align: center;">{{$tour['tour_name']}}</h1>
-        <img src="{{public_path('img/tours/tour_itinerary/'.$tour['image'])}}" height="400" style="border-radius: 8px;">
+        <!-- <img src="{{public_path('img/tours/'.$tour['image'])}}" height="400" style="border-radius: 8px;"> -->
+        <img src="{{URL::asset('img/tours/'.$tour['image'])}}" height="400" style="border-radius: 8px;">
         <!-- <header>
             <div>
                 content this element use vertical-align: middle;
@@ -190,6 +193,11 @@
                 <p class="fs-15" style="margin-top: 2px">{!! $tour['note'] !!}</p>
             </div>
             @endif
+
+            <div style="text-align: center; line-height: 0.5;">
+                <h3> Thank you & Regards. </h3>
+                <h4> Looking forward to treat you a great pleasure</h4>
+            </div>
         </div>
     </div>
     <!-- partial -->

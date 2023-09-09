@@ -79,7 +79,7 @@
                                         <input type="text" name="food" class="form-control" placeholder="Enter Food" value="{{$itinerary->food}}" required>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="required">Image <small>(Size: 800 X 530px)</small></label>
+                                        <label>Image <small>(Size: 800 X 530px)</small></label>
                                         @if(!empty($itinerary->image))
                                         <input type="hidden" name="current_image" value="{{ $itinerary->image }}">
                                         @endif

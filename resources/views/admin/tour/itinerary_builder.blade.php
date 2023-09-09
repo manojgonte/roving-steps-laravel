@@ -103,8 +103,8 @@
                                             <input type="text" name="food" class="form-control" placeholder="Enter Food" value="" required>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label class="required">Image <small>(Size: 800 X 530px)</small></label>
-                                            <input type="file" name="image" class="form-control p-1" required>
+                                            <label>Image <small>(Size: 800 X 530px)</small></label>
+                                            <input type="file" name="image" class="form-control p-1">
                                         </div>
                                     </div>
                                 <form>
@@ -190,7 +190,7 @@
                     required: true,
                 },
                 image: {
-                    required: true,
+                    // required: true,
                     accept: 'png|jpg|jpeg|webp|svg',
                 },
             },

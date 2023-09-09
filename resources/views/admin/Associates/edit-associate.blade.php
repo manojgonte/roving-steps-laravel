@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-default">
-                        <form method="POST" action="{{ url('admin/edit-associate'.$associate->id) }}" enctype="multipart/form-data" id="editAssociate">@csrf
+                        <form method="POST" action="{{ url('admin/edit-associate/'.$associate->id) }}" enctype="multipart/form-data" id="editAssociate">@csrf
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-4">

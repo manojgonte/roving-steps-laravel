@@ -355,7 +355,10 @@ class TourController extends Controller
                 ->orderBy('tours.id','DESC')
                 ->first();
             $tourname = Str::slug($tour->tour_name);
-            $pdf = PDF::loadView('emails.share_tour_attachment', compact('tour'));
+            // return view('emails.share_tour_attachment')->with(compact('tour'));
+            $pdf = PDF::setOptions([
+                'images' => true
+            ])->loadView('emails.share_tour_attachment', compact('tour'))->setPaper('a4', 'portrait');
             return $pdf->download($tourname.'-tour-details.pdf');
             // $pdf = $pdf->output();
     }
