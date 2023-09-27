@@ -9,14 +9,16 @@ use App\Models\TourItinerary;
 use App\Models\Tour;
 use App\Models\Enquiry;
 use App\Models\TourEnquiry;
+use App\Services\MailchimpService;
 use Image;
 use Auth;
 use Mail;
 use PDF;
+use Illuminate\Support\Facades\View;
 
 class TourController extends Controller
 {
-    
+
     // admin methods
     public function addTour(Request $request){
         if($request->isMethod('post')){
@@ -151,7 +153,7 @@ class TourController extends Controller
     }
 
     public function tourPlanner(Request $request, $status=null){
-        $status = (empty($status) || $status == 0) ? 0 : 1; 
+        $status = (empty($status) || $status == 0) ? 0 : 1;
         $tours = Tour::select('tours.id','tours.tour_name','tours.type','tours.dest_id','tours.from_date','tours.end_date','tours.days','tours.nights','tours.status','tours.updated_at','destinations.name as destination')
             ->leftJoin('destinations','destinations.id','tours.dest_id')
             ->orderBy('tours.id','DESC')
@@ -329,8 +331,8 @@ class TourController extends Controller
                 ->first();
             $tourname = Str::slug($tour->tour_name);
 
-            $pdf = PDF::loadView('emails.share_tour_attachment', compact('data','tour'));
-            $pdf = $pdf->output();
+            // $pdf = PDF::loadView('emails.share_tour_attachment', compact('data','tour'));
+            // $pdf = $pdf->output();
             // return $pdf->stream();
 
             $email = [$email];
@@ -338,10 +340,22 @@ class TourController extends Controller
                 'data' => $data,
                 'tour' => $tour
             ];
-            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject,$pdf,$tourname){
-                $message->to($email)->subject($subject . ' | '. config('app.name'));
-                $message->attachData($pdf, $tourname.'-tour-details.pdf');
-            });
+
+            // Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject,$pdf,$tourname){
+            //     $message->to($email)->subject($subject . ' | '. config('app.name'));
+            //     $message->attachData($pdf, $tourname.'-tour-details.pdf');
+            // });
+            $listId = 'd1f4e77d12';
+            // $listId = env('MAILCHIMP_LIST_ID');
+
+            $mailchimp = new MailchimpService();
+            $listId = $listId; // Replace with your list ID
+            $subject = $subject;
+
+
+            $htmlContent = View::make('emails.share_tour', ['tour' => $tour])->render();
+            // dd($htmlContent);
+            $mailchimp->sendEmailToList($listId, $subject, $htmlContent);
 
             return redirect()->back()->with('flash_message_success','Mail sent');
         }
@@ -354,10 +368,11 @@ class TourController extends Controller
                 ->where('tours.id', $id)
                 ->orderBy('tours.id','DESC')
                 ->first();
+            $tour->image_path = public_path('img/tours/'.$tour->image);
             $tourname = Str::slug($tour->tour_name);
             // return view('emails.share_tour_attachment')->with(compact('tour'));
             $pdf = PDF::setOptions([
-                'images' => true
+                'images' => true,
             ])->loadView('emails.share_tour_attachment', compact('tour'))->setPaper('a4', 'portrait');
             return $pdf->download($tourname.'-tour-details.pdf');
             // $pdf = $pdf->output();
@@ -367,7 +382,7 @@ class TourController extends Controller
         $destinations = Destination::orderBy('name','ASC');
 
         if($request->status){
-            $status = (empty($request->status) || $request->status == 'inactive') ? 0 : 1; 
+            $status = (empty($request->status) || $request->status == 'inactive') ? 0 : 1;
             $destinations = $destinations->where('status', $status);
         }
         if($request->type){
@@ -441,7 +456,7 @@ class TourController extends Controller
                 'status'=>!empty($data['status']) ? $data['status'] : '0',
                 'is_popular' => !empty($data['is_popular']) ? $data['is_popular'] : '0'
             ]);
-            
+
             return redirect('admin/view-destinations')->with('flash_message_success','Destination details updated successfully');
         }
         $destination = Destination::where('id',$id)->first();

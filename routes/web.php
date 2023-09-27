@@ -6,6 +6,7 @@ use App\Http\Controllers\AssociateController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\MailChimpController;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Middleware\AdminAuthenticated;
@@ -15,6 +16,7 @@ Route::get('/clear', function () {
     $exitCode = Artisan::call('optimize');
     return "cache cleared";
 });
+
 
 // client routes
 Route::get('/', [IndexController::class, 'index'])->name('index');
@@ -73,10 +75,10 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/add-tour-itinerary/{id}', [TourController::class, 'addTourItinerary']);
     Route::match(['get','post'], 'admin/edit-tour-itinerary/{id}', [TourController::class, 'editTourItinerary']);
     Route::get('admin/delete-itinerary/{id}', [TourController::class,'deleteItinerary']);
-    
+
     Route::match(['get','post'], 'admin/share-tour/', [TourController::class,'shareTour']);
     Route::match(['get','post'], 'admin/download-tour/{id}', [TourController::class,'downloadTour']);
-    
+
     Route::match(['get','post'], 'admin/enquiries', [TourController::class,'enquiries']);
     Route::match(['get','post'], 'admin/tour-enquiries', [TourController::class,'tourEnquiries']);
 
@@ -106,6 +108,11 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/testimonials/', [AdminController::class, 'viewTestimonials']);
     Route::match(['get','post'], 'admin/add-testimonial/', [AdminController::class, 'addTestimonial']);
     Route::match(['get','post'], 'admin/delete-testimonial/{id}', [AdminController::class,'deleteTestimonial']);
+
+    // MAILCHIMP ROUTES
+    Route::match(['get','post'], 'admin/manageMailChimp', [MailChimpController::class, 'manageMailChimp']);
+    Route::match(['get','post'], 'admin/subscribe', [MailChimpController::class, 'subscribe'])->name('subscribe');
+    Route::match(['get','post'], 'admin/sendCompaign', [MailChimpController::class, 'sendCompaign'])->name('sendCompaign');
 });
 
 
@@ -120,6 +127,7 @@ Route::get('/admin-forgot-password', function () {
 Route::get('/admin-login', function () {
     return view('admin/admin_login');
 });
+
 
 Auth::routes();
 

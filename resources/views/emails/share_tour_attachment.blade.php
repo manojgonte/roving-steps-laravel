@@ -21,11 +21,24 @@
         }
 
         header {
-          width: 100%;
-          height: 100px;
+            position: fixed;
+            top: 0cm;
+            left: 0cm;
+            right: 0cm;
+            height: 1.5cm;
+            /** Extra personal styles **/
+            text-align: center;
         }
 
-        header:after {
+         /** Define now the real margins of every page in the PDF **/
+         body {
+            margin-top: 2cm;
+            margin-left: 2cm;
+            margin-right: 2cm;
+            margin-bottom: 2cm;
+        }
+
+        /* header:after {
           content: '';
           display: inline-block;
           vertical-align: middle;
@@ -62,12 +75,12 @@
 
         section {
           width: 100%;
-        }
+        } */
         /**************************************
         CSS TO MAKE THE EXAMPLE LOOK PRETTY
         **************************************/
 
-        *,
+        /* *,
         *:before,
         *:after {
           -moz-box-sizing: border-box;
@@ -83,26 +96,39 @@
           border-radius: 3px;
         }
         .fs-15{ font-size: 15px }
-        .fw-bold{ font-weight: bold }
+        .fw-bold{ font-weight: bold } */
+
+        /** Define the footer rules **/
+        footer {
+            position: fixed;
+            bottom: 0cm;
+            left: 0cm;
+            right: 0cm;
+            height: 1cm;
+
+            /** Extra personal styles **/
+            /* background-color: #eaeaea; */
+            color: black;
+            text-align: center;
+            /* line-height: 1.5cm; */
+        }
+        footer .pagenum:before {
+            content: counter(page);
+        }
     </style>
 </head>
 <body>
+    <header>
+        <img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('img/logo/logo_trans.png')))}}" height="40">
+    </header>
+    <main>
     <!-- partial:index.partial.html -->
     <div class="wrapper">
-        <!-- <img src="{{public_path('img/logo/logo_trans.png')}}" height="80"> -->
-        <h1>Roving Steps</h1>
         <p>Call/WhatsApp: <a href="tel:+918600031545">+91 8600031545</a> | Email: <a href="mailto:info@rovingsteps.com">info@rovingsteps.com</a> | Website: <a href="https://rovingsteps.com">www.rovingsteps.com</a></p>
         <hr>
         <h1 style="text-align: center;">{{$tour['tour_name']}}</h1>
         <!-- <img src="{{public_path('img/tours/'.$tour['image'])}}" height="400" style="border-radius: 8px;"> -->
-        <img src="{{URL::asset('img/tours/'.$tour['image'])}}" height="400" style="border-radius: 8px;">
-        <!-- <header>
-            <div>
-                content this element use vertical-align: middle;
-            </div>
-            HEADER too =)
-        </header> -->
-        <!-- <nav>NAV</nav> -->
+        <img src="data:image/png;base64,{{base64_encode(file_get_contents($tour->image_path))}}" height="400" style="border-radius: 8px;">
         <div>
             <h4 class="fw-bold">{{$tour['amenities']}}</h4>
             <hr>
@@ -200,6 +226,10 @@
             </div>
         </div>
     </div>
+    </main>
     <!-- partial -->
+    <footer>
+        <div class="pagenum-container">Page <span class="pagenum"></span></div>
+    </footer>
 </body>
 </html>

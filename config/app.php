@@ -123,7 +123,7 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    
+
     'google_recaptcha_key' => env('GOOGLE_RECAPTCHA_KEY'),
     'google_recaptcha_secret' => env('GOOGLE_RECAPTCHA_SECRET'),
 
@@ -238,6 +238,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'MailChimp' => ALtelma\LaravelMailChimp\MailChimpFacade::class
     ],
 
 ];
