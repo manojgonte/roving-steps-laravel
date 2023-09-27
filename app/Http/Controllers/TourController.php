@@ -345,9 +345,9 @@ class TourController extends Controller
             //     $message->to($email)->subject($subject . ' | '. config('app.name'));
             //     $message->attachData($pdf, $tourname.'-tour-details.pdf');
             // });
-            $listId = 'd1f4e77d12';
-            // $listId = env('MAILCHIMP_LIST_ID');
+            $listId = config('app.MAILCHIMP_LIST_ID');
 
+            // dd($listId);
             $mailchimp = new MailchimpService();
             $listId = $listId; // Replace with your list ID
             $subject = $subject;

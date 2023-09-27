@@ -22,7 +22,7 @@ class MailChimpController extends Controller
 
 
     public $mailchimp;
-    public $listId = 'd1f4e77d12';
+    // public $listId = 'd1f4e77d12';
 
 
     // public function __construct(Mailchimp $mailchimp)
@@ -41,16 +41,16 @@ class MailChimpController extends Controller
     public function subscribe(Request $request)
     {
 
-        // $listId = env('MAILCHIMP_LIST_ID');
-        $listId = 'd1f4e77d12';
-
+        $listId1 = config('app.MAILCHIMP_LIST_ID');
+        dd($listId1);
 		$mailchimp = new MailchimpService();
-        $listId = $listId; // Replace with your list ID
-        $subject = 'TEsting subject2';
+        $listId = $listId1; // Replace with your list ID
+
+        $subject = 'Testing subject2';
 
         $htmlContent = View::make('emails.share_tour.blade.php')->render();
         $body = $htmlContent;
-        // dd($listId);
+
         $mailchimp->sendEmailToList($listId, $subject, $htmlContent);
     }
 

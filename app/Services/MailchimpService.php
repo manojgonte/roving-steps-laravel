@@ -13,7 +13,8 @@ class MailchimpService
     {
         $this->client = new ApiClient();
           // Get the Mailchimp API key from the .env file
-          $apiKey = '455ae922a77f18258fd8858e9698a9c2-us21';
+          $apiKey = config('app.MAILCHIMP_API_KEY');
+        //   dd($apiKey);
 
           // Extract the data center from the API key (e.g., "us6")
           $dataCenter = explode('-', $apiKey)[1];
@@ -38,7 +39,7 @@ class MailchimpService
             'settings' => [
                 'subject_line' => $subject,
                 'reply_to' => 'ishwarsathe67@gmail.com',
-                'from_name' => 'roving steps',
+                'from_name' => 'Roving Steps',
             ],
         ]);
 
