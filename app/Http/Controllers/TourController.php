@@ -375,7 +375,9 @@ class TourController extends Controller
                 'images' => true,
             ])->loadView('emails.share_tour_attachment', compact('tour'))->setPaper('a4', 'portrait');
             return $pdf->download($tourname.'-tour-details.pdf');
-            // $pdf = $pdf->output();
+            // return $pdf->stream($tourname.'-tour-details.pdf');
+            $pdf = $pdf->output();
+            // return view('emails.share_tour_attachment')->with(compact('tour'));
     }
 
     public function viewDestinations(Request $request) {

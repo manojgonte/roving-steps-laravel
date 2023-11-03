@@ -1,102 +1,171 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>CodePen - Static Page Layout Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Roving steps travel PDF</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <meta http - equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <style>
+
+    {{-- Poppins font --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
+    {{-- Roboto font --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto+Mono:ital@1&family=Roboto+Serif:opsz@8..144&family=Roboto+Slab&display=swap"
+        rel="stylesheet">
+
+    {{-- Manrope font --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style type="text/css">
         body {
-          background: #fff;
-          margin: 0;
+            background: #fff;
+            margin-top: 2cm;
+            margin-left: 1cm;
+            margin-right: 1cm;
+            margin-bottom: 2cm;
+            font-family: 'Poppins', sans-serif;
+            font-family: 'Roboto Mono', monospace;
+            font-family: 'Roboto Serif', serif;
+            font-family: 'Roboto Slab', serif;
+            font-family: 'Manrope', sans-serif;
         }
 
         .wrapper {
-          color: #000;
-          /* font-family: Poppins; */
-          text-align: center;
-          width: 98%;
-          margin: 0 10px;
+            color: #000;
+            /* font-family: Poppins; */
+            /* text-align: center; */
+            width: 98%;
+            margin: 0 10px;
         }
 
         header {
             position: fixed;
-            top: 0cm;
-            left: 0cm;
-            right: 0cm;
+            top: 0.5cm;
             height: 1.5cm;
-            /** Extra personal styles **/
+            width: 98%;
+            margin: 0 10px;
+        }
+
+        /*  */
+        .durationBadge {
+            background-color: #e0dfdf;
+            /* color: #494646b6; */
+            color: #228b22;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: 'Roboto Mono', monospace;
+            font-family: 'Roboto Serif', serif;
+            font-family: 'Roboto Slab', serif;
+            border-radius: 30px;
+            width: 80px;
+            height: 25px;
             text-align: center;
         }
 
-         /** Define now the real margins of every page in the PDF **/
-         body {
-            margin-top: 2cm;
-            margin-left: 2cm;
-            margin-right: 2cm;
-            margin-bottom: 2cm;
+        /*  */
+
+        .tourName {
+            color: #039BE5;
+            font-size: 50px;
+            font-weight: 700;
+            font-family: 'Roboto Mono', monospace;
+            font-family: 'Roboto Serif', serif;
+            font-family: 'Roboto Slab', serif;
         }
 
-        /* header:after {
-          content: '';
-          display: inline-block;
-          vertical-align: middle;
-          width: 1px;
-          height: 100%;
-          margin: 0 0 0 -5px;
+        .amenities {
+            font-family: 'Roboto Mono', monospace;
+            font-family: 'Roboto Serif', serif;
+            font-family: 'Roboto Slab', serif;
+            color: #228b22;
+            font-size: 25px;
+            font-weight: 800;
         }
 
-        header > div {
-          float: left;
-          height: 100px;
-          background: green;
+        .date {
+            font-size: 17px;
+            font-weight: 800;
+            font-family: 'Roboto Mono', monospace;
+            font-family: 'Roboto Serif', serif;
+            font-family: 'Roboto Slab', serif;
         }
 
-        header > div:after {
-          content: '';
-          display: inline-block;
-          vertical-align: middle;
-          width: 1px;
-          height: 100%;
-          margin: 0 0 0 -5px;
+        .package {
+            margin: 2% 0% 0% 0%;
         }
 
-        nav,
-        section {
-          float: left;
-          padding: 200px 0;
+        .inclExlu {
+            text-align: left;
         }
 
-        nav {
-          width: 200px;
-          margin-right: 10px;
+        .dayWise {
+            margin: 1% 0% 1% 0%;
         }
 
-        section {
-          width: 100%;
-        } */
-        /**************************************
-        CSS TO MAKE THE EXAMPLE LOOK PRETTY
-        **************************************/
-
-        /* *,
-        *:before,
-        *:after {
-          -moz-box-sizing: border-box;
-          -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+        .day {
+            border: 1px solid black;
+            padding: 0.5%;
+            margin-bottom: 0.5%;
         }
 
-        header,
-        nav,
-        section {
-          border: 1px solid rgb(203 203 203);
-          margin-bottom: 10px;
-          border-radius: 3px;
+        .dayNplace {
+            color: #039BE5;
+            font-size: 15px;
+            /* font-family: 'Poppins', sans-serif; */
+            font-family: 'Roboto Mono', monospace;
+            font-family: 'Roboto Serif', serif;
+            font-family: 'Roboto Slab', serif;
         }
-        .fs-15{ font-size: 15px }
-        .fw-bold{ font-weight: bold } */
+
+        .end {
+            text-align: center;
+            margin-top: 2%;
+        }
+
+        .contact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1% 0% 1% 0%;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 700;
+            /* font-family: 'Poppins', sans-serif; */
+            font-family: 'Roboto Mono', monospace;
+            font-family: 'Roboto Serif', serif;
+            font-family: 'Roboto Slab', serif;
+            color: #1F95D1;
+        }
+
+        .line {
+            margin: 1% 0% 1% 0%;
+        }
+
+        .goodByeText {
+            color: #039BE5;
+            text-align: center;
+            font-size: 30px;
+            /* font-family: 'Poppins', sans-serif; */
+            font-family: 'Roboto Mono', monospace;
+            font-family: 'Roboto Serif', serif;
+            font-family: 'Roboto Slab', serif;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
 
         /** Define the footer rules **/
         footer {
@@ -112,124 +181,112 @@
             text-align: center;
             /* line-height: 1.5cm; */
         }
+
         footer .pagenum:before {
             content: counter(page);
         }
     </style>
 </head>
+
 <body>
     <header>
-        <img src="data:image/png;base64,{{base64_encode(file_get_contents(public_path('img/logo/logo_trans.png')))}}" height="40">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo/logo_trans.png'))) }}"
+            height="40">
     </header>
     <main>
-    <!-- partial:index.partial.html -->
-    <div class="wrapper">
-        <p>Call/WhatsApp: <a href="tel:+918600031545">+91 8600031545</a> | Email: <a href="mailto:info@rovingsteps.com">info@rovingsteps.com</a> | Website: <a href="https://rovingsteps.com">www.rovingsteps.com</a></p>
-        <hr>
-        <h1 style="text-align: center;">{{$tour['tour_name']}}</h1>
-        <!-- <img src="{{public_path('img/tours/'.$tour['image'])}}" height="400" style="border-radius: 8px;"> -->
-        <img src="data:image/png;base64,{{base64_encode(file_get_contents($tour->image_path))}}" height="400" style="border-radius: 8px;">
-        <div>
-            <h4 class="fw-bold">{{$tour['amenities']}}</h4>
-            <hr>
-            <p class="fs-15">Dubai...Where everything Glitters... Dazzling Dubai is where the ancient Arabic culture & tradition sit side by side with the modern infrastructure. Our Dubai Tours are memorable for all times to come, for we make you taste the Arabic delicacies, travel the paths of Gold Souk, thrill at Desert Safari, experience the stunning feat of architecture- the Burj Khalifa, the iconic Burj al-Arab, Palm Jumeirah & more. With Kesari, you will not only see Dubai you will experience it! The Dhow Dinner Cruise, the Desert Dune Safari, the Dubai Fountain Show and Snow World are some of the highlights of our Dubai Tour packages. The Dubai Shopping Festival and Ferrari Park are entertaining elements that are added to enhance your Dubai Tours.</p>
-
-            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tbody><tr>
-                    <td valign="top" width="33.333%" style="padding-top: 20px; border: 1px solid #aaa; margin: 20px 0px;" class="services">
-                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tbody>
-                                <tr>
-                                    <td class="text-services">
-                                        <h3 style="border-bottom: 1px solid #aaaaaa30; text-align: center">Price</h3>
-                                        <div style="text-align: center;">
-                                            <h5 style="margin-bottom: 0">Adult: Rs. {{number_format($tour['adult_price'])}}</h5>
-                                            @if($tour['child_price'])<h5>Child: Rs. {{number_format($tour['child_price'])}}</h5>@endif
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                    <td valign="top" width="33.333%" style="padding-top: 20px; border: 1px solid #aaa; margin: 20px 0px; background: rgba(0,0,0,.08);" class="services">
-                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tbody>
-                                <tr>
-                                    <td class="text-services">
-                                        <h3 style="border-bottom: 1px solid #aaaaaa30; text-align: center">Duration</h3>
-                                        <div style="text-align: center;">
-                                            <h5 style="margin-bottom: 0">{{$tour['days']}} Days</h5>
-                                            <h5>{{$tour['nights']}} Nights</h5>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                    <td valign="top" width="33.333%" style="padding-top: 20px; border: 1px solid #aaa; margin: 20px 0px;" class="services">
-                        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tbody>
-                                <tr>
-                                    <td class="text-services">
-                                        <h3 style="border-bottom: 1px solid #aaaaaa30; text-align: center">Date</h3>
-                                        <div style="text-align: center;">
-                                            @if($tour['from_date'])
-                                            <h5 style="margin-bottom: 0">{{date('d M Y', strtotime($tour['from_date']))}} TO</h5>
-                                            <h5>{{date('d M Y', strtotime($tour['end_date']))}}</h5>
-                                            @else
-                                            NA
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr></tbody>
-            </table>
-
-            <h3 style="font-weight: bold;">Tour Itinerary</h3>
-            @foreach($tour->itinerary as $day)
-            <div style="text-align: left; margin: 2% 1%">
-                <p class="fs-15 fw-bold" style="margin-bottom: 1px">Day {{$day->day}}: {{$day->visit_place}}</p>
-                <p class="fs-15" style="margin-top: 2px">{!! $day->description !!}</p>
+        <div class="wrapper">
+            <div class="tourName">{{ $tour['tour_name'] }}</div>
+            <div class="durationBadge">
+                {{ $tour['nights'] }}N/{{ $tour['days'] }}D
             </div>
-            @endforeach
-            <hr>
-
-            @if($tour['inclusions'])
-            <div style="text-align: left; margin: 2% 1%">
-                <p class="fs-15 fw-bold" style="margin-bottom: 1px">Inclusions: </p>
-                <p class="fs-15" style="margin-top: 2px">{!! $tour['inclusions'] !!}</p>
+            <div class="amenities">
+                <span>Amenities: {{ $tour['amenities'] }}</span>
             </div>
-            <hr>
+            @if (date('d M Y', strtotime($tour['from_date'])))
+                <div class="date">
+                    Travel date: {{ date('d M Y', strtotime($tour['from_date'])) }}
+                </div>
             @endif
 
-            @if($tour['exclusions'])
-            <div style="text-align: left; margin: 2% 1%">
-                <p class="fs-15 fw-bold" style="margin-bottom: 1px">Exclusions: </p>
-                <p class="fs-15" style="margin-top: 2px">{!! $tour['exclusions'] !!}</p>
+            <hr class="line" />
+
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents($tour->image_path)) }}" height="400"
+                style="border-radius: 8px;">
+
+            <div class="package">
+                @if ($tour['inclusions'])
+                    <div class="inclExlu">
+                        <span class="title">Inclusions: </span>
+                        <p>{!! nl2br($tour['inclusions']) !!}</p>
+                    </div>
+                    <hr>
+                @endif
+
+                @if ($tour['exclusions'])
+                    <div class="inclExlu">
+                        <span class="title">Exclusions: </span>
+                        <p class="fs-15" style="margin-top: 2px">{!! nl2br($tour['exclusions']) !!}</p>
+                    </div>
+                    <hr class="line" />
+                @endif
             </div>
-            <hr>
+
+            <div class="dayWise">
+
+                <div class="title" style="margin-bottom: 2%">Day wise details</div>
+
+                @foreach ($tour->itinerary as $day)
+                    <div class="day">
+                        <p class="dayNplace">Day {{ $day->day }}:
+                            {{ $day->visit_place }}</p>
+                        <p class="fs-15" style="margin-top: 2px">{!! $day->description !!}</p>
+                    </div>
+                @endforeach
+            </div>
+
+            <hr class="line" />
+
+            <div class="page-break"></div>
+
+            @if ($tour['note'])
+                <div>
+                    <span class="title">Note:</span>
+                    <div style="text-align: left; margin: 2% 1%">
+                        <p class="fs-15 fw-bold" style="margin-bottom: 1px">Note: </p>
+                        <p class="fs-15" style="margin-top: 2px">{!! $tour['note'] !!}</p>
+                    </div>
+                </div>
+                <hr class="line" />
             @endif
 
-            @if($tour['note'])
-            <div style="text-align: left; margin: 2% 1%">
-                <p class="fs-15 fw-bold" style="margin-bottom: 1px">Note: </p>
-                <p class="fs-15" style="margin-top: 2px">{!! $tour['note'] !!}</p>
-            </div>
-            @endif
+            <div class="end">
+                <div class="title">Contact detail:</div>
+                <div class="contact">
+                    <span>
+                        Call/WhatsApp: <a href="tel:+918600031545">+91 8600031545</a>
+                    </span>
+                    <span>
+                        Email: <a href="mailto:info@rovingsteps.com">info@rovingsteps.com</a>
+                    </span>
+                </div>
+                <div style="text-align: center; margin-bottom: 2%;">
+                    <span>
+                        Website: <a href="https://rovingsteps.com">www.rovingsteps.com</a>
+                    </span>
+                </div>
 
-            <div style="text-align: center; line-height: 0.5;">
-                <h3> Thank you & Regards. </h3>
-                <h4> Looking forward to treat you a great pleasure</h4>
+                <hr class="line" />
+
+                <div class="goodByeText">
+                    <h2> Tour Ends with Happy and Beautiful Memories. </h2>
+                </div>
             </div>
         </div>
-    </div>
     </main>
     <!-- partial -->
     <footer>
         <div class="pagenum-container">Page <span class="pagenum"></span></div>
     </footer>
 </body>
+
 </html>

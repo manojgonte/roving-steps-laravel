@@ -4,7 +4,7 @@
     <a href="{{ url('/admin/dashboard') }}" class="brand-link text-white p-2">
         <img src="{{asset('img/logo/logo_trans.png')}}" class="brand-image" style="width:80%;">
     </a>
-    <div class="sidebar">        
+    <div class="sidebar">
         <nav class="mt-1">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item has-treeview menu-open">
@@ -19,37 +19,37 @@
                         <i class="nav-icon fas fa-plane-departure"></i>
                         <p>Tours</p>
                     </a>
-                </li> 
+                </li>
                 <li class="nav-item">
                     <a href="{{url('admin/tour-planner/1')}}" class="nav-link text-white @if(preg_match('#/admin/tour-planner#', $url)) active @endif">
                         <i class="nav-icon fas fa-user-ninja"></i>
                         <p>Tour Planner</p>
                     </a>
-                </li> 
+                </li>
                 <li class="nav-item">
                     <a href="{{url('admin/tour-enquiries')}}" class="nav-link text-white @if(preg_match('#/admin/tour-enquiries#', $url)) active @endif">
                         <i class="nav-icon fas fa-comment-dots"></i>
                         <p>Tour Enquiries</p>
                     </a>
-                </li> 
+                </li>
                 <li class="nav-item">
                     <a href="{{url('admin/enquiries')}}" class="nav-link text-white @if(preg_match('#/admin/enquiries#', $url)) active @endif">
                         <i class="nav-icon fas fa-comment-dots"></i>
                         <p>Enquiries</p>
                     </a>
-                </li> 
+                </li>
                 <li class="nav-item">
                     <a href="{{url('admin/view-destinations')}}" class="nav-link text-white @if(preg_match('#/admin/view-destinations#', $url)) active @endif">
                         <i class="nav-icon fas fa-campground"></i>
                         <p>Destinations</p>
                     </a>
-                </li> 
+                </li>
                 <li class="nav-item">
                     <a href="{{url('admin/registered-users')}}" class="nav-link text-white @if(preg_match('#/admin/registered-users#', $url)) active @endif">
                         <i class="nav-icon fas fa-user-plus"></i>
                         <p>Registered Users</p>
                     </a>
-                </li> 
+                </li>
                 <li class="nav-item">
                     <a href="{{url('admin/associated-users')}}" class="nav-link text-white @if(preg_match('#/admin/associated-users#', $url)) active @endif">
                         <i class="nav-icon fas fa-users"></i>
@@ -61,13 +61,19 @@
                         <i class="nav-icon fas fa-photo-video"></i>
                         <p>Gallery</p>
                     </a>
-                </li> 
+                </li>
                 <li class="nav-item">
                     <a href="{{url('admin/testimonials')}}" class="nav-link text-white @if(preg_match('#/admin/testimonials#', $url)) active @endif">
                         <i class="nav-icon fa fa-user-edit"></i>
                         <p>Testimonials</p>
                     </a>
-                </li> 
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('admin/invoice-dashboard')}}" class="nav-link text-white @if(preg_match('#/admin/invoice-dashboard#', $url)) active @endif">
+                        <i class="nav-icon fa fa-user-edit"></i>
+                        <p>Billing & invoices</p>
+                    </a>
+                </li>
                 {{-- Projects --}}
                 {{-- <li class="nav-item">
                     <a href="#" class="nav-link text-white ">
@@ -90,7 +96,7 @@
                     </ul>
                 </li> --}}
             </ul>
-        </nav>  
+        </nav>
     </div>
 </aside>
 

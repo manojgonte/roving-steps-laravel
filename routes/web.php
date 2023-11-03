@@ -9,6 +9,7 @@ use App\Http\Controllers\TourController;
 use App\Http\Controllers\MailChimpController;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\BillingController;
 use App\Http\Middleware\AdminAuthenticated;
 use App\Http\Middleware\Userlogin;
 
@@ -113,6 +114,12 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/manageMailChimp', [MailChimpController::class, 'manageMailChimp']);
     Route::match(['get','post'], 'admin/subscribe', [MailChimpController::class, 'subscribe'])->name('subscribe');
     Route::match(['get','post'], 'admin/sendCompaign', [MailChimpController::class, 'sendCompaign'])->name('sendCompaign');
+
+    // Billing & invoices
+    // Route::match(['get','post'], 'admin//{id}', [TourController::class, 'editDestination']);
+    Route::match(['get','post'], 'admin/invoice-dashboard', [BillingController::class, 'viewRecords']);
+    Route::match(['get','post'], 'admin/create-invoice', [BillingController::class, 'createInvoice']);
+    // Route::match(['get','post'], 'admin/delete-destination/{id}', [TourController::class,'deleteDestination']);
 });
 
 
