@@ -30,7 +30,7 @@
                             <a href="{{ url('/admin/create-invoice') }}">Reset</a>
                         </button>
                         <button type="button" class="btn btn-outline-dark">
-                            <a href="{{ url('/admin/create-invoice') }}">Preview</a>
+                            <a href="{{ url('/admin/invoice-preview') }}">Preview</a>
                         </button>
                         <button type="button" class="btn btn-outline-success">
                             <a href="{{ url('/admin/create-invoice') }}">Save</a>

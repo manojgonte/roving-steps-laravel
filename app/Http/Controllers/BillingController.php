@@ -37,4 +37,10 @@ class BillingController extends Controller
     public function createInvoice() {
         return view('admin.billing.create-invoice');
     }
+
+    public function invoicePreview() {
+        return view('admin.billing.invoice-preview');
+    }
+
+
 }
