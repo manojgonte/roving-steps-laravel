@@ -118,7 +118,7 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     // Billing & invoices
     // Route::match(['get','post'], 'admin//{id}', [TourController::class, 'editDestination']);
     Route::match(['get','post'], 'admin/invoice-dashboard', [BillingController::class, 'viewRecords']);
-    Route::match(['get','post'], 'admin/create-invoice', [BillingController::class, 'createInvoice']);
+    Route::match(['get','post'], 'admin/create-invoice', [BillingController::class, 'createInvoice'])->name('createInvoice');;
     Route::match(['get','post'], 'admin/invoice-preview', [BillingController::class, 'invoicePreview']);
     // Route::match(['get','post'], 'admin/delete-destination/{id}', [TourController::class,'deleteDestination']);
 });

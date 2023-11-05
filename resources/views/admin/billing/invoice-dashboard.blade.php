@@ -85,7 +85,7 @@
                         <span style="font-size: 20px; font-weight: 800;">Invoice list</span>
                     </div>
                     <div class="col-lg-6 col-6" style="text-align: right">
-                        <button type="button"  class="btn btn-light">
+                        <button type="button" class="btn btn-light">
                             <a href="{{ url('/admin/create-invoice') }}">Create invoice</a>
                         </button>
                     </div>
@@ -135,13 +135,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($associates as $row)
+                            @foreach ($invoices as $row)
                                 <tr>
                                     <td>{{ $row->id }}</td>
-                                    <td>{{ Str::limit($row->name, 30) }}</td>
-                                    <td>{{ Str::limit($row->email, 30) }}</td>
-                                    <td>{{ $row->contact }}</td>
+                                    <td>{{ $row->bill_to }}</td>
                                     <td>{{ $row->tour_name }}</td>
+                                    <td>{{ $row->tour_name }}</td>
+                                    <td>{{ $row->tour_date }}</td>
+                                    <td>
+                                        @if ($row->grand_total == $row->amt_paid)
+                                            PAID
+                                        @elseif ($row->amt_paid > 0 && $row->amt_paid > $row->grand_total)
+                                            PARTIALLY PAID
+                                        @else
+                                            UNPAID
+                                        @endif
+                                    </td>
                                     <td>
                                         <a class="btn btn-default" href="{{ url('/admin/edit-associate/' . $row->id) }}"><i
                                                 class="fa fa-edit" style="color: #000;"></i></a> &nbsp;
@@ -150,11 +159,11 @@
                                                 class="fa fa-trash"></i></a> &nbsp;
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                     <div class="mt-2 d-flex justify-content-center">
-                        {{-- {{ $associates->links('pagination::bootstrap-4') }} --}}
+                        {{-- {{ $invoices->links('pagination::bootstrap-4') }} --}}
                     </div>
                 </div>
             </div>
