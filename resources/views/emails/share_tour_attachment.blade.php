@@ -3,27 +3,21 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Roving steps travel PDF</title>
+    <title>{{ $tour['tour_name'] }} | {{config('app.name')}}</title>
     <meta name="viewport"
         content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <meta http - equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
     {{-- Poppins font --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,400;1,500;1,600&display=swap" rel="stylesheet">
 
     {{-- Roboto font --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto+Mono:ital@1&family=Roboto+Serif:opsz@8..144&family=Roboto+Slab&display=swap"
         rel="stylesheet">
 
     {{-- Manrope font --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style type="text/css">
@@ -76,7 +70,7 @@
 
         .tourName {
             color: #039BE5;
-            font-size: 50px;
+            font-size: 35px;
             font-weight: 700;
             font-family: 'Roboto Mono', monospace;
             font-family: 'Roboto Serif', serif;
@@ -88,7 +82,7 @@
             font-family: 'Roboto Serif', serif;
             font-family: 'Roboto Slab', serif;
             color: #228b22;
-            font-size: 25px;
+            font-size: 23px;
             font-weight: 800;
         }
 
@@ -191,7 +185,7 @@
 <body>
     <header>
         <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo/logo_trans.png'))) }}"
-            height="40">
+            height="60">
     </header>
     <main>
         <div class="wrapper">
@@ -250,7 +244,6 @@
 
             @if ($tour['note'])
                 <div>
-                    <span class="title">Note:</span>
                     <div style="text-align: left; margin: 2% 1%">
                         <p class="fs-15 fw-bold" style="margin-bottom: 1px">Note: </p>
                         <p class="fs-15" style="margin-top: 2px">{!! $tour['note'] !!}</p>
@@ -278,14 +271,17 @@
                 <hr class="line" />
 
                 <div class="goodByeText">
-                    <h2> Tour Ends with Happy and Beautiful Memories. </h2>
+                    <h5> Tour Ends with Happy and Beautiful Memories. </h5>
                 </div>
             </div>
         </div>
     </main>
     <!-- partial -->
     <footer>
-        <div class="pagenum-container">Page <span class="pagenum"></span></div>
+        <div class="pagenum-container">
+            <div style="font-size: 15px; background: #2786BD; padding: 5px; border-radius: 5px; color: #fff !important;">Call/WhatsApp: +91 8600031545 | Email: info@rovingsteps.com | Website: www.rovingsteps.com</div>
+            Page <span class="pagenum"></span>
+        </div>
     </footer>
 </body>
 
