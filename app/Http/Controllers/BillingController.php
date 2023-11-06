@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\TourItinerary;
 use App\Models\Tour;
-use App\Models\Invoices;
-use App\Models\Payments;
+use App\Models\invoices;
+use App\Models\payments;
 use App\Models\Enquiry;
 use App\Models\TourEnquiry;
 use App\Models\Testimonial;
@@ -30,7 +30,7 @@ class BillingController extends Controller
 
         $testimonials = Testimonial::orderBy('id','DESC')->take(12)->get();
         $destinations = Destination::where(['status'=>1,'is_popular'=>1])->take(8)->get();
-        $invoices = Invoices::orderBy('id','DESC')->take(12)->get();
+        $invoices = invoices::orderBy('id','DESC')->take(12)->get();
 
         // dd("Hiiii");
         $meta_title = config('app.name');
@@ -41,7 +41,7 @@ class BillingController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
             // dd($data);
-            $Invoices = new Invoices;
+            $Invoices = new invoices;
             $Invoices->bill_to = $data['bill_to'];
             $Invoices->Address = $data['address'];
             $Invoices->email = $data['email'];
@@ -61,7 +61,7 @@ class BillingController extends Controller
             // Get invoice id with tour name and tour date and invoice date
             $invoice_id = $Invoices->id;
 
-            $Payments = new Payments;
+            $Payments = new payments;
 
             // Assuming the arrays have the same length
             $count = count($data['costing']);
@@ -70,7 +70,7 @@ class BillingController extends Controller
             $details = $data['details'];
 
             for ($i = 0; $i < $count; $i++) {
-                Payments::insert([
+                payments::insert([
                     'invoice_id' => $invoice_id,
                     'costing' => $costing[$i],
                     'mode_of_payment' => $mode_of_payment[$i],
