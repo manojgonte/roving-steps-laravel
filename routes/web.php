@@ -116,11 +116,16 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/sendCompaign', [MailChimpController::class, 'sendCompaign'])->name('sendCompaign');
 
     // Billing & invoices
-    // Route::match(['get','post'], 'admin//{id}', [TourController::class, 'editDestination']);
     Route::match(['get','post'], 'admin/invoice-dashboard', [BillingController::class, 'viewRecords']);
-    Route::match(['get','post'], 'admin/create-invoice', [BillingController::class, 'createInvoice'])->name('createInvoice');;
-    Route::match(['get','post'], 'admin/invoice-preview', [BillingController::class, 'invoicePreview']);
-    // Route::match(['get','post'], 'admin/delete-destination/{id}', [TourController::class,'deleteDestination']);
+    Route::match(['get','post'], 'admin/create-invoice', [BillingController::class, 'createInvoice'])->name('createInvoice');
+    Route::match(['get','post'], 'admin/invoice-details/{id}', [BillingController::class, 'invoiceDetails']);
+
+    Route::match(['get','post'], 'admin/edit-invoice/{id}', [BillingController::class, 'editInvoice'])->name('editInvoice');
+    Route::match(['get','post'], 'admin/edit-payment/{id}', [BillingController::class, 'editPayment']);
+
+    Route::match(['get','post'], 'admin/delete-invoice/{id}', [BillingController::class, 'deleteInvoice']);
+
+    Route::match(['get','post'], 'admin/invoice-pdf', [BillingController::class, 'createInvoicePdf']);
 });
 
 

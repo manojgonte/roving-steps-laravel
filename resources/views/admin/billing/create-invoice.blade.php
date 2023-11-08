@@ -22,11 +22,11 @@
                     <div class="col-lg-6 col-6">
                         <span style="font-size: 20px; font-weight: 800;">Invoice </span>
                     </div>
-                    <div class="col-lg-6 col-6" style="text-align: right">
+                    {{-- <div class="col-lg-6 col-6" style="text-align: right">
                         <button type="button" class="btn btn-outline-dark">
                             <a href="{{ url('/admin/invoice-preview') }}">Preview</a>
                         </button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -113,9 +113,6 @@
                                     Item</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-
                     </div>
                     <hr />
                 </div>

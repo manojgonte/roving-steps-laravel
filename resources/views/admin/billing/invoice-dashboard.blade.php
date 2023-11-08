@@ -152,11 +152,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a class="btn btn-default" href="{{ url('/admin/edit-associate/' . $row->id) }}"><i
-                                                class="fa fa-edit" style="color: #000;"></i></a> &nbsp;
-                                        <a class="btn btn-default" onclick="return confirm('Are you sure?')"
-                                            href="{{ url('/admin/delete-associate/' . $row->id) }}"><i
-                                                class="fa fa-trash"></i></a> &nbsp;
+                                        <a class="btn btn-default"
+                                            href="{{ url('/admin/invoice-details/' . $row->id) }}"><i class="fa fa-info"
+                                                aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

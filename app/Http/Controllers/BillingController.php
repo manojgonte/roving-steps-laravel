@@ -73,8 +73,9 @@ class BillingController extends Controller
                 payments::insert([
                     'invoice_id' => $invoice_id,
                     'costing' => $costing[$i],
+                    'amount_paid' => $amount_paid[$i],
                     'mode_of_payment' => $mode_of_payment[$i],
-                    'details' => $details[$i],
+                    'details' => $details[$i]
                 ]);
             }
 
@@ -87,5 +88,88 @@ class BillingController extends Controller
         return view('admin.billing.invoice-preview');
     }
 
+    public function invoiceDetails(Request $request, $id) {
 
+        $invoice_details = invoices::select('*')  // Use '*' to select all columns
+        ->where('id', $id)
+        ->take(10)
+        ->first();
+
+        $payments = payments::where('invoice_id', $id)
+                    ->orderBy('payment_id', 'DESC')
+                    ->take(12)
+                    ->get();
+
+        return view('admin.billing.invoice-details', compact('invoice_details', 'payments'));
+    }
+
+    public function editInvoice(Request $request, $id) {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // dd($data);
+
+            // detail update
+            invoices::where('id',$id)->update([
+                'bill_to'=>$data['bill_to'],
+                'address'=>$data['address'],
+                'costemailing'=>$data['email'],
+                'costicontact_nong'=>$data['contact_no'],
+                'tour_name'=>$data['tour_name'],
+                'no_of_passengers'=>$data['no_of_passengers'],
+                'tour_date'=>$data['tour_date'],
+                'invoice_date'=>$data['invoice_date'],
+
+                'amt_paid'=>$data['amt_paid'],
+                'grand_total'=>$data['grand_total'],
+                'balance'=>$data['balance'],
+                'amt_in_words'=>$data['amt_in_words']
+            ]);
+            return redirect('admin/invoice-details/'.$id)->with('flash_message_success','Invoice details updated successfully');
+        }
+
+        $invoice_details = invoices::select('*')  // Use '*' to select all columns
+        ->where('id', $id)
+        ->take(10)
+        ->first();
+
+        $payments = Payments::select('*')
+        ->where('invoice_id', $id)
+        ->get();
+
+        // dd($payments);
+        return view('admin.billing.edit-invoice', compact('invoice_details', 'payments'));
+    }
+
+    public function editPayment(Request $request, $id) {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // dd($data);
+
+            // detail update
+            payments::where('id',$id)->update([
+                'costing'=>$data['costing'],
+                'mode_of_payment'=>$data['mode_of_payment'],
+                'details'=>$data['details'],
+                'amount_paid'=>$data['amount_paid'],
+                'updated_at'=>$data['costing']
+            ]);
+            return redirect('admin/edit-payment/'.$id)->with('flash_message_success','Payment details updated successfully');
+        }
+
+        $payments = payments::select('*')
+            ->where('invoice_id', $id)
+            ->first();
+
+        return view('admin.billing.edit-invoice', compact('payments'));
+    }
+
+    public function deleteInvoice(Request $request, $id) {
+        invoices::where('id',$id)->delete();
+        return redirect()->back()->with('flash_message_success','Invoice deleted successfully');
+    }
+
+    public function deletePayment(Request $request, $id) {
+        payments::where('payment_id',$id)->delete();
+        return redirect()->back()->with('flash_message_success','Payment for invoice deleted successfully');
+    }
 }
