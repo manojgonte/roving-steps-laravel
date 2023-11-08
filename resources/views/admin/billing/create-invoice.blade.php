@@ -144,11 +144,10 @@
                     <hr />
                 </div>
                 <div class="card-footer ">
-                    <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check-circle"></i>
+                    <button type="submit" class="btn btn-warning font-weight-bold submit"><i class="fa fa-check-circle"></i>
                         SAVE </button>
-                    <button type="reset" class="btn btn-default"> <i class="fa fa-refresh"></i>
+                    <button type="reset" class="btn btn-light"> <i class="fa fa-refresh"></i>
                         RESET </button>
-                    <button type="cancel" class="btn btn-danger"><i class="fa fa-times"></i> CANCEL </button>
                 </div>
             </form>
         </section>
@@ -174,7 +173,7 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Amount paid</label>
-                                <input type="number" name="amt_paid[]" class="form-control" placeholder="Enter amount paid">
+                                <input type="number" name="amount_paid[]" class="form-control" placeholder="Enter amount paid">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Mode of payment</label>

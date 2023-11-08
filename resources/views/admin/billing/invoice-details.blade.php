@@ -22,17 +22,13 @@
                     <div class="col-md-6">
                         <div class="row d-flex flex-row-reverse">
                             <div>
-                                <button type="button" class="btn btn-danger">
-                                    <a href="{{ url('/admin/delete-invoice/' . $invoice_details->id) }}">Delete invoice</a>
-                                </button>
+                                <a class="btn btn-danger" href="{{ url('/admin/delete-invoice/' . $invoice_details->id) }}"><i class="fa fa-trash"></i> Delete</a>
                             </div>
                             <div class="mr-2">
-                                <button type="button" class="btn btn-success">Print invoice</button>
+                                <button type="button" class="btn btn-success"><i class="fa fa-print"></i> Print</button>
                             </div>
                             <div class="mr-2">
-                                <button type="button" class="btn btn-warning">
-                                    <a href="{{ url('/admin/edit-invoice/' . $invoice_details->id) }}">Edit invoice</a>
-                                </button>
+                                <a class="btn btn-warning" href="{{ url('/admin/edit-invoice/' . $invoice_details->id) }}"><i class="fa fa-pencil-alt"></i> Edit</a>
                             </div>
                         </div>
                     </div>
@@ -98,15 +94,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($payments as $row)
+                        @foreach ($invoice_details->invoicePayments as $row)
                             <tr>
-                                <td>{{ $row->payment_id }}</td>
+                                <td>{{ $row->id }}</td>
                                 <td>{{ $row->details }}</td>
-                                <td>{{ $row->costing }}</td>
-                                <td>{{ $row->amtPaid }}</td>
-                                <td>{{ $row->balance }}</td>
-                                <td>{{ $row->mode_of_payment }}</td>
-                                <td>{{ $row->created_at }}</td>
+                                <td>₹{{ $row->costing }}</td>
+                                <td>₹{{ $row->amount_paid }}</td>
+                                <td>₹{{ $row->costing - $row->amount_paid }}</td>
+                                <td class="text-uppercase">{{ $row->mode_of_payment }}</td>
+                                <td>{{ date('d M Y, h:iA', strtotime($row->created_at)) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -85,9 +85,7 @@
                         <span style="font-size: 20px; font-weight: 800;">Invoice list</span>
                     </div>
                     <div class="col-lg-6 col-6" style="text-align: right">
-                        <button type="button" class="btn btn-light">
-                            <a href="{{ url('/admin/create-invoice') }}">Create invoice</a>
-                        </button>
+                        <a href="{{ url('/admin/create-invoice') }}" class="btn btn-dark"><i class="fa fa-file-alt"></i> Create invoice</a>
                     </div>
                 </div>
             </div>

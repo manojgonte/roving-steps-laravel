@@ -58,25 +58,15 @@ class BillingController extends Controller
 
             $Invoices->save();
 
-            // Get invoice id with tour name and tour date and invoice date
-            $invoice_id = $Invoices->id;
-
-            $Payments = new payments;
-
-            // Assuming the arrays have the same length
-            $count = count($data['costing']);
-            $costing = $data['costing'];
-            $mode_of_payment = $data['mode_of_payment'];
-            $details = $data['details'];
-
-            for ($i = 0; $i < $count; $i++) {
-                payments::insert([
-                    'invoice_id' => $invoice_id,
-                    'costing' => $costing[$i],
-                    'amount_paid' => $amount_paid[$i],
-                    'mode_of_payment' => $mode_of_payment[$i],
-                    'details' => $details[$i]
-                ]);
+            // save payment in "payments" table
+            foreach($data['costing'] as $key => $val) {
+                $payments = new payments;
+                $payments->invoice_id       = $Invoices->id;
+                $payments->costing          = $data['costing'][$key];
+                $payments->amount_paid      = $data['amount_paid'][$key];
+                $payments->mode_of_payment  = $data['mode_of_payment'][$key];
+                $payments->details          = $data['details'][$key];
+                $payments->save();
             }
 
             return redirect('admin/invoice-dashboard/')->with('flash_message_success','New Invoices added successfully');
@@ -90,17 +80,12 @@ class BillingController extends Controller
 
     public function invoiceDetails(Request $request, $id) {
 
-        $invoice_details = invoices::select('*')  // Use '*' to select all columns
-        ->where('id', $id)
-        ->take(10)
-        ->first();
+        $invoice_details = invoices::with('invoicePayments')
+            ->select('*')  // Use '*' to select all columns
+            ->where('id', $id)
+            ->first();
 
-        $payments = payments::where('invoice_id', $id)
-                    ->orderBy('payment_id', 'DESC')
-                    ->take(12)
-                    ->get();
-
-        return view('admin.billing.invoice-details', compact('invoice_details', 'payments'));
+        return view('admin.billing.invoice-details', compact('invoice_details'));
     }
 
     public function editInvoice(Request $request, $id) {

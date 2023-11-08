@@ -10,4 +10,8 @@ class Invoices extends Model
     use HasFactory;
 
     protected $table = 'invoices';
+
+    public function invoicePayments() {
+        return $this->hasMany(payments::class, 'invoice_id');
+    }
 }
