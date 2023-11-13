@@ -92,40 +92,38 @@
             <hr />
 
             {{-- Filters --}}
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <input type="text" name="client name" class="form-control" placeholder="Search client name">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <input type="text" name="Tour ID" class="form-control" placeholder="Search tour id">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <input type="text" name="Tour name" class="form-control" placeholder="Search tour name">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <div class="form-group col-md-3">
-                                <select class="form-control select2bs4" name="type">
+            <div class="card">
+                <div class="card-header">
+                    <form action="" method="GET">
+                        <div class="row d-flex justify-content-start">
+                            <div class="col-auto">
+                                <input class="form-control" name="q" placeholder="Search by Client, Tour Name" value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
+                            </div>
+                            <div class="col-auto">
+                                <select name="gem_id" class="form-control" onchange="this.form.submit()">
+                                    <option value="">Select Identification</option>
                                     <option value="paid">PAID</option>
                                     <option value="not_paid">NOT PAID</option>
                                     <option value="partially_paid">PARTIALLY PAID</option>
                                     <option value="yet_to_send">YET TO SEND</option>
                                 </select>
                             </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-default"> Submit</button>
+                            </div>
+                            <div class="col-auto">
+                                <a href="{{url('admin/view-testing-report')}}" class="btn btn-default"> Clear</a>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-            </section>
 
-            <div class="invoicing-table">
-                <div class="card-body">
+                <div class="card-body invoicing-table">
                     <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                         <thead>
                             <tr>
                                 <th>Invoice ID</th>
                                 <th>Invoice to</th>
-                                <th>Tour ID</th>
                                 <th>Tour name</th>
                                 <th>Tour date</th>
                                 <th>Payment status</th>
@@ -135,10 +133,9 @@
                         <tbody>
                             @foreach ($invoices as $row)
                                 <tr>
-                                    <td>{{ $row->id }}</td>
+                                    <td><a href="{{ url('/admin/invoice-details/' . $row->id) }}"> {{ $row->id }}</a></td>
                                     <td>{{ $row->bill_to }}</td>
-                                    <td>{{ $row->tour_name }}</td>
-                                    <td>{{ $row->tour_name }}</td>
+                                    <td>{{ Str::limit($row->tourName, 20) }}</td>
                                     <td>{{ $row->tour_date }}</td>
                                     <td>
                                         @if ($row->grand_total == $row->amt_paid)
@@ -150,16 +147,14 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a class="btn btn-default"
-                                            href="{{ url('/admin/invoice-details/' . $row->id) }}"><i class="fa fa-info"
-                                                aria-hidden="true"></i></a>
+                                        <a class="btn btn-default" href="{{ url('/admin/invoice-details/'.$row->id) }}"><i class="fa fa-info-circle"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                     <div class="mt-2 d-flex justify-content-center">
-                        {{-- {{ $invoices->links('pagination::bootstrap-4') }} --}}
+                        {{ $invoices->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>
