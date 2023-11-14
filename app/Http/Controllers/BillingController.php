@@ -21,14 +21,22 @@ use Illuminate\Support\Facades\View;
 
 class BillingController extends Controller
 {
-    public function viewRecords() {
-        $invoices = invoices::select('invoices.*','tours.tour_name as tourName')
-            ->leftJoin('tours','tours.id','invoices.tour_name')
-            ->orderBy('invoices.id','DESC')
-            ->paginate(10);
+    public function viewRecords(Request $request) {
+        $invoices = invoices::with('invoicePayments')
+            ->select('invoices.*','tours.tour_name as tourName')
+            ->leftJoin('tours','tours.id','invoices.tour_name');
 
-        $meta_title = 'Invoices';
-        return view('admin.billing.invoice-dashboard',compact('meta_title','invoices'));
+        if($request->q){
+            $q = $request->q;
+            $invoices = $invoices->where(function($query) use($q){
+                $query->where('bill_to','like','%'.$q.'%')
+                ->orWhere('contact_no','like','%'.$q.'%');
+            });
+        }
+        $invoices = $invoices->orderBy('invoices.id','DESC')->paginate(10);
+            
+        $outstanding_amt = payments::select('costing','amount_paid')->get();
+        return view('admin.billing.invoice-dashboard',compact('invoices','outstanding_amt'));
     }
 
     public function createInvoice(Request $request) {

@@ -25,7 +25,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>{{ App\Models\Tour::count() }}</h3>
+                                <h3>₹{{ number_format($outstanding_amt->sum('costing') - $outstanding_amt->sum('amount_paid'), 1) }}</h3>
                                 <p>Outstanding</p>
                             </div>
                             <div class="icon">
@@ -52,7 +52,7 @@
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3>{{ App\Models\Enquiry::count() }}</h3>
-                                <p>Invoice in progress</p>
+                                <p>Invoice in Progress</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-social-twitch"></i>
@@ -65,7 +65,7 @@
                         <div class="small-box bg-danger">
                             <div class="inner">
                                 <h3>{{ App\Models\TourEnquiry::count() }}</h3>
-                                <p>Invoice sent</p>
+                                <p>Invoice Sent</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
@@ -97,7 +97,7 @@
                     <form action="" method="GET">
                         <div class="row d-flex justify-content-start">
                             <div class="col-auto">
-                                <input class="form-control" name="q" placeholder="Search by Client, Tour Name" value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
+                                <input class="form-control" type="search" name="q" placeholder="Search by Client, Tour Name" value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
                             </div>
                             <div class="col-auto">
                                 <select name="gem_id" class="form-control" onchange="this.form.submit()">
@@ -112,7 +112,7 @@
                                 <button type="submit" class="btn btn-default"> Submit</button>
                             </div>
                             <div class="col-auto">
-                                <a href="{{url('admin/view-testing-report')}}" class="btn btn-default"> Clear</a>
+                                <a href="{{url('admin/invoice-dashboard')}}" class="btn btn-default"> Clear</a>
                             </div>
                         </div>
                     </form>
@@ -136,11 +136,11 @@
                                     <td><a href="{{ url('/admin/invoice-details/' . $row->id) }}"> {{ $row->id }}</a></td>
                                     <td>{{ $row->bill_to }}</td>
                                     <td>{{ Str::limit($row->tourName, 20) }}</td>
-                                    <td>{{ $row->tour_date }}</td>
+                                    <td>{{ date('d M Y', strtotime($row->tour_date)) }}</td>
                                     <td>
-                                        @if ($row->grand_total == $row->amt_paid)
+                                        @if ($row->invoicePayments->sum('costing') == $row->invoicePayments->sum('amount_paid'))
                                             PAID
-                                        @elseif ($row->amt_paid > 0 && $row->amt_paid > $row->grand_total)
+                                        @elseif ($row->invoicePayments->sum('amount_paid') > 0)
                                             PARTIALLY PAID
                                         @else
                                             UNPAID
@@ -154,7 +154,7 @@
                         </tbody>
                     </table>
                     <div class="mt-2 d-flex justify-content-center">
-                        {{ $invoices->links('pagination::bootstrap-4') }}
+                        {{ $invoices->appends(request()->query())->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>
