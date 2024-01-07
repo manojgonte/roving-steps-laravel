@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\TourItinerary;
 use App\Models\Tour;
+use App\Models\PlannedTour;
 use App\Models\Enquiry;
 use App\Models\TourEnquiry;
 use App\Services\MailchimpService;
@@ -116,31 +117,39 @@ class TourController extends Controller
 
     public function viewTours(Request $request, $status=null){
         $now = date('Y-m-d');
-        $tours = Tour::select('tours.id','tours.tour_name','tours.type','tours.dest_id','tours.from_date','tours.end_date','tours.days','tours.nights','tours.status','tours.updated_at','destinations.name as destination')
-            ->leftJoin('destinations','destinations.id','tours.dest_id')
-            ->orderBy('tours.id','DESC');
-
+        $tours = PlannedTour::with('tour')
+            ->orderBy('id','DESC');
         // filters
         if($request->dest_id){
-            $tours = $tours->where('tours.dest_id', $request->dest_id);
+            $tours = $tours->whereHas('tour', function($query) use ($request) {
+                $query->where('dest_id', $request->dest_id);
+            });
         }
+
         if($request->type){
-            $tours = $tours->where('tours.type', $request->type);
+            $tours = $tours->whereHas('tour', function($query) use ($request) {
+                $query->where('type', $request->type);
+            });
         }
-        if($request->q){
+
+        if ($request->q) {
             $q = $request->q;
-            $tours = $tours->where(function($query) use($q){
-                $query->where('tours.tour_name','like','%'.$q.'%')
-                ->orWhere('tours.description','like','%'.$q.'%');
+            $tours = $tours->where(function ($query) use ($q) {
+                $query->where('from_date', 'like', '%' . $q . '%')
+                    ->orWhere('end_date', 'like', '%' . $q . '%')
+                    ->orWhereHas('tour', function ($subquery) use ($q) {
+                        $subquery->where('tour_name', 'like', '%' . $q . '%')
+                            ->orWhere('description', 'like', '%' . $q . '%');
+                    });
             });
         }
 
         if (empty($status) || $status == 'ongoing') {
-            $tours = $tours->whereRaw('? between tours.from_date and tours.end_date', [$now]);
+            $tours = $tours->whereRaw('? between from_date and end_date', [$now]);
         } elseif ($status == 'upcoming') {
-            $tours = $tours->where('tours.from_date', '>', $now);
+            $tours = $tours->where('from_date', '>', $now);
         } elseif ($status == 'completed') {
-            $tours = $tours->where('tours.end_date', '<', $now);
+            $tours = $tours->where('end_date', '<', $now);
         }
         $tours = $tours->paginate(10);
 
@@ -181,6 +190,45 @@ class TourController extends Controller
             ->get();
 
         return view('admin.tour.tour_planner')->with(compact('tours','destinations'));
+    }
+
+    public function planTour(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // dd($data);
+            $tour = new PlannedTour;
+            $tour->tour_id = $data['tour_id'];
+            $tour->tourist_count = $data['tourist_count'];
+            $tour->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
+            $tour->end_date = !empty($data['end_date']) ? $data['end_date'] : null;
+            $tour->status = '1';
+
+            $tour->save();
+            return redirect('admin/tours/')->with('flash_message_success','Tour added successfully');
+        }
+        return view('admin.tour.plan_tour');
+    }
+
+    public function editPlanTour(Request $request, $id){
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            // detail update
+            PlannedTour::where('id',$id)->update([
+                'tour_id'=>$data['tour_id'],
+                'tourist_count' => $data['tourist_count'],
+                'from_date' => !empty($data['from_date']) ? $data['from_date'] : null,
+                'end_date' => !empty($data['end_date']) ? $data['end_date'] : null
+            ]);
+            return redirect('admin/tours')->with('flash_message_success','Tour details updated successfully');
+        }
+        $tour = PlannedTour::where('id',$id)->first();
+        return view('admin.tour.edit_plan_tour')->with(compact('tour'));
+    }
+
+    public function deletePlanTour(Request $request, $id){
+        PlannedTour::where('id',$id)->delete();
+        return redirect()->back()->with('flash_message_success','Tour deleted successfully');
     }
 
     public function updateTourStatus(Request $request, $id){

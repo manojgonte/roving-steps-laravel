@@ -8,8 +8,8 @@
                 <div class="col-sm-6">
                     <h4>Tour Planner</h4>
                 </div>
-                <div class="col-sm-6">
-                    <a href="{{ url('/admin/add-tour') }}" style="float: right; margin: 3px 3px;" class="btn btn-warning text-white"><i class="fa fa-plus-circle"></i> Add Tour</a>
+                <div class="col-sm-6 text-right">
+                    <a href="{{ url('/admin/add-tour') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> Add</a>
                 </div>
             </div>
         </div>

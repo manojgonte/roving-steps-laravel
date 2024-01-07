@@ -98,15 +98,15 @@
                                         <label class="">Price per perosn (Child)</label>
                                         <input type="text" name="child_price" class="form-control" placeholder="Enter Price">
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    {{-- <div class="form-group col-md-2">
                                         <label class="">From Date</label>
                                         <input type="date" name="from_date" class="form-control" placeholder="Enter Date">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="">End Date</label>
                                         <input type="date" name="end_date" class="form-control" placeholder="Enter Date">
-                                    </div>
-                                    <div class="form-group col-md-2">
+                                    </div> --}}
+                                    <div class="form-group col-md-3">
                                         <label class="required">Day/s</label>
                                         <select class="form-control select2bs4" name="days">
                                             @for($i=1; $i<=30; $i++)
@@ -114,7 +114,7 @@
                                             @endfor
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3">
                                         <label class="required">Night/s</label>
                                         <select class="form-control select2bs4" name="nights">
                                             @for($i=1; $i<=30; $i++)
@@ -122,7 +122,7 @@
                                             @endfor
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-6">
                                         <label class="required">Amenities</label>
                                         <input type="text" name="amenities" class="form-control" placeholder="Enter Amenities" required>
                                     </div>

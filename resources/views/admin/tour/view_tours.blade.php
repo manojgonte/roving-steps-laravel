@@ -8,11 +8,8 @@
                 <div class="col-sm-6">
                     <h4>Tours</h4>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Tour List </li>
-                    </ol>
+                <div class="col-sm-6 text-right">
+                    <a href="{{ url('/admin/plan-tour') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> Add</a>
                 </div>
             </div>
         </div>
@@ -76,33 +73,33 @@
 
                         <div class="card-body">
                             @if(count($tours) > 0)
-                            <table id="example1" class="table table-bordered table-striped table-responsive" style="overflow-x: auto;">
+                            <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
                                     <tr>
-                                        <th>Tour ID</th>
+                                        <th>Sr.No.</th>
                                         <th class="text-left">Tour Name</th>
                                         <th>Tour</th>
                                         <th>Destination</th>
                                         <th>Tourist Count</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
-                                        {{-- <th>Action</th> --}}
+                                        <th>#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($tours as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td class="text-left">{{ Str::limit($row->tour_name, 40) }}</td>
-	                                    <td>{{ $row->type }}</td>
-                                        <td>{{ Str::limit($row->destination, 20) }}</td>
-	                                    <td>NA</td>
+	                                    <td class="text-left">{{ Str::limit($row->tour->tour_name, 40) }}</td>
+	                                    <td>{{ $row->tour->type }}</td>
+                                        <td>{{ Str::limit($row->tour->destination->name, 20) }}</td>
+	                                    <td>{{ $row->tourist_count }}</td>
 	                                    <td>{{date('d/m/Y', strtotime($row->from_date))}}</td> 
                                         <td>{{date('d/m/Y', strtotime($row->end_date))}}</td> 
-	                                    {{-- <td>
-                                            <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp;
-                                            <button class="btn btn-default" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i></button>
-	                                    </td> --}}
+	                                    <td>
+                                            <a class="btn btn-default" href="{{ url('/admin/edit-plan-tour/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a> &nbsp;
+                                            <a class="btn btn-danger" href="{{ url('/admin/delete-plan-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a>
+	                                    </td>
 	                                </tr>
                                 @endforeach
                                 </tbody>
