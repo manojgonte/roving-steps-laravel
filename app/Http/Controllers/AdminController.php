@@ -20,38 +20,31 @@ class AdminController extends Controller
         return view('admin.auth.login');
     }
 
-    public function postLogin(Request $request){
-        if($request->isMethod('post')){
-            $data = $request->input();
-            
-            // dd($adminCount);
-            if(Auth::attempt(['email' => $data['email'],'password'=>md5($data['password'])])){
-                return redirect()->route('adminDashboard')->with('flash_message_error','You are logged in sucessfully.');
-            }
-            else{
-                return back()->with('flash_message_error','Invalid Email or Password');
-            }
-        }
-    }
-
     public function login(Request $request){
         if($request->isMethod('post')){
             $data = $request->input();
-            $adminCount = Admin::where(['email' => $data['email'],'password'=>md5($data['password'])])->count();
-            if($adminCount > 0){
-                Session::put('adminSession', $data['email']);
+            $user = Admin::where('email',$data['email'])->first();
+            
+            // check user status
+            if($user && $user->status == 0){
+                return redirect()->back()->with('flash_message_error','Account is disbaled by admin, please contact admin.');
+            }
+
+            if(Auth::guard('admin')->attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>1])){
+                // dd('Welcome '.Auth::guard('admin')->User()->name);
                 return redirect('/admin/dashboard');
             }else{
-                return redirect('/admin-login')->with('flash_message_error','Invalid email or password');
+                return redirect('/admin')->with('flash_message_error','Invalid Email or Password');
             }
         }
         return view('admin.admin_login');
     }
 
     public function logout(){
-        // auth()->guard('admin')->logout();
-        Session::flush('adminSession');
-        return view('admin.admin_login')->with('flash_message_success','loggedout successfully');
+        auth()->guard('admin')->logout();
+        // Session::flush('adminSession');
+        Session::flush();
+        return redirect('/admin')->with('flash_message_success','Logged Out Successfully');
     }
 
 
@@ -59,99 +52,6 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-
-    // newsviews section
-
-    // add new newsviews
-    public function addNews(Request $request){
-        if($request->isMethod('post')){
-            $data = $request->all();
-            //dd($data);
-            $newsviews = new News;
-            $newsviews->title = $data['title'];
-            $newsviews->description = $data['description'];
-
-            if($request->hasFile('image')) {
-                $image_tmp = $request->image;
-                $filename = time() . '.' . $image_tmp->clientExtension();
-                if ($image_tmp->isValid()) {
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    $filename = rand(111, 99999999) . '.' . $extension;
-                    $newsviews_path = 'images/backend_images/news/'.$filename;
-                    Image::make($image_tmp)->save($newsviews_path);
-                    $newsviews->image = $filename;
-                }
-            }
-            $newsviews->save();
-            return redirect('admin/view-news')->with('flash_message_success','New record added successfully');
-        }
-        return view('admin.media.add-news');
-    }
-    
-    // edit specific newsviews
-    public function editNews(Request $request, $id){
-        if($request->isMethod('post')){
-            $data = $request->all();
-
-            if ($request->hasFile('image')) {
-                $image_tmp = $request->image;
-                $filename = time() . '.' . $image_tmp->clientExtension();
-                if ($image_tmp->isValid()) {
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    $filename = rand(1111, 99999) . '.' . $extension;
-                    $collaborate_path = 'images/backend_images/news/' . $filename;
-                    Image::make($image_tmp)->save($collaborate_path);
-                }
-            } else if (!empty($data['current_image'])) {
-                $filename = $data['current_image'];
-            } else {
-                $filename = '';
-            }
-            News::where('id',$id)->update(['title'=>$data['title'],'description'=>$data['description'],'image'=>$filename]);
-            return redirect('admin/view-news')->with('flash_message_success','New record updated successfully');
-        }
-        $newsviews = News::where('id',$id)->first();
-        return view('admin.media.edit-news')->with(compact('newsviews'));
-    }
-
-     public function viewNews(){
-        $newsviews = News::orderBy('id','DESC')->get();
-        // dd($newsviewss);
-        return view('admin.media.view-news')->with(compact('newsviews'));
-    }
-
-    public function deleteNews(Request $request, $id){
-        News::where('id',$id)->delete();
-        return redirect()->back()->with('flash_message_success','Data deleted successfully');
-    }
-
-
-    // Clients section
-
-    // add new Client
-    public function addClient(Request $request){
-        if($request->isMethod('post')){
-            $data = $request->all();
-            //dd($data);
-            $clients = new Clients;
-            $clients->title = $data['title'];
-
-            if($request->hasFile('image')) {
-                $image_tmp = $request->image;
-                $filename = time() . '.' . $image_tmp->clientExtension();
-                if ($image_tmp->isValid()) {
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    $filename = rand(111, 99999999) . '.' . $extension;
-                    $newsviews_path = 'images/backend_images/client/'.$filename;
-                    Image::make($image_tmp)->save($newsviews_path);
-                    $clients->image = $filename;
-                }
-            }
-            $clients->save();
-            return redirect('admin/view-client')->with('flash_message_success','New record added successfully');
-        }
-        return view('admin.clients.add-client');
-    }
 
     public function viewTestimonials(Request $request) {
         $testimonials = Testimonial::orderBy('id','DESC')->paginate(10);
@@ -191,4 +91,73 @@ class AdminController extends Controller
         return redirect()->back()->with('flash_message_success','Testimonial deleted successfully');
     }
     
+    public function viewStaff(Request $request) {
+        $users = Admin::select('admins.*')->orderBy('name','ASC');
+        if($request->status != null){
+            $users = $users->where('admins.status',$request->status);
+        }
+        if($request->name != null) {
+            $users = $users->where('admins.name','LIKE',"%".$request->name."%")->orWhere('admins.email','LIKE',"%".$request->name."%");
+            $name = $request->name;
+        }
+        $users = $users->paginate(10);
+        return view('admin.users.view_staff', compact('users'));
+    }
+
+    public function addStaff(Request $request){
+        if($request->isMethod('post')){
+
+            $this->validate($request, [
+                'name' => 'required',
+                'email' => 'required|email|unique:admins,email',
+                'password' => 'required|min:6',
+                'roles' => 'required'
+            ]);
+
+            $data = $request->all();
+            // dd($data);
+            
+            $user = new Admin;
+            $user->name = $data['name'];
+            $user->email = $data['email'];
+            $user->password = bcrypt($data['password']);
+            $user->status = empty($data['status']) ? 0 : 1;
+            
+            $user->roles = $data['roles'];
+            $user->save();
+
+            return redirect('admin/view-staff')->with('success_message','User added successfully');
+        }
+        return view('admin.users.add_staff');
+    }
+
+    public function editStaff(Request $request, $id){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // dd($data);
+            $this->validate($request, [
+                'name' => 'required',
+                'email' => 'required|email',
+                'roles' => 'required'
+            ]);
+            
+            $user = Admin::find($id);
+            $user->update([
+                'name'      => $data['name'],
+                'email'     => $data['email'],
+                'status'    => $request->has('status') ? 1 : 0,
+                'roles'     => $data['roles'],
+                'password' => (!empty($data['password'])) ? bcrypt($data['password']) : $user->password,
+            ]);
+
+            return redirect('admin/view-staff')->with('flash_message_success','User details updated successfully');
+        }
+        $user = Admin::find($id);
+        return view('admin.users.edit_staff',with(compact('user')));
+    }
+    
+    public function deleteStaff(Request $request, $id){
+        Admin::find($id)->delete();
+        return redirect()->back()->with('flash_message_success','User deleted successfully');
+    }
 }

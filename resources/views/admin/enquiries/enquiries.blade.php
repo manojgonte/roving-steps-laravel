@@ -20,31 +20,22 @@
 
     <section class="content">
         <div class="container-fluid">
+            @if(Session::has('flash_message_error'))
+            <div class="alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! session('flash_message_error') !!}</strong>
+            </div>
+            @endif
+            @if(Session::has('flash_message_success'))
+            <div class="alert alert-success alert-block w-50">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! session('flash_message_success') !!}</strong>
+            </div>
+            @endif
             <div class="row">
                 <div class="col-12">
-                	@if(Session::has('flash_message_error'))
-		            <div class="alert alert-danger alert-block">
-		                <button type="button" class="close" data-dismiss="alert">×</button>
-		                <strong>{!! session('flash_message_error') !!}</strong>
-		            </div>
-		            @endif
-		            @if(Session::has('flash_message_success'))
-		            <div class="alert alert-success alert-block w-50">
-		                <button type="button" class="close" data-dismiss="alert">×</button>
-		                <strong>{!! session('flash_message_success') !!}</strong>
-		            </div>
-		            @endif
                     <div class="card">
-                        {{-- <div class="card-header p-2">
-			                <ul class="nav nav-pills">
-			                  	<li class="nav-item"><a class="nav-link @if(empty(Request()->status) || Request()->status == 'ongoing') active @endif" href="{{url('admin/tours/ongoing')}}">Ongoing</a></li>
-			                  	<li class="nav-item"><a class="nav-link @if(Request()->status == 'upcoming') active @endif" href="{{url('admin/tours/upcoming')}}">Upcoming</a></li>
-			                  	<li class="nav-item"><a class="nav-link @if(Request()->status == 'completed') active @endif" href="{{url('admin/tours/completed')}}">Completed</a></li>
-			                </ul>
-			            </div> --}}
-
                         <div class="card-body">
-
                             @if(count($enquiry) > 0)
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
@@ -55,7 +46,7 @@
                                         <th>Contact</th>
                                         <th>Address</th>
                                         <th>Message</th>
-                                        {{-- <th>Action</th> --}}
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,10 +58,9 @@
 	                                    <td>{{ $row->contact }}</td>
 	                                    <td>{{ $row->address }}</td>
 	                                    <td>{{ $row->message }}</td>
-	                                    {{-- <td>
-                                            <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp;
-                                            <a class="btn btn-default" href="{{ url('/admin/share-tour/'.$row->id) }}"><i class="fa fa-share"></i></a>
-	                                    </td> --}}
+	                                    <td>
+                                            <a class="btn btn-danger" onclick="return confirm('Are you sure')" href="{{ url('/admin/delete-enquiry/'.$row->id) }}"><i class="fa fa-trash"></i></a>
+	                                    </td>
 	                                </tr>
                                 @endforeach
                                 </tbody>

@@ -51,7 +51,7 @@ Route::get('/admin', function () { return view('admin/admin_login'); });
 // Route::get('/login', [AdminController::class, 'getLogin'])->name('adminLogin');
 // Route::post('/login', [AdminController::class, 'postLogin'])->name('adminLoginPost');
 Auth::routes();
-Route::middleware([AdminAuthenticated::class])->group(function () {
+Route::group(['middleware'=>'admin_auth'],function(){
     //Dashboard
     Route::match(['get','post'], '/admin/dashboard', [AdminController::class, 'viewDashboard']);
     //Admin-Setting
@@ -86,6 +86,7 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/download-tour/{id}', [TourController::class,'downloadTour']);
 
     Route::match(['get','post'], 'admin/enquiries', [TourController::class,'enquiries']);
+    Route::match(['get','post'], 'admin/delete-enquiry/{id}', [TourController::class,'deleteEnquiry']);
     Route::match(['get','post'], 'admin/tour-enquiries', [TourController::class,'tourEnquiries']);
 
     // Destinations
@@ -136,19 +137,20 @@ Route::middleware([AdminAuthenticated::class])->group(function () {
     Route::match(['get','post'], 'admin/delete-invoice/{id}', [BillingController::class, 'deleteInvoice']);
 
     Route::match(['get','post'], 'admin/invoice-pdf', [BillingController::class, 'createInvoicePdf']);
+    
+    Route::get('admin/view-staff', [AdminController::class, 'viewStaff']);
+    Route::match(['get','post'], 'admin/add-staff', [AdminController::class, 'addStaff']);
+    Route::match(['get','post'], 'admin/edit-staff/{id}', [AdminController::class, 'editStaff']);
+    Route::match(['get','post'], 'admin/delete-staff/{id}', [AdminController::class, 'deleteStaff']);
 });
 
 
 //ADMIN AUTH ROUTES
-Route::match(['get','post'], '/admin-login-check', [AdminController::class, 'login']);
+Route::match(['get','post'], '/admin', [AdminController::class, 'login']);
 Route::post('/admin-reset-password', [AdminController::class, 'resetPassword']);
 
 Route::get('/admin-forgot-password', function () {
     return view('admin/admin-forgot-password');
-});
-
-Route::get('/admin-login', function () {
-    return view('admin/admin_login');
 });
 
 

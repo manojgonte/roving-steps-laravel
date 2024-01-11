@@ -1,6 +1,3 @@
-@php $date = date('D, d M Y'); @endphp
-<?php $email = session('adminSession'); ?>
-
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -12,17 +9,15 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <li class="nav-item nav-link mb-clock">
-            <h6 style="color: #4C4C4C; padding: 0px 12px 0px 12px; margin-top: 5px;"><i class="fa fa-clock"></i> <?php echo $date; ?> 
-            <!-- <span id="clock"></span> -->
-            </h6>
+            <h6 style="margin-top: 2px;"><i class="fa fa-clock"></i> {{date('D, d M Y') }}</h6>
         </li>
 
         <!-- User Account: style can be found in dropdown.less -->
         <li class="nav-item dropdown user user-menu">
             <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                <span class="hidden-xs"> <i class="fa fa-user" aria-hidden="true"></i> Hello, Admin </span>
+                <span class="hidden-xs"> <i class="fa fa-user" aria-hidden="true"></i> Hello, {{Auth::guard('admin')->User()->name}} </span>
             </a>
-            <ul class="dropdown-menu" style="width: 50px;">
+            <ul class="dropdown-menu" style="width: 50px">
                 <li class="user-body">
                     <div class="row">
                         <div class="col-sm-12 text-left">

@@ -1,12 +1,29 @@
 {
     "poppins": {
-        "300": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_300_999a4088f0da952988730996a4bec1d8",
-        "normal": "poppins_normal_442dffd12abdf0df26c14405d3f49bfa",
-        "500": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_500_fce53b208cddccda1573b7620b579598",
+        "300": "poppins_300_4a08cccbc2911e3077321a0298f4e093",
+        "normal": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_normal_442dffd12abdf0df26c14405d3f49bfa",
+        "500": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_500_6a6f5e017da7e062546fd806ab3b249c",
         "600": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_600_9623fbc18c38938c2057a9aae8390a42",
-        "bold": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_bold_8fe618268f56b4b8f1e70e87a9e99fc0"
+        "bold": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_bold_8fe618268f56b4b8f1e70e87a9e99fc0",
+        "italic": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_italic_1ad90e53438b9573bebb0fe37dfde87c",
+        "500_italic": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_500_italic_0b33503413d15e2b0c2db57c393906ed",
+        "600_italic": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_600_italic_bd7beee89dec36870459c02bb03bc74e"
     },
     "glyphicons halflings": {
         "normal": "glyphicons_halflings_normal_4ced20531a4f462a8c5c535d4debd2eb"
+    },
+    "roboto mono": {
+        "italic": "roboto_mono_italic_b6de51b739f488c0f14085dc9d2d126e"
+    },
+    "roboto serif": {
+        "normal": "roboto_serif_normal_422a4b427851200f53c0f2f08f831ea7"
+    },
+    "roboto slab": {
+        "normal": "roboto_slab_normal_ec2bf126fe441f17656ae32017e2a073"
+    },
+    "manrope": {
+        "500": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/manrope_500_3faecf902bdf678508c43f0770f51f59",
+        "600": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/manrope_600_7965b5f7a522f1c92cbaca274ac0692b",
+        "bold": "manrope_bold_39803e033cf59c26714816343b268345"
     }
 }

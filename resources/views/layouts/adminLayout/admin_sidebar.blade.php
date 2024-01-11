@@ -1,4 +1,7 @@
-<?php $url = url()->current(); ?>
+@php 
+    $url = url()->current();
+    $role = Auth::guard('admin')->user()->roles;
+@endphp
 
 <aside class="main-sidebar elevation-4" style="background:#1B2C60;color:white;">
     <a href="{{ url('/admin/dashboard') }}" class="brand-link text-white p-2">
@@ -14,83 +17,112 @@
                     </a>
                 </li>
                 {{-- tours --}}
+                @if($role == 'Admin' || $role == 'Accountant')
                 <li class="nav-item">
                     <a href="{{url('admin/tours')}}" class="nav-link text-white @if(preg_match('#/admin/tours#', $url)) active @endif">
                         <i class="nav-icon fas fa-plane-departure"></i>
                         <p>Tours</p>
                     </a>
                 </li>
+                @endif
+                @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/tour-planner/1')}}" class="nav-link text-white @if(preg_match('#/admin/tour-planner#', $url)) active @endif">
                         <i class="nav-icon fas fa-user-ninja"></i>
                         <p>Tour Planner</p>
                     </a>
                 </li>
+                @endif
+                @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/tour-enquiries')}}" class="nav-link text-white @if(preg_match('#/admin/tour-enquiries#', $url)) active @endif">
                         <i class="nav-icon fas fa-comment-dots"></i>
                         <p>Tour Enquiries</p>
                     </a>
                 </li>
+                @endif
+                @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/enquiries')}}" class="nav-link text-white @if(preg_match('#/admin/enquiries#', $url)) active @endif">
                         <i class="nav-icon fas fa-comment-dots"></i>
                         <p>Enquiries</p>
                     </a>
                 </li>
+                @endif
+                @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/view-destinations')}}" class="nav-link text-white @if(preg_match('#/admin/view-destinations#', $url)) active @endif">
                         <i class="nav-icon fas fa-campground"></i>
                         <p>Destinations</p>
                     </a>
                 </li>
+                @endif
+                @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/registered-users')}}" class="nav-link text-white @if(preg_match('#/admin/registered-users#', $url)) active @endif">
                         <i class="nav-icon fas fa-user-plus"></i>
                         <p>Registered Users</p>
                     </a>
                 </li>
+                @endif
+                @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/associated-users')}}" class="nav-link text-white @if(preg_match('#/admin/associated-users#', $url)) active @endif">
                         <i class="nav-icon fas fa-users"></i>
                         <p>Associated Users</p>
                     </a>
                 </li>
+                @endif
+                @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/gallery')}}" class="nav-link text-white @if(preg_match('#/admin/gallery#', $url)) active @endif">
                         <i class="nav-icon fas fa-photo-video"></i>
                         <p>Gallery</p>
                     </a>
                 </li>
+                @endif
+                @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/testimonials')}}" class="nav-link text-white @if(preg_match('#/admin/testimonials#', $url)) active @endif">
-                        <i class="nav-icon fa fa-user-edit"></i>
+                        <i class="nav-icon fa fa-comments"></i>
                         <p>Testimonials</p>
                     </a>
                 </li>
+                @endif
+                @if($role == 'Admin' || $role == 'Accountant')
                 <li class="nav-item">
                     <a href="{{url('admin/invoice-dashboard')}}" class="nav-link text-white @if(preg_match('#/admin/invoice-dashboard#', $url)) active @endif">
-                        <i class="nav-icon fa fa-user-edit"></i>
-                        <p>Billing & invoices</p>
+                        <i class="nav-icon fa fa-file-invoice-dollar"></i>
+                        <p>Billing & Invoices</p>
                     </a>
                 </li>
-                {{-- Projects --}}
+                @endif
+                @if($role == 'Admin')
+                <li class="nav-item">
+                    <a href="{{url('admin/view-staff')}}" class="nav-link text-white @if(preg_match('#/admin/invoice-dashboard#', $url)) active @endif">
+                        <i class="nav-icon fa fa-users-cog"></i>
+                        <p>Staff</p>
+                    </a>
+                </li>
+                @endif
+                
+                {{-- Tour --}}
                 {{-- <li class="nav-item">
-                    <a href="#" class="nav-link text-white ">
-                        <i class="nav-icon fas fa-user-cog"></i>
-                        <p>Projects <i class="fas fa-angle-left right"></i></p>
+                    <a href="#" class="nav-link text-white @if(preg_match('#/admin/tours#', $url) || preg_match('#/admin/tour-planner#', $url)) active @endif">
+                        <i class="nav-icon fas fa-plane-departure"></i>
+                        <p>Tour <i class="fas fa-angle-right right"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{url('/admin/view-ppt/')}}" class="nav-link text-white @if(preg_match('/ppt/', $url)) active @endif">
-                                <i class="nav-icon fas fa-arrow-right" style="color: #7c7c7c;"></i> <p style="color: #7c7c7c;"> Add Project</p>
+                            <a href="{{url('/admin/tours/')}}" class="nav-link text-white @if(preg_match('/ppt/', $url)) active @endif">
+                                <i class="nav-icon fas fa-arrow-right"></i> Tours
                             </a>
                         </li>
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{url('/admin/view-testimonials/')}}" class="nav-link text-white @if(preg_match('/testimonials/', $url)) active @endif">
-                                <i class="nav-icon fas fa-arrow-right" style="color: #7c7c7c;"></i> <p style="color: #7c7c7c;"> View Projects </p>
+                            <a href="{{url('/admin/tour-planner/1')}}" class="nav-link text-white @if(preg_match('/testimonials/', $url)) active @endif">
+                                <i class="nav-icon fas fa-arrow-right"></i> Tour Planner
                             </a>
                         </li>
                     </ul>
@@ -99,20 +131,3 @@
         </nav>
     </div>
 </aside>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

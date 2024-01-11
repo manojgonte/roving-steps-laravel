@@ -31,10 +31,10 @@
       </div>
       @endif
        <h3 class="login-box-msg" style="color: #000;">Admin Panel</h3>
-      <form action="{{ url('admin-login-check') }}" method="post">
+      <form action="{{ url('admin') }}" method="post">
         @csrf
         <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control" placeholder="Email" value="" required>
+          <input type="email" name="email" class="form-control" placeholder="Email" value="john@gmail.com" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -43,7 +43,7 @@
         </div>
 
         <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="Password" value="" required>
+          <input type="password" name="password" class="form-control" placeholder="Password" value="admin@123" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

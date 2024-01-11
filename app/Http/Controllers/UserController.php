@@ -18,7 +18,7 @@ class UserController extends Controller
             // dd($data);
             if($user = User::where('email',$data['email'])->first()){
                 if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>'1'])){
-                    Session::put('userSession',$user->email);
+                    // Session::put('userSession',$user->email);
                     // dd(Auth::User());
                     return redirect('/');
                     // return redirect('/user/dashboard');

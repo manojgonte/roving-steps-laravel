@@ -339,6 +339,11 @@ class TourController extends Controller
         return view('admin.enquiries.enquiries')->with(compact('enquiry'));
     }
 
+    public function deleteEnquiry(Request $request, $id){
+        $enquiry = Enquiry::find($id)->delete();
+        return redirect()->back()->with('flash_message_success','Enquiry deleted');
+    }
+
     public function tourEnquiries(Request $request, $status=null){
         $tour_enquiry = TourEnquiry::select('tour_enquiry.*','tours.id as tour_id','tours.tour_name')
             ->leftJoin('tours','tour_enquiry.tour_id','tours.id')
@@ -377,10 +382,11 @@ class TourController extends Controller
                 ->where('tours.id', $data['tour_id'])
                 ->orderBy('tours.id','DESC')
                 ->first();
+                // dd($tour);
             $tourname = Str::slug($tour->tour_name);
 
-            // $pdf = PDF::loadView('emails.share_tour_attachment', compact('data','tour'));
-            // $pdf = $pdf->output();
+            $pdf = PDF::loadView('emails.share_tour_attachment', compact('data','tour'));
+            $pdf = $pdf->output();
             // return $pdf->stream();
 
             $email = [$email];
@@ -389,22 +395,11 @@ class TourController extends Controller
                 'tour' => $tour
             ];
 
-            // Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject,$pdf,$tourname){
-            //     $message->to($email)->subject($subject . ' | '. config('app.name'));
-            //     $message->attachData($pdf, $tourname.'-tour-details.pdf');
-            // });
-            $listId = config('app.MAILCHIMP_LIST_ID');
-
-            // dd($listId);
-            $mailchimp = new MailchimpService();
-            $listId = $listId; // Replace with your list ID
-            $subject = $subject;
-
-
-            $htmlContent = View::make('emails.share_tour', ['tour' => $tour])->render();
-            // dd($htmlContent);
-            $mailchimp->sendEmailToList($listId, $subject, $htmlContent);
-
+            Mail::send('emails.share_tour',$messageData,function($message) use($email,$subject,$pdf,$tourname){
+                $message->to($email)->subject($subject . ' | '. config('app.name'));
+                $message->attachData($pdf, $tourname.'-tour-details.pdf');
+            });
+            
             return redirect()->back()->with('flash_message_success','Mail sent');
         }
         return redirect()->back();
