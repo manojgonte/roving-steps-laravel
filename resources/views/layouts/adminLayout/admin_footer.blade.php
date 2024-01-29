@@ -1,4 +1,4 @@
-	<footer class="main-footer"><span class="copyrights-text">© {{date('Y') }} | Design & Developed by <a href="javascript:void" target="_blank" class="site-text-primary">MI</a></span></footer>
+	<footer class="main-footer"><span class="copyrights-text">© {{date('Y') }} | All Rights Reserved. {{config('app.name')}}</span></footer>
 </div>
 
 

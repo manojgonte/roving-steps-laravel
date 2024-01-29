@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Users <span class="badge badge-secondary text-md">{{ $users->total() }}</span></h1>
+                    <h1>Staff <span class="badge badge-secondary text-md">{{ $users->total() }}</span></h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ url('/admin/add-staff') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> Add User</a>

@@ -65,14 +65,14 @@
                     </a>
                 </li>
                 @endif
-                @if($role == 'Admin' || $role == 'Office User')
+                {{-- @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/associated-users')}}" class="nav-link text-white @if(preg_match('#/admin/associated-users#', $url)) active @endif">
                         <i class="nav-icon fas fa-users"></i>
                         <p>Associated Users</p>
                     </a>
                 </li>
-                @endif
+                @endif --}}
                 @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/gallery')}}" class="nav-link text-white @if(preg_match('#/admin/gallery#', $url)) active @endif">
@@ -99,7 +99,7 @@
                 @endif
                 @if($role == 'Admin')
                 <li class="nav-item">
-                    <a href="{{url('admin/view-staff')}}" class="nav-link text-white @if(preg_match('#/admin/invoice-dashboard#', $url)) active @endif">
+                    <a href="{{url('admin/view-staff')}}" class="nav-link text-white @if(preg_match('#/admin/view-staff#', $url)) active @endif">
                         <i class="nav-icon fa fa-users-cog"></i>
                         <p>Staff</p>
                     </a>

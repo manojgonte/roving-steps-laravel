@@ -55,7 +55,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
     //Dashboard
     Route::match(['get','post'], '/admin/dashboard', [AdminController::class, 'viewDashboard']);
     //Admin-Setting
-    Route::match(['get','post'], 'admin/admin-setting/', [AdminController::class, 'setting']);
+    Route::match(['get','post'], 'admin/setting/', [AdminController::class, 'setting']);
     Route::get('/logout', [AdminController::class, 'logout']);
     Route::match(['get','post'], '/admin/add-admin/', [AdminController::class, 'addAdmin']);
     Route::get('/admin/view-admin', [AdminController::class, 'viewAdmin']);
@@ -147,13 +147,8 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
 //ADMIN AUTH ROUTES
 Route::match(['get','post'], '/admin', [AdminController::class, 'login']);
-Route::post('/admin-reset-password', [AdminController::class, 'resetPassword']);
-
-Route::get('/admin-forgot-password', function () {
-    return view('admin/admin-forgot-password');
-});
-
-
+Route::match(['get','post'], '/admin/forgot-password', [AdminController::class, 'forgotPassword']);
+Route::match(['get','post'], 'admin/password-reset', [AdminController::class, 'resetPassword']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

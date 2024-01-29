@@ -13,6 +13,8 @@ use App\Models\Event;
 use App\Models\Expo;
 use Auth;
 use Image;
+use Hash;
+use Mail;
 
 class AdminController extends Controller
 {
@@ -159,5 +161,61 @@ class AdminController extends Controller
     public function deleteStaff(Request $request, $id){
         Admin::find($id)->delete();
         return redirect()->back()->with('flash_message_success','User deleted successfully');
+    }
+
+    public function setting(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $adminCount = Admin::where(['id'=>Auth::id()])->first();
+            if (Hash::check($data['current_pwd'], $adminCount->password)) {
+                Admin::where('id',Auth::id())->update(['password'=>bcrypt($data['new_pwd'])]);
+                return redirect()->back()->with('flash_message_success','Password updated successfully!');
+            }else{
+                return redirect()->back()->with('flash_message_error','Incorrect current password!');
+            }
+        }
+        $admin = Admin::find(Auth::id());
+        return view('admin.admin_setting')->with(compact('admin'));
+    }
+    public function forgotPassword(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+
+            if($user = Admin::select('id','email','name')->where('email',$data['email'])->first()){
+                $user->remember_token = rand(100000,999999);
+                $user->save();
+
+                $email = $user->email;
+                $messageData = [
+                    'user' => $user
+                ];
+                Mail::send('emails.forgot_password_otp',$messageData,function($message) use($email){
+                    $message->to($email)->subject('Password Reset Code');
+                });
+
+                return redirect('admin/password-reset')->with('flash_message_success','Please enter code received on email'); 
+            }else{
+                return redirect()->back()->with('flash_message_error','Email address not found'); 
+            }
+        }
+        return view('admin.forgot_password');
+    }
+
+    public function resetPassword(Request $request) {
+        if($request->isMethod('post')){
+            if (($user = Admin::where('email', $request->email)->where('remember_token', $request->code)->first()) != null) {
+                if ($request->password == $request->confirm_password) {
+                    $user->password = Hash::make($request->password);
+                    $user->email_verified_at = date('Y-m-d h:m:s');
+                    $user->save();
+                    return redirect('/admin');
+                } else {
+                    return redirect()->back()->with("flash_message_error","Password and confirm password didn't match"); 
+                }
+            } else {
+                return redirect()->back()->with("flash_message_error","Verification code mismatch"); 
+            }
+        }
+        return view('admin.password_reset');
     }
 }

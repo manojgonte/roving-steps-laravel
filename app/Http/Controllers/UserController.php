@@ -92,13 +92,13 @@ class UserController extends Controller
                 $user->remember_token = rand(100000,999999);
                 $user->save();
 
-                // $email = $user->email;
-                // $messageData = [
-                //     'user' => $user
-                // ];
-                // Mail::send('emails.forgot_password_otp',$messageData,function($message) use($email){
-                //     $message->to($email)->subject('Password Reset Code');
-                // });
+                $email = $user->email;
+                $messageData = [
+                    'user' => $user
+                ];
+                Mail::send('emails.forgot_password_otp',$messageData,function($message) use($email){
+                    $message->to($email)->subject('Password Reset Code');
+                });
 
                 return redirect('password-reset')->with('flash_message_success','Please enter code received on email'); 
             }else{

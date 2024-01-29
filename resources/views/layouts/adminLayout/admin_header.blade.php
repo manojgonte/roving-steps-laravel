@@ -21,7 +21,7 @@
                 <li class="user-body">
                     <div class="row">
                         <div class="col-sm-12 text-left">
-                            <a href="{{ url('admin/admin-setting') }}"><i class="fa fa-user" aria-hidden="true"></i> Setting</a>
+                            <a href="{{ url('admin/setting') }}"><i class="fa fa-user" aria-hidden="true"></i> Setting</a>
                         </div>                  
                         <div class="col-sm-12 text-left">
                             <a href="{{ url('/logout') }}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> Logout</a>
