@@ -44,10 +44,14 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-3">
+                                        <label class="required">Customer Name</label>
+                                        <input type="text" name="customer_name" class="form-control" placeholder="Enter Customer Name" required>
+                                    </div>
+                                    <div class="form-group col-md-3">
                                         <label class="required">Tour</label>
                                         <select class="form-control select2bs4" name="tour_id" required>
                                             <option value="" selected>Select One</option>
-                                            @foreach(App\Models\Tour::where('status',1)->orderBy('tour_name','ASC')->get() as $row)
+                                            @foreach(App\Models\Tour::orderBy('tour_name','ASC')->get() as $row)
                                             <option value="{{$row->id}}" @if($row->id === $tour->tour_id) selected @endif>{{$row->tour_name}}</option>
                                             @endforeach
                                         </select>
@@ -56,6 +60,8 @@
                                         <label class="required">Tourist Count</label>
                                         <input type="number" min="1" name="tourist_count" class="form-control" placeholder="Enter Count" value="{{$tour->tourist_count}}" required>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-3">
                                         <label class="required">From Date</label>
                                         <input type="date" name="from_date" class="form-control" placeholder="Enter Date" value="{{$tour->from_date}}" required>
@@ -63,6 +69,13 @@
                                     <div class="form-group col-md-3">
                                         <label class="required">End Date</label>
                                         <input type="date" name="end_date" class="form-control" placeholder="Enter Date" value="{{$tour->end_date}}" required>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="required">Status</label>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="status" name="status" value="1" @if($tour->status == 1) checked @endif>
+                                            <label class="form-check-label" for="isPopular">Final</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

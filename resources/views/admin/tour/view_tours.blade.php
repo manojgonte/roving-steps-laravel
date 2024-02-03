@@ -9,7 +9,8 @@
                     <h4>Tours</h4>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ url('/admin/plan-tour') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> Add</a>
+                    <a href="{{ url('/admin/plan-tour') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> Add Custom Tour</a>
+                    <a href="{{ url('/admin/add-tour') }}" class="btn btn-light"><i class="fa fa-plus-circle"></i> Add Plan Tour</a>
                 </div>
             </div>
         </div>
@@ -34,7 +35,8 @@
                     <div class="card">
                         <div class="card-header p-2">
 			                <ul class="nav nav-pills">
-			                  	<li class="nav-item"><a class="nav-link @if(empty(Request()->status) || Request()->status == 'ongoing') active @endif" href="{{url('admin/tours/ongoing')}}">Ongoing</a></li>
+			                  	<li class="nav-item"><a class="nav-link @if(empty(Request()->status) || Request()->status == 'draft') active @endif" href="{{url('admin/tours/draft')}}">Draft</a></li>
+                                <li class="nav-item"><a class="nav-link @if(Request()->status == 'ongoing') active @endif" href="{{url('admin/tours/ongoing')}}">Ongoing</a></li>
 			                  	<li class="nav-item"><a class="nav-link @if(Request()->status == 'upcoming') active @endif" href="{{url('admin/tours/upcoming')}}">Upcoming</a></li>
 			                  	<li class="nav-item"><a class="nav-link @if(Request()->status == 'completed') active @endif" href="{{url('admin/tours/completed')}}">Completed</a></li>
 			                </ul>
@@ -77,12 +79,13 @@
                                 <thead>
                                     <tr>
                                         <th>Sr.No.</th>
+                                        <th class="text-left">Customer Name</th>
                                         <th class="text-left">Tour Name</th>
-                                        <th>Tour</th>
                                         <th>Destination</th>
                                         <th>Tourist Count</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
+                                        <th>Final</th>
                                         <th>#</th>
                                     </tr>
                                 </thead>
@@ -90,12 +93,23 @@
                                 @foreach($tours as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td class="text-left">{{ Str::limit($row->tour->tour_name, 40) }}</td>
-	                                    <td>{{ $row->tour->type }}</td>
+	                                    <td class="text-left">{{ Str::limit($row->customer_name, 40) }}</td>
+                                        <td class="text-left"><a href="{{url('admin/edit-tour/'.$row->tour_id)}}">{{ Str::limit($row->tour->tour_name, 40) }}</a></td>
+	                                    {{-- <td>{{ $row->tour->type }}</td> --}}
                                         <td>{{ Str::limit($row->tour->destination->name, 20) }}</td>
 	                                    <td>{{ $row->tourist_count }}</td>
 	                                    <td>{{date('d/m/Y', strtotime($row->from_date))}}</td> 
-                                        <td>{{date('d/m/Y', strtotime($row->end_date))}}</td> 
+                                        <td>{{date('d/m/Y', strtotime($row->end_date))}}</td>
+                                        <td>
+                                            <form action="{{ url('admin/update-custom-tour-status/'.$row->id) }}" method="post">@csrf
+                                            <div class="form-group">
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" name="status" value="1" @if($row->status=="1") checked @endif class="custom-control-input" id="customSwitch1{{$row->id}}" onchange="javascript:this.form.submit();">
+                                                    <label class="custom-control-label" for="customSwitch1{{$row->id}}"></label>
+                                                </div>
+                                            </div>
+                                            </form>
+                                        </td> 
 	                                    <td>
                                             <a class="btn btn-default" href="{{ url('/admin/edit-plan-tour/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a> &nbsp;
                                             <a class="btn btn-danger" href="{{ url('/admin/delete-plan-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a>

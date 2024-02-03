@@ -11,25 +11,25 @@
         <nav class="mt-1">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item has-treeview menu-open">
-                    <a href="{{ route('addTour') }}" class="nav-link text-white @if(preg_match('#/admin/dashboard#', $url)) active @endif">
+                    <a href="{{ route('dashboard') }}" class="nav-link text-white @if(preg_match('#/admin/dashboard#', $url)) active @endif">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p> Dashboard </p>
                     </a>
                 </li>
-                {{-- tours --}}
+                {{-- custom tours --}}
                 @if($role == 'Admin' || $role == 'Accountant')
                 <li class="nav-item">
                     <a href="{{url('admin/tours')}}" class="nav-link text-white @if(preg_match('#/admin/tours#', $url)) active @endif">
-                        <i class="nav-icon fas fa-plane-departure"></i>
-                        <p>Tours</p>
+                        <i class="nav-icon fas fa-campground"></i>
+                        <p>Custom Tours</p>
                     </a>
                 </li>
                 @endif
                 @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/tour-planner/1')}}" class="nav-link text-white @if(preg_match('#/admin/tour-planner#', $url)) active @endif">
-                        <i class="nav-icon fas fa-user-ninja"></i>
-                        <p>Tour Planner</p>
+                        <i class="nav-icon fas fa-plane-departure"></i>
+                        <p>Plan Tour</p>
                     </a>
                 </li>
                 @endif
@@ -57,7 +57,7 @@
                     </a>
                 </li>
                 @endif
-                @if($role == 'Admin' || $role == 'Office User')
+                @if($role == 'Admin')
                 <li class="nav-item">
                     <a href="{{url('admin/registered-users')}}" class="nav-link text-white @if(preg_match('#/admin/registered-users#', $url)) active @endif">
                         <i class="nav-icon fas fa-user-plus"></i>

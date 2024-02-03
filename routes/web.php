@@ -53,7 +53,7 @@ Route::get('/admin', function () { return view('admin/admin_login'); });
 Auth::routes();
 Route::group(['middleware'=>'admin_auth'],function(){
     //Dashboard
-    Route::match(['get','post'], '/admin/dashboard', [AdminController::class, 'viewDashboard']);
+    Route::match(['get','post'], '/admin/dashboard', [AdminController::class, 'viewDashboard'])->name('dashboard');
     //Admin-Setting
     Route::match(['get','post'], 'admin/setting/', [AdminController::class, 'setting']);
     Route::get('/logout', [AdminController::class, 'logout']);
@@ -71,6 +71,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/edit-tour/{id}', [TourController::class, 'editTour']);
     Route::get('admin/delete-tour/{id}', [TourController::class,'deleteTour']);
     Route::match(['get','post'], 'admin/update-tour-status/{id}', [TourController::class,'updateTourStatus']);
+    Route::match(['get','post'], 'admin/update-custom-tour-status/{id}', [TourController::class,'updateCustomTourStatus']);
     
     Route::match(['get','post'], 'admin/plan-tour/', [TourController::class, 'planTour']);
     Route::match(['get','post'], 'admin/edit-plan-tour/{id}', [TourController::class, 'editPlanTour']);

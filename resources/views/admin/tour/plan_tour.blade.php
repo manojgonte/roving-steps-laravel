@@ -11,7 +11,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h4>Plan Tour Section</h4>
+                    <h4>Custom Tour Section</h4>
                     @if(Session::has('flash_message_error'))
                     <div class="alert alert-error alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -44,10 +44,14 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-3">
+                                        <label class="required">Customer Name</label>
+                                        <input type="text" name="customer_name" class="form-control" placeholder="Enter Customer Name" required>
+                                    </div>
+                                    <div class="form-group col-md-3">
                                         <label class="required">Tour</label>
                                         <select class="form-control select2bs4" name="tour_id" required>
                                             <option value="" selected>Select One</option>
-                                            @foreach(App\Models\Tour::where('status',1)->orderBy('tour_name','ASC')->get() as $row)
+                                            @foreach(App\Models\Tour::orderBy('tour_name','ASC')->get() as $row)
                                             <option value="{{$row->id}}">{{$row->tour_name}}</option>
                                             @endforeach
                                         </select>
@@ -56,6 +60,8 @@
                                         <label class="required">Tourist Count</label>
                                         <input type="number" min="1" name="tourist_count" class="form-control" placeholder="Enter Count" required>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="form-group col-md-3">
                                         <label class="required">From Date</label>
                                         <input type="date" name="from_date" class="form-control" placeholder="Enter Date" required>
@@ -64,10 +70,17 @@
                                         <label class="required">End Date</label>
                                         <input type="date" name="end_date" class="form-control" placeholder="Enter Date" required>
                                     </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="required">Status</label>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="status" name="status" value="1">
+                                            <label class="form-check-label" for="isPopular">Final</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer ">
-                                <button type="submit" class="btn btn-dark submit"><i class="fa fa-check-circle"></i> Add </button>
+                                <button type="submit" class="btn btn-dark submit"><i class="fa fa-check-circle"></i> Create </button>
                                 <button type="reset" class="btn btn-default"> Reset </button>
                             </div>
                         </form>

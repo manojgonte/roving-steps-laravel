@@ -117,8 +117,8 @@ class TourController extends Controller
 
     public function viewTours(Request $request, $status=null){
         $now = date('Y-m-d');
-        $tours = PlannedTour::with('tour')
-            ->orderBy('id','DESC');
+        $tours = PlannedTour::with('tour')->orderBy('id','DESC');
+
         // filters
         if($request->dest_id){
             $tours = $tours->whereHas('tour', function($query) use ($request) {
@@ -144,12 +144,14 @@ class TourController extends Controller
             });
         }
 
-        if (empty($status) || $status == 'ongoing') {
-            $tours = $tours->whereRaw('? between from_date and end_date', [$now]);
+        if (empty($status) || $status == 'draft') {
+            $tours = $tours->where('status',0);
+        }elseif ($status == 'ongoing') {
+            $tours = $tours->where('status',1)->whereRaw('? between from_date and end_date', [$now]);
         } elseif ($status == 'upcoming') {
-            $tours = $tours->where('from_date', '>', $now);
+            $tours = $tours->where('status',1)->where('from_date', '>', $now);
         } elseif ($status == 'completed') {
-            $tours = $tours->where('end_date', '<', $now);
+            $tours = $tours->where('status',1)->where('end_date', '<', $now);
         }
         $tours = $tours->paginate(10);
 
@@ -195,13 +197,14 @@ class TourController extends Controller
     public function planTour(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
-            // dd($data);
+            
             $tour = new PlannedTour;
             $tour->tour_id = $data['tour_id'];
+            $tour->customer_name = $data['customer_name'];
             $tour->tourist_count = $data['tourist_count'];
             $tour->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
             $tour->end_date = !empty($data['end_date']) ? $data['end_date'] : null;
-            $tour->status = '1';
+            $tour->status = !empty($data['status']) ? $data['status'] : 0;
 
             $tour->save();
             return redirect('admin/tours/')->with('flash_message_success','Tour added successfully');
@@ -216,14 +219,26 @@ class TourController extends Controller
             // detail update
             PlannedTour::where('id',$id)->update([
                 'tour_id'=>$data['tour_id'],
+                'customer_name'=>$data['customer_name'],
                 'tourist_count' => $data['tourist_count'],
                 'from_date' => !empty($data['from_date']) ? $data['from_date'] : null,
-                'end_date' => !empty($data['end_date']) ? $data['end_date'] : null
+                'end_date' => !empty($data['end_date']) ? $data['end_date'] : null,
+                'status' => !empty($data['status']) ? $data['status'] : 0
             ]);
             return redirect('admin/tours')->with('flash_message_success','Tour details updated successfully');
         }
         $tour = PlannedTour::where('id',$id)->first();
         return view('admin.tour.edit_plan_tour')->with(compact('tour'));
+    }
+
+    public function updateCustomTourStatus(Request $request, $id){
+        if($request->status == '1'){
+            $status='1';
+        }else{
+            $status='0';
+        }
+        PlannedTour::where(['id'=>$id])->update(['status'=>$status]);
+        return redirect()->back();
     }
 
     public function deletePlanTour(Request $request, $id){
