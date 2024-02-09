@@ -44,8 +44,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-3">
-                                        <label class="required">Customer Name</label>
-                                        <input type="text" name="customer_name" class="form-control" placeholder="Enter Customer Name" required>
+                                        <label class="">Customer Name</label>
+                                        <input type="text" name="customer_name" class="form-control" placeholder="Enter Customer Name" value="{{$tour->customer_name}}">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required">Tour</label>

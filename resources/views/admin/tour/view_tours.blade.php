@@ -9,8 +9,8 @@
                     <h4>Tours</h4>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ url('/admin/plan-tour') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> Add Custom Tour</a>
-                    <a href="{{ url('/admin/add-tour') }}" class="btn btn-light"><i class="fa fa-plus-circle"></i> Add Plan Tour</a>
+                    <a href="{{ url('/admin/plan-tour') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> Create Tour</a>
+                    <a href="{{ url('/admin/add-tour') }}" class="btn btn-light"><i class="fa fa-plus-circle"></i> Plan Tour</a>
                 </div>
             </div>
         </div>
@@ -93,7 +93,7 @@
                                 @foreach($tours as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td class="text-left">{{ Str::limit($row->customer_name, 40) }}</td>
+	                                    <td class="text-left">{{ !empty($row->customer_name) ? Str::limit($row->customer_name, 40) : 'NA' }}</td>
                                         <td class="text-left"><a href="{{url('admin/edit-tour/'.$row->tour_id)}}">{{ Str::limit($row->tour->tour_name, 40) }}</a></td>
 	                                    {{-- <td>{{ $row->tour->type }}</td> --}}
                                         <td>{{ Str::limit($row->tour->destination->name, 20) }}</td>
@@ -112,7 +112,7 @@
                                         </td> 
 	                                    <td>
                                             <a class="btn btn-default" href="{{ url('/admin/edit-plan-tour/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a> &nbsp;
-                                            <a class="btn btn-danger" href="{{ url('/admin/delete-plan-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-plan-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a>
 	                                    </td>
 	                                </tr>
                                 @endforeach

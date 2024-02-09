@@ -200,7 +200,7 @@ class TourController extends Controller
             
             $tour = new PlannedTour;
             $tour->tour_id = $data['tour_id'];
-            $tour->customer_name = $data['customer_name'];
+            $tour->customer_name = !empty($data['customer_name']) ? $data['customer_name'] : null;
             $tour->tourist_count = $data['tourist_count'];
             $tour->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
             $tour->end_date = !empty($data['end_date']) ? $data['end_date'] : null;
@@ -219,7 +219,7 @@ class TourController extends Controller
             // detail update
             PlannedTour::where('id',$id)->update([
                 'tour_id'=>$data['tour_id'],
-                'customer_name'=>$data['customer_name'],
+                'customer_name'=> !empty($data['customer_name']) ? $data['customer_name'] : null,
                 'tourist_count' => $data['tourist_count'],
                 'from_date' => !empty($data['from_date']) ? $data['from_date'] : null,
                 'end_date' => !empty($data['end_date']) ? $data['end_date'] : null,
