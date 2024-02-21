@@ -63,8 +63,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-3">
-                                        <label class="required">From Date</label>
-                                        <input type="date" name="from_date" class="form-control" placeholder="Enter Date" value="{{$tour->from_date}}" required>
+                                        <label class="required">Start Date</label>
+                                        <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Enter Date" value="{{$tour->from_date}}" required>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required">End Date</label>
@@ -101,16 +101,37 @@
 @endsection('scripts')
 <script>
     $(document).ready(function() {
+        $.validator.addMethod("greaterThan", function (value, element, params) {
+            var from_date_value = new Date($(params).val());
+            var end_date_value = new Date(value);
+            return end_date_value > from_date_value;
+        }, "End Date must be greater than From Date.");
         $('#addTour').validate({
             ignore: [],
             debug: false,
-            rules: {},
-            messages: {},
+            rules: {
+                from_date: {
+                    required: true,
+                },
+                end_date: {
+                    required: true,
+                    greaterThan: "#from_date"
+                }
+            },
+            messages: {
+                from_date: {
+                    required: "Please select a From Date."
+                },
+                end_date: {
+                    required: "Please select an End Date.",
+                    greaterThan: "End Date must be greater than From Date."
+                }
+            },
             submitHandler: function(form) {
                 $(".submit").attr("disabled", true);
                 $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
                 form.submit();
-            }
+            },
         });
     });
 </script>

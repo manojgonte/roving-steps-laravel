@@ -86,7 +86,7 @@
                                         <th>Start Date</th>
                                         <th>End Date</th>
                                         <th>Final</th>
-                                        <th>#</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
