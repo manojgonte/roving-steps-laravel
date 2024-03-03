@@ -71,7 +71,7 @@
                                         <input type="date" name="end_date" class="form-control" placeholder="Enter Date" value="{{$tour->end_date}}" required>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="required">Status</label>
+                                        <label class="">Status</label>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="status" name="status" value="1" @if($tour->status == 1) checked @endif>
                                             <label class="form-check-label" for="isPopular">Final</label>

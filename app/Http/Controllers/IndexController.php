@@ -19,7 +19,7 @@ class IndexController extends Controller
     public function index(){
         $popularTours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id','rating')
             ->orderBy('id','DESC')
-            ->where(['status'=>1,'is_popular'=>1])
+            ->where(['status'=>1,'is_popular'=>1,'custom_tour'=>0])
             ->take(10)
             ->get();
 
@@ -60,7 +60,7 @@ class IndexController extends Controller
         $tours = Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id','rating','special_tour_type')
             ->orderBy('is_popular','DESC')
             ->orderBy('id','DESC')
-            ->where('status','1');
+            ->where(['status'=>'1','custom_tour'=>0]);
 
         if($request->q){
             $q = $request->q;

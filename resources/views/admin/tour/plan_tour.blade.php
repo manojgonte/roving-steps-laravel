@@ -51,8 +51,8 @@
                                         <label class="required">Tour</label>
                                         <select class="form-control select2bs4" name="tour_id" required>
                                             <option value="" selected>Select One</option>
-                                            @foreach(App\Models\Tour::orderBy('tour_name','ASC')->get() as $row)
-                                            <option value="{{$row->id}}">{{$row->tour_name}}</option>
+                                            @foreach(App\Models\Tour::select('id','tour_name','days','nights')->orderBy('custom_tour','DESC')->orderBy('tour_name','ASC')->get() as $row)
+                                            <option value="{{$row->id}}">{{$row->tour_name}} | {{$row->days}}D/{{$row->nights}}N</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -71,7 +71,7 @@
                                         <input type="date" name="end_date" class="form-control" placeholder="Enter Date" required>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="required">Status</label>
+                                        <label class="">Status</label>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="status" name="status" value="1">
                                             <label class="form-check-label" for="isPopular">Final</label>

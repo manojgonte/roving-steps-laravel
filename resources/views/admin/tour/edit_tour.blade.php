@@ -152,6 +152,12 @@
                                             <label class="form-check-label" for="isPopular">Popular Tour Package</label>
                                         </div>
                                     </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="isCustom" name="custom_tour" value="1" @if($tour->custom_tour == 1) checked @endif >
+                                            <label class="form-check-label" for="isCustom">Custom Tour</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer ">

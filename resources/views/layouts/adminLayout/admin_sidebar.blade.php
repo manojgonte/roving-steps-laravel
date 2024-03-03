@@ -97,6 +97,14 @@
                     </a>
                 </li>
                 @endif
+                @if($role == 'Admin' || $role == 'Accountant')
+                <li class="nav-item">
+                    <a href="{{url('admin/invoice-dashboard')}}" class="nav-link text-white @if(preg_match('#/admin/invoice-dashboard#', $url)) active @endif">
+                        <i class="nav-icon fa fa-file-invoice-dollar"></i>
+                        <p>Billing & Invoices NEW</p>
+                    </a>
+                </li>
+                @endif
                 @if($role == 'Admin')
                 <li class="nav-item">
                     <a href="{{url('admin/view-staff')}}" class="nav-link text-white @if(preg_match('#/admin/view-staff#', $url)) active @endif">

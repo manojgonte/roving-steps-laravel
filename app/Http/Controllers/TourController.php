@@ -43,6 +43,7 @@ class TourController extends Controller
             $tour->exclusions = !empty($data['exclusions']) ? $data['exclusions'] : null;;
             $tour->note = !empty($data['note']) ? $data['note'] : null;
             $tour->is_popular = !empty($data['is_popular']) ? $data['is_popular'] : '0' ;
+            $tour->custom_tour = !empty($data['custom_tour']) ? $data['custom_tour'] : '0' ;
             $tour->status = '0';
 
             // image save in folder
@@ -103,6 +104,7 @@ class TourController extends Controller
                 'exclusions' => $data['exclusions'],
                 'note' => !empty($data['note']) ? $data['note'] : null,
                 'is_popular' => !empty($data['is_popular']) ? $data['is_popular'] : '0',
+                'custom_tour' => !empty($data['custom_tour']) ? $data['custom_tour'] : '0',
             ]);
             return redirect('admin/itinerary-builder/'.$id)->with('flash_message_success','Tour details updated successfully');
         }
@@ -197,9 +199,53 @@ class TourController extends Controller
     public function planTour(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
-            
+            $tour=Tour::with('itinerary')->where(['id'=>$data['tour_id'],'custom_tour'=>0])->first();
+            if($tour){
+                $customTour = new Tour;
+                $customTour->tour_name = $tour->tour_name;
+                $customTour->type = $tour->type;
+                $customTour->special_tour_type = !empty($tour->special_tour_type) ? $tour->special_tour_type : null;
+                $customTour->dest_id = $tour->dest_id;
+                $customTour->rating = $tour->rating;
+                $customTour->description = !empty($tour->description) ? $tour->description : null;
+                $customTour->adult_price = $tour->adult_price;
+                $customTour->child_price = !empty($tour->child_price) ? $tour->child_price : null;
+                $customTour->from_date = !empty($tour->from_date) ? $tour->from_date : null;
+                $customTour->end_date = !empty($tour->end_date) ? $tour->end_date : null;
+                $customTour->days = $tour->days;
+                $customTour->nights = $tour->nights;
+                $customTour->amenities = $tour->amenities;
+                $customTour->inclusions = !empty($tour->inclusions) ? $tour->inclusions : null;;
+                $customTour->exclusions = !empty($tour->exclusions) ? $tour->exclusions : null;;
+                $customTour->note = !empty($tour->note) ? $tour->note : null;
+                $customTour->is_popular = '0' ;
+                $customTour->custom_tour = 1 ;
+                $customTour->status = '0';
+                $customTour->image = $tour->image;
+                $customTour->save();
+
+                if(count($tour->itinerary)>0){
+                    foreach($tour->itinerary as $day){
+                        $itinerary = new TourItinerary;
+                        $itinerary->tour_id       = $customTour->id;
+                        $itinerary->day           = $day->day;
+                        $itinerary->visit_place   = $day->visit_place;
+                        $itinerary->activity      = $day->activity;
+                        $itinerary->travel_option = $day->travel_option;
+                        $itinerary->description   = $day->description;
+                        $itinerary->stay          = $day->stay;
+                        $itinerary->food          = $day->food;
+                        $itinerary->image         = $day->image;
+                        $itinerary->save();
+                    }
+                }
+
+                $tourId = $customTour->id;
+            }else{
+                $tourId = $data['tour_id'];
+            }
             $tour = new PlannedTour;
-            $tour->tour_id = $data['tour_id'];
+            $tour->tour_id = $tourId;
             $tour->customer_name = !empty($data['customer_name']) ? $data['customer_name'] : null;
             $tour->tourist_count = $data['tourist_count'];
             $tour->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
