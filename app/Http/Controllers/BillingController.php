@@ -41,7 +41,7 @@ class BillingController extends Controller
     }
 
     public function invoiceBilling(Request $request) {
-        $invoices = invoices::with('invoicePayments')
+        $invoices = invoices::with('invoiceItems')
             ->select('invoices.*','tours.tour_name as tourName')
             ->leftJoin('tours','tours.id','invoices.tour_name');
 
@@ -82,6 +82,44 @@ class BillingController extends Controller
             return redirect('admin/invoice-details/'.$Invoices->id)->with('flash_message_success','Invoices created successfully');
         }
         return view('admin.billing.create-invoice');
+    }
+
+    public function invoiceActions(Request $request, $id) {
+        $id = base64_decode($id);
+        $invoice = invoices::with('invoiceItems')
+            ->select('invoices.*','tours.tour_name as tourName','invoices.tour_name as tour_id')
+            ->leftJoin('tours','tours.id','invoices.tour_name')
+            ->where('invoices.id', $id)
+            ->first();
+        if($request->type == 'download') {
+            $pdf = PDF::setOptions([
+                'images' => true,
+            ])->loadView('emails.share_invoice', compact('invoice'))->setPaper('a4', 'portrait');
+            return $pdf->download("Invoice-".$invoice->id."-".Str::slug($invoice->bill_to)."-".date('dMY').".pdf");
+        }elseif($request->type == 'share') {
+            if($invoice->email) {
+                $pdf = PDF::loadView('emails.share_invoice', compact('invoice'));
+                $pdf = $pdf->output();
+                $email = $invoice->email;
+                $messageData = [
+                    'invoice' => $invoice
+                ];
+                Mail::send('emails.share_invoice',$messageData,function($message) use($email,$pdf){
+                    $message->to($email)->subject('Invoice of Booking' . ' | '. config('app.name'));
+                    $message->attachData($pdf, 'invoice-'.date('dMY').'.pdf');
+                });
+
+                // update invoice sent field in db
+                $inv = invoices::find($id);
+                $inv->invoice_sent = 1;
+                $inv->save();
+
+                return redirect()->back()->with('flash_message_success','Invoice email sent successfully.');
+            }else{
+                return redirect()->back()->with('flash_message_error','Email not found for this invoice.');
+            }
+        }
+        return redirect()->back()->with('flash_message_error','Please select invoice action.');
     }
 
     public function invoicePreview() {
@@ -183,8 +221,7 @@ class BillingController extends Controller
     }
 
     public function deleteInvoice(Request $request, $id) {
-        invoices::where('id',$id)->delete();
-        payments::where('invoice_id',$id)->delete();
+        invoices::where('id',base64_decode($id))->delete();
         return redirect()->back()->with('flash_message_success','Invoice deleted successfully');
     }
 

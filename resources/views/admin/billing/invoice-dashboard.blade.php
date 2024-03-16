@@ -13,7 +13,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Invoice & Billing</h1>
+                        <h4 class="m-0 text-dark">Invoice & Billing</h4>
                     </div>
                 </div>
             </div>
@@ -38,53 +38,45 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>₹{{ number_format($outstanding_amt->sum('costing') - $outstanding_amt->sum('amount_paid'), 1) }}</h3>
-                                <p>Outstanding</p>
+                                <h3>₹{{number_format($invoices->sum('balance'), 1)}}</h3>
+                                <p>Outstanding </p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-map"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i>
-                            </a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>{{ App\Models\Destination::count() }}</h3>
-                                <p>Overdue</p>
+                                <h3>₹{{number_format($invoices->sum('payment_received'), 1)}}</h3>
+                                <p>Received </p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-location"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i>
-                            </a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>{{ App\Models\Enquiry::count() }}</h3>
+                                <h3>{{ App\Models\invoices::select('invoice_sent')->where('invoice_sent',0)->count() }}</h3>
                                 <p>Invoice in Progress</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-social-twitch"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i>
-                            </a>
                         </div>
                     </div>
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>{{ App\Models\TourEnquiry::count() }}</h3>
+                                <h3>{{ App\Models\invoices::select('invoice_sent')->where('invoice_sent',1)->count() }}</h3>
                                 <p>Invoice Sent</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -95,14 +87,14 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-6 col-6">
-                        <span style="font-size: 20px; font-weight: 800;">Invoice list</span>
+                        <h5>Invoice list ({{$invoices->total()}})</h5>
                     </div>
                     <div class="col-lg-6 col-6" style="text-align: right">
                         <a href="{{ url('/admin/create-invoice') }}" class="btn btn-dark"><i class="fa fa-file-alt"></i> Create invoice</a>
                     </div>
                 </div>
             </div>
-            <hr />
+            <hr class="my-2" />
 
             {{-- Filters --}}
             <div class="card">
@@ -110,9 +102,9 @@
                     <form action="" method="GET">
                         <div class="row d-flex justify-content-start">
                             <div class="col-auto">
-                                <input class="form-control" type="search" name="q" placeholder="Search by Client, Tour Name" value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
+                                <input class="form-control form-control-sm" type="search" name="q" placeholder="Search by Client, Tour Name" value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
                             </div>
-                            <div class="col-auto">
+                            {{-- <div class="col-auto">
                                 <select name="gem_id" class="form-control" onchange="this.form.submit()">
                                     <option value="">Select Identification</option>
                                     <option value="paid">PAID</option>
@@ -120,18 +112,18 @@
                                     <option value="partially_paid">PARTIALLY PAID</option>
                                     <option value="yet_to_send">YET TO SEND</option>
                                 </select>
+                            </div> --}}
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-default btn-sm"> Submit</button>
                             </div>
                             <div class="col-auto">
-                                <button type="submit" class="btn btn-default"> Submit</button>
-                            </div>
-                            <div class="col-auto">
-                                <a href="{{url('admin/invoice-dashboard')}}" class="btn btn-default"> Clear</a>
+                                <a href="{{url('admin/invoice-dashboard')}}" class="btn btn-default btn-sm"> Clear</a>
                             </div>
                         </div>
                     </form>
                 </div>
 
-                <div class="card-body invoicing-table">
+                <div class="card-body invoicing-table p-0">
                     <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                         <thead>
                             <tr>
@@ -139,6 +131,7 @@
                                 <th>Bill To</th>
                                 <th>Tour Name</th>
                                 <th>Invoice Date</th>
+                                <th>Total</th>
                                 <th>Payment Status</th>
                                 <th>Action</th>
                             </tr>
@@ -148,12 +141,13 @@
                                 <tr>
                                     <td><a href="{{ url('/admin/invoice-details/' . $row->id) }}"> {{ $row->id }}</a></td>
                                     <td>{{ $row->bill_to }}</td>
-                                    <td>{{ $row->tourName ? Str::limit($row->tourName, 20) : 'NA' }}</td>
+                                    <td>{{ $row->tourName ? Str::limit($row->tourName, 20) : '-' }}</td>
                                     <td>{{ date('d M Y', strtotime($row->invoice_date)) }}</td>
+                                    <td>₹{{ number_format($row->grand_total,1) }}</td>
                                     <td>
-                                        @if ($row->invoicePayments->sum('costing') == $row->invoicePayments->sum('amount_paid'))
+                                        @if ($row->balance == 0)
                                             PAID
-                                        @elseif ($row->invoicePayments->sum('amount_paid') > 0)
+                                        @elseif ($row->payment_received > 0)
                                             PARTIALLY PAID
                                         @else
                                             UNPAID
@@ -161,6 +155,9 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-default" href="{{ url('/admin/invoice-details/'.$row->id) }}"><i class="fa fa-info-circle"></i></a>
+                                        <a class="btn btn-default" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=download') }}"><i class="fa fa-download"></i></a>
+                                        <a class="btn btn-default" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=share') }}"><i class="fa fa-share-alt"></i></a>
+                                        <a class="btn btn-default" href="{{ url('/admin/delete-invoice/'.base64_encode($row->id)) }}" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

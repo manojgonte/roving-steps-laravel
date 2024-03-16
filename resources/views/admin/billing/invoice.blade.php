@@ -30,7 +30,7 @@
                                 <a class="btn btn-light btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-invoice/' . $invoice->id) }}"><i class="fa fa-trash"></i> Delete</a>
                             </div> --}}
                             <div class="mr-2">
-                                <button class="btn btn-light btn-sm" type="button" class="btn btn-default" onclick="editInvoice({{Request()->id}})" data-toggle="modal" data-target="#editInvoice"><i class="fa fa-pencil-alt"></i> Edit</button>
+                                {{-- <button class="btn btn-light btn-sm" type="button" class="btn btn-default" onclick="editInvoice({{Request()->id}})" data-toggle="modal" data-target="#editInvoice"><i class="fa fa-pencil-alt"></i> Edit</button> --}}
                             </div>
                         </div>
                     </div>

@@ -137,8 +137,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/add-invoice-payment/', [BillingController::class, 'addInvoicePayment']);
 
     Route::match(['get','post'], 'admin/delete-invoice/{id}', [BillingController::class, 'deleteInvoice']);
-
-    Route::match(['get','post'], 'admin/invoice-pdf', [BillingController::class, 'createInvoicePdf']);
+    Route::match(['get','post'], 'admin/invoice-actions/{id}', [BillingController::class, 'invoiceActions']);
     
     Route::get('admin/view-staff', [AdminController::class, 'viewStaff']);
     Route::match(['get','post'], 'admin/add-staff', [AdminController::class, 'addStaff']);
