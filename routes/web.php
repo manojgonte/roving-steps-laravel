@@ -124,6 +124,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     // Billing & invoices
     Route::match(['get','post'], 'admin/invoice-dashboard', [BillingController::class, 'viewRecords']);
+    Route::match(['get','post'], 'admin/invoice-billing', [BillingController::class, 'invoiceBilling']);
     Route::match(['get','post'], 'admin/create-invoice', [BillingController::class, 'createInvoice'])->name('createInvoice');
     Route::match(['get','post'], 'admin/invoice-details/{id}', [BillingController::class, 'invoiceDetails']);
     Route::match(['get','post'], 'admin/del-invoice-payment/{id}', [BillingController::class, 'deleteInvoicePayment']);

@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\TourItinerary;
 use App\Models\Tour;
 use App\Models\invoices;
+use App\Models\InvoiceItems;
 use App\Models\payments;
 use App\Models\Enquiry;
 use App\Models\TourEnquiry;
@@ -39,34 +40,46 @@ class BillingController extends Controller
         return view('admin.billing.invoice-dashboard',compact('invoices','outstanding_amt'));
     }
 
+    public function invoiceBilling(Request $request) {
+        $invoices = invoices::with('invoicePayments')
+            ->select('invoices.*','tours.tour_name as tourName')
+            ->leftJoin('tours','tours.id','invoices.tour_name');
+
+        if($request->q){
+            $q = $request->q;
+            $invoices = $invoices->where(function($query) use($q){
+                $query->where('bill_to','like','%'.$q.'%')
+                ->orWhere('contact_no','like','%'.$q.'%');
+            });
+        }
+        $invoices = $invoices->orderBy('invoices.id','DESC')->paginate(10);
+            
+        $outstanding_amt = payments::select('costing','amount_paid')->get();
+        return view('admin.billing.invoice-dashboard',compact('invoices','outstanding_amt'));
+    }
+
     public function createInvoice(Request $request) {
         if($request->isMethod('post')){
             $data = $request->all();
-            // dd($data);
+            dd($data);
             $Invoices = new invoices;
             $Invoices->bill_to = $data['bill_to'];
             $Invoices->address = $data['address'];
-            $Invoices->email = $data['email'];
+            $Invoices->email = !empty($data['email']) ? $data['email'] : null;
             $Invoices->contact_no = $data['contact_no'];
-            $Invoices->tour_name = $data['tour_name'];
+            $Invoices->pan_no = $data['pan_no'];
+            $Invoices->gst_no = $data['gst_no'];
+            $Invoices->gst_address = $data['gst_address'];
             $Invoices->no_of_passengers = $data['no_of_passengers'];
-            $Invoices->tour_date = $data['tour_date'];
+            $Invoices->from_date = $data['from_date'];
+            $Invoices->to_date = $data['to_date'];
+            $Invoices->invoice_for = $request->invoice_for;
             $Invoices->invoice_date = $data['invoice_date'];
 
+            $Invoices->tour_name = ($data['isTour'] == 1) ? $data['tour_name'] : null;
             $Invoices->save();
 
-            // save payment in "payments" table
-            foreach($data['costing'] as $key => $val) {
-                $payments = new payments;
-                $payments->invoice_id       = $Invoices->id;
-                $payments->costing          = $data['costing'][$key];
-                $payments->amount_paid      = $data['amount_paid'][$key];
-                $payments->mode_of_payment  = $data['mode_of_payment'][$key];
-                $payments->details          = $data['details'][$key];
-                $payments->save();
-            }
-
-            return redirect('admin/invoice-dashboard/')->with('flash_message_success','New Invoices added successfully');
+            return redirect('admin/invoice-details/'.$Invoices->id)->with('flash_message_success','Invoices created successfully');
         }
         return view('admin.billing.create-invoice');
     }
@@ -76,12 +89,57 @@ class BillingController extends Controller
     }
 
     public function invoiceDetails(Request $request, $id) {
-        $invoice_details = invoices::with('invoicePayments')
-            ->select('*')  // Use '*' to select all columns
-            ->where('id', $id)
-            ->first();
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            // dd($data);
 
-        return view('admin.billing.invoice-details', compact('invoice_details'));
+            $invoice = invoices::find($id);
+            $invoice->visa = $data['visa'];
+            $invoice->insurance = $data['insurance'];
+            $invoice->visa_appointment = $data['visa_appointment'];
+            $invoice->swiss_pass = $data['swiss_pass'];
+            $invoice->land_package = $data['land_package'];
+            $invoice->passport_services = $data['passport_services'];
+            $invoice->total = $data['total'];
+            $invoice->service_charges = $data['service_charges'];
+            $invoice->gst_per = $data['gst_per'];
+            $invoice->gst = $data['gst'];
+            $invoice->grand_total = $data['grand_total'];
+            $invoice->payment_received = $data['payment_received'];
+            $invoice->balance = $data['balance'];
+            $invoice->note = $data['note'];
+            $invoice->save();
+
+            if(isset($data['service_name'])) {
+                foreach($data['service_name'] as $key => $val) {
+                    $item = new InvoiceItems;
+                    $item->invoice_id       = $id;
+                    $item->service_name     = $data['service_name'][$key];
+                    $item->date             = $data['date'][$key];
+                    $item->name             = $data['name'][$key];
+                    $item->from_dest        = $data['from'][$key];
+                    $item->to_dest          = $data['to'][$key];
+                    $item->class            = !empty($data['class'][$key]) ? $data['class'][$key] : null;
+                    $item->days             = !empty($data['days'][$key]) ? $data['days'][$key] : null;
+                    $item->tourist_count    = $data['tourist_count'][$key];
+                    $item->cost_person      = $data['cost_person'][$key];
+                    $item->total_cost       = $data['total_cost'][$key];
+                    $item->save();
+                }
+            }
+
+            return redirect('admin/invoice-dashboard/')->with('flash_message_success','Invoices updated successfully');
+        }
+
+        $invoice = invoices::with('invoiceItems')
+            ->select('invoices.*','tours.tour_name as tourName','invoices.tour_name as tour_id')
+            ->leftJoin('tours','tours.id','invoices.tour_name')
+            ->where('invoices.id', $id)
+            ->first();
+        if(count($invoice->invoiceItems)) {
+            return view('admin.billing.invoice', compact('invoice'));
+        }
+        return view('admin.billing.invoice-details', compact('invoice'));
     }
 
     public function editInvoice(Request $request) {

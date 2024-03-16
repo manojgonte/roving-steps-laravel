@@ -19,6 +19,19 @@
             </div>
         </div>
 
+        @if(Session::has('flash_message_error'))
+        <div class="alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{!! session('flash_message_error') !!}</strong>
+        </div>
+        @endif
+        @if(Session::has('flash_message_success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{!! session('flash_message_success') !!}</strong>
+        </div>
+        @endif
+
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -123,10 +136,10 @@
                         <thead>
                             <tr>
                                 <th>Invoice ID</th>
-                                <th>Invoice to</th>
-                                <th>Tour name</th>
-                                <th>Tour date</th>
-                                <th>Payment status</th>
+                                <th>Bill To</th>
+                                <th>Tour Name</th>
+                                <th>Invoice Date</th>
+                                <th>Payment Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -135,8 +148,8 @@
                                 <tr>
                                     <td><a href="{{ url('/admin/invoice-details/' . $row->id) }}"> {{ $row->id }}</a></td>
                                     <td>{{ $row->bill_to }}</td>
-                                    <td>{{ Str::limit($row->tourName, 20) }}</td>
-                                    <td>{{ date('d M Y', strtotime($row->tour_date)) }}</td>
+                                    <td>{{ $row->tourName ? Str::limit($row->tourName, 20) : 'NA' }}</td>
+                                    <td>{{ date('d M Y', strtotime($row->invoice_date)) }}</td>
                                     <td>
                                         @if ($row->invoicePayments->sum('costing') == $row->invoicePayments->sum('amount_paid'))
                                             PAID

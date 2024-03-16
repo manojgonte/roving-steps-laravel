@@ -27,5 +27,12 @@ function AmountInWords(float $amount) {
     }
     $implode_to_Rupees = implode('', array_reverse($string));
     $get_paise = ($amount_after_decimal > 0) ? "And " . ($change_words[$amount_after_decimal / 10] . " " . $change_words[$amount_after_decimal % 10]) . ' Paise' : '';
-    return ($implode_to_Rupees ? $implode_to_Rupees . 'Rupees ' : '') . $get_paise;
+    return ($implode_to_Rupees ? $implode_to_Rupees . 'Rupees Only' : '') . $get_paise;
+}
+
+function isDate($string){
+    if (DateTime::createFromFormat('Y-m-d', $string) !== false) {
+        return true;
+    }
+    return false;
 }

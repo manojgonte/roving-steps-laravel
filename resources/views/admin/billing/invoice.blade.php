@@ -9,6 +9,9 @@
         .table th {
             padding: .3rem !important;
         }
+        .bg-light-orange {
+            background-color: #FFEBB8;
+        }
     </style>
     {{-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
 @endsection('styles')
@@ -19,7 +22,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-8">
-                        <h4 class="m-0 text-dark">Update Invoice Details</h4>
+                        <h4 class="m-0 text-dark">Invoice Details</h4>
                     </div>
                     <div class="col-sm-4">
                         <div class="row d-flex flex-row-reverse">
@@ -103,7 +106,6 @@
                 </div>
                 <hr />
 
-                <form action="" method="POST">@csrf
                 <div class="">
                     <div class="row clearfix mt-3">
                         <div class="col-md-12">
@@ -120,179 +122,54 @@
                                         <th class="text-center"> Tourist Count </th>
                                         <th class="text-center"> Cost per Person </th>
                                         <th class="text-center"> Total Cost </th>
-                                        <th class="text-center"> # </th>
+                                        {{-- <th class="text-center"> # </th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(in_array('Flight Booking', $invoice->invoice_for))
-                                    <tr id=''>
+                                    @foreach ($invoice->invoiceItems->filter(function($item) {
+                                        return $item->service_name != 'Hotel Booking';
+                                    }) as $item)
+                                    <tr>
                                         <td class="align-middle text-left">
-                                            Flight Booking
-                                            <input type="hidden" name='service_name[]' value="Flight Booking" />
+                                            {{$item->service_name}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='date[]' placeholder='' class="form-control form-control-sm" required />
+                                            {{date('d/m/Y', strtotime($item->date))}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
+                                            {{$item->name}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required />
+                                            {{$item->from_dest}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
+                                            {{$item->to_dest}}
                                         </td>
                                         <td class="align-middle">
-                                            <select class="form-control form-control-sm" name="class[]" required>
-                                                <option value="">Class</option>
-                                                <option value="Economy">Economy</option>
-                                                <option value="Premium Economy">Premium Economy</option>
-                                                <option value="Business">Business</option>
-                                            </select>
+                                            {{isset($item->class) ? $item->class : '-'}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" />
+                                            {{$item->tourist_count}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" />
+                                            ₹{{$item->cost_person}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
+                                            ₹{{$item->total_cost}}
                                         </td>
-                                        <td class="align-middle d-flex">
+                                        {{-- <td class="align-middle d-flex">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
                                             <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
-                                        </td>
+                                        </td> --}}
                                     </tr>
-                                    @endif
-                                    @if(in_array('Train Booking', $invoice->invoice_for))
-                                    <tr id=''>
-                                        <td class="align-middle text-left">
-                                            Train Booking
-                                            <input type="hidden" name='service_name[]' value="Train Booking" />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="date" name='date[]' class="form-control form-control-sm" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm amount_paid" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <select class="form-control form-control-sm" name="class[]" required>
-                                                <option value="">Class</option>
-                                                <option value="Sleeper Class">Sleeper Class</option>
-                                                <option value="Third AC">Third AC</option>
-                                                <option value="Second AC">Second AC</option>
-                                                <option value="First AC">First AC</option>
-                                                <option value="Second Seating">Second Seating</option>
-                                                <option value="Vistadome AC">Vistadome AC</option>
-                                                <option value="AC chair cars">AC chair cars</option>
-                                                <option value="First Class">First Class</option>
-                                            </select>
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
-                                        </td>
-                                        <td class="align-middle d-flex">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
-                                        </td>
-                                    </tr>
-                                    @endif
-                                    @if(in_array('Bus Booking', $invoice->invoice_for))
-                                    <tr id=''>
-                                        <td class="align-middle text-left">
-                                            Bus Booking
-                                            <input type="hidden" name='service_name[]' value="Bus Booking" />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="date" name='date[]' class="form-control form-control-sm" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
-                                        </td>
-                                        <td class="align-middle">NA</td>
-                                        <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
-                                        </td>
-                                        <td class="align-middle d-flex">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
-                                        </td>
-                                    </tr>
-                                    @endif
-                                    @if(in_array('Cab Booking', $invoice->invoice_for))
-                                    <tr id=''>
-                                        <td class="align-middle text-left">
-                                            Cab Booking
-                                            <input type="hidden" name='service_name[]' value="Cab Booking" />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="date" name='date[]' class="form-control form-control-sm" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
-                                        </td>                                        
-                                        <td class="align-middle">
-                                            <select class="form-control form-control-sm" name="class[]" required>
-                                                <option value="">Class</option>
-                                                <option value="Sedan">Sedan</option>
-                                                <option value="SUV">SUV</option>
-                                                <option value="Tempo Traveler - 12 ">Tempo Traveler - 12 </option>
-                                                <option value="Tempo Traveler - 17 ">Tempo Traveler - 17 </option>
-                                                <option value="Bus">Bus</option>
-                                            </select>
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
-                                        </td>
-                                        <td class="align-middle">
-                                            <input type="number" name='total_cost[]' class="form-control form-control-sm" readonly />
-                                        </td>
-                                        <td class="align-middle d-flex">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
-                                        </td>
-                                    </tr>
-                                    @endif
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
 
-                        @if(in_array('Hotel Booking', $invoice->invoice_for))
+                        @if (count($invoice->invoiceItems->filter(function($item) {
+                                        return $item->service_name == 'Hotel Booking';
+                                    })) > 0)
                         <div class="col-md-12">
                             <table class="table table-hover table-bordered">
                                 <thead>
@@ -306,44 +183,42 @@
                                         <th class="text-center"> Tourist Count </th>
                                         <th class="text-center"> Cost per Person </th>
                                         <th class="text-center"> Total Cost </th>
-                                        <th class="text-center"> # </th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($invoice->invoiceItems->filter(function($item) {
+                                        return $item->service_name == 'Hotel Booking';
+                                    }) as $item)
                                     <tr id='addr0'>
                                         <td class="align-middle text-left">
-                                            Hotel Booking
-                                            <input type="hidden" name='service_name[]' value="Hotel Booking" />
+                                            {{$item->service_name}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='date[]' placeholder='' class="form-control form-control-sm" />
+                                            {{date('d/m/Y', strtotime($item->date))}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" />
+                                            {{$item->name}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='from[]' placeholder='From' class="form-control form-control-sm" />
+                                            {{date('d/m/Y', strtotime($item->from_dest))}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='to[]' placeholder='To' class="form-control form-control-sm" />
+                                            {{date('d/m/Y', strtotime($item->to_dest))}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='days[]' placeholder='Enter days' class="form-control form-control-sm" min="1" />
+                                            {{$item->days}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" />
+                                            {{$item->tourist_count}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Cost per person' class="form-control form-control-sm" min="1" />
+                                            ₹{{$item->cost_person}}
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
-                                        </td>
-                                        <td class="align-middle d-flex">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            ₹{{$item->total_cost}}
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -351,68 +226,68 @@
                     </div>
                 </div>
 
-                <table id="example" class="table table-bordered table-striped" style="overflow-x: auto;">
+                <table id="example" class="table table-bordered" style="overflow-x: auto;">
                     <tbody>
                         <tr>
                             <td class="text-left text-sm">Visa</td>
-                            <td><input type="number" name="visa" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td class="text-left">{{isset($invoice->visa) ? $invoice->visa : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Insurance</td>
-                            <td><input type="number" name="insurance" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td class="text-left">{{isset($invoice->insurance) ? $invoice->insurance : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Visa Appointment</td>
-                            <td><input type="text" name="visa_appointment" class="form-control form-control-sm w-25" /></td>
+                            <td class="text-left">{{isset($invoice->visa_appointment) ? $invoice->visa_appointment : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Swiss Pass</td>
-                            <td><input type="text" name="swiss_pass" class="form-control form-control-sm w-25" /></td>
+                            <td class="text-left">{{isset($invoice->swiss_pass) ? $invoice->swiss_pass : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Land Package</td>
-                            <td><input type="text" name="land_package" class="form-control form-control-sm w-25" /></td>
+                            <td class="text-left">{{isset($invoice->land_package) ? $invoice->land_package : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
-                            <td><input type="text" name="passport_services" class="form-control form-control-sm w-25" /></td>
+                            <td class="text-left">{{isset($invoice->passport_services) ? $invoice->passport_services : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Total</td>
-                            <td><input type="number" name="total" class="form-control form-control-sm w-25" id="total" min="1" readonly /></td>
+                            <td class="text-left">₹{{$invoice->total}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Service Charges</td>
-                            <td><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" /></td>
+                            <td class="text-left">₹{{$invoice->service_charges}}</td>
                         </tr>
                         <tr>
-                            <td class="text-left text-sm font-weight-bold d-flex justify-content-between border-0">
-                                <span>GST </span>
+                            <td class="text-left align-middle text-sm font-weight-bold d-flex justify-content-between border-0">
+                                GST
                                 <div>
-                                    <select class="form-control form-control-sm border-0" name="gst_per" required><option value="">Select GST %</option><option value="18">18%</option><option value="5">5%</option></select>
+                                    <select class="form-control form-control-sm border-0" disabled><option>{{$invoice->gst_per}}%</option></select>
                                 </div>
                             </td>
-                            <td><input type="number" name="gst" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-left align-middle">₹{{$invoice->gst}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Grand Total</td>
-                            <td><input type="number" name="grand_total" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-left font-weight-bold">₹{{$invoice->grand_total}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
-                            <td class="text-left" id="grand_total_word"></td>
+                            <td class="text-left font-weight-bold" id="">{{AmountInWords($invoice->grand_total)}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
-                            <td><input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td class="text-left">₹{{$invoice->payment_received}}</td>
                         </tr>
-                        <tr>
+                        <tr class="bg-light-orange">
                             <td class="text-left text-sm font-weight-bold">Balance</td>
-                            <td><input type="number" name="balance" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-left font-weight-bold">₹{{$invoice->balance}}</td>
                         </tr>
-                        <tr>
+                        <tr class="bg-light-orange">
                             <td class="text-left text-sm font-weight-bold">In Word</td>
-                            <td class="text-left" id="balance_word"></td>
+                            <td class="text-left font-weight-bold" id="">{{AmountInWords($invoice->balance)}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -436,13 +311,8 @@
                 <hr />
                 <div class="form-group">
                     <label>Note</label>
-                    <input type="text" name="note" class="form-control form-control-sm">
+                    <h6>{{isset($invoice->note) ? $invoice->note : '-'}}</h6>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-default">Cancel</button>
-                    <button class="btn btn-dark"><i class="fa fa-check-circle"></i> Save</button>
-                </div>
-                </form>
             </div>
         </section>
     </div>

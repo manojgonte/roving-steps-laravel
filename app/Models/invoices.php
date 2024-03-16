@@ -11,7 +11,15 @@ class Invoices extends Model
 
     protected $table = 'invoices';
 
+    protected $casts = [
+        'invoice_for' => 'array'
+    ];
+
     public function invoicePayments() {
         return $this->hasMany(payments::class, 'invoice_id');
+    }
+
+    public function invoiceItems() {
+        return $this->hasMany(InvoiceItems::class, 'invoice_id');
     }
 }
