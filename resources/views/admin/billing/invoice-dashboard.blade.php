@@ -139,12 +139,12 @@
                         <tbody>
                             @foreach ($invoices as $row)
                                 <tr>
-                                    <td><a href="{{ url('/admin/invoice-details/' . $row->id) }}"> {{ $row->id }}</a></td>
-                                    <td>{{ $row->bill_to }}</td>
-                                    <td>{{ $row->tourName ? Str::limit($row->tourName, 20) : '-' }}</td>
-                                    <td>{{ date('d M Y', strtotime($row->invoice_date)) }}</td>
-                                    <td>₹{{ number_format($row->grand_total,1) }}</td>
-                                    <td>
+                                    <td class="align-middle"><a href="{{ url('/admin/invoice-details/' . base64_encode($row->id)) }}"> {{ $row->id }}</a></td>
+                                    <td class="align-middle">{{ $row->bill_to }}</td>
+                                    <td class="align-middle">{{ $row->tourName ? Str::limit($row->tourName, 20) : '-' }}</td>
+                                    <td class="align-middle">{{ date('d M Y', strtotime($row->invoice_date)) }}</td>
+                                    <td class="align-middle">₹{{ number_format($row->grand_total,1) }}</td>
+                                    <td class="align-middle">
                                         @if ($row->balance == 0)
                                             PAID
                                         @elseif ($row->payment_received > 0)
@@ -153,8 +153,9 @@
                                             UNPAID
                                         @endif
                                     </td>
-                                    <td>
-                                        <a class="btn btn-default" href="{{ url('/admin/invoice-details/'.$row->id) }}"><i class="fa fa-info-circle"></i></a>
+                                    <td class="align-middle">
+                                        <a class="btn btn-default" href="{{ url('/admin/invoice-details/'.base64_encode($row->id)) }}"><i class="fa fa-info-circle"></i></a>
+                                        <a class="btn btn-default" href="{{ url('/admin/edit-invoice/'.base64_encode($row->id)) }}"><i class="fa fa-pencil-alt"></i></a>
                                         <a class="btn btn-default" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=download') }}"><i class="fa fa-download"></i></a>
                                         <a class="btn btn-default" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=share') }}"><i class="fa fa-share-alt"></i></a>
                                         <a class="btn btn-default" href="{{ url('/admin/delete-invoice/'.base64_encode($row->id)) }}" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>

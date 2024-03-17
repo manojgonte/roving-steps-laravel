@@ -16,7 +16,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1 class="m-0 text-dark">Create Invoice</h1>
+                        <h4 class="m-0 text-dark">Create Invoice</h4>
                         <hr class="mb-0">
                     </div>
                 </div>
@@ -104,10 +104,11 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-dark font-weight-bold submit"><i class="fa fa-check-circle"></i> SAVE </button>
-                        <button type="reset" class="btn btn-light"> <i class="fa fa-refresh"></i> RESET </button>
+                        <button type="submit" class="btn btn-dark font-weight-bold submit"><i class="fa fa-check-circle"></i> Save </button>
+                        <button type="reset" class="btn btn-light"> <i class="fa fa-refresh"></i> Reset </button>
                     </div>
-                </form>
+                </div>
+            </form>
 
 
                 {{-- billing --}}

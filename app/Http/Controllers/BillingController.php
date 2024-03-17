@@ -61,7 +61,7 @@ class BillingController extends Controller
     public function createInvoice(Request $request) {
         if($request->isMethod('post')){
             $data = $request->all();
-            dd($data);
+            
             $Invoices = new invoices;
             $Invoices->bill_to = $data['bill_to'];
             $Invoices->address = $data['address'];
@@ -79,7 +79,7 @@ class BillingController extends Controller
             $Invoices->tour_name = ($data['isTour'] == 1) ? $data['tour_name'] : null;
             $Invoices->save();
 
-            return redirect('admin/invoice-details/'.$Invoices->id)->with('flash_message_success','Invoices created successfully');
+            return redirect('admin/invoice-details/'.base64_encode($Invoices->id))->with('flash_message_success','Invoices created successfully');
         }
         return view('admin.billing.create-invoice');
     }
@@ -127,6 +127,7 @@ class BillingController extends Controller
     }
 
     public function invoiceDetails(Request $request, $id) {
+        $id = base64_decode($id);
         if($request->isMethod('post')) {
             $data = $request->all();
             // dd($data);
@@ -174,60 +175,102 @@ class BillingController extends Controller
             ->leftJoin('tours','tours.id','invoices.tour_name')
             ->where('invoices.id', $id)
             ->first();
-        if(count($invoice->invoiceItems)) {
+        if(count($invoice->invoiceItems) > 0) {
             return view('admin.billing.invoice', compact('invoice'));
         }
         return view('admin.billing.invoice-details', compact('invoice'));
     }
 
-    public function editInvoice(Request $request) {
-        $data = $request->all();
+    public function editInvoice(Request $request,$id) {
+        $id = base64_decode($id);
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            // dd($data);
+            // detail update
+            $Invoices = invoices::find($id);
+            $Invoices->bill_to = $data['bill_to'];
+            $Invoices->address = $data['address'];
+            $Invoices->email = !empty($data['email']) ? $data['email'] : null;
+            $Invoices->contact_no = $data['contact_no'];
+            $Invoices->pan_no = $data['pan_no'];
+            $Invoices->gst_no = $data['gst_no'];
+            $Invoices->gst_address = $data['gst_address'];
+            $Invoices->no_of_passengers = $data['no_of_passengers'];
+            $Invoices->from_date = $data['from_date'];
+            $Invoices->to_date = $data['to_date'];
+            $Invoices->invoice_for = $request->invoice_for;
+            $Invoices->invoice_date = $data['invoice_date'];
 
-        // detail update
-        invoices::where('id',$request->invoice_id)->update([
-            'bill_to'=>$data['bill_to'],
-            'address'=>$data['address'],
-            'email'=>$data['email'],
-            'contact_no'=>$data['contact_no'],
-            'tour_name'=>$data['tour_name'],
-            'no_of_passengers'=>$data['no_of_passengers'],
-            'tour_date'=>$data['tour_date'],
-            'invoice_date'=>$data['invoice_date']
-        ]);
-        return redirect()->back()->with('flash_message_success','Invoice details updated successfully');
+            $Invoices->tour_name = empty($data['isTour']) ? $data['tour_name'] : null;
+            $Invoices->save();
+
+            // return redirect('admin/invoice-details/'.$Invoices->id)->with('flash_message_success','Invoices created successfully');
+            return redirect()->back()->with('flash_message_success','Invoice details updated successfully');
+        }
+        $invoice = invoices::select('invoices.*','tours.tour_name as tourName','invoices.tour_name as tour_id')
+            ->leftJoin('tours','tours.id','invoices.tour_name')
+            ->where('invoices.id', $id)
+            ->first();
+        return view('admin.billing.edit-invoice', compact('invoice'));
     }
 
-    public function editPayment(Request $request, $id) {
-        if($request->isMethod('post')){
+    public function editInvoiceDetails(Request $request,$id) {
+        $id = base64_decode($id);
+        if($request->isMethod('post')) {
             $data = $request->all();
             // dd($data);
 
-            // detail update
-            payments::where('id',$id)->update([
-                'costing'=>$data['costing'],
-                'mode_of_payment'=>$data['mode_of_payment'],
-                'details'=>$data['details'],
-                'amount_paid'=>$data['amount_paid'],
-                'updated_at'=>$data['costing']
-            ]);
-            return redirect('admin/edit-payment/'.$id)->with('flash_message_success','Payment details updated successfully');
+            $invoice = invoices::find($id);
+            $invoice->visa = $data['visa'];
+            $invoice->insurance = $data['insurance'];
+            $invoice->visa_appointment = $data['visa_appointment'];
+            $invoice->swiss_pass = $data['swiss_pass'];
+            $invoice->land_package = $data['land_package'];
+            $invoice->passport_services = $data['passport_services'];
+            $invoice->total = $data['total'];
+            $invoice->service_charges = $data['service_charges'];
+            $invoice->gst_per = $data['gst_per'];
+            $invoice->gst = $data['gst'];
+            $invoice->grand_total = $data['grand_total'];
+            $invoice->payment_received = $data['payment_received'];
+            $invoice->balance = $data['balance'];
+            $invoice->note = $data['note'];
+            $invoice->save();
+
+            //delete previously added invoice item and adding fresh items
+            InvoiceItems::where('invoice_id',$id)->delete();
+
+            if(isset($data['service_name'])) {
+                foreach($data['service_name'] as $key => $val) {
+                    $item = new InvoiceItems;
+                    $item->invoice_id       = $id;
+                    $item->service_name     = $data['service_name'][$key];
+                    $item->date             = $data['date'][$key];
+                    $item->name             = $data['name'][$key];
+                    $item->from_dest        = $data['from'][$key];
+                    $item->to_dest          = $data['to'][$key];
+                    $item->class            = !empty($data['class'][$key]) ? $data['class'][$key] : null;
+                    $item->days             = !empty($data['days'][$key]) ? $data['days'][$key] : null;
+                    $item->tourist_count    = $data['tourist_count'][$key];
+                    $item->cost_person      = $data['cost_person'][$key];
+                    $item->total_cost       = $data['total_cost'][$key];
+                    $item->save();
+                }
+            }
+
+            return redirect('admin/invoice-details/'.base64_encode($id))->with('flash_message_success','Invoice details updated successfully');
         }
-
-        $payments = payments::select('*')
-            ->where('invoice_id', $id)
+        $invoice = invoices::with('invoiceItems')
+            ->select('invoices.*','tours.tour_name as tourName','invoices.tour_name as tour_id')
+            ->leftJoin('tours','tours.id','invoices.tour_name')
+            ->where('invoices.id', $id)
             ->first();
-
-        return view('admin.billing.edit-invoice', compact('payments'));
+        return view('admin.billing.edit_invoice_details', compact('invoice'));
     }
 
     public function deleteInvoice(Request $request, $id) {
         invoices::where('id',base64_decode($id))->delete();
         return redirect()->back()->with('flash_message_success','Invoice deleted successfully');
-    }
-
-    public function deleteInvoicePayment(Request $request, $id) {
-        payments::where('id',$id)->delete();
-        return redirect()->back()->with('flash_message_success','Payment for invoice deleted successfully');
     }
 
     public function getInvoiceDetails(Request $request){
@@ -236,35 +279,5 @@ class BillingController extends Controller
             ->leftJoin('tours','tours.id','invoices.tour_name')
             ->first();
         return response()->json($invoices);
-    }
-
-    public function getPayDetails(Request $request){
-        $id = $request->input('id');
-        $payment = payments::find($id);
-        return response()->json($payment);
-    }
-
-    public function updatePayDetails(Request $request){
-        $payment = payments::where('id', $request->payment_id)
-            ->update([
-                'details'=>$request->details,
-                'costing'=>$request->costing,
-                'amount_paid'=>$request->amount_paid,
-                'mode_of_payment'=>$request->mode_of_payment
-            ]);
-        return redirect()->back()->with('flash_message_success','Payment details updated successfully');
-    }
-
-    public function addInvoicePayment(Request $request){
-        $data = $request->all();
-            // dd($data);
-            $pay = new payments;
-            $pay->invoice_id    = $data['invoice_id'];
-            $pay->details       = $data['details'];
-            $pay->costing       = $data['costing'];
-            $pay->amount_paid   = $data['amount_paid'];
-            $pay->mode_of_payment = $data['mode_of_payment'];
-            $pay->save();
-        return redirect()->back()->with('flash_message_success','Payment added successfully');
     }
 }

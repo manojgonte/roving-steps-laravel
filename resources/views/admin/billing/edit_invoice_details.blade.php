@@ -36,7 +36,14 @@
         </div>
 
         <section id="DivIdToPrint">
-            <div class="invoice p-3 mb-3 m-3 mt-auto">
+            
+            <div class="card p-3 mb-3 m-3 mt-auto">
+                <div class="card-header pt-0 px-0">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item"><a class="nav-link border" href="{{url('admin/edit-invoice/'.Request()->id)}}">Basic</a></li>
+                        <li class="nav-item"><a class="nav-link active ml-1" href="javascript:void">Details</a></li>
+                    </ul>
+                </div>
                 @if(Session::has('flash_message_error'))
                 <div class="alert alert-danger alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -49,7 +56,8 @@
                     <strong>{!! session('flash_message_success') !!}</strong>
                 </div>
                 @endif
-                <div class="row">
+
+                <div class="row card-body px-0 pb-0">
                     <div class="col px-0">
                         <div class="col-md-10">
                             <label><b>Bill To:</b> {{ $invoice->bill_to }}</label>
@@ -105,7 +113,7 @@
 
                 <form action="" method="POST">@csrf
                 <div class="">
-                    <div class="row clearfix mt-3">
+                    <div class="row clearfix mt-0">
                         <div class="col-md-12">
                             <h6 class="font-weight-bold">Payments</h6>
                             <table class="table table-hover table-bordered" id="tab_logic1">
@@ -125,84 +133,89 @@
                                 </thead>
                                 <tbody>
                                     @if(in_array('Flight Booking', $invoice->invoice_for))
+                                    @foreach ($invoice->invoiceItems->filter(function($item) {
+                                        return $item->service_name == 'Flight Booking';
+                                    }) as $item)
                                     <tr id=''>
                                         <td class="align-middle text-left">
                                             Flight Booking
                                             <input type="hidden" name='service_name[]' value="Flight Booking" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='date[]' placeholder='' class="form-control form-control-sm" required />
+                                            <input type="date" name='date[]' placeholder='' class="form-control form-control-sm" value="{{$item->date}}" required />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
+                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" value="{{$item->name}}" required />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required />
+                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" value="{{$item->from_dest}}" required />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
+                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" value="{{$item->to_dest}}" required />
                                         </td>
                                         <td class="align-middle">
                                             <input type="hidden" name="days[]" value="">
                                             <select class="form-control form-control-sm" name="class[]" required>
                                                 <option value="">Class</option>
-                                                <option value="Economy">Economy</option>
-                                                <option value="Premium Economy">Premium Economy</option>
-                                                <option value="Business">Business</option>
+                                                <option value="Economy" @if($item->class == 'Economy') selected @endif>Economy</option>
+                                                <option value="Premium Economy" @if($item->class == 'Premium Economy') selected @endif>Premium Economy</option>
+                                                <option value="Business" @if($item->class == 'Business') selected @endif>Business</option>
                                             </select>
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" value="{{$item->cost_person}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
+                                            <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" value="" />
                                         </td>
                                         <td class="align-middle d-flex">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
                                             <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
+                                    @endforeach
                                     @endif
                                     @if(in_array('Train Booking', $invoice->invoice_for))
+                                    @foreach ($invoice->invoiceItems->filter(function($item) {
+                                        return $item->service_name == 'Train Booking';
+                                    }) as $item)
                                     <tr id=''>
                                         <td class="align-middle text-left">
                                             Train Booking
                                             <input type="hidden" name='service_name[]' value="Train Booking" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='date[]' class="form-control form-control-sm" required />
+                                            <input type="date" name='date[]' class="form-control form-control-sm" required value="{{$item->date}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
+                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required value="{{$item->name}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm amount_paid" required />
+                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm amount_paid" required value="{{$item->from_dest}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
+                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required value="{{$item->to_dest}}" />
                                         </td>
+                                        @php 
+                                            $train_class = ["Sleeper Class","Third AC","Second AC","First AC","Second Seating","Vistadome AC","AC chair cars","First Class"];
+                                        @endphp
                                         <td class="align-middle">
                                             <input type="hidden" name="days[]" value="">
                                             <select class="form-control form-control-sm" name="class[]" required>
                                                 <option value="">Class</option>
-                                                <option value="Sleeper Class">Sleeper Class</option>
-                                                <option value="Third AC">Third AC</option>
-                                                <option value="Second AC">Second AC</option>
-                                                <option value="First AC">First AC</option>
-                                                <option value="Second Seating">Second Seating</option>
-                                                <option value="Vistadome AC">Vistadome AC</option>
-                                                <option value="AC chair cars">AC chair cars</option>
-                                                <option value="First Class">First Class</option>
+                                                @foreach($train_class as $class)
+                                                <option value="{{$class}}" @if($class == $item->class) selected @endif>{{$class}}</option>
+                                                @endforeach
                                             </select>
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
@@ -212,24 +225,28 @@
                                             <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
+                                    @endforeach
                                     @endif
                                     @if(in_array('Bus Booking', $invoice->invoice_for))
+                                    @foreach ($invoice->invoiceItems->filter(function($item) {
+                                        return $item->service_name == 'Bus Booking';
+                                    }) as $item)
                                     <tr id=''>
                                         <td class="align-middle text-left">
                                             Bus Booking
                                             <input type="hidden" name='service_name[]' value="Bus Booking" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='date[]' class="form-control form-control-sm" required />
+                                            <input type="date" name='date[]' class="form-control form-control-sm" required value="{{$item->date}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
+                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required value="{{$item->name}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required />
+                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required value="{{$item->from_dest}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
+                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required value="{{$item->to_dest}}" />
                                         </td>
                                         <td class="align-middle">
                                             NA
@@ -237,10 +254,10 @@
                                             <input type="hidden" name="days[]" value="">
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
@@ -250,41 +267,47 @@
                                             <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
+                                    @endforeach
                                     @endif
                                     @if(in_array('Cab Booking', $invoice->invoice_for))
+                                    @foreach ($invoice->invoiceItems->filter(function($item) {
+                                        return $item->service_name == 'Cab Booking';
+                                    }) as $item)
                                     <tr id=''>
                                         <td class="align-middle text-left">
                                             Cab Booking
                                             <input type="hidden" name='service_name[]' value="Cab Booking" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='date[]' class="form-control form-control-sm" required />
+                                            <input type="date" name='date[]' class="form-control form-control-sm" required value="{{$item->date}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
+                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required value="{{$item->name}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required />
+                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required value="{{$item->from_dest}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
-                                        </td>                                        
+                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required value="{{$item->to_dest}}" />
+                                        </td>
+                                        @php 
+                                            $cab_class = ["Sedan","SUV","Tempo Traveler - 12","Tempo Traveler - 17"];
+                                        @endphp
                                         <td class="align-middle">
                                             <input type="hidden" name="days[]" value="">
                                             <select class="form-control form-control-sm" name="class[]" required>
                                                 <option value="">Class</option>
-                                                <option value="Sedan">Sedan</option>
-                                                <option value="SUV">SUV</option>
-                                                <option value="Tempo Traveler - 12">Tempo Traveler - 12</option>
-                                                <option value="Tempo Traveler - 17">Tempo Traveler - 17</option>
                                                 <option value="Bus">Bus</option>
+                                                @foreach($cab_class as $class)
+                                                <option value="{{$class}}" @if($class == $item->class) selected @endif>{{$class}}</option>
+                                                @endforeach
                                             </select>
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' class="form-control form-control-sm" readonly />
@@ -294,6 +317,7 @@
                                             <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
+                                    @endforeach
                                     @endif
                                 </tbody>
                             </table>
@@ -317,41 +341,45 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr id='addr0'>
+                                    @foreach ($invoice->invoiceItems->filter(function($item) {
+                                        return $item->service_name == 'Hotel Booking';
+                                    }) as $item)
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Hotel Booking
                                             <input type="hidden" name='service_name[]' value="Hotel Booking" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='date[]' placeholder='' class="form-control form-control-sm" required />
+                                            <input type="date" name='date[]' class="form-control form-control-sm" required value="{{$item->date}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
+                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required value="{{$item->name}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='from[]' placeholder='From' class="form-control form-control-sm" required />
+                                            <input type="date" name='from[]' placeholder='From' class="form-control form-control-sm" required value="{{$item->from_dest}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='to[]' placeholder='To' class="form-control form-control-sm" required />
+                                            <input type="date" name='to[]' placeholder='To' class="form-control form-control-sm" required value="{{$item->to_dest}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="hidden" name="class[]" value="">
-                                            <input type="number" name='days[]' placeholder='Enter days' class="form-control form-control-sm" required min="1" />
+                                            <input type="number" name='days[]' placeholder='Enter days' class="form-control form-control-sm" required min="1" value="{{$item->days}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" required min="1" />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" required min="1" value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Cost per person' class="form-control form-control-sm" required min="1" />
+                                            <input type="number" name='cost_person[]' placeholder='Cost per person' class="form-control form-control-sm" required min="1" value="{{$item->cost_person}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" required />
                                         </td>
                                         <td class="align-middle d-flex">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
+                                            <button type="button" class="btn btn-default btn-sm add-row" data-service-name="Hotel Booking"><i class="fa fa-plus-circle"></i></button>
                                             <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -363,27 +391,27 @@
                     <tbody>
                         <tr>
                             <td class="text-left text-sm">Visa</td>
-                            <td><input type="number" name="visa" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td><input type="number" name="visa" class="form-control form-control-sm w-25" min="1" value="{{$invoice->visa}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Insurance</td>
-                            <td><input type="number" name="insurance" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td><input type="number" name="insurance" class="form-control form-control-sm w-25" min="1" value="{{$invoice->insurance}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Visa Appointment</td>
-                            <td><input type="text" name="visa_appointment" class="form-control form-control-sm w-25" /></td>
+                            <td><input type="text" name="visa_appointment" class="form-control form-control-sm w-25" value="{{$invoice->visa_appointment}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Swiss Pass</td>
-                            <td><input type="text" name="swiss_pass" class="form-control form-control-sm w-25" /></td>
+                            <td><input type="text" name="swiss_pass" class="form-control form-control-sm w-25" value="{{$invoice->swiss_pass}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Land Package</td>
-                            <td><input type="text" name="land_package" class="form-control form-control-sm w-25" /></td>
+                            <td><input type="text" name="land_package" class="form-control form-control-sm w-25" value="{{$invoice->land_package}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
-                            <td><input type="text" name="passport_services" class="form-control form-control-sm w-25" /></td>
+                            <td><input type="text" name="passport_services" class="form-control form-control-sm w-25" value="{{$invoice->passport_services}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Total</td>
@@ -391,13 +419,13 @@
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Service Charges</td>
-                            <td><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" /></td>
+                            <td><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" value="{{$invoice->service_charges}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold d-flex justify-content-between border-0">
                                 <span>GST </span>
                                 <div>
-                                    <select class="form-control form-control-sm border-0" name="gst_per" required><option value="">Select GST %</option><option value="18">18%</option><option value="5">5%</option></select>
+                                    <select class="form-control form-control-sm border-0" name="gst_per" required><option value="">Select GST %</option><option value="18" @if($invoice->gst_per == '18') selected @endif>18%</option><option value="5" @if($invoice->gst_per == '5') selected @endif>5%</option></select>
                                 </div>
                             </td>
                             <td><input type="number" name="gst" class="form-control form-control-sm w-25" readonly /></td>
@@ -412,7 +440,7 @@
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
-                            <td><input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td><input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" value="{{$invoice->payment_received}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Balance</td>
@@ -444,11 +472,11 @@
                 <hr />
                 <div class="form-group">
                     <label>Note</label>
-                    <input type="text" name="note" class="form-control form-control-sm">
+                    <input type="text" name="note" class="form-control form-control-sm" value="{{$invoice->note}}">
                 </div>
                 <div class="form-group">
                     <a href="{{url('admin/invoice-billing')}}" class="btn btn-default">Cancel</a>
-                    <button type="submit" class="btn btn-dark"><i class="fa fa-check-circle"></i> Save</button>
+                    <button type="submit" class="btn btn-dark"><i class="fa fa-check-circle"></i> Update</button>
                 </div>
                 </form>
             </div>
