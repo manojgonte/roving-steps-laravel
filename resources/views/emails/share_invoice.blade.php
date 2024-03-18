@@ -133,12 +133,10 @@
             display: table-header-group;
             vertical-align: middle;
             border-color: inherit;
-        }
+        }        
         .bg-gradient-dark {
-            background: #343a40 linear-gradient(180deg, #52585d, #343a40) repeat-x !important;
-        }
-        .bg-gradient-dark {
-            color: #fff;
+            background: #E1E4FF !important;
+            color: #000 !important;
         }
         .table-bordered thead td, .table-bordered thead th {
             border-bottom-width: 2px;
@@ -231,8 +229,8 @@
 <body>
     <section>
         <div class="mt-auto">
-            <div class="text-center">
-                <img src="{{public_path('img/logo/logo_trans.png')}}" height="70">
+            <div class="text-left" style="margin-bottom: 10px;">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo/logo_trans.png'))) }}" height="70">
             </div>
             <table class="w-full">
                 <tr>
@@ -256,8 +254,8 @@
                     <td class="w-half">
                         <div><label><b>Invoice Id:</b> {{ $invoice->id }} </label></div>
                         <div><label><b>Pan No.:</b> {{ $invoice->pan_no }} </label></div>
-                        <div><label><b>GST No.:</b> {{ $invoice->gst_no }} </label></div>
-                        <div><label><b>GST Address.:</b> {{ $invoice->gst_address }} </label></div>
+                        <div><label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label></div>
+                        <div><label><b>GST Address.:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label></div>
                         <div><label><b>Tourist Count:</b> {{ $invoice->no_of_passengers }} </label></div>
                         <div><label><b>Date:</b> {{ date('d/m/Y', strtotime($invoice->from_date)) }} - {{ date('d/m/Y', strtotime($invoice->to_date)) }} </label></div>
                     </td>
@@ -383,61 +381,61 @@
                 <tbody>
                     <tr>
                         <td class="text-left text-sm">Visa</td>
-                        <td class="text-left">{{isset($invoice->visa) ? $invoice->visa : '-'}}</td>
+                        <td class="text-right">{{isset($invoice->visa) ? $invoice->visa : '-'}}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm">Insurance</td>
-                        <td class="text-left">{{isset($invoice->insurance) ? $invoice->insurance : '-'}}</td>
+                        <td class="text-right">{{isset($invoice->insurance) ? $invoice->insurance : '-'}}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm">Visa Appointment</td>
-                        <td class="text-left">{{isset($invoice->visa_appointment) ? $invoice->visa_appointment : '-'}}</td>
+                        <td class="text-right">{{isset($invoice->visa_appointment) ? $invoice->visa_appointment : '-'}}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm">Swiss Pass</td>
-                        <td class="text-left">{{isset($invoice->swiss_pass) ? $invoice->swiss_pass : '-'}}</td>
+                        <td class="text-right">{{isset($invoice->swiss_pass) ? $invoice->swiss_pass : '-'}}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm">Land Package</td>
-                        <td class="text-left">{{isset($invoice->land_package) ? $invoice->land_package : '-'}}</td>
+                        <td class="text-right">{{isset($invoice->land_package) ? $invoice->land_package : '-'}}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm">Passport Services</td>
-                        <td class="text-left">{{isset($invoice->passport_services) ? $invoice->passport_services : '-'}}</td>
+                        <td class="text-right">{{isset($invoice->passport_services) ? $invoice->passport_services : '-'}}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm font-weight-bold">Total</td>
-                        <td class="text-left">Rs.{{$invoice->total}}</td>
+                        <td class="text-right">Rs.{{$invoice->total}}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm font-weight-bold">Service Charges</td>
-                        <td class="text-left">Rs.{{$invoice->service_charges}}</td>
+                        <td class="text-right">Rs.{{$invoice->service_charges}}</td>
                     </tr>
                     <tr>
                         <td class="text-left align-middle text-sm font-weight-bold d-flex justify-content-between border-0">
                             GST ({{$invoice->gst_per}}%)
                         </td>
-                        <td class="text-left align-middle">Rs.{{$invoice->gst}}</td>
+                        <td class="text-right align-middle">Rs.{{$invoice->gst}}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm font-weight-bold">Grand Total</td>
-                        <td class="text-left font-weight-bold">Rs.{{$invoice->grand_total}}</td>
+                        <td class="text-right font-weight-bold">Rs.{{number_format($invoice->grand_total, 1)}}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm font-weight-bold">In Word</td>
-                        <td class="text-left font-weight-bold" id="">{{AmountInWords($invoice->grand_total)}}</td>
+                        <td class="text-right font-weight-bold" id="">{{ ($invoice->grand_total != null || $invoice->grand_total != 0.0) ? AmountInWords($invoice->grand_total) : '-'}}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm font-weight-bold">Payment Received</td>
-                        <td class="text-left">Rs.{{$invoice->payment_received}}</td>
+                        <td class="text-right">Rs.{{$invoice->payment_received}}</td>
                     </tr>
                     <tr class="bg-light-orange">
                         <td class="text-left text-sm font-weight-bold">Balance</td>
-                        <td class="text-left font-weight-bold">Rs.{{$invoice->balance}}</td>
+                        <td class="text-right font-weight-bold">Rs.{{number_format($invoice->balance, 1)}}</td>
                     </tr>
                     <tr class="bg-light-orange">
                         <td class="text-left text-sm font-weight-bold">In Word</td>
-                        <td class="text-left font-weight-bold" id="">{{AmountInWords($invoice->balance)}}</td>
+                        <td class="text-right font-weight-bold" id="">{{ ($invoice->balance != null || $invoice->balance != 0.0) ? AmountInWords($invoice->balance) : '-'}}</td>
                     </tr>
                 </tbody>
             </table>

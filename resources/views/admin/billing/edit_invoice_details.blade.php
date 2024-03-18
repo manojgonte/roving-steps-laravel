@@ -9,6 +9,10 @@
         .table th {
             padding: .3rem !important;
         }
+        .bg-gradient-dark {
+            background: #E1E4FF !important;
+            color: #000 !important;
+        }
     </style>
     {{-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
 @endsection('styles')
@@ -96,10 +100,10 @@
                             <label><b>Pan No.:</b> {{ $invoice->pan_no }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>GST No.:</b> {{ $invoice->gst_no }} </label>
+                            <label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>GST Address.:</b> {{ $invoice->gst_address }} </label>
+                            <label><b>GST Address.:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label>
                         </div>
                         <div class="col-md-10">
                             <label><b>Tourist Count:</b> {{ $invoice->no_of_passengers }} </label>
@@ -128,7 +132,7 @@
                                         <th class="text-center"> Tourist Count </th>
                                         <th class="text-center"> Cost per Person </th>
                                         <th class="text-center"> Total Cost </th>
-                                        <th class="text-center"> # </th>
+                                        <th class="text-center"> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -337,7 +341,7 @@
                                         <th class="text-center"> Tourist Count </th>
                                         <th class="text-center"> Cost per Person </th>
                                         <th class="text-center"> Total Cost </th>
-                                        <th class="text-center"> # </th>
+                                        <th class="text-center"> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -391,35 +395,35 @@
                     <tbody>
                         <tr>
                             <td class="text-left text-sm">Visa</td>
-                            <td><input type="number" name="visa" class="form-control form-control-sm w-25" min="1" value="{{$invoice->visa}}" /></td>
+                            <td class="text-right"><input type="number" name="visa" class="form-control form-control-sm w-25" min="1" value="{{$invoice->visa}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Insurance</td>
-                            <td><input type="number" name="insurance" class="form-control form-control-sm w-25" min="1" value="{{$invoice->insurance}}" /></td>
+                            <td class="text-right"><input type="number" name="insurance" class="form-control form-control-sm w-25" min="1" value="{{$invoice->insurance}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Visa Appointment</td>
-                            <td><input type="text" name="visa_appointment" class="form-control form-control-sm w-25" value="{{$invoice->visa_appointment}}" /></td>
+                            <td class="text-right"><input type="text" name="visa_appointment" class="form-control form-control-sm w-25" value="{{$invoice->visa_appointment}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Swiss Pass</td>
-                            <td><input type="text" name="swiss_pass" class="form-control form-control-sm w-25" value="{{$invoice->swiss_pass}}" /></td>
+                            <td class="text-right"><input type="text" name="swiss_pass" class="form-control form-control-sm w-25" value="{{$invoice->swiss_pass}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Land Package</td>
-                            <td><input type="text" name="land_package" class="form-control form-control-sm w-25" value="{{$invoice->land_package}}" /></td>
+                            <td class="text-right"><input type="text" name="land_package" class="form-control form-control-sm w-25" value="{{$invoice->land_package}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
-                            <td><input type="text" name="passport_services" class="form-control form-control-sm w-25" value="{{$invoice->passport_services}}" /></td>
+                            <td class="text-right"><input type="text" name="passport_services" class="form-control form-control-sm w-25" value="{{$invoice->passport_services}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Total</td>
-                            <td><input type="number" name="total" class="form-control form-control-sm w-25" id="total" min="1" readonly /></td>
+                            <td class="text-right"><input type="number" name="total" class="form-control form-control-sm w-25" id="total" min="1" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Service Charges</td>
-                            <td><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" value="{{$invoice->service_charges}}" /></td>
+                            <td class="text-right"><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" value="{{$invoice->service_charges}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold d-flex justify-content-between border-0">
@@ -428,27 +432,27 @@
                                     <select class="form-control form-control-sm border-0" name="gst_per" required><option value="">Select GST %</option><option value="18" @if($invoice->gst_per == '18') selected @endif>18%</option><option value="5" @if($invoice->gst_per == '5') selected @endif>5%</option></select>
                                 </div>
                             </td>
-                            <td><input type="number" name="gst" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Grand Total</td>
-                            <td><input type="number" name="grand_total" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
-                            <td class="text-left" id="grand_total_word"></td>
+                            <td class="text-right" id="grand_total_word"></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
-                            <td><input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" value="{{$invoice->payment_received}}" /></td>
+                            <td class="text-right"><input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" value="{{$invoice->payment_received}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Balance</td>
-                            <td><input type="number" name="balance" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-right"><input type="number" name="balance" class="form-control form-control-sm w-25" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
-                            <td class="text-left" id="balance_word"></td>
+                            <td class="text-right" id="balance_word"></td>
                         </tr>
                     </tbody>
                 </table>

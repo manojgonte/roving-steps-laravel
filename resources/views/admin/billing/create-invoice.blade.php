@@ -55,11 +55,11 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label class="required">GST Number</label>
-                            <input type="text" name="gst_no" class="form-control" placeholder="GST Number" required>
+                            <input type="text" name="gst_no" class="form-control" placeholder="GST Number">
                         </div>
                         <div class="form-group col-md-4">
                             <label class="required">GST Address</label>
-                            <input type="text" name="gst_address" class="form-control" placeholder="GST Address" required>
+                            <input type="text" name="gst_address" class="form-control" placeholder="GST Address">
                         </div>
                     </div>
                     <div class="row">
@@ -323,6 +323,10 @@
             var end_date_value = new Date(value);
             return end_date_value > from_date_value;
         }, "To Date must be greater than From Date.");
+        $.validator.addMethod("panCard", function(value, element) {
+            var panCardRegex = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+            return this.optional(element) || panCardRegex.test(value);
+        }, "Please enter a valid PAN card number");
         $('#createInvoice').validate({
             ignore: [],
             debug: false,
@@ -336,18 +340,19 @@
                     maxlength:10,
                     minlength:10,
                 },
-                pan_card: {
+                pan_no: {
                     required: true,
                     maxlength:10,
                     minlength:10,
+                    panCard: true,
                 },
                 gst_no: {
-                    required: true,
+                    required: false,
                     maxlength:15,
                     minlength:15,
                 },
                 gst_address: {
-                    required: true
+                    required: false
                 },
                 no_of_passengers: {
                     required: true,

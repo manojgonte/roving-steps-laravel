@@ -12,6 +12,10 @@
         .bg-light-orange {
             background-color: #FFEBB8;
         }
+        .bg-gradient-dark {
+            background: #E1E4FF !important;
+            color: #000 !important;
+        }
     </style>
     {{-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
 @endsection('styles')
@@ -93,10 +97,10 @@
                             <label><b>Pan No.:</b> {{ $invoice->pan_no }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>GST No.:</b> {{ $invoice->gst_no }} </label>
+                            <label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>GST Address.:</b> {{ $invoice->gst_address }} </label>
+                            <label><b>GST Address.:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label>
                         </div>
                         <div class="col-md-10">
                             <label><b>Tourist Count:</b> {{ $invoice->no_of_passengers }} </label>
@@ -232,35 +236,35 @@
                     <tbody>
                         <tr>
                             <td class="text-left text-sm">Visa</td>
-                            <td class="text-left">{{isset($invoice->visa) ? $invoice->visa : '-'}}</td>
+                            <td class="text-right">{{isset($invoice->visa) ? $invoice->visa : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Insurance</td>
-                            <td class="text-left">{{isset($invoice->insurance) ? $invoice->insurance : '-'}}</td>
+                            <td class="text-right">{{isset($invoice->insurance) ? $invoice->insurance : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Visa Appointment</td>
-                            <td class="text-left">{{isset($invoice->visa_appointment) ? $invoice->visa_appointment : '-'}}</td>
+                            <td class="text-right">{{isset($invoice->visa_appointment) ? $invoice->visa_appointment : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Swiss Pass</td>
-                            <td class="text-left">{{isset($invoice->swiss_pass) ? $invoice->swiss_pass : '-'}}</td>
+                            <td class="text-right">{{isset($invoice->swiss_pass) ? $invoice->swiss_pass : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Land Package</td>
-                            <td class="text-left">{{isset($invoice->land_package) ? $invoice->land_package : '-'}}</td>
+                            <td class="text-right">{{isset($invoice->land_package) ? $invoice->land_package : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
-                            <td class="text-left">{{isset($invoice->passport_services) ? $invoice->passport_services : '-'}}</td>
+                            <td class="text-right">{{isset($invoice->passport_services) ? $invoice->passport_services : '-'}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Total</td>
-                            <td class="text-left">₹{{$invoice->total}}</td>
+                            <td class="text-right">₹{{$invoice->total}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Service Charges</td>
-                            <td class="text-left">₹{{$invoice->service_charges}}</td>
+                            <td class="text-right">₹{{$invoice->service_charges}}</td>
                         </tr>
                         <tr>
                             <td class="text-left align-middle text-sm font-weight-bold d-flex justify-content-between border-0">
@@ -269,27 +273,27 @@
                                     <select class="form-control form-control-sm border-0" disabled><option>{{$invoice->gst_per}}%</option></select>
                                 </div>
                             </td>
-                            <td class="text-left align-middle">₹{{$invoice->gst}}</td>
+                            <td class="text-right align-middle">₹{{$invoice->gst}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Grand Total</td>
-                            <td class="text-left font-weight-bold">₹{{$invoice->grand_total}}</td>
+                            <td class="text-right font-weight-bold">₹{{number_format($invoice->grand_total, 1)}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
-                            <td class="text-left font-weight-bold" id="">{{AmountInWords($invoice->grand_total)}}</td>
+                            <td class="text-right font-weight-bold" id="">{{AmountInWords($invoice->grand_total)}}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
-                            <td class="text-left">₹{{$invoice->payment_received}}</td>
+                            <td class="text-right">₹{{$invoice->payment_received}}</td>
                         </tr>
                         <tr class="bg-light-orange">
                             <td class="text-left text-sm font-weight-bold">Balance</td>
-                            <td class="text-left font-weight-bold">₹{{$invoice->balance}}</td>
+                            <td class="text-right font-weight-bold">₹{{number_format($invoice->balance, 1)}}</td>
                         </tr>
                         <tr class="bg-light-orange">
                             <td class="text-left text-sm font-weight-bold">In Word</td>
-                            <td class="text-left font-weight-bold" id="">{{AmountInWords($invoice->balance)}}</td>
+                            <td class="text-right font-weight-bold" id="">{{AmountInWords($invoice->balance)}}</td>
                         </tr>
                     </tbody>
                 </table>
