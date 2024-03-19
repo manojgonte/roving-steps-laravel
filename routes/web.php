@@ -19,7 +19,7 @@ Route::get('/clear', function () {
 });
 
 
-// client routes
+// guest user routes
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::match(['get','post'], '/contact-us', [IndexController::class, 'contact'])->name('contact');
 Route::get('/about-us', [IndexController::class, 'about'])->name('about');
@@ -40,6 +40,7 @@ Route::match(['get','post'], '/check-user-exist', [UserController::class, 'check
 Route::match(['get','post'], '/forgot-password', [UserController::class, 'forgotPassword']);
 Route::match(['get','post'], '/password-reset', [UserController::class, 'resetPassword']);
 
+// user routes
 Route::middleware([Userlogin::class])->group(function () {
     Route::get('user/dashboard', [UserController::class, 'dashboard']);
     Route::get('user/logout', [UserController::class, 'userLogout']);
@@ -48,8 +49,6 @@ Route::middleware([Userlogin::class])->group(function () {
 // Admin Routes
 Auth::routes();
 Route::get('/admin', function () { return view('admin/admin_login'); });
-// Route::get('/login', [AdminController::class, 'getLogin'])->name('adminLogin');
-// Route::post('/login', [AdminController::class, 'postLogin'])->name('adminLoginPost');
 Auth::routes();
 Route::group(['middleware'=>'admin_auth'],function(){
     //Dashboard

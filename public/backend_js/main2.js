@@ -1,4 +1,27 @@
 // Main Js File
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all number input fields
+    var numberFields = document.querySelectorAll('input[type="number"]');
+
+    // Attach event listeners to each number input field
+    numberFields.forEach(function(inputField) {
+        inputField.addEventListener('input', function(event) {
+            var inputValue = event.target.value;
+            if (!isValidNumber(inputValue)) {
+                event.target.value = ''; // Clear the input field
+            }
+        });
+    });
+
+    function isValidNumber(inputValue) {
+        // Regular expression to match valid numbers (no +, -, or e)
+        var regex = /^[-+]?(?:\d+(?:\.\d*)?|\.\d+)$/;
+
+        return regex.test(inputValue);
+    }
+});
+
 $(document).ready(function () {
 
 

@@ -403,19 +403,19 @@
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Visa Appointment</td>
-                            <td class="text-right"><input type="text" name="visa_appointment" class="form-control form-control-sm w-25" value="{{$invoice->visa_appointment}}" /></td>
+                            <td class="text-right"><input type="number" name="visa_appointment" class="form-control form-control-sm w-25" min="1" value="{{$invoice->visa_appointment}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Swiss Pass</td>
-                            <td class="text-right"><input type="text" name="swiss_pass" class="form-control form-control-sm w-25" value="{{$invoice->swiss_pass}}" /></td>
+                            <td class="text-right"><input type="number" name="swiss_pass" class="form-control form-control-sm w-25" min="1" value="{{$invoice->swiss_pass}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Land Package</td>
-                            <td class="text-right"><input type="text" name="land_package" class="form-control form-control-sm w-25" value="{{$invoice->land_package}}" /></td>
+                            <td class="text-right"><input type="number" name="land_package" class="form-control form-control-sm w-25" min="1" value="{{$invoice->land_package}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
-                            <td class="text-right"><input type="text" name="passport_services" class="form-control form-control-sm w-25" value="{{$invoice->passport_services}}" /></td>
+                            <td class="text-right"><input type="number" name="passport_services" class="form-control form-control-sm w-25" min="1" value="{{$invoice->passport_services}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Total</td>
@@ -440,7 +440,7 @@
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
-                            <td class="text-right" id="grand_total_word"></td>
+                            <td class="text-left" id="grand_total_word"></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
@@ -452,7 +452,7 @@
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
-                            <td class="text-right" id="balance_word"></td>
+                            <td class="text-left" id="balance_word"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -572,6 +572,15 @@
                 $(this).find('input[name="total_cost[]"]').val(totalCost);
                 subtotal += isNaN(totalCost) ? 0 : totalCost;
             });
+
+            // Add the values of additional fields to the subtotal
+            subtotal += parseFloat($('[name="visa"]').val() || 0);
+            subtotal += parseFloat($('[name="insurance"]').val() || 0);
+            subtotal += parseFloat($('[name="visa_appointment"]').val() || 0);
+            subtotal += parseFloat($('[name="swiss_pass"]').val() || 0);
+            subtotal += parseFloat($('[name="land_package"]').val() || 0);
+            subtotal += parseFloat($('[name="passport_services"]').val() || 0);
+
             $('#total').val(subtotal);
             calculateGrandTotal();
         }
@@ -634,6 +643,11 @@
             calculateGrandTotal();
         });
 
+        // Calculate grand total when additional fields change
+        $('input[name="visa"], input[name="insurance"], input[name="visa_appointment"], input[name="swiss_pass"], input[name="land_package"], input[name="passport_services"]').on('input', function() {
+            calculateTotalCost();
+        });
+
         // Update balance when payment received changes
         $('[name="payment_received"]').on('input', function() {
             updateBalance();
@@ -660,30 +674,6 @@
 
 {{-- onclick add more set of fields and balance, costing & amount paid calculations --}}
 <script>
-    $(document).ready(function(){
-        var i=1;
-        $("#add_row").click(function(){
-            b=i-1;
-            $('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
-            $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-            i++; 
-        });
-        $("#delete_row").click(function(){
-            if(i>1){
-                $("#addr"+(i-1)).html('');
-                i--;
-            }
-            calc();
-        });
-        
-        $('#tab_logic tbody').on('keyup change',function(){
-            calc();
-        });
-        $('#tax').on('keyup change',function(){
-            calc_total();
-        });
-    });
-
     function calc() {
         $('#tab_logic tbody tr').each(function(i, element) {
             var html = $(this).html();
@@ -720,45 +710,6 @@
         $('#totalCosting').val(costing.toFixed(2));
         $('#totalAmountPaid').val(amount_paid.toFixed(2));
         $('#balance').val((costing - amount_paid).toFixed(2));
-    }
-</script>
-
-<script>
-    function editInvoice(id){
-        $.ajax({
-            type:"get",
-            url:"{{url('admin/get-invoice-details')}}",
-            data:{id:id},
-            success:function(data){
-                console.log(data);
-                $('#bill_to').val(data['bill_to']);
-                $('#address').val(data['address']);
-                $('#email').val(data['email']);
-                $('#contact_no').val(data['contact_no']);
-                $('#no_of_passengers').val(data['no_of_passengers']);
-                $('#tour_date').val(data['tour_date']);
-                $('#invoice_date').val(data['invoice_date']);
-                $('#tour').append('<option selected value="'+data['tour_id']+'">'+data['tourName']+'</option>');
-            }
-        });
-    }
-</script>
-
-<script>
-    function editPayment(id){
-        $.ajax({
-            type:"get",
-            url:"{{url('admin/get-payment-details')}}",
-            data:{id:id},
-            success:function(data){
-                $('.payId').text(data['id']);
-                $('.payId').val(data['id']);
-                $('.details').val(data['details']);
-                $('.costing').val(data['costing']);
-                $('.amount_paid').val(data['amount_paid']);
-                $('#mode_of_payment').append('<option selected value="'+data['mode_of_payment']+'">'+data['mode_of_payment']+'</option>');
-            }
-        });
     }
 </script>
 
