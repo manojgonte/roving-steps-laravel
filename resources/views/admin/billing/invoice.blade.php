@@ -30,13 +30,10 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="row d-flex flex-row-reverse">
-                            {{-- <div>
-                                <a class="btn btn-light btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-invoice/' . $invoice->id) }}"><i class="fa fa-trash"></i> Delete</a>
-                            </div> --}}
                             <div class="mr-2">
-                                <a href="{{ url('/admin/edit-invoice/'.Request()->id) }}" class="btn btn-light btn-sm" type="button" class="btn btn-default"><i class="fa fa-pencil-alt"></i> Edit</a>
-                                <a href="{{ url('/admin/invoice-actions/'.Request()->id.'?type=download') }}" class="btn btn-light btn-sm" type="button" class="btn btn-default"><i class="fa fa-download"></i> Download</a>
-                                <a href="{{ url('/admin/invoice-actions/'.Request()->id.'?type=share') }}" class="btn btn-light btn-sm" type="button" class="btn btn-default"><i class="fa fa-share-alt"></i> Share</a>
+                                <a href="{{ url('/admin/edit-invoice/'.Request()->id) }}" class="btn btn-light btn-sm"><i class="fa fa-pencil-alt"></i> Edit</a>
+                                <a href="{{ url('/admin/invoice-actions/'.Request()->id.'?type=download') }}" class="btn btn-light btn-sm"><i class="fa fa-download"></i> Download</a>
+                                <a href="{{ url('/admin/invoice-actions/'.Request()->id.'?type=share') }}" class="btn btn-light btn-sm"><i class="fa fa-share-alt"></i> Share</a>
                             </div>
                         </div>
                     </div>
@@ -61,19 +58,19 @@
                 <div class="row">
                     <div class="col px-0">
                         <div class="col-md-10">
+                            <label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label>
+                        </div>
+                        <div class="col-md-10">
                             <label><b>Bill To:</b> {{ $invoice->bill_to }}</label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Address:</b> {{ $invoice->address }}</label>
+                            <label><b>Address:</b> {{ !empty($invoice->address) ? $invoice->address : '-' }}</label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Contact No.:</b> {{ $invoice->contact_no }} </label>
+                            <label><b>Contact No.:</b> {{ !empty($invoice->contact_no) ? $invoice->contact_no : '-' }}</label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Email:</b> {{ $invoice->email }}</label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label>
+                            <label><b>Email:</b> {{ !empty($invoice->email) ? $invoice->email : '-' }}</label>
                         </div>
                         <div class="col-md-10">
                             <label><b>Invoice For:</b> 
@@ -94,19 +91,19 @@
                             <label><b>Invoice Id:</b> {{ $invoice->id }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Pan No.:</b> {{ $invoice->pan_no }} </label>
+                            <label><b>Pan No.:</b> {{ !empty($invoice->pan_no) ? $invoice->pan_no : '-' }} </label>
                         </div>
                         <div class="col-md-10">
                             <label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>GST Address.:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label>
+                            <label><b>GST Address:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Tourist Count:</b> {{ $invoice->no_of_passengers }} </label>
+                            <label><b>Tourist Count:</b> {{ !empty($invoice->no_of_passengers) ? $invoice->no_of_passengers : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Date:</b> {{ date('d/m/Y', strtotime($invoice->from_date)) }} - {{ date('d/m/Y', strtotime($invoice->to_date)) }} </label>
+                            <label><b>Date:</b> {{ !empty($invoice->from_date) ? date('d/m/Y', strtotime($invoice->from_date)) : '-' }} - {{ !empty($invoice->to_date) ? date('d/m/Y', strtotime($invoice->to_date)) : '-' }} </label>
                         </div>
                     </div>
                 </div>
@@ -114,6 +111,11 @@
 
                 <div class="">
                     <div class="row clearfix mt-3">
+                        @if(in_array('Bus Booking', $invoice->invoice_for) || 
+                            in_array('Flight Booking', $invoice->invoice_for) || 
+                            in_array('Train Booking', $invoice->invoice_for) || 
+                            in_array('Cab Booking', $invoice->invoice_for) || 
+                            in_array('Cruise Booking', $invoice->invoice_for))
                         <div class="col-md-12">
                             <h6 class="font-weight-bold">Payments</h6>
                             <table class="table table-hover table-bordered" id="tab_logic1">
@@ -172,16 +174,16 @@
                                 </tbody>
                             </table>
                         </div>
+                        @endif
 
                         @if (count($invoice->invoiceItems->filter(function($item) {
-                                        return $item->service_name == 'Hotel Booking';
-                                    })) > 0)
+                            return $item->service_name == 'Hotel Booking';
+                        })) > 0)
                         <div class="col-md-12">
                             <table class="table table-hover table-bordered">
                                 <thead>
                                     <tr class="bg-gradient-dark">
                                         <th class="text-left"> Service </th>
-                                        <th class="text-center"> Date </th>
                                         <th class="text-center"> Name </th>
                                         <th class="text-center"> From </th>
                                         <th class="text-center"> To </th>
@@ -198,9 +200,6 @@
                                     <tr id='addr0'>
                                         <td class="align-middle text-left">
                                             {{$item->service_name}}
-                                        </td>
-                                        <td class="align-middle">
-                                            {{date('d/m/Y', strtotime($item->date))}}
                                         </td>
                                         <td class="align-middle">
                                             {{$item->name}}

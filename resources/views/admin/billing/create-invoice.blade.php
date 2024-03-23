@@ -36,41 +36,41 @@
                             <input type="text" name="bill_to" class="form-control" placeholder="Enter bill to" required>
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="required">Address</label>
-                            <input type="text" name="address" class="form-control" placeholder="Enter address" required>
+                            <label class="">Address</label>
+                            <input type="text" name="address" class="form-control" placeholder="Enter address" >
                         </div>
                         <div class="form-group col-md-3">
                             <label class=>Email</label>
                             <input type="email" name="email" class="form-control" placeholder="Enter email">
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="required">Contact Number</label>
-                            <input type="number" name="contact_no" class="form-control" placeholder="Enter contact number" required>
+                            <label class="">Contact Number</label>
+                            <input type="number" name="contact_no" class="form-control" placeholder="Enter contact number">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-3">
-                            <label class="required">Pan Number</label>
-                            <input type="text" name="pan_no" class="form-control" placeholder="Pan Number" required>
+                            <label class="">Pan Number</label>
+                            <input type="text" name="pan_no" class="form-control" placeholder="Pan Number" >
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="required">GST Number</label>
+                            <label class="">GST Number</label>
                             <input type="text" name="gst_no" class="form-control" placeholder="GST Number">
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="required">GST Address</label>
+                            <label class="">GST Address</label>
                             <input type="text" name="gst_address" class="form-control" placeholder="GST Address">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-1">
-                            <label class="required">Invoice For</label>
+                            <label class="">Invoice For</label>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="tour" name="isTour" value="1" onclick="toggleTourNameField()">
                                 <label class="form-check-label" for="tour">Tour</label>
                             </div>
                         </div>
-                        <div class="form-group col-md-3" id="tourList" style="display: none;">
+                        <div class="form-group col-md-2" id="tourList" style="display: none;">
                             <label class="required">Tour Name</label>
                             <select name="tour_name" class="form-control" id="tourNameSelect">
                                 <option value="">Select tour</option>
@@ -80,7 +80,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <label class="required">Invoice For</label>
+                            <label class="required">Services</label>
                             <select name="invoice_for[]" class="form-control sumoselect" multiple required>
                                 <option value="Hotel Booking">Hotel Booking</option>
                                 <option value="Bus Booking">Bus Booking</option>
@@ -91,16 +91,16 @@
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <label class="required">Tourist Count</label>
-                            <input type="number" name="no_of_passengers" class="form-control" min="1" placeholder="Total tourist count" required>
+                            <label class="">Tourist Count</label>
+                            <input type="number" name="no_of_passengers" class="form-control" min="1" placeholder="Total tourist count" >
                         </div>
                         <div class="form-group col-md-2">
-                            <label class="required">From Date</label>
-                            <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Enter from date" value="{{date('Y-m-d')}}" required>
+                            <label class="">From Date</label>
+                            <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Enter from date" value="" >
                         </div>
                         <div class="form-group col-md-2">
-                            <label class="required">To Date</label>
-                            <input type="date" name="to_date" class="form-control" placeholder="Enter to date" value="" required>
+                            <label class="">To Date</label>
+                            <input type="date" name="to_date" class="form-control" placeholder="Enter to date" value="" >
                         </div>
                     </div>
                     <div class="card-footer">
@@ -109,80 +109,6 @@
                     </div>
                 </div>
             </form>
-
-
-                {{-- billing --}}
-                <!--<div class="d-none">
-                    <div class="row clearfix mt-3">
-                        <div class="col-md-12">
-                            <h6>Payments</h6>
-                            <table class="table table-hover" id="tab_logic">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left"> # </th>
-                                        <th class="text-left"> Details </th>
-                                        <th class="text-center"> Costing </th>
-                                        <th class="text-center"> Amount Paid </th>
-                                        <th class="text-center"> Mode of payment </th>
-                                        <th class="text-center d-none"> Total </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr id='addr0'>
-                                        <td class="align-middle">1</td>
-                                        <td>
-                                            <input type="text" name='details[]' placeholder='Enter details' class="form-control" />
-                                        </td>
-                                        <td>
-                                            <input type="number" name='costing[]' placeholder='Enter costing' class="form-control costing" step="0" min="0" />
-                                        </td>
-                                        <td>
-                                            <input type="number" name='amount_paid[]' placeholder='Enter amount' class="form-control amount_paid" step="0.00" min="0" />
-                                        </td>
-                                        <td>
-                                            <select class="form-control" name="mode_of_payment[]" required>
-                                                <option value="">Select</option>
-                                                <option value="Cash">Cash</option>
-                                                <option value="Cheque">Cheque</option>
-                                                <option value="Bank Transfer">Bank Transfer</option>
-                                                <option value="UPI">UPI</option>
-                                            </select>
-                                        </td>
-                                        <td class="d-none">
-                                            <input type="number" name='' placeholder='0.00' class="form-control total" readonly />
-                                        </td>
-                                    </tr>
-                                    <tr id='addr1'></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row clearfix mb-3">
-                        <div class="col-md-12">
-                            <button type="button" id="add_row" class="btn btn-default pull-left">Add Item</button>
-                            <button type="button" id='delete_row' class="pull-right btn btn-default">Delete Item</button>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                            <label>Grand Total</label>
-                            <input type="number" name="grand_total" id="totalCosting" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                            <label>Amount Paid</label>
-                            <input type="number" name="amt_paid" id="totalAmountPaid" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                            <label>Balance Amount</label>
-                            <input type="number" name="balance" id="balance" class="form-control" readonly>
-                        </div>
-                    </div>
-                </div>-->
         </section>
     </div>
 
@@ -190,114 +116,6 @@
 
 @section('scripts')
 <script src="{{asset('backend_js/jquery.sumoselect.js')}}"></script>
-
-{{-- onclick add more set of fields and balance, costing & amount paid calculations --}}
-<script>
-    $(document).ready(function(){
-        var i=1;
-        $("#add_row").click(function(){b=i-1;
-            $('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
-            $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-            i++; 
-        });
-        $("#delete_row").click(function(){
-            if(i>1){
-            $("#addr"+(i-1)).html('');
-            i--;
-            }
-            calc();
-        });
-        
-        $('#tab_logic tbody').on('keyup change',function(){
-            calc();
-        });
-        $('#tax').on('keyup change',function(){
-            calc_total();
-        });
-    });
-
-    function calc() {
-        $('#tab_logic tbody tr').each(function(i, element) {
-            var html = $(this).html();
-            if(html!='') {
-                var costing = $(this).find('.costing').val();
-                var amount_paid = $(this).find('.amount_paid').val();
-                $(this).find('.total').val(costing - amount_paid);
-                
-                calc_total();
-            }
-        });
-    }
-
-    function calc_total() {
-        total=0;
-        $('.total').each(function() {
-            total += parseInt($(this).val());
-        });
-
-        costing=0;
-        $('.costing').each(function() {
-            costing += parseInt($(this).val());
-        });
-        $('#totalCosting').val(costing.toFixed(2));
-
-        amount_paid=0;
-        $('.amount_paid').each(function() {
-            amount_paid += parseInt($(this).val());
-        });
-        $('#totalAmountPaid').val(amount_paid.toFixed(2));
-
-        $('#balance').val((costing-amount_paid).toFixed(2));
-    }
-</script>
-
-{{-- onclick add more set of fields --}}
-<script type="text/javascript">
-    var i = 0;
-
-    // alert("real button click");
-    function clickAddBtn() {
-        // ++i;
-        $("#dynamicAddRemove").append(`
-            <div class="new-row">
-                <hr />
-                <div class="row">
-                    <div class="form-group col-md-2">
-                        <label>Costing</label>
-                        <input type="number" name="costing[]" class="form-control costing" placeholder="Enter costing"required>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label>Amount paid</label>
-                        <input type="number" name="amount_paid[]" class="form-control amount_paid" placeholder="Enter amount paid" required>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label>Mode of payment</label>
-                        <select class="form-control select2bs4" name="mode_of_payment[]" required>
-                            <option value="">Select</option>
-                            <option value="cash">CASH</option>
-                            <option value="cheque">CHEQUE</option>
-                            <option value="bank_transfer">BANK TRANSFER</option>
-                            <option value="upi">UPI</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Details</label>
-                        <input type="text" name="details[]" class="form-control" placeholder="Enter details" required>
-                    </div>
-                    <div class="form-group col-md-2 d-flex justify-content-center align-items-end remove">
-                        <button id="add-btn" type="button" class="btn btn-outline-danger"><i
-                                class="fa fa-trash"></i> Remove</button>
-                    </div>
-                </div>
-            </div>
-        `);
-        calculateSum();
-    };
-
-    $(document).on('click', '.remove', function() {
-        $(this).closest('.new-row').remove();
-    });
-</script>
 
 <script>
     function toggleTourNameField() {
@@ -319,9 +137,15 @@
 <script>
     $(document).ready(function() {
         $.validator.addMethod("greaterThan", function (value, element, params) {
-            var from_date_value = new Date($(params).val());
-            var end_date_value = new Date(value);
-            return end_date_value > from_date_value;
+            var from_date_value = $(params).val();
+            var end_date_value = value;
+            if (!from_date_value && !end_date_value) {
+                return true;
+            }
+            if (from_date_value && end_date_value) {
+                return new Date(end_date_value) > new Date(from_date_value);
+            }
+            return false;
         }, "To Date must be greater than From Date.");
         $.validator.addMethod("panCard", function(value, element) {
             var panCardRegex = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
@@ -335,13 +159,13 @@
                     email: true,
                 },
                 contact_no: {
-                    required: true,
+                    required: false,
                     number:true,
                     maxlength:10,
                     minlength:10,
                 },
                 pan_no: {
-                    required: true,
+                    required: false,
                     maxlength:10,
                     minlength:10,
                     panCard: true,
@@ -355,38 +179,20 @@
                     required: false
                 },
                 no_of_passengers: {
-                    required: true,
+                    required: false,
                     number:true,
                     min:1,
                 },
                 from_date: {
-                    required: true,
+                    required: false,
                 },
                 to_date: {
-                    required: true,
+                    required: false,
                     greaterThan: "#from_date"
                 },
                 'invoice_for[]': {
                     required: true,
-                },
-                // 'costing[]': {
-                //     required: true,
-                //     number:true,
-                // },
-                // 'mode_of_payment[]': {
-                //     required: true,
-                // },
-                // 'amount_paid[]': {
-                //     required: true,
-                //     number:true,
-                // },
-                // 'details[]': {
-                //     required: true,
-                // },
-                // image: {
-                //     required: true,
-                //     accept: 'png|jpg|jpeg|webp',
-                // },                
+                },               
             },
             messages: {},
             submitHandler: function(form) {

@@ -64,19 +64,19 @@
                 <div class="row card-body px-0 pb-0">
                     <div class="col px-0">
                         <div class="col-md-10">
+                            <label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label>
+                        </div>
+                        <div class="col-md-10">
                             <label><b>Bill To:</b> {{ $invoice->bill_to }}</label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Address:</b> {{ $invoice->address }}</label>
+                            <label><b>Address:</b> {{ !empty($invoice->address) ? $invoice->address : '-' }}</label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Contact No.:</b> {{ $invoice->contact_no }} </label>
+                            <label><b>Contact No.:</b> {{ !empty($invoice->contact_no) ? $invoice->contact_no : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Email:</b> {{ $invoice->email }}</label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label>
+                            <label><b>Email:</b> {{ !empty($invoice->email) ? $invoice->email : '-' }}</label>
                         </div>
                         <div class="col-md-10">
                             <label><b>Invoice For:</b> 
@@ -97,19 +97,19 @@
                             <label><b>Invoice Id:</b> {{ $invoice->id }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Pan No.:</b> {{ $invoice->pan_no }} </label>
+                            <label><b>Pan No.:</b> {{ !empty($invoice->pan_no) ? $invoice->pan_no : '-' }} </label>
                         </div>
                         <div class="col-md-10">
                             <label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>GST Address.:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label>
+                            <label><b>GST Address:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Tourist Count:</b> {{ $invoice->no_of_passengers }} </label>
+                            <label><b>Tourist Count:</b> {{ !empty($invoice->no_of_passengers) ? $invoice->no_of_passengers : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Date:</b> {{ date('d/m/Y', strtotime($invoice->from_date)) }} - {{ date('d/m/Y', strtotime($invoice->to_date)) }} </label>
+                            <label><b>Date:</b> {{ !empty($invoice->from_date) ? date('d/m/Y', strtotime($invoice->from_date)) : '-' }} - {{ !empty($invoice->to_date) ? date('d/m/Y', strtotime($invoice->to_date)) : '-' }} </label>
                         </div>
                     </div>
                 </div>
@@ -175,9 +175,8 @@
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" value="" />
                                         </td>
-                                        <td class="align-middle d-flex">
+                                        <td class="align-middle">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -224,9 +223,8 @@
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
-                                        <td class="align-middle d-flex">
+                                        <td class="align-middle">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -266,9 +264,8 @@
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
-                                        <td class="align-middle d-flex">
+                                        <td class="align-middle">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -316,9 +313,8 @@
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' class="form-control form-control-sm" readonly />
                                         </td>
-                                        <td class="align-middle d-flex">
+                                        <td class="align-middle">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -354,7 +350,8 @@
                                             <input type="hidden" name='service_name[]' value="Hotel Booking" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='date[]' class="form-control form-control-sm" required value="{{$item->date}}" />
+                                            -
+                                            <input type="hidden" name="date[]" value="">
                                         </td>
                                         <td class="align-middle">
                                             <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required value="{{$item->name}}" />
@@ -378,9 +375,15 @@
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" required />
                                         </td>
-                                        <td class="align-middle d-flex">
-                                            <button type="button" class="btn btn-default btn-sm add-row" data-service-name="Hotel Booking"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
+                                        <td class="align-middle">
+                                            <div class="d-flex">
+                                                @if($loop->first)
+                                                <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                @endif
+                                                @if(!$loop->first)
+                                                <button type="button" class="btn btn-default btn-sm remove-row"><i class="fa fa-minus-circle"></i></button>
+                                                @endif
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -657,6 +660,8 @@
         $("table").on("click", ".add-row", function() {
             var newRow = $(this).closest("tr").clone(true);
             newRow.find("input:not([name='service_name[]'])").val(""); // Clear input values in the new row
+            newRow.find(".add-row").remove();
+            newRow.find("td:last").append('<button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>');
             $(this).closest("tr").after(newRow);
         });
 

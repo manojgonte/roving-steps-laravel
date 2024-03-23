@@ -24,6 +24,18 @@
         </div>
 
         <section class="content">
+            @if(Session::has('flash_message_error'))
+            <div class="alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! session('flash_message_error') !!}</strong>
+            </div>
+            @endif
+            @if(Session::has('flash_message_success'))
+            <div class="alert alert-success alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! session('flash_message_success') !!}</strong>
+            </div>
+            @endif
             <form method="POST" action="" enctype="multipart/form-data" id="createInvoice" class="card">@csrf
                 <div class="card-header p-2">
                     <ul class="nav nav-pills">
@@ -42,42 +54,42 @@
                             <input type="text" name="bill_to" class="form-control" placeholder="Enter bill to" required value="{{$invoice->bill_to}}">
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="required">Address</label>
-                            <input type="text" name="address" class="form-control" placeholder="Enter address" required value="{{$invoice->address}}">
+                            <label class="">Address</label>
+                            <input type="text" name="address" class="form-control" placeholder="Enter address"  value="{{$invoice->address}}">
                         </div>
                         <div class="form-group col-md-3">
                             <label class=>Email</label>
                             <input type="email" name="email" class="form-control" placeholder="Enter email" value="{{$invoice->email}}">
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="required">Contact Number</label>
-                            <input type="number" name="contact_no" class="form-control" placeholder="Enter contact number" required value="{{$invoice->contact_no}}">
+                            <label class="">Contact Number</label>
+                            <input type="number" name="contact_no" class="form-control" placeholder="Enter contact number"  value="{{$invoice->contact_no}}">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-3">
-                            <label class="required">Pan Number</label>
-                            <input type="text" name="pan_no" class="form-control" placeholder="Pan Number" required value="{{$invoice->pan_no}}">
+                            <label class="">Pan Number</label>
+                            <input type="text" name="pan_no" class="form-control" placeholder="Pan Number"  value="{{$invoice->pan_no}}">
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="required">GST Number</label>
+                            <label class="">GST Number</label>
                             <input type="text" name="gst_no" class="form-control" placeholder="GST Number" value="{{$invoice->gst_no}}">
                         </div>
                         <div class="form-group col-md-4">
-                            <label class="required">GST Address</label>
+                            <label class="">GST Address</label>
                             <input type="text" name="gst_address" class="form-control" placeholder="GST Address" value="{{$invoice->gst_address}}">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-1">
-                            <label class="required">Invoice For</label>
+                            <label class="">Invoice For</label>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="tour" name="isTour" value="1" onclick="toggleTourNameField()" @if(!empty($invoice->tour_name)) checked @endif>
                                 <label class="form-check-label" for="tour">Tour</label>
                             </div>
                         </div>
                         
-                        <div class="form-group col-md-3" id="tourList" @if(!empty($invoice->tour_name)) style="display: block;" @else style="display: none;" @endif>
+                        <div class="form-group col-md-2" id="tourList" @if(!empty($invoice->tour_name)) style="display: block;" @else style="display: none;" @endif>
                             <label class="required">Tour Name</label>
                             <select name="tour_name" class="form-control" id="tourNameSelect">
                                 <option value="">Select tour</option>
@@ -91,24 +103,24 @@
                             $bookings = ["Hotel Booking","Bus Booking","Flight Booking","Train Booking","Cab Booking","Cruise Booking"];
                         @endphp
                         <div class="form-group col-md-2">
-                            <label class="required">Invoice For</label>
-                            <select name="invoice_for[]" class="form-control sumoselect" multiple required>
+                            <label class="required">Services</label>
+                            <select name="invoice_for[]" class="form-control sumoselect" multiple @if(count($invoice->invoice_for) == 0) required @endif>
                                 @foreach($bookings as $booking)
-                                <option value="{{$booking}}" @if(in_array($booking, $invoice->invoice_for)) selected @endif>{{$booking}}</option>
+                                <option value="{{$booking}}" @if(in_array($booking, $invoice->invoice_for)) selected @endif disabled>{{$booking}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <label class="required">Tourist Count</label>
-                            <input type="number" name="no_of_passengers" class="form-control" min="1" placeholder="Total tourist count" required value="{{$invoice->no_of_passengers}}">
+                            <label class="">Tourist Count</label>
+                            <input type="number" name="no_of_passengers" class="form-control" min="1" placeholder="Total tourist count" value="{{$invoice->no_of_passengers}}">
                         </div>
                         <div class="form-group col-md-2">
-                            <label class="required">From Date</label>
-                            <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Enter from date" required value="{{$invoice->from_date}}">
+                            <label class="">From Date</label>
+                            <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Enter from date" value="{{$invoice->from_date}}">
                         </div>
                         <div class="form-group col-md-2">
-                            <label class="required">To Date</label>
-                            <input type="date" name="to_date" class="form-control" placeholder="Enter to date" value="{{$invoice->to_date}}" required>
+                            <label class="">To Date</label>
+                            <input type="date" name="to_date" class="form-control" placeholder="Enter to date" value="{{$invoice->to_date}}" >
                         </div>
                     </div>
                     <div class="card-footer">
@@ -144,9 +156,15 @@
 <script>
     $(document).ready(function() {
         $.validator.addMethod("greaterThan", function (value, element, params) {
-            var from_date_value = new Date($(params).val());
-            var end_date_value = new Date(value);
-            return end_date_value > from_date_value;
+            var from_date_value = $(params).val();
+            var end_date_value = value;
+            if (!from_date_value && !end_date_value) {
+                return true;
+            }
+            if (from_date_value && end_date_value) {
+                return new Date(end_date_value) > new Date(from_date_value);
+            }
+            return false;
         }, "To Date must be greater than From Date.");
         $.validator.addMethod("panCard", function(value, element) {
             var panCardRegex = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
@@ -160,13 +178,13 @@
                     email: true,
                 },
                 contact_no: {
-                    required: true,
+                    required: false,
                     number:true,
                     maxlength:10,
                     minlength:10,
                 },
                 pan_no: {
-                    required: true,
+                    required: false,
                     maxlength:10,
                     minlength:10,
                     panCard: true,
@@ -180,20 +198,17 @@
                     required: false
                 },
                 no_of_passengers: {
-                    required: true,
+                    required: false,
                     number:true,
                     min:1,
                 },
                 from_date: {
-                    required: true,
+                    required: false,
                 },
                 to_date: {
-                    required: true,
+                    required: false,
                     greaterThan: "#from_date"
-                },
-                'invoice_for[]': {
-                    required: true,
-                },             
+                },         
             },
             messages: {},
             submitHandler: function(form) {

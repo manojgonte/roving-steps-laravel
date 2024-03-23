@@ -22,23 +22,6 @@ use Illuminate\Support\Facades\View;
 
 class BillingController extends Controller
 {
-    public function viewRecords(Request $request) {
-        $invoices = invoices::with('invoicePayments')
-            ->select('invoices.*','tours.tour_name as tourName')
-            ->leftJoin('tours','tours.id','invoices.tour_name');
-
-        if($request->q){
-            $q = $request->q;
-            $invoices = $invoices->where(function($query) use($q){
-                $query->where('bill_to','like','%'.$q.'%')
-                ->orWhere('contact_no','like','%'.$q.'%');
-            });
-        }
-        $invoices = $invoices->orderBy('invoices.id','DESC')->paginate(10);
-            
-        $outstanding_amt = payments::select('costing','amount_paid')->get();
-        return view('admin.billing.invoice-dashboard',compact('invoices','outstanding_amt'));
-    }
 
     public function invoiceBilling(Request $request) {
         $invoices = invoices::with('invoiceItems')
@@ -61,22 +44,22 @@ class BillingController extends Controller
     public function createInvoice(Request $request) {
         if($request->isMethod('post')){
             $data = $request->all();
-            
+            // dd($data);
             $Invoices = new invoices;
             $Invoices->bill_to = $data['bill_to'];
-            $Invoices->address = $data['address'];
+            $Invoices->address = !empty($data['address']) ? $data['address'] : null;
             $Invoices->email = !empty($data['email']) ? $data['email'] : null;
-            $Invoices->contact_no = $data['contact_no'];
-            $Invoices->pan_no = $data['pan_no'];
-            $Invoices->gst_no = $data['gst_no'];
-            $Invoices->gst_address = $data['gst_address'];
-            $Invoices->no_of_passengers = $data['no_of_passengers'];
-            $Invoices->from_date = $data['from_date'];
-            $Invoices->to_date = $data['to_date'];
+            $Invoices->contact_no = !empty($data['contact_no']) ? $data['contact_no'] : null;
+            $Invoices->pan_no = !empty($data['pan_no']) ? $data['pan_no'] : null;
+            $Invoices->gst_no = !empty($data['gst_no']) ? $data['gst_no'] : null;
+            $Invoices->gst_address = !empty($data['gst_address']) ? $data['gst_address'] : null;
+            $Invoices->no_of_passengers = !empty($data['no_of_passengers']) ? $data['no_of_passengers'] : null;
+            $Invoices->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
+            $Invoices->to_date = !empty($data['to_date']) ? $data['to_date'] : null;
             $Invoices->invoice_for = $request->invoice_for;
             $Invoices->invoice_date = $data['invoice_date'];
 
-            $Invoices->tour_name = ($data['isTour'] == 1) ? $data['tour_name'] : null;
+            $Invoices->tour_name = !empty($data['isTour']) ? $data['tour_name'] : null;
             $Invoices->save();
 
             return redirect('admin/invoice-details/'.base64_encode($Invoices->id))->with('flash_message_success','Invoices created successfully');
@@ -167,7 +150,7 @@ class BillingController extends Controller
                 }
             }
 
-            return redirect('admin/invoice-dashboard/')->with('flash_message_success','Invoices updated successfully');
+            return redirect('admin/invoice-billing/')->with('flash_message_success','Invoices updated successfully');
         }
 
         $invoice = invoices::with('invoiceItems')
@@ -186,25 +169,24 @@ class BillingController extends Controller
         if($request->isMethod('post')) {
             $data = $request->all();
             // dd($data);
-            // detail update
             $Invoices = invoices::find($id);
             $Invoices->bill_to = $data['bill_to'];
-            $Invoices->address = $data['address'];
+            $Invoices->address = !empty($data['address']) ? $data['address'] : null;
             $Invoices->email = !empty($data['email']) ? $data['email'] : null;
-            $Invoices->contact_no = $data['contact_no'];
-            $Invoices->pan_no = $data['pan_no'];
-            $Invoices->gst_no = $data['gst_no'];
-            $Invoices->gst_address = $data['gst_address'];
-            $Invoices->no_of_passengers = $data['no_of_passengers'];
-            $Invoices->from_date = $data['from_date'];
-            $Invoices->to_date = $data['to_date'];
-            $Invoices->invoice_for = $request->invoice_for;
+            $Invoices->contact_no = !empty($data['contact_no']) ? $data['contact_no'] : null;
+            $Invoices->pan_no = !empty($data['pan_no']) ? $data['pan_no'] : null;
+            $Invoices->gst_no = !empty($data['gst_no']) ? $data['gst_no'] : null;
+            $Invoices->gst_address = !empty($data['gst_address']) ? $data['gst_address'] : null;
+            $Invoices->no_of_passengers = !empty($data['no_of_passengers']) ? $data['no_of_passengers'] : null;
+            $Invoices->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
+            $Invoices->to_date = !empty($data['to_date']) ? $data['to_date'] : null;
             $Invoices->invoice_date = $data['invoice_date'];
+            $Invoices->tour_name = !empty($data['isTour']) ? $data['tour_name'] : null;
 
-            $Invoices->tour_name = empty($data['isTour']) ? $data['tour_name'] : null;
+            // $Invoices->invoice_for = $request->invoice_for;
             $Invoices->save();
 
-            // return redirect('admin/invoice-details/'.$Invoices->id)->with('flash_message_success','Invoices created successfully');
+            // return redirect('admin/invoice-details/'.$Invoices->id)->with('flash_message_success','Invoice updated successfully');
             return redirect()->back()->with('flash_message_success','Invoice details updated successfully');
         }
         $invoice = invoices::select('invoices.*','tours.tour_name as tourName','invoices.tour_name as tour_id')
@@ -265,6 +247,9 @@ class BillingController extends Controller
             ->leftJoin('tours','tours.id','invoices.tour_name')
             ->where('invoices.id', $id)
             ->first();
+        if(count($invoice->invoiceItems) <= 0) {
+            return view('admin.billing.invoice-details', compact('invoice'));
+        }
         return view('admin.billing.edit_invoice_details', compact('invoice'));
     }
 

@@ -42,7 +42,7 @@
                                 <p>Outstanding </p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-map"></i>
+                                <i class="ion ion-cash"></i>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                                 <p>Received </p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-location"></i>
+                                <i class="ion ion-android-checkbox"></i>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                                 <p>Invoice in Progress</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-social-twitch"></i>
+                                <i class="ion ion-clipboard"></i>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                                 <p>Invoice Sent</p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-person-add"></i>
+                                <i class="ion ion-paper-airplane"></i>
                             </div>
                         </div>
                     </div>

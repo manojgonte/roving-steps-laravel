@@ -53,19 +53,20 @@
                     <strong>{!! session('flash_message_success') !!}</strong>
                 </div>
                 @endif
+                <a href="{{ url('/admin/edit-invoice/'.Request()->id) }}" class="btn btn-light btn-sm position-absolute" style="right: 5px;top: 5px;z-index: 1;"><i class="fa fa-pencil-alt"></i> Edit</a>
                 <div class="row">
                     <div class="col px-0">
                         <div class="col-md-10">
                             <label><b>Bill To:</b> {{ $invoice->bill_to }}</label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Address:</b> {{ $invoice->address }}</label>
+                            <label><b>Address:</b> {{ !empty($invoice->address) ? $invoice->address : '-' }}</label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Contact No.:</b> {{ $invoice->contact_no }} </label>
+                            <label><b>Contact No.:</b> {{ !empty($invoice->contact_no) ? $invoice->contact_no : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Email:</b> {{ $invoice->email }}</label>
+                            <label><b>Email:</b> {{ !empty($invoice->email) ? $invoice->email : '-' }}</label>
                         </div>
                         <div class="col-md-10">
                             <label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label>
@@ -89,7 +90,7 @@
                             <label><b>Invoice Id:</b> {{ $invoice->id }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Pan No.:</b> {{ $invoice->pan_no }} </label>
+                            <label><b>Pan No.:</b> {{ !empty($invoice->pan_no) ? $invoice->pan_no : '-' }} </label>
                         </div>
                         <div class="col-md-10">
                             <label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label>
@@ -98,10 +99,10 @@
                             <label><b>GST Address.:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Tourist Count:</b> {{ $invoice->no_of_passengers }} </label>
+                            <label><b>Tourist Count:</b> {{ !empty($invoice->no_of_passengers) ? $invoice->no_of_passengers : '-' }} </label>
                         </div>
                         <div class="col-md-10">
-                            <label><b>Date:</b> {{ date('d/m/Y', strtotime($invoice->from_date)) }} - {{ date('d/m/Y', strtotime($invoice->to_date)) }} </label>
+                            <label><b>Date:</b> {{ !empty($invoice->from_date) ? date('d/m/Y', strtotime($invoice->from_date)) : '-' }} - {{ !empty($invoice->to_date) ? date('d/m/Y', strtotime($invoice->to_date)) : '-' }} </label>
                         </div>
                     </div>
                 </div>
@@ -110,6 +111,11 @@
                 <form action="" method="POST">@csrf
                 <div class="">
                     <div class="row clearfix mt-3">
+                        @if(in_array('Bus Booking', $invoice->invoice_for) || 
+                            in_array('Flight Booking', $invoice->invoice_for) || 
+                            in_array('Train Booking', $invoice->invoice_for) || 
+                            in_array('Cab Booking', $invoice->invoice_for) || 
+                            in_array('Cruise Booking', $invoice->invoice_for))
                         <div class="col-md-12">
                             <h6 class="font-weight-bold">Payments</h6>
                             <table class="table table-hover table-bordered" id="tab_logic1">
@@ -129,7 +135,7 @@
                                 </thead>
                                 <tbody>
                                     @if(in_array('Flight Booking', $invoice->invoice_for))
-                                    <tr id=''>
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Flight Booking
                                             <input type="hidden" name='service_name[]' value="Flight Booking" />
@@ -164,14 +170,14 @@
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
-                                        <td class="align-middle d-flex">
+                                        <td class="align-middle">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
                                         </td>
                                     </tr>
                                     @endif
                                     @if(in_array('Train Booking', $invoice->invoice_for))
-                                    <tr id=''>
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Train Booking
                                             <input type="hidden" name='service_name[]' value="Train Booking" />
@@ -211,14 +217,14 @@
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
-                                        <td class="align-middle d-flex">
+                                        <td class="align-middle">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
                                         </td>
                                     </tr>
                                     @endif
                                     @if(in_array('Bus Booking', $invoice->invoice_for))
-                                    <tr id=''>
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Bus Booking
                                             <input type="hidden" name='service_name[]' value="Bus Booking" />
@@ -236,7 +242,7 @@
                                             <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
                                         </td>
                                         <td class="align-middle">
-                                            NA
+                                            -
                                             <input type="hidden" name="class[]" value="">
                                             <input type="hidden" name="days[]" value="">
                                         </td>
@@ -249,14 +255,52 @@
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
-                                        <td class="align-middle d-flex">
+                                        <td class="align-middle">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @if(in_array('Cruise Booking', $invoice->invoice_for))
+                                    <tr>
+                                        <td class="align-middle text-left">
+                                            Cruise Booking
+                                            <input type="hidden" name='service_name[]' value="Cruise Booking" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="date" name='date[]' class="form-control form-control-sm" required />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
+                                        </td>
+                                        <td class="align-middle">
+                                            -
+                                            <input type="hidden" name="class[]" value="">
+                                            <input type="hidden" name="days[]" value="">
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
+                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
                                         </td>
                                     </tr>
                                     @endif
                                     @if(in_array('Cab Booking', $invoice->invoice_for))
-                                    <tr id=''>
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Cab Booking
                                             <input type="hidden" name='service_name[]' value="Cab Booking" />
@@ -293,15 +337,16 @@
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' class="form-control form-control-sm" readonly />
                                         </td>
-                                        <td class="align-middle d-flex">
+                                        <td class="align-middle">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
                                         </td>
                                     </tr>
                                     @endif
                                 </tbody>
                             </table>
                         </div>
+                        @endif
 
                         @if(in_array('Hotel Booking', $invoice->invoice_for))
                         <div class="col-md-12">
@@ -327,7 +372,9 @@
                                             <input type="hidden" name='service_name[]' value="Hotel Booking" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="date" name='date[]' placeholder='' class="form-control form-control-sm" required />
+                                            -
+                                            {{-- <input type="date" name='date[]' placeholder='' class="form-control form-control-sm" required /> --}}
+                                            <input type="hidden" name="date[]" value="">
                                         </td>
                                         <td class="align-middle">
                                             <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
@@ -351,9 +398,9 @@
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" required />
                                         </td>
-                                        <td class="align-middle d-flex">
+                                        <td class="align-middle">
                                             <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -629,6 +676,8 @@
         $("table").on("click", ".add-row", function() {
             var newRow = $(this).closest("tr").clone(true);
             newRow.find("input:not([name='service_name[]'])").val(""); // Clear input values in the new row except service_name
+            newRow.find(".add-row").remove();
+            newRow.find("td:last").append('<button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>');
             $(this).closest("tr").after(newRow);
         });
 
