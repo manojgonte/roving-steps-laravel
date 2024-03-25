@@ -270,6 +270,47 @@
                                     </tr>
                                     @endforeach
                                     @endif
+                                    @if(in_array('Cruise Booking', $invoice->invoice_for))
+                                    @foreach ($invoice->invoiceItems->filter(function($item) {
+                                        return $item->service_name == 'Cruise Booking';
+                                    }) as $item)
+                                    <tr id=''>
+                                        <td class="align-middle text-left">
+                                            Cruise Booking
+                                            <input type="hidden" name='service_name[]' value="Cruise Booking" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="date" name='date[]' class="form-control form-control-sm" required value="{{$item->date}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required value="{{$item->name}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required value="{{$item->from_dest}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required value="{{$item->to_dest}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            NA
+                                            <input type="hidden" name="class[]" value="">
+                                            <input type="hidden" name="days[]" value="">
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    @endif
                                     @if(in_array('Cab Booking', $invoice->invoice_for))
                                     @foreach ($invoice->invoiceItems->filter(function($item) {
                                         return $item->service_name == 'Cab Booking';
@@ -674,59 +715,6 @@
         // Initial calculation when the page loads
         calculateTotalCost();
     });
-</script>
-
-
-{{-- onclick add more set of fields and balance, costing & amount paid calculations --}}
-<script>
-    function calc() {
-        $('#tab_logic tbody tr').each(function(i, element) {
-            var html = $(this).html();
-            if(html!='') {
-                var costing = parseFloat($(this).find('.costing').val()) || 0; // Parse as float, default to 0 if NaN
-                var amount_paid = parseFloat($(this).find('.amount_paid').val()) || 0; // Parse as float, default to 0 if NaN
-                $(this).find('.total').val((costing - amount_paid).toFixed(2)); // Use toFixed(2) to limit decimals to 2 places
-                
-                calc_total();
-            }
-        });
-    }
-
-    function calc_total() {
-        var total = 0;
-        var costing = 0;
-        var amount_paid = 0;
-
-        $('.total').each(function() {
-            var value = parseFloat($(this).val()) || 0;
-            total += value;
-        });
-
-        $('.costing').each(function() {
-            var value = parseFloat($(this).val()) || 0;
-            costing += value;
-        });
-
-        $('.amount_paid').each(function() {
-            var value = parseFloat($(this).val()) || 0;
-            amount_paid += value;
-        });
-
-        $('#totalCosting').val(costing.toFixed(2));
-        $('#totalAmountPaid').val(amount_paid.toFixed(2));
-        $('#balance').val((costing - amount_paid).toFixed(2));
-    }
-</script>
-
-<script>
-    function printDiv(){
-        var divToPrint=document.getElementById('DivIdToPrint');
-        var newWin=window.open('','Print-Window');
-        newWin.document.open();
-        newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
-        newWin.document.close();
-        setTimeout(function(){newWin.close();},10);
-    }
 </script>
 
 @endsection('scripts')
