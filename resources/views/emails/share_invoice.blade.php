@@ -8,7 +8,7 @@
         
         body {
             margin: 0;
-            font-size: 0.9rem;
+            font-size: 0.65rem;
             font-weight: 400;
             line-height: 1.5;
             color: #212529;
@@ -42,7 +42,7 @@
             padding-left: 0 !important;
         }
         .text-sm {
-            font-size: .875rem !important;
+            font-size: .65rem !important;
         }
         .text-left {
             text-align: left !important;
@@ -112,7 +112,7 @@
             font-weight: 600;
         }
         .h6, h6 {
-            font-size: 1rem;
+            font-size: 0.7rem;
         }
         .table:not(.table-dark) {
             color: inherit;
@@ -183,7 +183,7 @@
         .form-control-sm {
             height: calc(1.8125rem + 2px);
             padding: 0.25rem 0.5rem;
-            font-size: .875rem;
+            font-size: .75rem;
             line-height: 1.5;
             border-radius: 0.2rem;
         }
@@ -192,7 +192,7 @@
             width: 100%;
             height: calc(2.25rem + 2px);
             padding: 0.375rem 0.75rem;
-            font-size: 1rem;
+            font-size: 0.7rem;
             font-weight: 400;
             line-height: 1.5;
             color: #495057;
@@ -230,15 +230,15 @@
     <section>
         <div class="mt-auto">
             <div class="text-left" style="margin-bottom: 10px;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo/logo_trans.png'))) }}" height="70">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo/logo_trans.png'))) }}" height="50">
             </div>
             <table class="w-full">
                 <tr>
                     <td class="w-half">
                         <div><label><b>Bill To:</b> {{ $invoice->bill_to }}</label></div>
-                        <div><label><b>Address:</b> {{ $invoice->address }}</label></div>
-                        <div><label><b>Contact No.:</b> {{ $invoice->contact_no }} </label></div>
-                        <div><label><b>Email:</b> {{ $invoice->email }}</label></div>
+                        <div><label><b>Address:</b> {{ !empty($invoice->address) ? $invoice->address : '-' }}</label></div>
+                        <div><label><b>Contact No.:</b> {{ !empty($invoice->contact_no) ? $invoice->contact_no : '-' }}</label></div>
+                        <div><label><b>Email:</b> {{ !empty($invoice->email) ? $invoice->email : '-' }}</label></div>
                         <div><label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label></div>
                         <div>
                             <label><b>Invoice For:</b> 
@@ -253,18 +253,18 @@
                     </td>
                     <td class="w-half">
                         <div><label><b>Invoice Id:</b> {{ $invoice->id }} </label></div>
-                        <div><label><b>Pan No.:</b> {{ $invoice->pan_no }} </label></div>
+                        <div><label><b>Pan No.:</b> {{ !empty($invoice->pan_no) ? $invoice->pan_no : '-' }} </label></div>
                         <div><label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label></div>
                         <div><label><b>GST Address.:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label></div>
-                        <div><label><b>Tourist Count:</b> {{ $invoice->no_of_passengers }} </label></div>
-                        <div><label><b>Date:</b> {{ date('d/m/Y', strtotime($invoice->from_date)) }} - {{ date('d/m/Y', strtotime($invoice->to_date)) }} </label></div>
+                        <div><label><b>Tourist Count:</b> {{ !empty($invoice->no_of_passengers) ? $invoice->no_of_passengers : '-' }} </label></div>
+                        <div><label><b>Date:</b> {{ !empty($invoice->from_date) ? date('d/m/Y', strtotime($invoice->from_date)) : '-' }} - {{ !empty($invoice->to_date) ? date('d/m/Y', strtotime($invoice->to_date)) : '-' }} </label></div>
                     </td>
                 </tr>
             </table>
             <hr />
 
             <div class="">
-                <div class="font-weight-bold" style="font-size: 18px; margin-bottom: 8px">Payments</div>
+                <div class="font-weight-bold" style="font-size: 13px; margin-bottom: 8px">Payments</div>
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr class="bg-gradient-dark">
@@ -461,8 +461,8 @@
             </table>
             <hr />
             <div style="text-align: left">
-                <div><label>Note:</label></div>
-                <span>{{isset($invoice->note) ? $invoice->note : '-'}}</span>
+                <div><label>Note: <span>{{isset($invoice->note) ? $invoice->note : '-'}}</span></label></div>
+                
             </div>
         </div>
     </section>
