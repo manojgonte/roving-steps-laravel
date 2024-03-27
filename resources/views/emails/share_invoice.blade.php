@@ -269,7 +269,6 @@
                     <thead>
                         <tr class="bg-gradient-dark">
                             <th class="text-left"> Services </th>
-                            <th class="text-center"> Date </th>
                             <th class="text-center"> Name </th>
                             <th class="text-center"> From </th>
                             <th class="text-center"> To </th>
@@ -287,9 +286,6 @@
                         <tr>
                             <td class="align-middle text-left">
                                 {{$item->service_name}}
-                            </td>
-                            <td class="align-middle text-center">
-                                {{date('d/m/Y', strtotime($item->date))}}
                             </td>
                             <td class="align-middle text-center">
                                 {{$item->name}}
