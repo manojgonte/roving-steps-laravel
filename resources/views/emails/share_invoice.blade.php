@@ -4,19 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Invoice: {{$invoice->bill_to}}</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto+Mono:ital@1&family=Roboto+Serif:opsz@8..144&family=Roboto+Slab&display=swap"
-        rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto+Mono:ital@1&family=Roboto+Serif:opsz@8..144&family=Roboto+Slab&display=swap" rel="stylesheet"> --}}
     <style>
         body {
             margin: 0;
-            font-size: 0.60rem;
+            font-size: 0.65rem;
             font-weight: 400;
-            line-height: 0.9;
+            line-height: 1.5;
             color: #212529;
             text-align: left;
             background-color: #fff;
-            font-family: 'Poppins', sans-serif;
+/*            font-family: 'Poppins', sans-serif;*/
         }
         .invoice {
             background: #fff;
