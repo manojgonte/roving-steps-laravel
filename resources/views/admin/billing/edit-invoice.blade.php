@@ -106,7 +106,7 @@
                             <label class="required">Services</label>
                             <select name="invoice_for[]" class="form-control sumoselect" multiple @if(count($invoice->invoice_for) == 0) required @endif>
                                 @foreach($bookings as $booking)
-                                <option value="{{$booking}}" @if(in_array($booking, $invoice->invoice_for)) selected @endif disabled>{{$booking}}</option>
+                                <option value="{{$booking}}" @if(in_array($booking, $invoice->invoice_for)) selected @endif @if(count($invoice->invoiceItems) > 0) disabled @endif>{{$booking}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-dark font-weight-bold submit"><i class="fa fa-check-circle"></i> Update </button>
-                        <button type="reset" class="btn btn-light"> <i class="fa fa-refresh"></i> Reset </button>
+                        <a href="{{url('/admin/invoice-billing')}}" class="btn btn-light"> <i class="fa fa-refresh"></i> Cancel </a>
                     </div>
                 </div>
             </form>

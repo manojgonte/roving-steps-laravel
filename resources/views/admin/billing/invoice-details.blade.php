@@ -27,12 +27,6 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="row d-flex flex-row-reverse">
-                            {{-- <div>
-                                <a class="btn btn-light btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-invoice/' . $invoice->id) }}"><i class="fa fa-trash"></i> Delete</a>
-                            </div> --}}
-                            <div class="mr-2">
-                                {{-- <button class="btn btn-light btn-sm" type="button" class="btn btn-default" onclick="editInvoice({{Request()->id}})" data-toggle="modal" data-target="#editInvoice"><i class="fa fa-pencil-alt"></i> Edit</button> --}}
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,58 +48,7 @@
                 </div>
                 @endif
                 <a href="{{ url('/admin/edit-invoice/'.Request()->id) }}" class="btn btn-light btn-sm position-absolute" style="right: 5px;top: 5px;z-index: 1;"><i class="fa fa-pencil-alt"></i> Edit</a>
-                <div class="row">
-                    <div class="col px-0">
-                        <div class="col-md-10">
-                            <label><b>Bill To:</b> {{ $invoice->bill_to }}</label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Address:</b> {{ !empty($invoice->address) ? $invoice->address : '-' }}</label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Contact No.:</b> {{ !empty($invoice->contact_no) ? $invoice->contact_no : '-' }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Email:</b> {{ !empty($invoice->email) ? $invoice->email : '-' }}</label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Invoice For:</b> 
-                                @foreach($invoice->invoice_for as $row)
-                                {{ $row }}@if($loop->last) @else, @endif
-                                @endforeach
-                            </label>
-                        </div>
-                        @if($invoice->tour_id)
-                        <div class="col-md-10">
-                            <label><b>Tour:</b> {{ $invoice->tourName }} </label>
-                        </div>
-                        @endif
-                    </div>
-                    <hr />
-                    <div class="col">
-                        <div class="col-md-10">
-                            <label><b>Invoice Id:</b> {{ $invoice->id }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Pan No.:</b> {{ !empty($invoice->pan_no) ? $invoice->pan_no : '-' }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>GST Address.:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Tourist Count:</b> {{ !empty($invoice->no_of_passengers) ? $invoice->no_of_passengers : '-' }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Date:</b> {{ !empty($invoice->from_date) ? date('d/m/Y', strtotime($invoice->from_date)) : '-' }} - {{ !empty($invoice->to_date) ? date('d/m/Y', strtotime($invoice->to_date)) : '-' }} </label>
-                        </div>
-                    </div>
-                </div>
+                @include('admin/billing/invoice_basic_info', ['invoice' => $invoice])
                 <hr />
 
                 <form action="" method="POST">@csrf
@@ -128,8 +71,8 @@
                                         <th class="text-center"> To </th>
                                         <th class="text-center"> Class </th>
                                         <th class="text-center"> Tourist Count </th>
-                                        <th class="text-center"> Cost per Person </th>
-                                        <th class="text-center"> Total Cost </th>
+                                        <th class="text-center"> Cost per Person(₹)</th>
+                                        <th class="text-center"> Total Cost(₹)</th>
                                         <th class="text-center"> Action </th>
                                     </tr>
                                 </thead>
@@ -171,8 +114,10 @@
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endif
@@ -218,8 +163,10 @@
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endif
@@ -256,8 +203,10 @@
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endif
@@ -294,8 +243,10 @@
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endif
@@ -338,8 +289,10 @@
                                             <input type="number" name='total_cost[]' class="form-control form-control-sm" readonly />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endif
@@ -360,20 +313,19 @@
                                         <th class="text-center"> To </th>
                                         <th class="text-center"> No. of Days </th>
                                         <th class="text-center"> Tourist Count </th>
-                                        <th class="text-center"> Cost per Person </th>
-                                        <th class="text-center"> Total Cost </th>
+                                        <th class="text-center"> Cost per Person(₹) </th>
+                                        <th class="text-center"> Total Cost(₹)</th>
                                         <th class="text-center"> Action </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr id='addr0'>
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Hotel Booking
                                             <input type="hidden" name='service_name[]' value="Hotel Booking" />
                                         </td>
                                         <td class="align-middle">
                                             -
-                                            {{-- <input type="date" name='date[]' placeholder='' class="form-control form-control-sm" required /> --}}
                                             <input type="hidden" name="date[]" value="">
                                         </td>
                                         <td class="align-middle">
@@ -399,8 +351,10 @@
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" required />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                            {{-- <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button> --}}
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -414,27 +368,27 @@
                     <tbody>
                         <tr>
                             <td class="text-left text-sm">Visa</td>
-                            <td class="text-right"><input type="number" name="visa" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td class="text-right"><input type="number" name="visa" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Insurance</td>
-                            <td class="text-right"><input type="number" name="insurance" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td class="text-right"><input type="number" name="insurance" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Visa Appointment</td>
-                            <td class="text-right"><input type="number" name="visa_appointment" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td class="text-right"><input type="number" name="visa_appointment" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Swiss Pass</td>
-                            <td class="text-right"><input type="number" name="swiss_pass" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td class="text-right"><input type="number" name="swiss_pass" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Land Package</td>
-                            <td class="text-right"><input type="number" name="land_package" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td class="text-right"><input type="number" name="land_package" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
-                            <td class="text-right"><input type="number" name="passport_services" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td class="text-right"><input type="number" name="passport_services" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Total</td>
@@ -442,7 +396,7 @@
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Service Charges</td>
-                            <td class="text-right"><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" /></td>
+                            <td class="text-right"><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold d-flex justify-content-between border-0">
@@ -463,7 +417,19 @@
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
-                            <td class="text-right"><input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" /></td>
+                            <td class="text-right">
+                                <div class="d-flex">
+                                    <input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" placeholder="₹" />&nbsp;
+                                    <select class="form-control form-control-sm w-25" name="payment_mode">
+                                        <option value="">Mode of Payment</option>
+                                        <option value="Bank Transfer">Bank Transfer</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="UPI">UPI</option>
+                                        <option value="Card">Card</option>
+                                        <option value="Cheque">Cheque</option>
+                                    </select>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Balance</td>
@@ -677,7 +643,7 @@
             var newRow = $(this).closest("tr").clone(true);
             newRow.find("input:not([name='service_name[]'])").val(""); // Clear input values in the new row except service_name
             newRow.find(".add-row").remove();
-            newRow.find("td:last").append('<button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>');
+            // newRow.find("td:last").append('<button type="button" class="btn btn-default btn-xs ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>');
             $(this).closest("tr").after(newRow);
         });
 

@@ -37,8 +37,7 @@ class BillingController extends Controller
         }
         $invoices = $invoices->orderBy('invoices.id','DESC')->paginate(10);
             
-        $outstanding_amt = payments::select('costing','amount_paid')->get();
-        return view('admin.billing.invoice-dashboard',compact('invoices','outstanding_amt'));
+        return view('admin.billing.invoice-dashboard',compact('invoices'));
     }
 
     public function createInvoice(Request $request) {
@@ -69,7 +68,7 @@ class BillingController extends Controller
 
     public function invoiceActions(Request $request, $id) {
         $id = base64_decode($id);
-        $invoice = invoices::with('invoiceItems')
+        $invoice = invoices::with('invoiceItems','invoicePayments')
             ->select('invoices.*','tours.tour_name as tourName','invoices.tour_name as tour_id')
             ->leftJoin('tours','tours.id','invoices.tour_name')
             ->where('invoices.id', $id)
@@ -80,10 +79,10 @@ class BillingController extends Controller
             ])->loadView('emails.share_invoice', compact('invoice'))->setPaper('a4', 'portrait');
             return $pdf->download("Invoice-".$invoice->id."-".Str::slug($invoice->bill_to)."-".date('dMY').".pdf");
         }elseif($request->type == 'share') {
-            if($invoice->email) {
+            if($request->email) {
                 $pdf = PDF::loadView('emails.share_invoice', compact('invoice'));
                 $pdf = $pdf->output();
-                $email = $invoice->email;
+                $email = $request->email;
                 $messageData = [
                     'invoice' => $invoice
                 ];
@@ -150,6 +149,15 @@ class BillingController extends Controller
                 }
             }
 
+            if(!empty($data['payment_received']) && $data['payment_received'] != 0) {
+                $pay = new payments;
+                $pay->invoice_id    = $invoice->id;
+                $pay->payment_date  = date('Y-m-d');
+                $pay->amount        = $data['payment_received'];
+                $pay->payment_mode  = !empty($data['payment_mode']) ? $data['payment_mode'] : null;
+                $pay->save();
+            }
+
             return redirect('admin/invoice-billing/')->with('flash_message_success','Invoices updated successfully');
         }
 
@@ -183,13 +191,16 @@ class BillingController extends Controller
             $Invoices->invoice_date = $data['invoice_date'];
             $Invoices->tour_name = !empty($data['isTour']) ? $data['tour_name'] : null;
 
-            // $Invoices->invoice_for = $request->invoice_for;
+            if(isset($request->invoice_for)){
+                $Invoices->invoice_for = $request->invoice_for;
+            }
             $Invoices->save();
 
             // return redirect('admin/invoice-details/'.$Invoices->id)->with('flash_message_success','Invoice updated successfully');
             return redirect()->back()->with('flash_message_success','Invoice details updated successfully');
         }
-        $invoice = invoices::select('invoices.*','tours.tour_name as tourName','invoices.tour_name as tour_id')
+        $invoice = invoices::with('invoiceItems')
+            ->select('invoices.*','tours.tour_name as tourName','invoices.tour_name as tour_id')
             ->leftJoin('tours','tours.id','invoices.tour_name')
             ->where('invoices.id', $id)
             ->first();
@@ -264,5 +275,67 @@ class BillingController extends Controller
             ->leftJoin('tours','tours.id','invoices.tour_name')
             ->first();
         return response()->json($invoices);
+    }
+
+    public function invoicePayments(Request $request, $id) {
+        $invoice = invoices::with('invoicePayments')
+            ->select('invoices.*','tours.tour_name as tourName')
+            ->leftJoin('tours','tours.id','invoices.tour_name')
+            ->orderBy('invoices.id','DESC')
+            ->where('invoices.id',base64_decode($id))
+            ->first();
+            
+        return view('admin.billing.invoice_payments',compact('invoice'));
+    }
+
+    public function addInvoicePayment(Request $request, $id){
+        $id = base64_decode($id);
+        if($request->isMethod('post')){
+            $data = $request->all();
+            
+            $pay = new payments;
+            $pay->invoice_id    = $id;
+            $pay->payment_date  = $data['payment_date'];
+            $pay->amount        = $data['amount'];
+            $pay->payment_mode  = $data['payment_mode'];
+            $pay->save();
+
+            // update received payment in invoice table
+            $invoice = invoices::select('grand_total','payment_received','balance')->find($id);
+            $payment_received = $invoice->payment_received + $data['amount'];
+            $balance = $invoice->balance - $data['amount'];
+            invoices::where('id',$id)->update(['payment_received'=>$payment_received,'balance'=>$balance]);
+
+            return redirect()->back()->with('flash_message_success','Payment added successfully');
+        }
+    }
+
+    public function updatePayDetails(Request $request, $id){
+        $payment = payments::where('id',base64_decode($id))->first();
+        if($request->isMethod('post')){
+            $data = $request->all();
+            payments::where('id', base64_decode($id))
+                ->update([
+                    'payment_date'=>$request->payment_date,
+                    'amount'=>$request->amount,
+                    'payment_mode'=>$request->payment_mode
+                ]);
+            return redirect('admin/invoice-payments/'.base64_encode($payment->invoice_id))->with('flash_message_success','Payment details updated successfully');
+        }
+        return view('admin.billing.edit_invoice_payment',compact('payment'));
+    }
+
+    public function deleteInvoicePayment(Request $request, $id) {
+        $id = base64_decode($id);
+        // update received payment in invoice table
+        $payment = payments::find($id);
+        $invoice = invoices::select('grand_total','payment_received','balance')->find($payment->invoice_id);
+        $payment_received = $invoice->payment_received - $payment->amount;
+        $balance = $invoice->balance + $payment->amount;
+        invoices::where('id',$payment->invoice_id)->update(['payment_received'=>$payment_received,'balance'=>$balance]);
+
+        //delete payment
+        payments::where('id',$id)->delete();
+        return redirect()->back()->with('flash_message_success','Payment for invoice deleted successfully');
     }
 }

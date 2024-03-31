@@ -4,16 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Invoice: {{$invoice->bill_to}}</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto+Mono:ital@1&family=Roboto+Serif:opsz@8..144&family=Roboto+Slab&display=swap"
+        rel="stylesheet">
     <style>
-        
         body {
             margin: 0;
-            font-size: 0.65rem;
+            font-size: 0.60rem;
             font-weight: 400;
-            line-height: 1.5;
+            line-height: 0.9;
             color: #212529;
             text-align: left;
             background-color: #fff;
+            font-family: 'Poppins', sans-serif;
         }
         .invoice {
             background: #fff;
@@ -69,7 +72,6 @@
             flex-basis: 0;
             -ms-flex-positive: 1;
             flex-grow: 1;
-/*            max-width: 100%;*/
         }
         .col-md-10 {
             -ms-flex: 0 0 83.333333%;
@@ -224,6 +226,24 @@
         .w-half {
             width: 50%;
         }
+        /** Define the footer rules **/
+        footer {
+            position: fixed;
+            bottom: 0cm;
+            left: 0cm;
+            right: 0cm;
+            height: 1cm;
+
+            /** Extra personal styles **/
+            /* background-color: #eaeaea; */
+            color: black;
+            text-align: center;
+            /* line-height: 1.5cm; */
+        }
+
+        footer .pagenum:before {
+            content: counter(page);
+        }
     </style>
 </head>
 <body>
@@ -232,6 +252,7 @@
             <div class="text-left" style="margin-bottom: 10px;">
                 <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo/logo_trans.png'))) }}" height="50">
             </div>
+            <hr/>
             <table class="w-full">
                 <tr>
                     <td class="w-half">
@@ -242,9 +263,18 @@
                         <div><label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label></div>
                         <div>
                             <label><b>Invoice For:</b> 
+                            @if(count($invoice->invoiceItems) > 0)
+                            @foreach($invoice->invoiceItems->unique('service_name')->groupBy('service_name') as $serviceNames)
+                                @if(!$loop->first), @endif
+                                @foreach($serviceNames as $serviceName)
+                                    {{ $serviceName->service_name }}
+                                @endforeach
+                            @endforeach
+                            @else
                             @foreach($invoice->invoice_for as $row)
                             {{ $row }}@if($loop->last) @else, @endif
                             @endforeach
+                            @endif
                             </label>
                         </div>
                         @if($invoice->tour_id)
@@ -269,6 +299,7 @@
                     <thead>
                         <tr class="bg-gradient-dark">
                             <th class="text-left"> Services </th>
+                            <th class="text-center"> Date </th>
                             <th class="text-center"> Name </th>
                             <th class="text-center"> From </th>
                             <th class="text-center"> To </th>
@@ -286,6 +317,9 @@
                         <tr>
                             <td class="align-middle text-left">
                                 {{$item->service_name}}
+                            </td>
+                            <td class="align-middle text-center">
+                                {{date('d/m/Y', strtotime($item->date))}}
                             </td>
                             <td class="align-middle text-center">
                                 {{$item->name}}
@@ -308,10 +342,6 @@
                             <td class="align-middle text-center">
                                 Rs.{{$item->total_cost}}
                             </td>
-                            {{-- <td class="align-middle d-flex">
-                                <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
-                                <button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>
-                            </td> --}}
                         </tr>
                         @endforeach
                     </tbody>
@@ -324,7 +354,6 @@
                     <thead>
                         <tr class="bg-gradient-dark">
                             <th class="text-left"> Service </th>
-                            <th class="text-center"> Date </th>
                             <th class="text-center"> Name </th>
                             <th class="text-center"> From </th>
                             <th class="text-center"> To </th>
@@ -338,12 +367,9 @@
                         @foreach ($invoice->invoiceItems->filter(function($item) {
                             return $item->service_name == 'Hotel Booking';
                         }) as $item)
-                        <tr id='addr0'>
+                        <tr>
                             <td class="align-middle text-left">
                                 {{$item->service_name}}
-                            </td>
-                            <td class="align-middle text-center">
-                                {{date('d/m/Y', strtotime($item->date))}}
                             </td>
                             <td class="align-middle text-center">
                                 {{$item->name}}
@@ -375,30 +401,42 @@
 
             <table class="table table-bordered" style="overflow-x: auto;">
                 <tbody>
+                    @if(!empty($invoice->visa))
                     <tr>
                         <td class="text-left text-sm">Visa</td>
                         <td class="text-right">{{isset($invoice->visa) ? $invoice->visa : '-'}}</td>
                     </tr>
+                    @endif
+                    @if(!empty($invoice->insurance))
                     <tr>
                         <td class="text-left text-sm">Insurance</td>
                         <td class="text-right">{{isset($invoice->insurance) ? $invoice->insurance : '-'}}</td>
                     </tr>
+                    @endif
+                    @if(!empty($invoice->visa_appointment))
                     <tr>
                         <td class="text-left text-sm">Visa Appointment</td>
                         <td class="text-right">{{isset($invoice->visa_appointment) ? $invoice->visa_appointment : '-'}}</td>
                     </tr>
+                    @endif
+                    @if(!empty($invoice->swiss_pass))
                     <tr>
                         <td class="text-left text-sm">Swiss Pass</td>
                         <td class="text-right">{{isset($invoice->swiss_pass) ? $invoice->swiss_pass : '-'}}</td>
                     </tr>
+                    @endif
+                    @if(!empty($invoice->land_package))
                     <tr>
                         <td class="text-left text-sm">Land Package</td>
                         <td class="text-right">{{isset($invoice->land_package) ? $invoice->land_package : '-'}}</td>
                     </tr>
+                    @endif
+                    @if(!empty($invoice->passport_services))
                     <tr>
                         <td class="text-left text-sm">Passport Services</td>
                         <td class="text-right">{{isset($invoice->passport_services) ? $invoice->passport_services : '-'}}</td>
                     </tr>
+                    @endif
                     <tr>
                         <td class="text-left text-sm font-weight-bold">Total</td>
                         <td class="text-right">Rs.{{$invoice->total}}</td>
@@ -436,6 +474,31 @@
                 </tbody>
             </table>
 
+            <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="bg-gradient-dark">
+                            <th class="text-left"> Date </th>
+                            <th class="text-center"> Amount </th>
+                            <th class="text-center"> Payment Mode </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($invoice->invoicePayments->sortByDesc('payment_date') as $payment)
+                        <tr>
+                            <td class="align-middle text-left">
+                                {{date('d/m/Y', strtotime($payment->payment_date))}}
+                            </td>
+                            <td class="align-middle text-center">
+                                Rs.{{$payment->amount}}
+                            </td>
+                            <td class="align-middle text-center">
+                                {{$payment->payment_mode}}
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
             <hr />
             <table class="w-full">
                 <tr>
@@ -462,5 +525,10 @@
             </div>
         </div>
     </section>
+    <footer>
+        <div class="pagenum-container">
+            <div style="background: #2786BD; padding: 5px; border-radius: 5px; color: #fff !important;margin-top: 1cm">Call/WhatsApp: +91 8600031545 | Email: info@rovingsteps.com | Website: www.rovingsteps.com</div>
+        </div>
+    </footer>
 </body>
 </html>

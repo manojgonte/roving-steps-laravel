@@ -3218,7 +3218,8 @@ input[type=submit].btn-block {
 	background-color: transparent
 }
 .dropdown-menu.show {
-	display: block
+	display: block;
+	z-index: 9999;
 }
 .dropdown-header {
 	display: block;

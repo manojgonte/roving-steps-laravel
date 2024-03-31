@@ -125,15 +125,17 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/invoice-billing', [BillingController::class, 'invoiceBilling']);
     Route::match(['get','post'], 'admin/create-invoice', [BillingController::class, 'createInvoice'])->name('createInvoice');
     Route::match(['get','post'], 'admin/invoice-details/{id}', [BillingController::class, 'invoiceDetails']);
-    Route::match(['get','post'], 'admin/del-invoice-payment/{id}', [BillingController::class, 'deleteInvoicePayment']);
-    Route::match(['get','post'], 'admin/get-payment-details/', [BillingController::class, 'getPayDetails']);
-    Route::match(['get','post'], 'admin/update-payment-details/', [BillingController::class, 'updatePayDetails']);
 
     Route::match(['get','post'], 'admin/edit-invoice/{id}', [BillingController::class, 'editInvoice'])->name('editInvoice');
     Route::match(['get','post'], 'admin/edit-invoice-details/{id}', [BillingController::class, 'editInvoiceDetails'])->name('editInvoiceDetails');
     Route::match(['get','post'], 'admin/get-invoice-details', [BillingController::class, 'getInvoiceDetails']);
     Route::match(['get','post'], 'admin/edit-payment/{id}', [BillingController::class, 'editPayment']);
-    Route::match(['get','post'], 'admin/add-invoice-payment/', [BillingController::class, 'addInvoicePayment']);
+    
+    Route::match(['get','post'], 'admin/invoice-payments/{id}', [BillingController::class, 'invoicePayments']);
+    Route::match(['get','post'], 'admin/add-invoice-payment/{id}', [BillingController::class, 'addInvoicePayment']);
+    Route::match(['get','post'], 'admin/update-payment-details/{id}', [BillingController::class, 'updatePayDetails']);
+    Route::match(['get','post'], 'admin/get-payment-details/', [BillingController::class, 'getPayDetails']);
+    Route::match(['get','post'], 'admin/del-invoice-payment/{id}', [BillingController::class, 'deleteInvoicePayment']);
 
     Route::match(['get','post'], 'admin/delete-invoice/{id}', [BillingController::class, 'deleteInvoice']);
     Route::match(['get','post'], 'admin/invoice-actions/{id}', [BillingController::class, 'invoiceActions']);

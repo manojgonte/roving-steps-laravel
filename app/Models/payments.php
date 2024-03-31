@@ -9,5 +9,5 @@ class Payments extends Model
 {
     use HasFactory;
 
-    protected $table = 'payments';
+    protected $table = 'invoice_payments';
 }

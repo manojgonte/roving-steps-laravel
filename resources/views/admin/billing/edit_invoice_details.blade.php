@@ -14,7 +14,6 @@
             color: #000 !important;
         }
     </style>
-    {{-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
 @endsection('styles')
 
 
@@ -25,22 +24,11 @@
                     <div class="col-sm-8">
                         <h4 class="m-0 text-dark">Update Invoice Details</h4>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="row d-flex flex-row-reverse">
-                            {{-- <div>
-                                <a class="btn btn-light btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-invoice/' . $invoice->id) }}"><i class="fa fa-trash"></i> Delete</a>
-                            </div> --}}
-                            <div class="mr-2">
-                                {{-- <button class="btn btn-light btn-sm" type="button" class="btn btn-default" onclick="editInvoice({{Request()->id}})" data-toggle="modal" data-target="#editInvoice"><i class="fa fa-pencil-alt"></i> Edit</button> --}}
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
-        <section id="DivIdToPrint">
-            
+        <section>            
             <div class="card p-3 mb-3 m-3 mt-auto">
                 <div class="card-header pt-0 px-0">
                     <ul class="nav nav-pills">
@@ -61,57 +49,8 @@
                 </div>
                 @endif
 
-                <div class="row card-body px-0 pb-0">
-                    <div class="col px-0">
-                        <div class="col-md-10">
-                            <label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Bill To:</b> {{ $invoice->bill_to }}</label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Address:</b> {{ !empty($invoice->address) ? $invoice->address : '-' }}</label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Contact No.:</b> {{ !empty($invoice->contact_no) ? $invoice->contact_no : '-' }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Email:</b> {{ !empty($invoice->email) ? $invoice->email : '-' }}</label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Invoice For:</b> 
-                                @foreach($invoice->invoice_for as $row)
-                                {{ $row }}@if($loop->last) @else, @endif
-                                @endforeach
-                            </label>
-                        </div>
-                        @if($invoice->tour_id)
-                        <div class="col-md-10">
-                            <label><b>Tour:</b> {{ $invoice->tourName }} </label>
-                        </div>
-                        @endif
-                    </div>
-                    <hr />
-                    <div class="col">
-                        <div class="col-md-10">
-                            <label><b>Invoice Id:</b> {{ $invoice->id }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Pan No.:</b> {{ !empty($invoice->pan_no) ? $invoice->pan_no : '-' }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>GST Address:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Tourist Count:</b> {{ !empty($invoice->no_of_passengers) ? $invoice->no_of_passengers : '-' }} </label>
-                        </div>
-                        <div class="col-md-10">
-                            <label><b>Date:</b> {{ !empty($invoice->from_date) ? date('d/m/Y', strtotime($invoice->from_date)) : '-' }} - {{ !empty($invoice->to_date) ? date('d/m/Y', strtotime($invoice->to_date)) : '-' }} </label>
-                        </div>
-                    </div>
+                <div class="card-body px-0 pb-0">
+                    @include('admin/billing/invoice_basic_info', ['invoice' => $invoice])
                 </div>
                 <hr />
 
@@ -119,7 +58,20 @@
                 <div class="">
                     <div class="row clearfix mt-0">
                         <div class="col-md-12">
-                            <h6 class="font-weight-bold">Payments</h6>
+                            <div class="row mx-0 justify-content-between mb-1">
+                                <h6 class="font-weight-bold">Payments</h6>
+                                <div>
+                                    <select id="addService" class="form-control form-control-sm">
+                                        <option value="">New Service</option>
+                                        <option value="Hotel">Hotel Booking</option>
+                                        <option value="Bus">Bus Booking</option>
+                                        <option value="Flight">Flight Booking</option>
+                                        <option value="Train">Train Booking</option>
+                                        <option value="Cab">Cab Booking</option>
+                                        <option value="Cruise">Cruise Booking</option>
+                                    </select>
+                                </div>
+                            </div>
                             <table class="table table-hover table-bordered" id="tab_logic1">
                                 <thead>
                                     <tr class="bg-gradient-dark">
@@ -140,7 +92,7 @@
                                     @foreach ($invoice->invoiceItems->filter(function($item) {
                                         return $item->service_name == 'Flight Booking';
                                     }) as $item)
-                                    <tr id=''>
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Flight Booking
                                             <input type="hidden" name='service_name[]' value="Flight Booking" />
@@ -176,7 +128,10 @@
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" value="" />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -185,7 +140,7 @@
                                     @foreach ($invoice->invoiceItems->filter(function($item) {
                                         return $item->service_name == 'Train Booking';
                                     }) as $item)
-                                    <tr id=''>
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Train Booking
                                             <input type="hidden" name='service_name[]' value="Train Booking" />
@@ -224,7 +179,10 @@
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -233,7 +191,7 @@
                                     @foreach ($invoice->invoiceItems->filter(function($item) {
                                         return $item->service_name == 'Bus Booking';
                                     }) as $item)
-                                    <tr id=''>
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Bus Booking
                                             <input type="hidden" name='service_name[]' value="Bus Booking" />
@@ -265,7 +223,10 @@
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -274,7 +235,7 @@
                                     @foreach ($invoice->invoiceItems->filter(function($item) {
                                         return $item->service_name == 'Cruise Booking';
                                     }) as $item)
-                                    <tr id=''>
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Cruise Booking
                                             <input type="hidden" name='service_name[]' value="Cruise Booking" />
@@ -306,7 +267,10 @@
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -315,7 +279,7 @@
                                     @foreach ($invoice->invoiceItems->filter(function($item) {
                                         return $item->service_name == 'Cab Booking';
                                     }) as $item)
-                                    <tr id=''>
+                                    <tr>
                                         <td class="align-middle text-left">
                                             Cab Booking
                                             <input type="hidden" name='service_name[]' value="Cab Booking" />
@@ -355,7 +319,10 @@
                                             <input type="number" name='total_cost[]' class="form-control form-control-sm" readonly />
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -418,12 +385,8 @@
                                         </td>
                                         <td class="align-middle">
                                             <div class="d-flex">
-                                                @if($loop->first)
-                                                <button type="button" class="btn btn-default btn-sm add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
-                                                @endif
-                                                @if(!$loop->first)
-                                                <button type="button" class="btn btn-default btn-sm remove-row"><i class="fa fa-minus-circle"></i></button>
-                                                @endif
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -546,6 +509,59 @@
         // Function to remove a row
         $("table").on("click", ".remove-row", function() {
             $(this).closest("tr").remove();
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        var hotel = '<tr><td class="align-middle text-left">Hotel Booking <input type="hidden" name="service_name[]" value="Hotel Booking"></td><td class="align-middle">-<input type="hidden" name="date[]" value=""></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle"><input type="date" name="from[]" placeholder="From" class="form-control form-control-sm" required></td><td class="align-middle"><input type="date" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle"><input type="hidden" name="class[]" value=""> <input type="number" name="days[]" placeholder="Enter days" class="form-control form-control-sm" required min="1"></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" required min="1"></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Cost per person" class="form-control form-control-sm" required min="1"></td><td class="align-middle"><input type="number" name="total_cost[]" readonly="readonly" class="form-control form-control-sm" required></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
+        var flight = '<tr><td class="align-middle text-left">Flight Booking <input type="hidden" name="service_name[]" value="Flight Booking"></td><td class="align-middle"><input type="date" name="date[]" placeholder="" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="from[]" placeholder="From" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle"><input type="hidden" name="days[]" value=""><select class="form-control form-control-sm" name="class[]" required><option value="">Class</option><option value="Economy">Economy</option><option value="Premium Economy">Premium Economy</option><option value="Business">Business</option></select></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1"></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1"></td><td class="align-middle"><input type="number" name="total_cost[]" readonly="readonly" class="form-control form-control-sm"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
+        var train = '<tr><td class="align-middle text-left">Train Booking <input type="hidden" name="service_name[]" value="Train Booking"></td><td class="align-middle"><input type="date" name="date[]" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="from[]" placeholder="From" class="form-control form-control-sm amount_paid" required></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle"><input type="hidden" name="days[]" value=""><select class="form-control form-control-sm" name="class[]" required><option value="">Class</option><option value="Sleeper Class">Sleeper Class</option><option value="Third AC">Third AC</option><option value="Second AC">Second AC</option><option value="First AC">First AC</option><option value="Second Seating">Second Seating</option><option value="Vistadome AC">Vistadome AC</option><option value="AC chair cars">AC chair cars</option><option value="First Class">First Class</option></select></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="total_cost[]" readonly="readonly" class="form-control form-control-sm"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
+        var bus = '<tr><td class="align-middle text-left">Bus Booking <input type="hidden" name="service_name[]" value="Bus Booking"></td><td class="align-middle"><input type="date" name="date[]" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="from[]" placeholder="From" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle">- <input type="hidden" name="class[]" value=""> <input type="hidden" name="days[]" value=""></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="total_cost[]" readonly="readonly" class="form-control form-control-sm"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
+        var cruise = '<tr><td class="align-middle text-left">Cruise Booking <input type="hidden" name="service_name[]" value="Cruise Booking"></td><td class="align-middle"><input type="date" name="date[]" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="from[]" placeholder="From" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle">- <input type="hidden" name="class[]" value=""> <input type="hidden" name="days[]" value=""></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="total_cost[]" readonly="readonly" class="form-control form-control-sm"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
+        var cab = '<tr><td class="align-middle text-left">Cab Booking <input type="hidden" name="service_name[]" value="Cab Booking"></td><td class="align-middle"><input type="date" name="date[]" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="from[]" placeholder="From" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle"><input type="hidden" name="days[]" value=""><select class="form-control form-control-sm" name="class[]" required><option value="">Class</option><option value="Sedan">Sedan</option><option value="SUV">SUV</option><option value="Tempo Traveler - 12">Tempo Traveler - 12</option><option value="Tempo Traveler - 17">Tempo Traveler - 17</option><option value="Bus">Bus</option></select></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="total_cost[]" class="form-control form-control-sm" readonly="readonly"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
+
+        // Function to append row based on selected service
+        $('#addService').on('change', function() {
+            var selectedService = $(this).val();
+
+            // Initialize newRow variable to store the selected row string
+            var newRow;
+
+            // Determine which row string to use based on selectedService
+            switch(selectedService) {
+                case 'Hotel':
+                    newRow = hotel;
+                    break;
+                case 'Flight':
+                    newRow = flight;
+                    break;
+                case 'Train':
+                    newRow = train;
+                    break;
+                case 'Bus':
+                    newRow = bus;
+                    break;
+                case 'Cruise':
+                    newRow = cruise;
+                    break;
+                case 'Cab':
+                    newRow = cab;
+                    break;
+                default:
+                    newRow = ''; // Default to an empty string if no matching service found
+                    break;
+            }
+
+            // Append the new row to the appropriate table
+            if (newRow) {
+                if (selectedService === "Hotel") {
+                    $('#tab_logic').append(newRow);
+                } else {
+                    $('#tab_logic1').append(newRow);
+                }
+            }
         });
     });
 </script>
@@ -702,7 +718,7 @@
             var newRow = $(this).closest("tr").clone(true);
             newRow.find("input:not([name='service_name[]'])").val(""); // Clear input values in the new row
             newRow.find(".add-row").remove();
-            newRow.find("td:last").append('<button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>');
+            // newRow.find("td:last").append('<button type="button" class="btn btn-default btn-sm ml-1 remove-row"><i class="fa fa-minus-circle"></i></button>');
             $(this).closest("tr").after(newRow);
         });
 
