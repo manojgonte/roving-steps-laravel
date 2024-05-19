@@ -31,6 +31,7 @@
                     <div class="col-sm-4">
                         <div class="row d-flex flex-row-reverse">
                             <div class="mr-2">
+                                <a href="{{ url('/admin/invoice-billing/') }}" class="btn btn-light btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
                                 <a href="{{ url('/admin/edit-invoice/'.Request()->id) }}" class="btn btn-light btn-sm"><i class="fa fa-pencil-alt"></i> Edit</a>
                                 <a href="{{ url('/admin/invoice-actions/'.Request()->id.'?type=download') }}" class="btn btn-light btn-sm"><i class="fa fa-download"></i> Download</a>
                                 {{-- <a href="{{ url('/admin/invoice-actions/'.Request()->id.'?type=share') }}" class="btn btn-light btn-sm"><i class="fa fa-share-alt"></i> Share</a> --}}

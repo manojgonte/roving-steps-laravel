@@ -11,7 +11,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h4>Custom Tour Section</h4>
+                    <h4>Create Custom Tour</h4>
                     @if(Session::has('flash_message_error'))
                     <div class="alert alert-error alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -52,7 +52,7 @@
                                         <select class="form-control select2bs4" name="tour_id" required>
                                             <option value="" selected>Select One</option>
                                             @foreach(App\Models\Tour::select('id','tour_name','days','nights')->orderBy('custom_tour','DESC')->orderBy('tour_name','ASC')->get() as $row)
-                                            <option value="{{$row->id}}">{{$row->tour_name}} | {{$row->days}}D/{{$row->nights}}N</option>
+                                            <option value="{{$row->id}}">{{$row->tour_name}} | {{$row->nights}}N/{{$row->days}}D</option>
                                             @endforeach
                                         </select>
                                     </div>

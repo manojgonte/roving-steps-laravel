@@ -90,7 +90,7 @@
                         <h5>Invoice list ({{$invoices->total()}})</h5>
                     </div>
                     <div class="col-lg-6 col-6" style="text-align: right">
-                        <a href="{{ url('/admin/create-invoice') }}" class="btn btn-dark"><i class="fa fa-file-alt"></i> Create invoice</a>
+                        <a href="{{ url('/admin/create-invoice') }}" class="btn btn-dark"><i class="fa fa-file-alt"></i> Create Invoice</a>
                     </div>
                 </div>
             </div>

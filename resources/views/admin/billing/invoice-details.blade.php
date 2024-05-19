@@ -26,14 +26,16 @@
                         <h4 class="m-0 text-dark">Update Invoice Details</h4>
                     </div>
                     <div class="col-sm-4">
-                        <div class="row d-flex flex-row-reverse">
+                        <div class="text-right">
+                            <a href="{{ url('/admin/invoice-billing/') }}" class="btn btn-light btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
+                            <a href="{{ url('/admin/edit-invoice/'.Request()->id) }}" class="btn btn-light btn-sm"><i class="fa fa-pencil-alt"></i> Edit</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <section id="DivIdToPrint">
+        <section>
             <div class="invoice p-3 mb-3 m-3 mt-auto">
                 @if(Session::has('flash_message_error'))
                 <div class="alert alert-danger alert-block">
@@ -47,7 +49,6 @@
                     <strong>{!! session('flash_message_success') !!}</strong>
                 </div>
                 @endif
-                <a href="{{ url('/admin/edit-invoice/'.Request()->id) }}" class="btn btn-light btn-sm position-absolute" style="right: 5px;top: 5px;z-index: 1;"><i class="fa fa-pencil-alt"></i> Edit</a>
                 @include('admin/billing/invoice_basic_info', ['invoice' => $invoice])
                 <hr />
 
@@ -656,17 +657,6 @@
         // Initial calculation when the page loads
         calculateTotalCost();
     });
-</script>
-
-<script>
-    function printDiv(){
-        var divToPrint=document.getElementById('DivIdToPrint');
-        var newWin=window.open('','Print-Window');
-        newWin.document.open();
-        newWin.document.write('<html><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
-        newWin.document.close();
-        setTimeout(function(){newWin.close();},10);
-    }
 </script>
 
 @endsection('scripts')
