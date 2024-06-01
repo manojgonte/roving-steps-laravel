@@ -60,7 +60,7 @@
                                             <label class="required">Day</label>
                                             <select class="form-control select2bs4" name="day" required>
                                                 <option value="">Select Day</option>
-                                                @for($i=0;$i<$tour->days;$i++)
+                                                @for($i=0; $i<$tour->days; $i++)
                                                 <option value="{{$i+1}}">{{$i+1}}</option>
                                                 @endfor
                                             </select>
@@ -69,7 +69,17 @@
                                     <div class="row pt-2">
                                         <div class="form-group col-md-4">
                                             <label class="required">Places to Visit</label>
-                                            <input type="text" name="visit_place" class="form-control" placeholder="Enter Place" value="" required>
+                                            {{-- <input type="text" name="visit_place" class="form-control" placeholder="Enter Place" value="" required> --}}
+                                            <select class="form-control select2bs4" name="visit_place" required>
+                                                <option value="">Select One</option>
+                                                @foreach($destinations as $cat){
+                                                    <option value="{{$cat->name}}">{{$cat->name}}</option>
+                                                    @php $sub_categories = App\Models\Destination::where(['parent_id'=>$cat->id])->get(); @endphp
+                                                    @foreach ($sub_categories as $sub_cat) {
+                                                    <option value="{{$sub_cat->name}}">-- {{$sub_cat->name}}</option>
+                                                    @endforeach
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="required">Activity of the Day</label>
@@ -127,7 +137,6 @@
                                         <th>Place</th>
                                         <th>Activity</th>
                                         <th>Travel</th>
-                                        {{-- <th>Overview</th> --}}
                                         <th>Stay</th>
                                         <th>Food</th>
                                         <th></th>
@@ -141,7 +150,6 @@
                                         <td>{{ Str::limit($row->visit_place, 30) }}</td>
                                         <td>{{ $row->activity }}</td>
                                         <td>{{ $row->travel_option }}</td>
-                                        {{-- <td>{{ Str::limit($row->description, 30) }}</td> --}}
                                         <td>{{ $row->stay }}</td>
                                         <td>{{ $row->food }}</td>
                                         <td class="d-flex border-0 justify-content-center">
@@ -202,6 +210,37 @@
             }
         });
     });
+</script>
+<script>
+    $(document).ready(function(){
+        $('select[name="visit_place"]').change(function(){
+            var placeId = $(this).val();
+            if(placeId){
+                $.ajax({
+                    type:"GET",
+                    url:"../../admin/get-itinerary-details/"+placeId,
+                    data:{place_id: placeId},
+                    dataType: 'json',
+                    success:function(data){
+                        // console.log(data); return false;
+                        if(data){
+                            $('input[name="activity"]').val(data.activity);
+                            $('select[name="travel_option"]').val(data.travel_option);
+                            $('textarea[name="description"]').val(data.description);
+                            $('input[name="stay"]').val(data.stay);
+                            $('input[name="food"]').val(data.food);
+                        }
+                    }
+                });
+            }else{
+                $('input[name="activity"]').val('');
+                $('select[name="travel_option"]').val('');
+                $('textarea[name="description"]').val('');
+                $('input[name="stay"]').val('');
+                $('input[name="food"]').val('');
+            }
+        });
+});
 </script>
 
 @endsection

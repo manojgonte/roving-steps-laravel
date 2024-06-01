@@ -30,7 +30,7 @@
                                         <a href="{{url('/gallery')}}"> Gallery </a>
                                     </li>
                                     <li>
-                                        <a href="{{url('/flight-booking')}}"> Flight Booking </a>
+                                        <a href="#"> Flight Booking </a>
                                     </li>
                                     <li>
                                         <a href="{{url('/cruise-booking')}}"> Cruise Booking </a>

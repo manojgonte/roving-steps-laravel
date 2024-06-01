@@ -31,6 +31,7 @@ Route::post('/tour-enquiry', [IndexController::class, 'tourEnquiry']);
 Route::get('/gallery', [IndexController::class, 'gallery']);
 
 Route::get('/flight-booking', [IndexController::class, 'flightBooking']);
+Route::get('/flight-listing', [IndexController::class, 'flightListing']);
 Route::get('/cruise-booking', [IndexController::class, 'cruiseBooking']);
 Route::get('/other-services', [IndexController::class, 'otherServices']);
 
@@ -81,6 +82,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/add-tour-itinerary/{id}', [TourController::class, 'addTourItinerary']);
     Route::match(['get','post'], 'admin/edit-tour-itinerary/{id}', [TourController::class, 'editTourItinerary']);
     Route::get('admin/delete-itinerary/{id}', [TourController::class,'deleteItinerary']);
+    Route::get('admin/get-itinerary-details/{place}', [TourController::class,'getItineraryDetails']);
 
     Route::match(['get','post'], 'admin/share-tour/', [TourController::class,'shareTour']);
     Route::match(['get','post'], 'admin/download-tour/{id}', [TourController::class,'downloadTour']);
@@ -88,6 +90,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/enquiries', [TourController::class,'enquiries']);
     Route::match(['get','post'], 'admin/delete-enquiry/{id}', [TourController::class,'deleteEnquiry']);
     Route::match(['get','post'], 'admin/tour-enquiries', [TourController::class,'tourEnquiries']);
+    Route::match(['get','post'], 'admin/delete-tour-enquiry/{id}', [TourController::class,'deleteTourEnquiry']);
 
     // Destinations
     Route::match(['get','post'], 'admin/edit-destination/{id}', [TourController::class, 'editDestination']);

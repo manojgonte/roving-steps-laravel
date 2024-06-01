@@ -77,9 +77,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($destinations as $row)
+                                @foreach($destinations as $key => $row)
 	                                <tr>
-	                                    <td>{{ $row->id }}</td>
+                                        <td>{{ $destinations->firstItem() + $key }}</td>
 	                                    <td>@if($row->image)<img src="{{asset('img/destinations/'.$row->image)}}" width="50"> @else NA @endif</td>
 	                                    <td>{{ Str::limit($row->name, 30) }}</td>
 	                                    <td>@if($row->description){{ Str::limit($row->description, 30) }} @else NA @endif</td>

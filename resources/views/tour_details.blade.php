@@ -377,14 +377,14 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-input ">
-                                        <input type="date" name="from_date" min="{{date("Y-m-d")}}">
+                                        <input type="date" name="from_date" min="">
                                         <label class="lh-1 text-16 text-light-1">From</label>
                                     </div>
                                     <div class="error-message"></div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-input ">
-                                        <input type="date" name="end_date" min="{{date("Y-m-d")}}">
+                                        <input type="date" name="end_date" min="">
                                         <label class="lh-1 text-16 text-light-1">To</label>
                                     </div>
                                     <div class="error-message"></div>
@@ -432,7 +432,13 @@
                 },
                 message:{
                     required:true,
-                    maxlength:1000,
+                    maxlength:500,
+                },
+                from_date:{
+                    date:true,
+                },
+                end_date:{
+                    date:true,
                 },
             },
             messages:{

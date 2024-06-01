@@ -20,20 +20,20 @@
 
     <section class="content">
         <div class="container-fluid">
+            @if(Session::has('flash_message_error'))
+            <div class="alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! session('flash_message_error') !!}</strong>
+            </div>
+            @endif
+            @if(Session::has('flash_message_success'))
+            <div class="alert alert-success alert-block w-50">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! session('flash_message_success') !!}</strong>
+            </div>
+            @endif
             <div class="row">
                 <div class="col-12">
-                	@if(Session::has('flash_message_error'))
-		            <div class="alert alert-danger alert-block">
-		                <button type="button" class="close" data-dismiss="alert">×</button>
-		                <strong>{!! session('flash_message_error') !!}</strong>
-		            </div>
-		            @endif
-		            @if(Session::has('flash_message_success'))
-		            <div class="alert alert-success alert-block w-50">
-		                <button type="button" class="close" data-dismiss="alert">×</button>
-		                <strong>{!! session('flash_message_success') !!}</strong>
-		            </div>
-		            @endif
                     <div class="card">
                         <div class="card-header">
                             <form action="" method="GET">
@@ -71,6 +71,7 @@
                                         <th>Current city</th>
                                         <th>Travel Date</th>
                                         <th>Message</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,8 +85,11 @@
                                         </td>
 	                                    <td>{{ $row->tourist_no }}</td>
 	                                    <td>{{ $row->current_city }}</td>
-	                                    <td>{{ date('d/m/Y', strtotime($row->from_date)) }} - <br>{{ date('d/m/Y', strtotime($row->end_date)) }}</td>
+	                                    <td>{{ $row->from_date ? date('d/m/Y', strtotime($row->from_date)) : 'NA' }} - <br>{{ $row->end_date ? date('d/m/Y', strtotime($row->end_date)) : 'NA' }}</td>
 	                                    <td>{{ $row->message }}</td>
+                                        <td>
+                                            <a class="btn btn-danger" onclick="return confirm('Are you sure')" href="{{ url('/admin/delete-tour-enquiry/'.$row->id) }}"><i class="fa fa-trash"></i></a>
+                                        </td>
 	                                    {{-- <td>
                                             <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp;
                                             <a class="btn btn-default" href="{{ url('/admin/share-tour/'.$row->id) }}"><i class="fa fa-share"></i></a>

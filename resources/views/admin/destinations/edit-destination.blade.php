@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h4>Edit destination Section</h4>
+                    <h4>Edit Destination Section</h4>
                     @if(Session::has('flash_message_error'))
                     <div class="alert alert-error alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -38,24 +38,34 @@
                         <form method="POST" action="{{ url('admin/edit-destination/'.$destination->id) }}" enctype="multipart/form-data" id="addDestination">@csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
             	                        <label class="required">Destination Name</label>
             	                        <input type="text" name="destination_name" class="form-control" placeholder="Enter Destination Name" value="{{$destination->name}}" required>
                           	        </div>
-                                    <div class="form-group col-md-4">
+
+                                    <div class="form-group col-md-3">
+                                        <label class="required">Destination Level</label>
+                                        <select class="form-control select2bs4" name="parent_id" id="parent_id">
+                                            <option value="0">Main Category</option>
+                                            @foreach(App\Models\Destination::where(['parent_id'=>0])->get() as $val)
+                                            <option value="{{ $val->id }}" @if($val->id == $destination->parent_id) selected @endif>{{ $val->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="required">Destination Type</label>
+                                        <select class="form-control select2bs4" name="type" name="type" value="{{$destination->type}}">
+                                            <option @if($destination->type == 'Domestic') selected @endif value="Domestic">Domestic</option>
+                                            <option @if($destination->type == 'International') selected @endif value="International">International</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
                                         <label class="required">Cover Image <small>(Size: 450 X 600px)</small></label>
                                         @if(!empty($destination->image))
                                         <input type="hidden" name="current_image" value="{{ $destination->image }}">
                                         @endif
                                         <input type="file" name="image" class="form-control p-1" id="image" value="{{ $destination->image }}">
                                         <img class="mt-2" style="width: 15%;" src="{{ asset('img/destinations/'.$destination->image) }}" alt="">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="required">Destination Type</label>
-                                        <select class="form-control select2bs4" name="type" name="type" value="{{$destination->type}}">
-                                            <option @if($destination->type == 'Domestic') selected @endif value="Domestic">Domestic</option>
-                                            <option @if($destination->type == 'International') selected @endif value="International">International</option>
-                                        </select>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Destination Description</label>

@@ -179,6 +179,11 @@ class IndexController extends Controller
         return view('flight_booking',compact('meta_title'));
     }
 
+    public function flightListing(Request $request){
+        $meta_title = 'Flight Listing';
+        return view('flight_listing',compact('meta_title'));
+    }
+
     public function cruiseBooking(Request $request){
         $meta_title = 'Cruise Booking';
         return view('cruise_booking',compact('meta_title'));

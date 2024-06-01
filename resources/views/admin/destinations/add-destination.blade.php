@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h4>Add destination Section</h4>
+                    <h4>Add Destination Section</h4>
                     @if(Session::has('flash_message_error'))
                     <div class="alert alert-error alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -39,21 +39,30 @@
                             id="addDestination">@csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
                                         <label class="required">Destination Name</label>
                                         <input type="text" name="destination_name" class="form-control"
                                             placeholder="Enter Destination Name" required>
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="">Cover Image <small>(Size: 450 X 600px)</small></label>
-                                        <input type="file" name="image" class="form-control p-1" accept="image/*">
+                                    <div class="form-group col-md-3">
+                                        <label class="required">Destination Level</label>
+                                        <select class="form-control select2bs4" name="parent_id" id="parent_id">
+                                            <option value="0">Main Category</option>
+                                            @foreach(App\Models\Destination::where(['parent_id'=>0])->get() as $val)
+                                            <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
                                         <label class="required">Destination Type</label>
-                                        <select class="form-control select2bs4" name="type" name="type">
+                                        <select class="form-control select2bs4" name="type" id="type">
                                             <option value="Domestic">Domestic</option>
                                             <option value="International">International</option>
                                         </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="">Cover Image <small>(Size: 450 X 600px)</small></label>
+                                        <input type="file" name="image" class="form-control p-1" accept="image/*">
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Destination Description</label>

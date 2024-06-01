@@ -309,7 +309,8 @@ class TourController extends Controller
                 ->leftJoin('special_tours','special_tours.id','tours.special_tour_type')
                 ->where('tours.id', $id)
                 ->first();
-        return view('admin.tour.itinerary_builder')->with(compact('tour'));
+        $destinations = Destination::where(['parent_id'=>0])->get();
+        return view('admin.tour.itinerary_builder')->with(compact('tour','destinations'));
     }
 
     public function addTourItinerary(Request $request, $id){
@@ -395,6 +396,10 @@ class TourController extends Controller
         return redirect()->back()->with('flash_message_success','Itinerary deleted successfully');
     }
 
+    public function getItineraryDetails(Request $request, $place){
+        return $itinerary = TourItinerary::where('visit_place',$place)->orderBy('id','DESC')->first();
+    }
+
     public function enquiries(Request $request, $status=null){
         $enquiry = Enquiry::orderBy('id','DESC')->paginate(10);
         return view('admin.enquiries.enquiries')->with(compact('enquiry'));
@@ -430,6 +435,11 @@ class TourController extends Controller
             ->groupBy('tour_enquiry.tour_id')
             ->get();
         return view('admin.tour.tour-enquiries')->with(compact('tour_enquiry','tours'));
+    }
+
+    public function deleteTourEnquiry(Request $request, $id){
+        $enquiry = TourEnquiry::find($id)->delete();
+        return redirect()->back()->with('flash_message_success','Enquiry deleted');
     }
 
     public function shareTour(Request $request){
@@ -511,6 +521,7 @@ class TourController extends Controller
             // dd($data);
             $destination = new Destination;
             $destination->name = $data['destination_name'];
+            $destination->parent_id = $data['parent_id'];
             $destination->description = !empty($data['description']) ? $data['description'] : null;
             $destination->type = $data['type'];
             $destination->is_popular = !empty($data['is_popular']) ? $data['is_popular'] : '0' ;
@@ -556,6 +567,7 @@ class TourController extends Controller
             // detail update
             Destination::where('id',$id)->update([
                 'name'=>$data['destination_name'],
+                'parent_id'=>$data['parent_id'],
                 'image'=>$filename,
                 'description'=>!empty($data['description']) ? $data['description'] : null,
                 'type'=>$data['type'],
