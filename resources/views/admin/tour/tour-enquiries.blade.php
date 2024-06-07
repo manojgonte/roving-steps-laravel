@@ -42,7 +42,9 @@
                                         <select class="form-control select2bs4" name="tour_id" onchange="javascript:this.form.submit();">
                                             <option value="" selected>-- All Tours --</option>
                                             @foreach($tours as $tour)
+                                            @if($tour->tour_name)
                                             <option value="{{$tour->tour_id}}" @if(Request()->tour_id == $tour->tour_id) selected @endif>{{Str::limit($tour->tour_name, 30)}}</option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -78,13 +80,19 @@
                                 @foreach($tour_enquiry as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-                                        <td><a href="{{url('tour-details/'.$row->tour_id.'/'.Str::slug($row->tour_name))}}" target="_blank" noreferrer noopener> {{ $row->tour_name }} </a></td>
+                                        <td>
+                                            @if($row->tour_id)
+                                            <a href="{{url('tour-details/'.$row->tour_id.'/'.Str::slug($row->tour_name))}}" target="_blank" noreferrer noopener> {{ $row->tour_name }} </a>
+                                            @else
+                                            -
+                                            @endif
+                                        </td>
 	                                    <td class="text-left"><i class="fa fa-user"></i> {{ Str::limit($row->name, 30) }} <br> 
                                             <i class="fa fa-envelope"></i> {{ $row->email }} <br> 
                                             <i class="fa fa-phone"></i> {{ $row->contact }}
                                         </td>
-	                                    <td>{{ $row->tourist_no }}</td>
-	                                    <td>{{ $row->current_city }}</td>
+	                                    <td>{{ $row->tourist_no ? $row->tourist_no : '-' }}</td>
+	                                    <td>{{ $row->current_city ? $row->current_city : '-' }}</td>
 	                                    <td>{{ $row->from_date ? date('d/m/Y', strtotime($row->from_date)) : 'NA' }} - <br>{{ $row->end_date ? date('d/m/Y', strtotime($row->end_date)) : 'NA' }}</td>
 	                                    <td>{{ $row->message }}</td>
                                         <td>

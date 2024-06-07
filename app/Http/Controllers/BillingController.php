@@ -61,7 +61,7 @@ class BillingController extends Controller
             $Invoices->tour_name = !empty($data['isTour']) ? $data['tour_name'] : null;
             $Invoices->save();
 
-            return redirect('admin/invoice-details/'.base64_encode($Invoices->id))->with('flash_message_success','Invoice created successfully');
+            return redirect('admin/invoice-details/'.base64_encode($Invoices->id))->with('flash_message_success','Invoice generated successfully, please update the services amount.');
         }
         return view('admin.billing.create-invoice');
     }

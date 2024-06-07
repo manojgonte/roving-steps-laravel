@@ -25,12 +25,22 @@
 </section>
 
 <section class="layout-pt-md layout-pb-lg">
-    <div class="container">
+        <div class="container">
+        @if(Session::has('success_message'))
+        <div class="p-2 mb-2 bg-info-2 rounded-4">
+            <span class="text-white">{!! session('success_message') !!}</span>
+        </div>
+        @endif
+        @if(Session::has('error_message'))
+        <div class="p-2 mb-2 bg-red-1 rounded-4">
+            <span class="text-white">{!! session('error_message') !!}</span>
+        </div>
+        @endif
         <div class="row d-flex x-gap-80 y-gap-20 justify-between">
             <div class="col-lg-7">
                 <div class="text-30 sm:text-24 fw-600">Keep in touch with us</div>
                 <div class="rounded-4">
-                    <form action="{{url('contact-us')}}" method="POST" class="contactEnqForm">@csrf
+                    <form action="{{url('tour-enquiry')}}" method="POST" class="contactEnqForm">@csrf
                         <div class="row y-gap-20">
                             <div class="col-6">
                                 <div class="form-input">
@@ -160,7 +170,7 @@
             },
             submitHandler: function(form) {
                 $(".button").attr("disabled", true);
-                $(".button").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
+                $(".button").html("<span class='fa fa-spinner fa-spin'></span>&nbsp; Please wait...");
                 form.submit();
             }
         });

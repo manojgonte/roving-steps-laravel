@@ -2,7 +2,7 @@
 
 use Carbon\Carbon;
 
-function AmountInWords(float $amount) {
+function AmountInWords(float $amount=null) {
     if ($amount == null || $amount == 0.0) {
         return '-';
     }else{

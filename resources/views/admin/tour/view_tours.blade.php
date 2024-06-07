@@ -9,7 +9,7 @@
                     <h4>Tours</h4>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ url('/admin/plan-tour') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> Create Tour</a>
+                    <a href="{{ url('/admin/plan-tour') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> Create Custom Tour</a>
                     <a href="{{ url('/admin/add-tour') }}" class="btn btn-light"><i class="fa fa-plus-circle"></i> Plan Tour</a>
                 </div>
             </div>

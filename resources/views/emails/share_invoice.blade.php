@@ -293,6 +293,7 @@
 
             <div class="">
                 <div class="font-weight-bold" style="font-size: 13px; margin-bottom: 8px">Payments</div>
+                @if(count($invoice->invoiceItems) > 0)
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr class="bg-gradient-dark">
@@ -344,6 +345,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                @endif
 
                 @if (count($invoice->invoiceItems->filter(function($item) {
                     return $item->service_name == 'Hotel Booking';
@@ -472,30 +474,33 @@
                 </tbody>
             </table>
 
+            @if(count($invoice->invoicePayments) > 0)
+            <div class="font-weight-bold" style="font-size: 13px; margin-bottom: 8px">Payment History</div>
             <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr class="bg-gradient-dark">
-                            <th class="text-left"> Date </th>
-                            <th class="text-center"> Amount </th>
-                            <th class="text-center"> Payment Mode </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($invoice->invoicePayments->sortByDesc('payment_date') as $payment)
-                        <tr>
-                            <td class="align-middle text-left">
-                                {{date('d/m/Y', strtotime($payment->payment_date))}}
-                            </td>
-                            <td class="align-middle text-center">
-                                Rs.{{$payment->amount}}
-                            </td>
-                            <td class="align-middle text-center">
-                                {{$payment->payment_mode}}
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <thead>
+                    <tr class="bg-gradient-dark">
+                        <th class="text-left"> Date </th>
+                        <th class="text-center"> Amount </th>
+                        <th class="text-center"> Payment Mode </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($invoice->invoicePayments->sortByDesc('payment_date') as $payment)
+                    <tr>
+                        <td class="align-middle text-left">
+                            {{date('d/m/Y', strtotime($payment->payment_date))}}
+                        </td>
+                        <td class="align-middle text-center">
+                            Rs.{{$payment->amount}}
+                        </td>
+                        <td class="align-middle text-center">
+                            {{$payment->payment_mode}}
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @endif
 
             <hr />
             <table class="w-full">

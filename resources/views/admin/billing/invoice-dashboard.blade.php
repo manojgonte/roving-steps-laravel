@@ -133,6 +133,7 @@
                                 <th>Invoice Date</th>
                                 <th>Total</th>
                                 <th>Payment Status</th>
+                                <th>Invoice Sent</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -153,6 +154,7 @@
                                             UNPAID
                                         @endif
                                     </td>
+                                    <td class="align-middle">{{ $row->invoice_sent == 1 ? 'Yes' : 'No' }}</td>
                                     <td class="align-middle">
                                         <a class="btn btn-default" href="{{ url('/admin/invoice-details/'.base64_encode($row->id)) }}"><i class="fa fa-info-circle"></i></a>
                                         <a class="btn btn-default @if($row->grand_total == 0) disabled @endif" href="{{ url('/admin/invoice-payments/'.base64_encode($row->id)) }}"><i class="fa fa-money-bill-alt"></i></a>

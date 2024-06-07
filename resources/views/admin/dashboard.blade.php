@@ -68,5 +68,64 @@
             </div>
         </div>
     </section>
+
+    <hr />
+
+    @php $now = Carbon\Carbon::now(); @endphp
+    <section class="content">
+        <div class="container-fluid">
+            <h4 class="m-0 mb-3 text-dark">Dashboard</h4>
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-gradient-dark">
+                        <div class="inner">
+                            <h3>{{App\Models\PlannedTour::where('status', 0)->count()}}</h3>
+                            <p>Draft</p>
+                        </div>
+                        {{-- <div class="icon">
+                            <i class="ion ion-map"></i>
+                        </div> --}}
+                        <a href="{{url('admin/tours/draft')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-gradient-dark">
+                        <div class="inner">
+                            <h3>{{App\Models\PlannedTour::where('status', 1)->whereRaw('? between from_date and end_date', [$now])->count()}}</h3>
+                            <p>Ongoing</p>
+                        </div>
+                        {{-- <div class="icon">
+                            <i class="ion ion-location"></i>
+                        </div> --}}
+                        <a href="{{url('admin/tours/ongoing')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-gradient-dark">
+                        <div class="inner">
+                            <h3>{{App\Models\PlannedTour::where('status', 1)->where('from_date', '>', $now)->count()}}</h3>
+                            <p>Upcoming</p>
+                        </div>
+                        {{-- <div class="icon">
+                            <i class="ion ion-social-twitch"></i>
+                        </div> --}}
+                        <a href="{{url('admin/tours/upcoming')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-gradient-dark">
+                        <div class="inner">
+                            <h3>{{App\Models\PlannedTour::where('status', 1)->where('end_date', '<', $now)->count()}}</h3>
+                            <p>Completed</p>
+                        </div>
+                        {{-- <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div> --}}
+                        <a href="{{url('admin/tours/completed')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 @endsection

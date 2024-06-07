@@ -65,7 +65,8 @@
                             in_array('Flight Booking', $invoice->invoice_for) || 
                             in_array('Train Booking', $invoice->invoice_for) || 
                             in_array('Cab Booking', $invoice->invoice_for) || 
-                            in_array('Cruise Booking', $invoice->invoice_for))
+                            in_array('Cruise Booking', $invoice->invoice_for) || 
+                            in_array('Visa Service', $invoice->invoice_for))
                         <div class="col-md-12">
                             <h6 class="font-weight-bold">Payments</h6>
                             <table class="table table-hover table-bordered" id="tab_logic1">

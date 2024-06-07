@@ -25,9 +25,11 @@
                     @endforeach
                 @endforeach
                 @else
+                @if($invoice->invoice_for)
                 @foreach($invoice->invoice_for as $row)
                 {{ $row }}@if($loop->last) @else, @endif
                 @endforeach
+                @endif
                 @endif
             </label>
         </div>
