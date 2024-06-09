@@ -91,7 +91,7 @@
                                 @foreach($tours as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td class="text-left">{{ Str::limit($row->tour_name, 40) }}</td>
+	                                    <td class="text-left"><a href="{{ url('/admin/edit-tour/'.$row->id) }}">{{ Str::limit($row->tour_name, 40) }}</a></td>
 	                                    <td>{{ $row->type }}</td>
                                         <td>{{ Str::limit($row->destination, 20) }}</td>
                                         <td>{{ $row->days }}D | {{ $row->nights }}N</td>

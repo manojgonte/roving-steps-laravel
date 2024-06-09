@@ -89,6 +89,7 @@
                                 <option value="Cab Booking">Cab Booking</option>
                                 <option value="Cruise Booking">Cruise Booking</option>
                                 <option value="Visa Service">Visa Service</option>
+                                <option value="Passport Service">Passport Service</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2">

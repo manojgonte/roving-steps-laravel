@@ -100,7 +100,7 @@
                         </div>
                         
                         @php 
-                            $bookings = ["Hotel Booking","Bus Booking","Flight Booking","Train Booking","Cab Booking","Cruise Booking","Visa Service"];
+                            $bookings = ["Hotel Booking","Bus Booking","Flight Booking","Train Booking","Cab Booking","Cruise Booking","Visa Service","Passport Service"];
                         @endphp
                         <div class="form-group col-md-2">
                             <label class="required">Services</label>

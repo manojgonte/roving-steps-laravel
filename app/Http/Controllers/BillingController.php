@@ -115,7 +115,7 @@ class BillingController extends Controller
             // dd($data);
 
             $invoice = invoices::find($id);
-            $invoice->visa = $data['visa'];
+            $invoice->visa = !empty($data['visa']) ? $data['visa'] : null;
             $invoice->insurance = $data['insurance'];
             $invoice->visa_appointment = $data['visa_appointment'];
             $invoice->swiss_pass = $data['swiss_pass'];
@@ -138,8 +138,8 @@ class BillingController extends Controller
                     $item->service_name     = $data['service_name'][$key];
                     $item->date             = $data['date'][$key];
                     $item->name             = $data['name'][$key];
-                    $item->from_dest        = $data['from'][$key];
-                    $item->to_dest          = $data['to'][$key];
+                    $item->from_dest        = !empty($data['from'][$key]) ? $data['from'][$key] : null;
+                    $item->to_dest          = !empty($data['to'][$key]) ? $data['to'][$key] : null;
                     $item->class            = !empty($data['class'][$key]) ? $data['class'][$key] : null;
                     $item->days             = !empty($data['days'][$key]) ? $data['days'][$key] : null;
                     $item->tourist_count    = $data['tourist_count'][$key];

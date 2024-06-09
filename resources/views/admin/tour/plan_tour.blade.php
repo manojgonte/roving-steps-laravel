@@ -45,30 +45,30 @@
                                 <div class="row">
                                     <div class="form-group col-md-3">
                                         <label class="">Customer Name</label>
-                                        <input type="text" name="customer_name" class="form-control" placeholder="Enter Customer Name">
+                                        <input type="text" name="customer_name" class="form-control" placeholder="Enter Customer Name" value="{{Request()->name}}">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required">Tour</label>
                                         <select class="form-control select2bs4" name="tour_id" required>
                                             <option value="" selected>Select One</option>
                                             @foreach(App\Models\Tour::select('id','tour_name','days','nights')->orderBy('custom_tour','DESC')->orderBy('tour_name','ASC')->get() as $row)
-                                            <option value="{{$row->id}}">{{$row->tour_name}} | {{$row->nights}}N/{{$row->days}}D</option>
+                                            <option value="{{$row->id}}" @if(Request()->tour_id == $row->id) selected @endif>{{$row->tour_name}} | {{$row->nights}}N/{{$row->days}}D</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required">Tourist Count</label>
-                                        <input type="number" min="1" name="tourist_count" class="form-control" placeholder="Enter Count" required>
+                                        <input type="number" min="1" name="tourist_count" class="form-control" placeholder="Enter Count" value="{{Request()->tourist_count}}" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-3">
                                         <label class="required">Start Date</label>
-                                        <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Enter Date" required>
+                                        <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Enter Date" value="{{Request()->from_date}}" required>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required">End Date</label>
-                                        <input type="date" name="end_date" class="form-control" placeholder="Enter Date" required>
+                                        <input type="date" name="end_date" class="form-control" placeholder="Enter Date" value="{{Request()->end_date}}" required>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="">Status</label>

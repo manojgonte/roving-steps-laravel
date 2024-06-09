@@ -20,19 +20,19 @@
 
     <section class="content">
         <div class="container-fluid">
-            @if(Session::has('flash_message_error'))
-            <div class="alert alert-danger alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>{!! session('flash_message_error') !!}</strong>
-            </div>
-            @endif
-            @if(Session::has('flash_message_success'))
-            <div class="alert alert-success alert-block w-50">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>{!! session('flash_message_success') !!}</strong>
-            </div>
-            @endif
             <div class="row">
+                @if(Session::has('flash_message_error'))
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{!! session('flash_message_error') !!}</strong>
+                </div>
+                @endif
+                @if(Session::has('flash_message_success'))
+                <div class="alert alert-success alert-block w-50">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{!! session('flash_message_success') !!}</strong>
+                </div>
+                @endif
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
@@ -70,7 +70,6 @@
                                         <th>Tour Name</th>
                                         <th>Customer Details</th>
                                         <th>Tourist No</th>
-                                        <th>Current city</th>
                                         <th>Travel Date</th>
                                         <th>Message</th>
                                         <th>Action</th>
@@ -89,14 +88,17 @@
                                         </td>
 	                                    <td class="text-left"><i class="fa fa-user"></i> {{ Str::limit($row->name, 30) }} <br> 
                                             <i class="fa fa-envelope"></i> {{ $row->email }} <br> 
-                                            <i class="fa fa-phone"></i> {{ $row->contact }}
+                                            <i class="fa fa-phone"></i> {{ $row->contact }}<br> 
+                                            <i class="fa fa-city"></i> {{ $row->current_city ? $row->current_city : 'NA' }}
                                         </td>
-	                                    <td>{{ $row->tourist_no ? $row->tourist_no : '-' }}</td>
-	                                    <td>{{ $row->current_city ? $row->current_city : '-' }}</td>
+	                                    <td>{{ $row->tourist_no ? $row->tourist_no : 'NA' }}</td>
 	                                    <td>{{ $row->from_date ? date('d/m/Y', strtotime($row->from_date)) : 'NA' }} - <br>{{ $row->end_date ? date('d/m/Y', strtotime($row->end_date)) : 'NA' }}</td>
 	                                    <td>{{ $row->message }}</td>
                                         <td>
-                                            <a class="btn btn-danger" onclick="return confirm('Are you sure')" href="{{ url('/admin/delete-tour-enquiry/'.$row->id) }}"><i class="fa fa-trash"></i></a>
+                                            <div class="d-flex">
+                                                <a class="btn btn-light btn-sm mr-1" title="Create Custom Tour" href="{{ url('/admin/plan-tour?tour_id='.$row->tour_id.'&name='.$row->name.'&tourist_count='.$row->tourist_no.'&from_date='.$row->from_date.'&end_date='.$row->end_date) }}"><i class="fa fa-campground"></i></a>
+                                                <a class="btn btn-danger btn-sm" onclick="return confirm('Are you sure')" href="{{ url('/admin/delete-tour-enquiry/'.$row->id) }}"><i class="fa fa-trash"></i></a>
+                                            </div>
                                         </td>
 	                                    {{-- <td>
                                             <button class="btn btn-default disabled" disbaled href="{{ url('/admin/download-tour/'.$row->id) }}"><i class="fa fa-download" style="color: #000;"></i></button> &nbsp;

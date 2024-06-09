@@ -70,6 +70,7 @@
                                         <option value="Cab">Cab Booking</option>
                                         <option value="Cruise">Cruise Booking</option>
                                         <option value="Visa">Visa Service</option>
+                                        <option value="Passport">Passport Service</option>
                                     </select>
                                 </div>
                             </div>
@@ -344,13 +345,59 @@
                                             <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required value="{{$item->name}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required value="{{$item->from_dest}}" />
+                                            -
+                                            <input type="hidden" name="from[]" value="">
                                         </td>
                                         <td class="align-middle">
                                             <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required value="{{$item->to_dest}}" />
                                         </td>
                                         <td class="align-middle">
-                                            NA
+                                            -
+                                            <input type="hidden" name="class[]" value="">
+                                            <input type="hidden" name="days[]" value="">
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    @endif
+                                    @if(in_array('Passport Service', $invoice->invoice_for))
+                                    @foreach ($invoice->invoiceItems->filter(function($item) {
+                                        return $item->service_name == 'Passport Service';
+                                    }) as $item)
+                                    <tr>
+                                        <td class="align-middle text-left">
+                                            Passport Service
+                                            <input type="hidden" name='service_name[]' value="Passport Service" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="date" name='date[]' class="form-control form-control-sm" required value="{{$item->date}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required value="{{$item->name}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            -
+                                            <input type="hidden" name="class[]" value="">
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required value="{{$item->to_dest}}" />
+                                        </td>
+                                        <td class="align-middle">
+                                            -
                                             <input type="hidden" name="class[]" value="">
                                             <input type="hidden" name="days[]" value="">
                                         </td>
@@ -445,10 +492,10 @@
 
                 <table id="example" class="table table-bordered table-striped" style="overflow-x: auto;">
                     <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td class="text-left text-sm">Visa</td>
                             <td class="text-right"><input type="number" name="visa" class="form-control form-control-sm w-25" min="1" value="{{$invoice->visa}}" /></td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td class="text-left text-sm">Insurance</td>
                             <td class="text-right"><input type="number" name="insurance" class="form-control form-control-sm w-25" min="1" value="{{$invoice->insurance}}" /></td>
@@ -566,7 +613,8 @@
         var bus = '<tr><td class="align-middle text-left">Bus Booking <input type="hidden" name="service_name[]" value="Bus Booking"></td><td class="align-middle"><input type="date" name="date[]" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="from[]" placeholder="From" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle">- <input type="hidden" name="class[]" value=""> <input type="hidden" name="days[]" value=""></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="total_cost[]" readonly="readonly" class="form-control form-control-sm"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
         var cruise = '<tr><td class="align-middle text-left">Cruise Booking <input type="hidden" name="service_name[]" value="Cruise Booking"></td><td class="align-middle"><input type="date" name="date[]" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="from[]" placeholder="From" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle">- <input type="hidden" name="class[]" value=""> <input type="hidden" name="days[]" value=""></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="total_cost[]" readonly="readonly" class="form-control form-control-sm"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
         var cab = '<tr><td class="align-middle text-left">Cab Booking <input type="hidden" name="service_name[]" value="Cab Booking"></td><td class="align-middle"><input type="date" name="date[]" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="from[]" placeholder="From" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle"><input type="hidden" name="days[]" value=""><select class="form-control form-control-sm" name="class[]" required><option value="">Class</option><option value="Sedan">Sedan</option><option value="SUV">SUV</option><option value="Tempo Traveler - 12">Tempo Traveler - 12</option><option value="Tempo Traveler - 17">Tempo Traveler - 17</option><option value="Bus">Bus</option></select></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="total_cost[]" class="form-control form-control-sm" readonly="readonly"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
-        var visa = '<tr><td class="align-middle text-left">Visa Service <input type="hidden" name="service_name[]" value="Visa Service"></td><td class="align-middle"><input type="date" name="date[]" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="from[]" placeholder="From" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle">- <input type="hidden" name="class[]" value=""> <input type="hidden" name="days[]" value=""></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="total_cost[]" readonly="readonly" class="form-control form-control-sm"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
+        var visa = '<tr><td class="align-middle text-left">Visa Service <input type="hidden" name="service_name[]" value="Visa Service"></td><td class="align-middle"><input type="date" name="date[]" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle">- <input type="hidden" name="from[]" value=""></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle">- <input type="hidden" name="class[]" value=""> <input type="hidden" name="days[]" value=""></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="total_cost[]" readonly="readonly" class="form-control form-control-sm"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
+        var passport = '<tr><td class="align-middle text-left">Passport Service <input type="hidden" name="service_name[]" value="Passport Service"></td><td class="align-middle"><input type="date" name="date[]" class="form-control form-control-sm" required></td><td class="align-middle"><input type="text" name="name[]" placeholder="Name" class="form-control form-control-sm" required></td><td class="align-middle">- <input type="hidden" name="from[]" value=""></td><td class="align-middle"><input type="text" name="to[]" placeholder="To" class="form-control form-control-sm" required></td><td class="align-middle">- <input type="hidden" name="class[]" value=""> <input type="hidden" name="days[]" value=""></td><td class="align-middle"><input type="number" name="tourist_count[]" placeholder="Enter count" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="cost_person[]" placeholder="Enter cost" class="form-control form-control-sm" min="1" required></td><td class="align-middle"><input type="number" name="total_cost[]" readonly="readonly" class="form-control form-control-sm"></td><td class="align-middle"><div class="d-flex"><button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;<button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button></div></td></tr>';
 
         // Function to append row based on selected service
         $('#addService').on('change', function() {
@@ -597,6 +645,9 @@
                     break;
                 case 'Visa':
                     newRow = visa;
+                    break;
+                case 'Passport':
+                    newRow = passport;
                     break;
                 default:
                     newRow = ''; // Default to an empty string if no matching service found

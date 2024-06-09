@@ -143,7 +143,7 @@
                 },
                 message:{
                     required:true,
-                    maxlength:1000,
+                    maxlength:200,
                 },
             },
             messages:{

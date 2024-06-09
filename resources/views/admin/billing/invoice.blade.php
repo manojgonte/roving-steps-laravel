@@ -66,7 +66,8 @@
                             in_array('Train Booking', $invoice->invoice_for) || 
                             in_array('Cab Booking', $invoice->invoice_for) || 
                             in_array('Cruise Booking', $invoice->invoice_for) || 
-                            in_array('Visa Service', $invoice->invoice_for))
+                            in_array('Visa Service', $invoice->invoice_for) ||
+                            in_array('Passport Service', $invoice->invoice_for))
                         <div class="col-md-12">
                             <h6 class="font-weight-bold">Payments</h6>
                             <table class="table table-hover table-bordered" id="tab_logic1">
@@ -184,10 +185,10 @@
 
                 <table id="example" class="table table-bordered" style="overflow-x: auto;">
                     <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td class="text-left text-sm">Visa</td>
                             <td class="text-right">{{isset($invoice->visa) ? $invoice->visa : '-'}}</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td class="text-left text-sm">Insurance</td>
                             <td class="text-right">{{isset($invoice->insurance) ? $invoice->insurance : '-'}}</td>
@@ -220,7 +221,7 @@
                             <td class="text-left align-middle text-sm font-weight-bold d-flex justify-content-between border-0">
                                 GST
                                 <div>
-                                    <select class="form-control form-control-sm border-0" disabled><option>{{$invoice->gst_per}}%</option></select>
+                                    <button class="form-control form-control-sm border-0" disabled><option>{{$invoice->gst_per}}%</option></button>
                                 </div>
                             </td>
                             <td class="text-right align-middle">₹{{$invoice->gst}}</td>

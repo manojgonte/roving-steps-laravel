@@ -69,8 +69,8 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Image</th>
-                                        <th>Destination</th>
-                                        <th>Description</th>
+                                        <th>Place to Visit</th>
+                                        <th>Overview</th>
                                         <th>Type</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -80,7 +80,7 @@
                                 @foreach($destinations as $key => $row)
 	                                <tr>
                                         <td>{{ $destinations->firstItem() + $key }}</td>
-	                                    <td>@if($row->image)<img src="{{asset('img/destinations/'.$row->image)}}" width="50"> @else NA @endif</td>
+	                                    <td>@if($row->image)<img src="{{asset('img/destinations/'.$row->image)}}" width="50"> @else - @endif</td>
 	                                    <td>{{ Str::limit($row->name, 30) }}</td>
 	                                    <td>@if($row->description){{ Str::limit($row->description, 30) }} @else NA @endif</td>
 	                                    <td>{{ $row->type }}</td>

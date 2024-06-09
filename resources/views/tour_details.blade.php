@@ -432,7 +432,7 @@
                 },
                 message:{
                     required:true,
-                    maxlength:500,
+                    maxlength:200,
                 },
                 from_date:{
                     date:true,

@@ -309,7 +309,7 @@ class TourController extends Controller
                 ->leftJoin('special_tours','special_tours.id','tours.special_tour_type')
                 ->where('tours.id', $id)
                 ->first();
-        $destinations = Destination::where(['parent_id'=>0])->get();
+        $destinations = Destination::where(['parent_id'=>0, 'id'=>$tour->dest_id])->get();
         return view('admin.tour.itinerary_builder')->with(compact('tour','destinations'));
     }
 
@@ -388,7 +388,7 @@ class TourController extends Controller
 
     public function deleteItinerary(Request $request, $id){
         $itinerary = TourItinerary::select('id','image')->where('id',$id)->first();
-        if(file_exists('img/tours/tour_itinerary/'.$itinerary->image)){
+        if(!empty($itinerary->image) && file_exists('img/tours/tour_itinerary/'.$itinerary->image)){
             unlink('img/tours/tour_itinerary/'.$itinerary->image);
         }
 

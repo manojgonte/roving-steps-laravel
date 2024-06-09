@@ -61,8 +61,10 @@
                             in_array('Train Booking', $invoice->invoice_for) || 
                             in_array('Cab Booking', $invoice->invoice_for) || 
                             in_array('Cruise Booking', $invoice->invoice_for) || 
-                            in_array('Visa Service', $invoice->invoice_for))
+                            in_array('Visa Service', $invoice->invoice_for) || 
+                            in_array('Passport Service', $invoice->invoice_for))
                         <div class="col-md-12">
+                            <a class="btn btn-sm btn-secondary mb-1 float-right" href="{{ url('/admin/edit-invoice/'.Request()->id) }}">Add Service</a>
                             <h6 class="font-weight-bold">Payments</h6>
                             <table class="table table-hover table-bordered" id="tab_logic1">
                                 <thead>
@@ -312,7 +314,51 @@
                                             <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required />
+                                            {{-- <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required /> --}}
+                                            -
+                                            <input type="hidden" name="from[]" value="">
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
+                                        </td>                                        
+                                        <td class="align-middle">
+                                            -
+                                            <input type="hidden" name="class[]" value="">
+                                            <input type="hidden" name="days[]" value="">
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" name='total_cost[]' class="form-control form-control-sm" readonly />
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="d-flex">
+                                                <button type="button" class="btn btn-default btn-xs add-row"><i class="fa fa-plus-circle"></i></button>&nbsp;
+                                                <button type="button" class="btn btn-default btn-xs remove-row"><i class="fa fa-minus-circle"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @if(in_array('Passport Service', $invoice->invoice_for))
+                                    <tr>
+                                        <td class="align-middle text-left">
+                                            Passport Service
+                                            <input type="hidden" name='service_name[]' value="Passport Service" />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="date" name='date[]' class="form-control form-control-sm" required />
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" name='name[]' placeholder='Name' class="form-control form-control-sm" required />
+                                        </td>
+                                        <td class="align-middle">
+                                            {{-- <input type="text" name='from[]' placeholder='From' class="form-control form-control-sm" required /> --}}
+                                            -
+                                            <input type="hidden" name="from[]" value="">
                                         </td>
                                         <td class="align-middle">
                                             <input type="text" name='to[]' placeholder='To' class="form-control form-control-sm" required />
@@ -410,10 +456,10 @@
 
                 <table id="example" class="table table-bordered table-striped" style="overflow-x: auto;">
                     <tbody>
-                        <tr>
+                        {{-- <tr>
                             <td class="text-left text-sm">Visa</td>
                             <td class="text-right"><input type="number" name="visa" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td class="text-left text-sm">Insurance</td>
                             <td class="text-right"><input type="number" name="insurance" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
@@ -446,7 +492,7 @@
                             <td class="text-left text-sm font-weight-bold d-flex justify-content-between border-0">
                                 <span>GST </span>
                                 <div>
-                                    <select class="form-control form-control-sm border-0" name="gst_per" required><option value="">Select GST %</option><option value="18">18%</option><option value="5">5%</option></select>
+                                    <select class="form-control form-control-sm border-0" name="gst_per" required><option value="">Select GST %</option><option value="0">0%</option><option value="18">18%</option><option value="5">5%</option></select>
                                 </div>
                             </td>
                             <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" readonly /></td>
@@ -603,7 +649,7 @@
             });
 
             // Add the values of additional fields to the subtotal
-            subtotal += parseFloat($('[name="visa"]').val() || 0);
+            // subtotal += parseFloat($('[name="visa"]').val() || 0);
             subtotal += parseFloat($('[name="insurance"]').val() || 0);
             subtotal += parseFloat($('[name="visa_appointment"]').val() || 0);
             subtotal += parseFloat($('[name="swiss_pass"]').val() || 0);

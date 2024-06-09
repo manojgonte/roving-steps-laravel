@@ -45,7 +45,17 @@
                                     <input type="hidden" name="tour_id" value="{{$itinerary->tour_id}}"> 
                                     <div class="form-group col-md-4">
                                         <label class="required">Places to Visit</label>
-                                        <input type="text" name="visit_place" class="form-control" placeholder="Enter Place" value="{{$itinerary->visit_place}}" required>
+                                        {{-- <input type="text" name="visit_place" class="form-control" placeholder="Enter Place" value="{{$itinerary->visit_place}}" required> --}}
+                                        <select class="form-control select2bs4" name="visit_place" required>
+                                            <option value="">Select One</option>
+                                            @foreach(App\Models\Destination::where('status',1)->orderBy('name','ASC')->get() as $cat){
+                                                <option value="{{$cat->name}}" @if($cat->name == $itinerary->visit_place) selected @endif>{{$cat->name}}</option>
+                                                @php $sub_categories = App\Models\Destination::where(['parent_id'=>$cat->id])->get(); @endphp
+                                                @foreach ($sub_categories as $sub_cat) {
+                                                <option value="{{$sub_cat->name}}" @if($sub_cat->name == $itinerary->visit_place) selected @endif>-- {{$sub_cat->name}}</option>
+                                                @endforeach
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="required">Activity of the Day</label>

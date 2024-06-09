@@ -44,7 +44,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{App\Models\Enquiry::count()}}</h3>
+                            <h3>{{App\Models\TourEnquiry::count()}}</h3>
                             <p>Tour Enquiries</p>
                         </div>
                         <div class="icon">
@@ -56,11 +56,11 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{App\Models\TourEnquiry::count()}}</h3>
-                            <p>Contact Enquiries</p>
+                            <h3>{{App\Models\Invoices::count()}}</h3>
+                            <p>Invoices</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-person-add"></i>
+                            <i class="ion ion-filing"></i>
                         </div>
                         {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
                     </div>
@@ -74,7 +74,7 @@
     @php $now = Carbon\Carbon::now(); @endphp
     <section class="content">
         <div class="container-fluid">
-            <h4 class="m-0 mb-3 text-dark">Dashboard</h4>
+            <h4 class="m-0 mb-3 text-dark">Tours</h4>
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-gradient-dark">

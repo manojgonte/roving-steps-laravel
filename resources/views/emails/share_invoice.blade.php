@@ -401,12 +401,12 @@
 
             <table class="table table-bordered" style="overflow-x: auto;">
                 <tbody>
-                    @if(!empty($invoice->visa))
+                    {{-- @if(!empty($invoice->visa))
                     <tr>
                         <td class="text-left text-sm">Visa</td>
                         <td class="text-right">{{isset($invoice->visa) ? $invoice->visa : '-'}}</td>
                     </tr>
-                    @endif
+                    @endif --}}
                     @if(!empty($invoice->insurance))
                     <tr>
                         <td class="text-left text-sm">Insurance</td>
