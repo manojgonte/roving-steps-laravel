@@ -56,7 +56,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{App\Models\Invoices::count()}}</h3>
+                            <h3>{{App\Models\invoices::count()}}</h3>
                             <p>Invoices</p>
                         </div>
                         <div class="icon">
