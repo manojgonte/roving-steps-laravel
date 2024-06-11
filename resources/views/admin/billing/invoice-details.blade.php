@@ -509,7 +509,7 @@
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
                             <td class="text-right">
                                 <div class="d-flex">
-                                    <input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" placeholder="₹" />&nbsp;
+                                    <input type="number" name="payment_received" class="form-control form-control-sm w-25" min="0" placeholder="₹" />&nbsp;
                                     <select class="form-control form-control-sm w-25" name="payment_mode">
                                         <option value="">Mode of Payment</option>
                                         <option value="Bank Transfer">Bank Transfer</option>
