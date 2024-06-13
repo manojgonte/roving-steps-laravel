@@ -98,8 +98,8 @@
 	                                    {{-- <td>{{ $row->tour->type }}</td> --}}
                                         <td>{{ Str::limit($row->tour->destination->name, 20) }}</td>
 	                                    <td>{{ $row->tourist_count }}</td>
-	                                    <td>{{date('d/m/Y', strtotime($row->from_date))}}</td> 
-                                        <td>{{date('d/m/Y', strtotime($row->end_date))}}</td>
+	                                    <td>{{ $row->from_date ? date('d/m/Y', strtotime($row->from_date)) : '-' }}</td> 
+                                        <td>{{ $row->end_date ? date('d/m/Y', strtotime($row->end_date)) : '-' }}</td>
                                         <td>
                                             <form action="{{ url('admin/update-custom-tour-status/'.$row->id) }}" method="post">@csrf
                                             <div class="form-group">

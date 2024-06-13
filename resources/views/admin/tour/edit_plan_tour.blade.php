@@ -63,12 +63,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-3">
-                                        <label class="required">Start Date</label>
-                                        <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Enter Date" value="{{$tour->from_date}}" required>
+                                        <label class="">Start Date</label>
+                                        <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Enter Date" value="{{$tour->from_date}}">
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="required">End Date</label>
-                                        <input type="date" name="end_date" class="form-control" placeholder="Enter Date" value="{{$tour->end_date}}" required>
+                                        <label class="">End Date</label>
+                                        <input type="date" name="end_date" class="form-control" placeholder="Enter Date" value="{{$tour->end_date}}">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="">Status</label>
@@ -102,19 +102,27 @@
 <script>
     $(document).ready(function() {
         $.validator.addMethod("greaterThan", function (value, element, params) {
-            var from_date_value = new Date($(params).val());
-            var end_date_value = new Date(value);
-            return end_date_value > from_date_value;
+            var from_date_value = $(params).val();
+            var end_date_value = value;
+
+            if (from_date_value && end_date_value) {
+                from_date_value = new Date(from_date_value);
+                end_date_value = new Date(end_date_value);
+
+                return end_date_value > from_date_value;
+            }
+
+            return true;
         }, "End Date must be greater than From Date.");
         $('#addTour').validate({
             ignore: [],
             debug: false,
             rules: {
                 from_date: {
-                    required: true,
+                    required: false,
                 },
                 end_date: {
-                    required: true,
+                    required: false,
                     greaterThan: "#from_date"
                 }
             },
