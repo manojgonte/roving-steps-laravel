@@ -46,18 +46,17 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
-            	                        <label class="required">Place to Visit</label>
-            	                        <input type="text" name="destination_name" class="form-control" placeholder="Enter Destination Name" value="{{$destination->name}}" required>
-                          	        </div>
-
-                                    <div class="form-group col-md-3">
                                         <label class="required">Destination</label>
                                         <select class="form-control select2bs4" name="parent_id" id="parent_id">
                                             <option value="0">Main Category</option>
-                                            @foreach(App\Models\Destination::where(['parent_id'=>0])->get() as $val)
+                                            @foreach(App\Models\Destination::where(['parent_id'=>0])->orderBy('name','ASC')->get() as $val)
                                             <option value="{{ $val->id }}" @if($val->id == $destination->parent_id) selected @endif>{{ $val->name }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="required">Place to Visit</label>
+                                        <input type="text" name="destination_name" class="form-control" placeholder="Enter Destination Name" value="{{$destination->name}}" required>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required">Cover Image <small>(Size: 450 X 600px)</small></label>

@@ -309,7 +309,7 @@ class TourController extends Controller
                 ->leftJoin('special_tours','special_tours.id','tours.special_tour_type')
                 ->where('tours.id', $id)
                 ->first();
-        $destinations = Destination::where(['parent_id'=>0, 'id'=>$tour->dest_id])->get();
+        $destinations = Destination::where(['parent_id'=>0, 'id'=>$tour->dest_id])->orderBy('name','ASC')->get();
         return view('admin.tour.itinerary_builder')->with(compact('tour','destinations'));
     }
 

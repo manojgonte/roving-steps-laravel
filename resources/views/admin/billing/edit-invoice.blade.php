@@ -102,7 +102,7 @@
                         @php 
                             $bookings = ["Hotel Booking","Bus Booking","Flight Booking","Train Booking","Cab Booking","Cruise Booking","Visa Service","Passport Service"];
                         @endphp
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-2 d-none">
                             <label class="required">Services</label>
                             <select name="invoice_for[]" class="form-control sumoselect" multiple @if(count($invoice->invoice_for) == 0) required @endif>
                                 @foreach($bookings as $booking)
