@@ -51,8 +51,8 @@
                                         <label class="required">Tour</label>
                                         <select class="form-control select2bs4" name="tour_id" required>
                                             <option value="" selected>Select One</option>
-                                            @foreach(App\Models\Tour::orderBy('tour_name','ASC')->get() as $row)
-                                            <option value="{{$row->id}}" @if($row->id === $tour->tour_id) selected @endif>{{$row->tour_name}}</option>
+                                            @foreach(App\Models\Tour::select('id','tour_name','days','nights')->orderBy('tour_name','ASC')->get() as $row)
+                                            <option value="{{$row->id}}" @if($row->id === $tour->tour_id) selected @endif>{{$row->tour_name}} | {{$row->nights}}N/{{$row->days}}D</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -74,8 +74,8 @@
                             <label class="required">Tour Name</label>
                             <select name="tour_name" class="form-control" id="tourNameSelect">
                                 <option value="">Select tour</option>
-                                @foreach(App\Models\Tour::select('id','tour_name')->get() as $tour)
-                                <option value="{{$tour->id}}">{{$tour->tour_name}}</option>
+                                @foreach(App\Models\Tour::select('id','tour_name','days','nights')->orderBy('tour_name','ASC')->get() as $tour)
+                                <option value="{{$tour->id}}">{{$tour->tour_name}} | {{$tour->nights}}N/{{$tour->days}}D</option>
                                 @endforeach
                             </select>
                         </div>

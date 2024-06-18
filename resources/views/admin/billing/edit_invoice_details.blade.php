@@ -528,7 +528,7 @@
                             <td class="text-left text-sm font-weight-bold d-flex justify-content-between border-0">
                                 <span>GST </span>
                                 <div>
-                                    <select class="form-control form-control-sm border-0" name="gst_per" required><option value="">Select GST %</option><option value="18" @if($invoice->gst_per == '18') selected @endif>18%</option><option value="5" @if($invoice->gst_per == '5') selected @endif>5%</option></select>
+                                    <select class="form-control form-control-sm" name="gst_per" required><option value="">Select GST %</option><option value="0" @if($invoice->gst_per == '0') selected @endif>0%</option><option value="18" @if($invoice->gst_per == '18') selected @endif>18%</option><option value="5" @if($invoice->gst_per == '5') selected @endif>5%</option></select>
                                 </div>
                             </td>
                             <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" readonly /></td>

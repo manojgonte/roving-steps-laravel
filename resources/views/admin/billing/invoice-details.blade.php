@@ -64,7 +64,7 @@
                             in_array('Visa Service', $invoice->invoice_for) || 
                             in_array('Passport Service', $invoice->invoice_for))
                         <div class="col-md-12">
-                            <a class="btn btn-sm btn-secondary mb-1 float-right" href="{{ url('/admin/edit-invoice/'.Request()->id) }}">Add Service</a>
+                            <a class="btn btn-sm btn-light mb-1 float-right" href="{{ url('/admin/edit-invoice/'.Request()->id) }}">Add Service</a>
                             <h6 class="font-weight-bold">Payments</h6>
                             <table class="table table-hover table-bordered" id="tab_logic1">
                                 <thead>
@@ -486,7 +486,7 @@
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Service Charges</td>
-                            <td class="text-right"><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" placeholder="₹" /></td>
+                            <td class="text-right"><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" placeholder="₹" value="0" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold d-flex justify-content-between border-0">

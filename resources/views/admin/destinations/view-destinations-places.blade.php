@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4>Destinations List</h4>
+                    <h4>Destination Places List</h4>
                 </div>
                 <div class="col-sm-6">
                     <a href="{{ url('/admin/add-destination') }}" style="float: right; margin: 3px 3px;" class="btn btn-warning text-white"><i class="fa fa-plus-circle"></i> Add Destination</a>
@@ -69,7 +69,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Image</th>
-                                        <th>Destination</th>
+                                        <th>Place to Visit</th>
                                         <th>Overview</th>
                                         <th>Type</th>
                                         <th>Status</th>
@@ -81,7 +81,7 @@
 	                                <tr>
                                         <td>{{ $destinations->firstItem() + $key }}</td>
 	                                    <td>@if($row->image)<img src="{{asset('img/destinations/'.$row->image)}}" width="50"> @else - @endif</td>
-	                                    <td><a class="btn btn-link" href="{{url('admin/destination/places/'.$row->id)}}" class="btn btn-default"> {{ Str::limit($row->name, 30) }}</a></td>
+	                                    <td>{{ Str::limit($row->name, 30) }}</td>
 	                                    <td>@if($row->description){{ Str::limit($row->description, 30) }} @else NA @endif</td>
 	                                    <td>{{ $row->type }}</td>
 	                                    <td>{{ ($row->status == '1') ? 'Published' : 'Not Published' }}</td>
@@ -97,7 +97,7 @@
                                 {{ $destinations->links("pagination::bootstrap-4") }}
                             </div>
                             @else
-                            <div class="alert alert-dark">No destinations found</div>
+                            <div class="alert alert-dark">No places found</div>
                             @endif
                         </div>
                     </div>

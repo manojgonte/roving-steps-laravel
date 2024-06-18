@@ -59,10 +59,10 @@
                                             <option value="" selected>Select One</option>
                                             @foreach(App\Models\Destination::where('status',1)->orderBy('name','ASC')->get() as $cat)
                                                 <option value="{{$cat->id}}" @if($tour->dest_id == $cat->id) selected @endif>{{$cat->name}}</option>
-                                                @php $sub_categories = App\Models\Destination::where(['parent_id'=>$cat->id])->get(); @endphp
+                                                {{-- @php $sub_categories = App\Models\Destination::where(['parent_id'=>$cat->id])->get(); @endphp
                                                 @foreach ($sub_categories as $sub_cat)
                                                 <option value="{{$sub_cat->id}}" @if($tour->dest_id == $sub_cat->id) selected @endif>-- {{$sub_cat->name}}</option>
-                                                @endforeach
+                                                @endforeach --}}
                                             @endforeach
                                         </select>
                                     </div>

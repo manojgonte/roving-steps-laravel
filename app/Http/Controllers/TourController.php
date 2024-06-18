@@ -495,7 +495,7 @@ class TourController extends Controller
     }
 
     public function viewDestinations(Request $request) {
-        $destinations = Destination::orderBy('name','ASC');
+        $destinations = Destination::orderBy('name','ASC')->where('parent_id',0);
 
         if($request->status){
             $status = (empty($request->status) || $request->status == 'inactive') ? 0 : 1;
@@ -513,6 +513,27 @@ class TourController extends Controller
         }
         $destinations = $destinations->paginate(10);
         return view('admin.destinations.view-destinations')->with(compact('destinations'));
+    }
+
+    public function viewDestinationPlaces(Request $request, $id) {
+        $destinations = Destination::orderBy('name','ASC')->where('parent_id',$id);
+
+        if($request->status){
+            $status = (empty($request->status) || $request->status == 'inactive') ? 0 : 1;
+            $destinations = $destinations->where('status', $status);
+        }
+        if($request->type){
+            $destinations = $destinations->where('type', $request->type);
+        }
+        if($request->q){
+            $q = $request->q;
+            $destinations = $destinations->where(function($query) use($q){
+                $query->where('name','like','%'.$q.'%')
+                ->orWhere('description','like','%'.$q.'%');
+            });
+        }
+        $destinations = $destinations->paginate(10);
+        return view('admin.destinations.view-destinations-places')->with(compact('destinations'));
     }
 
     public function addDestination(Request $request) {
