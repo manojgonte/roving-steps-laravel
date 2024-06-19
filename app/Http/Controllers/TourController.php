@@ -437,6 +437,25 @@ class TourController extends Controller
         return view('admin.tour.tour-enquiries')->with(compact('tour_enquiry','tours'));
     }
 
+    public function addEnquiry(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $enquiry = new TourEnquiry;
+            $enquiry->name          = $data['name'];
+            $enquiry->contact       = !empty($data['contact']) ? $data['contact'] : null;
+            $enquiry->email         = !empty($data['email']) ? $data['email'] : null;
+            $enquiry->tour_id       = !empty($data['tour_id']) ? $data['tour_id'] : null;
+            $enquiry->tourist_no    = !empty($data['tourist_no']) ? $data['tourist_no'] : null;
+            $enquiry->current_city  = !empty($data['current_city']) ? $data['current_city'] : null;
+            $enquiry->from_date     = !empty($data['from_date']) ? $data['from_date'] : null;
+            $enquiry->end_date      = !empty($data['end_date']) ? $data['end_date'] : null;
+            $enquiry->message       = !empty($data['message']) ? $data['message'] : null;
+            $enquiry->save();
+
+            return redirect()->back()->with('flash_message_success','Enquiry added');
+        }
+    }
+
     public function deleteTourEnquiry(Request $request, $id){
         $enquiry = TourEnquiry::find($id)->delete();
         return redirect()->back()->with('flash_message_success','Enquiry deleted');

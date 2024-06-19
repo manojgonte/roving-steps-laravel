@@ -90,6 +90,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/enquiries', [TourController::class,'enquiries']);
     Route::match(['get','post'], 'admin/delete-enquiry/{id}', [TourController::class,'deleteEnquiry']);
     Route::match(['get','post'], 'admin/tour-enquiries', [TourController::class,'tourEnquiries']);
+    Route::match(['get','post'], 'admin/add-enquiry', [TourController::class,'addEnquiry']);
     Route::match(['get','post'], 'admin/delete-tour-enquiry/{id}', [TourController::class,'deleteTourEnquiry']);
 
     // Destinations
