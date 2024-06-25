@@ -66,8 +66,7 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                     <label class="">Overview</label>
-                                        <input type="text" name="description" class="form-control"
-                                            placeholder="Enter Overview">
+                                        <textarea name="description" class="form-control" placeholder="Enter Overview" rows="8"></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="form-check">

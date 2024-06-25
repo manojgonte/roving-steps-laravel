@@ -86,17 +86,17 @@
                                             @if($row->tour_id)
                                             <a href="{{url('tour-details/'.$row->tour_id.'/'.Str::slug($row->tour_name))}}" target="_blank" noreferrer noopener> {{ $row->tour_name }} </a>
                                             @else
-                                            -
+                                            NA
                                             @endif
                                         </td>
 	                                    <td class="text-left"><i class="fa fa-user"></i> {{ Str::limit($row->name, 30) }} <br> 
-                                            <i class="fa fa-envelope"></i> {{ $row->email }} <br> 
-                                            <i class="fa fa-phone"></i> {{ $row->contact }}<br> 
+                                            <i class="fa fa-envelope"></i> {{ $row->email ? $row->email : 'NA' }} <br> 
+                                            <i class="fa fa-phone"></i> {{ $row->contact ? $row->contact : 'NA' }}<br> 
                                             <i class="fa fa-city"></i> {{ $row->current_city ? $row->current_city : 'NA' }}
                                         </td>
 	                                    <td>{{ $row->tourist_no ? $row->tourist_no : 'NA' }}</td>
 	                                    <td>{{ $row->from_date ? date('d/m/Y', strtotime($row->from_date)) : 'NA' }} - <br>{{ $row->end_date ? date('d/m/Y', strtotime($row->end_date)) : 'NA' }}</td>
-	                                    <td>{{ $row->message }}</td>
+	                                    <td>{{ $row->message ? $row->message : 'NA' }}</td>
                                         <td>
                                             <div class="d-flex justify-content-center">
                                                 <a class="btn btn-light btn-sm mr-1" title="Create Custom Tour" href="{{ url('/admin/plan-tour?tour_id='.$row->tour_id.'&name='.$row->name.'&tourist_count='.$row->tourist_no.'&from_date='.$row->from_date.'&end_date='.$row->end_date) }}"><i class="fa fa-campground"></i></a>
@@ -143,8 +143,8 @@
                                 <input type="text" name="contact" class="form-control" placeholder="Enter phone">
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="required">Customer Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+                                <label class="">Customer Email</label>
+                                <input type="email" name="email" class="form-control" placeholder="Enter email">
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="">Tour</label>
@@ -156,12 +156,12 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="required">Tourist Count</label>
-                                <input type="number" min="1" name="tourist_no" class="form-control" placeholder="Enter count" required>
+                                <label class="">Tourist Count</label>
+                                <input type="number" min="1" name="tourist_no" class="form-control" placeholder="Enter count" >
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="required">Current City</label>
-                                <input type="text" name="current_city" class="form-control" placeholder="Enter city" required>
+                                <label class="">Current City</label>
+                                <input type="text" name="current_city" class="form-control" placeholder="Enter city" >
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="">From Date</label>
@@ -172,8 +172,8 @@
                                 <input type="date" name="end_date" class="form-control" placeholder="Enter Date">
                             </div>
                             <div class="form-group col-md-12">
-                                <label class="required">Message</label>
-                                <textarea name="message" class="form-control" placeholder="Enter message" rows="3" required></textarea>
+                                <label class="">Message</label>
+                                <textarea name="message" class="form-control" placeholder="Enter message" rows="3" ></textarea>
                             </div>
                         </div>
                     </div>
