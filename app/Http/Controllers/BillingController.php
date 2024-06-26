@@ -120,7 +120,7 @@ class BillingController extends Controller
             $invoice->visa_appointment = $data['visa_appointment'];
             $invoice->swiss_pass = $data['swiss_pass'];
             $invoice->land_package = $data['land_package'];
-            $invoice->passport_services = $data['passport_services'];
+            $invoice->passport_services = !empty($data['passport_services']) ? $data['passport_services'] : null;
             $invoice->total = $data['total'];
             $invoice->service_charges = $data['service_charges'];
             $invoice->gst_per = $data['gst_per'];
@@ -214,12 +214,12 @@ class BillingController extends Controller
             // dd($data);
 
             $invoice = invoices::find($id);
-            $invoice->visa = $data['visa'];
+            $invoice->visa = !empty($data['visa']) ? $data['visa'] : null;
             $invoice->insurance = $data['insurance'];
             $invoice->visa_appointment = $data['visa_appointment'];
             $invoice->swiss_pass = $data['swiss_pass'];
             $invoice->land_package = $data['land_package'];
-            $invoice->passport_services = $data['passport_services'];
+            $invoice->passport_services = !empty($data['passport_services']) ? $data['passport_services'] : null;
             $invoice->total = $data['total'];
             $invoice->service_charges = $data['service_charges'];
             $invoice->gst_per = $data['gst_per'];
@@ -238,10 +238,10 @@ class BillingController extends Controller
                     $item = new InvoiceItems;
                     $item->invoice_id       = $id;
                     $item->service_name     = $data['service_name'][$key];
-                    $item->date             = $data['date'][$key];
+                    $item->date             = !empty($data['date'][$key]) ? $data['date'][$key] : null;
                     $item->name             = $data['name'][$key];
-                    $item->from_dest        = $data['from'][$key];
-                    $item->to_dest          = $data['to'][$key];
+                    $item->from_dest        = !empty($data['from'][$key]) ? $data['from'][$key] : null;
+                    $item->to_dest          = !empty($data['to'][$key]) ? $data['to'][$key] : null;
                     $item->class            = !empty($data['class'][$key]) ? $data['class'][$key] : null;
                     $item->days             = !empty($data['days'][$key]) ? $data['days'][$key] : null;
                     $item->tourist_count    = $data['tourist_count'][$key];
