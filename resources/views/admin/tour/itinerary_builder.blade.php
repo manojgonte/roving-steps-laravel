@@ -1,6 +1,10 @@
 @extends('layouts/adminLayout/admin_design')
 @section('content')
 
+@section('styles')
+
+@endsection('styles')
+
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
@@ -42,7 +46,7 @@
                             </ul>
                         </div>
 
-                        <div class="card">
+                        <div class="card m-3">
                             <h3 class="card-title text-muted pt-2 pl-3">
                                 Tour Details
                             </h3>
@@ -53,15 +57,15 @@
                             <h3 class="card-title text-muted pt-2 pl-3">
                                 Add Itinerary
                             </h3><hr>
-                            <div class="card-body pt-1">
-                                <form method="POST" action="{{url('admin/add-tour-itinerary/'.Request()->id)}}" enctype="multipart/form-data" id="TourItinerary">@csrf
+                            <form method="POST" action="{{url('admin/add-tour-itinerary/'.Request()->id)}}" enctype="multipart/form-data" id="TourItinerary">@csrf
+                                <div class="card-body pt-1">
                                     <div class="row">
                                         <div class="form-group col-md-4">
                                             <label class="required">Day</label>
                                             <select class="form-control select2bs4" name="day" required>
                                                 <option value="">Select Day</option>
                                                 @for($i=0; $i<$tour->days; $i++)
-                                                <option value="{{$i+1}}">{{$i+1}}</option>
+                                                <option value="{{$i+1}}" @if($i == 0) selected @endif>{{$i+1}}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -102,7 +106,7 @@
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label class="required">Overview</label>
-                                            <textarea name="description" class="form-control" rows="3" placeholder="Enter Overview" required></textarea>
+                                            <textarea name="description" class="form-control" rows="5" placeholder="Enter Overview" required></textarea>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="required">Stay</label>
@@ -114,14 +118,44 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Image <small>(Size: 800 X 530px)</small></label>
-                                            <input type="file" name="image" class="form-control p-1">
+
+                                            <div class="input-group mb-1">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text mr-1 bg-dark" style="cursor: pointer;" data-toggle="modal" data-target="#gallery-modal" onclick="checkGallerySelection()"> Gallery &nbsp;<i class="fa fa-images"></i></span>
+                                                </div>
+                                                <input type="hidden" name="gallery_image" id="gallery_image">
+                                                <input type="file" name="image" class="form-control p-1" id="image_file" onchange="checkFileInput()">
+                                            </div>
                                         </div>
                                     </div>
-                                <form>
-                            </div>
-                            <div class="card-footer text-start">
-                                <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check-circle"></i> Save </button>
-                            </div>
+
+                                    {{-- gallery modal --}}
+                                    <div class="modal fade" id="gallery-modal">
+                                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Photo Gallery</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="card-body p-0">
+                                                        <div id="gallery-content"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Select</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-start">
+                                    <button type="submit" class="btn btn-dark text-white submit"><i class="fa fa-check-circle"></i> Save </button>
+                                </div>
+                            <form>
                         </div>
 
                         <div class="card bg-light m-3">
@@ -139,7 +173,7 @@
                                         <th>Travel</th>
                                         <th>Stay</th>
                                         <th>Food</th>
-                                        <th></th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -153,7 +187,7 @@
                                         <td>{{ $row->stay }}</td>
                                         <td>{{ $row->food }}</td>
                                         <td class="d-flex border-0 justify-content-center">
-                                            <a class="btn btn-default" href="{{ url('/admin/edit-tour-itinerary/'.$row->id) }}"><i class="fa fa-edit"></i></a> &nbsp;
+                                            <a class="btn btn-default" href="{{ url('/admin/edit-tour-itinerary/'.$row->id.'?dest_id='.$tour->dest_id) }}"><i class="fa fa-edit"></i></a> &nbsp;
                                             <a class="btn btn-default" onclick="return confirm('Are you sure?')" href="{{url('admin/delete-itinerary/'.$row->id)}}"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
@@ -171,6 +205,40 @@
     </section>
 </div>
 
+<script>
+    function selectGalleryImage(image) {
+        document.getElementById('gallery_image').value = image;
+        document.getElementById('image_file').disabled = true;
+    }
+
+    function checkFileInput() {
+        const fileInput = document.getElementById('image_file');
+        if (fileInput.files.length > 0) {
+            document.getElementById('gallery_image').value = '';
+            const galleryRadios = document.getElementsByName('gallery_image_option');
+            for (let i = 0; i < galleryRadios.length; i++) {
+                galleryRadios[i].checked = false;
+            }
+        }
+    }
+
+    function checkGallerySelection() {
+        const galleryRadios = document.getElementsByName('gallery_image_option');
+        let isChecked = false;
+        for (let i = 0; i < galleryRadios.length; i++) {
+            if (galleryRadios[i].checked) {
+                isChecked = true;
+                break;
+            }
+        }
+
+        if (isChecked) {
+            document.getElementById('image_file').disabled = true;
+        } else {
+            document.getElementById('image_file').disabled = false;
+        }
+    }
+</script>
 
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
 <script>
@@ -203,7 +271,7 @@
                 },
             },
             messages: {},
-            submitHandler: function(form) {
+            submitHandler: function(gallery) {
                 $(".submit").attr("disabled", true);
                 $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
                 form.submit();

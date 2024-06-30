@@ -114,6 +114,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::post('admin/add-photos/', [GalleryController::class, 'addPhotos']);
     Route::post('admin/edit-photo/', [GalleryController::class, 'editPhoto']);
     Route::get('admin/delete-photo/{id}', [GalleryController::class, 'deletePhoto']);
+    Route::get('/admin/gallery-images', [GalleryController::class, 'getGalleryImages']);
 
     // testimonial
     Route::match(['get','post'], 'admin/edit-testimonial/{id}', [AdminController::class, 'editTestimonial']);

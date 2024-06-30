@@ -170,7 +170,7 @@ class IndexController extends Controller
     }
 
     public function gallery(Request $request){
-        $photos = Gallery::paginate(12);
+        $photos = Gallery::where('status',1)->paginate(12);
         $meta_title = 'Gallery';
         return view('gallery',compact('meta_title','photos'));
     }

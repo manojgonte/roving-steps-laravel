@@ -15,6 +15,7 @@ use Image;
 use Auth;
 use Mail;
 use PDF;
+use File;
 use Illuminate\Support\Facades\View;
 
 class TourController extends Controller
@@ -317,6 +318,9 @@ class TourController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
             // dd($data);
+            if(empty($data['image']) || empty($data['gallery_image'])){
+                return redirect()->back()->with('flash_message_error','Please select itinerary image from Gallery or Device');
+            }
 
             $itinerary = new TourItinerary;
             $itinerary->tour_id       = $id;
@@ -328,14 +332,26 @@ class TourController extends Controller
             $itinerary->stay          = $data['stay'];
             $itinerary->food          = $data['food'];
 
-            if($request->hasFile('image')) {
+            // Handle file upload
+            if ($request->hasFile('image')) {
                 $image_tmp = $data['image'];
                 if ($image_tmp->isValid()) {
-                    $filename = strtotime("now").'-'. $image_tmp->getClientOriginalName();
-                    $file_path = 'img/tours/tour_itinerary/'.$filename;
+                    $filename = strtotime("now") . '-' . $image_tmp->getClientOriginalName();
+                    $file_path = 'img/tours/tour_itinerary/' . $filename;
                     Image::make($image_tmp)->save($file_path);
                     $itinerary->image = $filename;
                 }
+            } elseif (!empty($data['gallery_image'])) {
+                // Handle gallery image selection
+                $gallery_image = $data['gallery_image'];
+                $source_path = 'img/gallery/' . $gallery_image;
+                $destination_path = 'img/tours/tour_itinerary/' . $gallery_image;
+
+                if (!file_exists($destination_path)) {
+                    File::copy($source_path, $destination_path);
+                }
+
+                $itinerary->image = $gallery_image;
             }
 
             $itinerary->save();
@@ -356,17 +372,29 @@ class TourController extends Controller
             $stay          = $data['stay'];
             $food          = $data['food'];
 
+            $filename = '';
+
+            // Check if a new file is uploaded
             if ($request->hasFile('image')) {
                 $image_tmp = $request->image;
                 if ($image_tmp->isValid()) {
-                    $filename = strtotime("now").'-'. $image_tmp->getClientOriginalName();
+                    $filename = strtotime("now") . '-' . $image_tmp->getClientOriginalName();
                     $file_path = 'img/tours/tour_itinerary/' . $filename;
                     Image::make($image_tmp)->save($file_path);
                 }
-            } else if (!empty($data['current_image'])) {
+            } elseif (!empty($data['gallery_image'])) {
+                // Check if a gallery image is selected
+                $gallery_image = $data['gallery_image'];
+                $source_path = 'img/gallery/' . $gallery_image;
+                $destination_path = 'img/tours/tour_itinerary/' . $gallery_image;
+
+                if (!file_exists($destination_path)) {
+                    File::copy($source_path, $destination_path);
+                }
+                $filename = $data['gallery_image'];
+            } elseif (!empty($data['current_image'])) {
+                // Retain the current image if no new image is provided
                 $filename = $data['current_image'];
-            } else {
-                $filename = '';
             }
 
             // detail update

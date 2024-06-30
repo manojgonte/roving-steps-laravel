@@ -35,7 +35,7 @@
                         @if(count($photos) >1)
                         @foreach($photos as $photo)
                         <div class="col-lg-3 col-sm-6">
-                            <a href="#" class="blogCard -type-1 d-block ">
+                            <a href="{{asset('img/gallery/'.$photo->image)}}" class="blogCard -type-1 d-block" target="_blank">
                                 <div class="blogCard__image">
                                     <div class="ratio ratio-4:3 rounded-8">
                                         <img class="img-ratio js-lazy" src="#" data-src="{{asset('img/gallery/'.$photo->image)}}"

@@ -67,4 +67,9 @@ class GalleryController extends Controller
         Gallery::where('id',$id)->delete();
         return redirect()->back()->with('flash_message_success','Photo deleted successfully');
     }
+
+    public function getGalleryImages(Request $request) {
+        $galleryImages = Gallery::orderBy('id', 'DESC')->paginate(12);
+        return view('admin.gallery_images_partial', compact('galleryImages'))->render();
+    }
 }

@@ -27029,3 +27029,76 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+
+.radio-buttons {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    height: 70vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.custom-radio input {
+    display: none;
+}
+
+.radio-btn {
+    margin: 10px;
+    width: 160px;
+    height: 200px;
+    border: 3px solid transparent;
+    display: inline-block;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 0 20px #c3c3c367;
+    cursor: pointer;
+}
+
+.radio-btn > i {
+    color: #ffffff;
+    background-color: #ffdae9;
+    font-size: 20px;
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%) scale(2);
+    border-radius: 50px;
+    padding: 3px;
+    transition: 0.5s;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.radio-btn .hobbies-icon {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.radio-btn .hobbies-icon img {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.radio-btn .hobbies-icon i {
+    color: #ffdae9;
+    line-height: 80px;
+    font-size: 60px;
+}
+
+.custom-radio input:checked + .radio-btn {
+    border: 3px solid #1184d5
+}
+
+.custom-radio input:checked + .radio-btn > i {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}

@@ -22,6 +22,37 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+$(document).ready(function() {
+    // Function to load gallery images
+    function loadGalleryImages(page = 1) {
+        $.ajax({
+            url: '/admin/gallery-images?page=' + page,
+            type: 'GET',
+            beforeSend: function() {
+                $('#gallery-content').html("<center>Fetching images...</center>");
+            },
+            success: function(data) {
+                $('#gallery-content').html(data);
+            },
+            error: function(xhr) {
+                console.error("Error loading images:", xhr);
+            }
+        });
+    }
+
+    // Load gallery images when the modal is opened
+    $('#gallery-modal').on('shown.bs.modal', function() {
+        loadGalleryImages();
+    });
+
+    // Handle pagination click
+    $(document).on('click', '.pagination a', function(event) {
+        event.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        loadGalleryImages(page);
+    });
+});
+
 $(document).ready(function () {
 
 
