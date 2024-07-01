@@ -46,7 +46,7 @@ $(document).ready(function() {
     });
 
     // Handle pagination click
-    $(document).on('click', '.pagination a', function(event) {
+    $(document).on('click', '.gallery-modal-pagination .pagination a', function(event) {
         event.preventDefault();
         var page = $(this).attr('href').split('page=')[1];
         loadGalleryImages(page);

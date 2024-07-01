@@ -11,6 +11,6 @@
     </label>
     @endforeach
 </div>
-<div class="pagination-wrapper d-flex justify-content-center">
+<div class="pagination-wrapper d-flex justify-content-center gallery-modal-pagination">
     {{ $galleryImages->links("pagination::bootstrap-4") }}
 </div>

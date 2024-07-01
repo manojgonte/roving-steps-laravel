@@ -9,7 +9,7 @@ use Image;
 class GalleryController extends Controller
 {
     public function viewPhotos() {
-        $photos = Gallery::orderBy('id','DESC')->paginate(10);
+        $photos = Gallery::orderBy('id','DESC')->paginate(12);
         return view('admin.gallery.view_gallery')->with(compact('photos'));
     }
 
