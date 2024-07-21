@@ -62,7 +62,37 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="">Cover Image <small>(Size: 450 X 600px)</small></label>
-                                        <input type="file" name="image" class="form-control p-1" accept="image/*">
+                                        {{-- <input type="file" name="image" class="form-control p-1" accept="image/*"> --}}
+                                        <div class="input-group mb-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text mr-1 bg-dark" style="cursor: pointer;" data-toggle="modal" data-target="#gallery-modal" onclick="checkGallerySelection()"> Gallery &nbsp;<i class="fa fa-images"></i></span>
+                                            </div>
+                                            <input type="hidden" name="gallery_image" id="gallery_image">
+                                            <input type="file" name="image" class="form-control p-1" id="image_file" onchange="checkFileInput()">
+                                        </div>
+
+                                        {{-- gallery modal --}}
+                                        <div class="modal fade" id="gallery-modal">
+                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Photo Gallery</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="card-body p-0">
+                                                            <div id="gallery-content"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Select</button>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-12">
                                     <label class="">Overview</label>
@@ -93,6 +123,41 @@
         </div>
     </section>
 </div>
+
+<script>
+    function selectGalleryImage(image) {
+        document.getElementById('gallery_image').value = image;
+        document.getElementById('image_file').disabled = true;
+    }
+
+    function checkFileInput() {
+        const fileInput = document.getElementById('image_file');
+        if (fileInput.files.length > 0) {
+            document.getElementById('gallery_image').value = '';
+            const galleryRadios = document.getElementsByName('gallery_image_option');
+            for (let i = 0; i < galleryRadios.length; i++) {
+                galleryRadios[i].checked = false;
+            }
+        }
+    }
+
+    function checkGallerySelection() {
+        const galleryRadios = document.getElementsByName('gallery_image_option');
+        let isChecked = false;
+        for (let i = 0; i < galleryRadios.length; i++) {
+            if (galleryRadios[i].checked) {
+                isChecked = true;
+                break;
+            }
+        }
+
+        if (isChecked) {
+            document.getElementById('image_file').disabled = true;
+        } else {
+            document.getElementById('image_file').disabled = false;
+        }
+    }
+</script>
 
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
 <script>

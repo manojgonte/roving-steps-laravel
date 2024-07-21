@@ -48,17 +48,40 @@ class TourController extends Controller
             $tour->status = '0';
 
             // image save in folder
-            if($request->hasFile('image')) {
-                $image_tmp = $request->image;
-                $filename = time() . '.' . $image_tmp->clientExtension();
+            // if($request->hasFile('image')) {
+            //     $image_tmp = $request->image;
+            //     $filename = time() . '.' . $image_tmp->clientExtension();
+            //     if ($image_tmp->isValid()) {
+            //         $extension = $image_tmp->getClientOriginalExtension();
+            //         $filename = strtotime("now") . '.' . $extension;
+            //         $file_path = 'img/tours/'.$filename;
+            //         Image::make($image_tmp)->save($file_path);
+            //         $tour->image = $filename;
+            //     }
+            // }
+            // Handle file upload
+            if ($request->hasFile('image')) {
+                $image_tmp = $data['image'];
                 if ($image_tmp->isValid()) {
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    $filename = strtotime("now") . '.' . $extension;
-                    $file_path = 'img/tours/'.$filename;
+                    $filename = strtotime("now") . '-' . $image_tmp->getClientOriginalName();
+                    $file_path = 'img/tours/' . $filename;
                     Image::make($image_tmp)->save($file_path);
                     $tour->image = $filename;
                 }
+            } elseif (!empty($data['gallery_image'])) {
+                // Handle gallery image selection
+                $gallery_image = $data['gallery_image'];
+                $source_path = 'img/gallery/' . $gallery_image;
+                $destination_path = 'img/tours/' . $gallery_image;
+
+                if (!file_exists($destination_path)) {
+                    File::copy($source_path, $destination_path);
+                }
+
+                $tour->image = $gallery_image;
             }
+
+
             $tour->save();
             return redirect('admin/itinerary-builder/'.$tour->id)->with('flash_message_success','New tour added successfully');
         }
@@ -70,19 +93,42 @@ class TourController extends Controller
             $data = $request->all();
             // dd($data);
             // image save in folder
+            // if ($request->hasFile('image')) {
+            //     $image_tmp = $request->image;
+            //     $filename = time() . '.' . $image_tmp->clientExtension();
+            //     if ($image_tmp->isValid()) {
+            //         $extension = $image_tmp->getClientOriginalExtension();
+            //         $filename = strtotime("now") . '.' . $extension;
+            //         $file_path = 'img/tours/' . $filename;
+            //         Image::make($image_tmp)->save($file_path);
+            //     }
+            // } else if (!empty($data['current_image'])) {
+            //     $filename = $data['current_image'];
+            // } else {
+            //     $filename = '';
+            // }
+
+            // Check if a new file is uploaded
             if ($request->hasFile('image')) {
                 $image_tmp = $request->image;
-                $filename = time() . '.' . $image_tmp->clientExtension();
                 if ($image_tmp->isValid()) {
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    $filename = strtotime("now") . '.' . $extension;
+                    $filename = strtotime("now") . '-' . $image_tmp->getClientOriginalName();
                     $file_path = 'img/tours/' . $filename;
                     Image::make($image_tmp)->save($file_path);
                 }
-            } else if (!empty($data['current_image'])) {
+            } elseif (!empty($data['gallery_image'])) {
+                // Check if a gallery image is selected
+                $gallery_image = $data['gallery_image'];
+                $source_path = 'img/gallery/' . $gallery_image;
+                $destination_path = 'img/tours/' . $gallery_image;
+
+                if (!file_exists($destination_path)) {
+                    File::copy($source_path, $destination_path);
+                }
+                $filename = $data['gallery_image'];
+            } elseif (!empty($data['current_image'])) {
+                // Retain the current image if no new image is provided
                 $filename = $data['current_image'];
-            } else {
-                $filename = '';
             }
 
             // detail update
@@ -596,17 +642,40 @@ class TourController extends Controller
             $destination->status = !empty($data['status']) ? $data['status'] : '0' ;
 
             // image save in folder
-            if($request->hasFile('image')) {
-                $image_tmp = $request->image;
-                $filename = time() . '.' . $image_tmp->clientExtension();
+            // if($request->hasFile('image')) {
+            //     $image_tmp = $request->image;
+            //     $filename = time() . '.' . $image_tmp->clientExtension();
+            //     if ($image_tmp->isValid()) {
+            //         $extension = $image_tmp->getClientOriginalExtension();
+            //         $filename = strtotime("now") . '.' . $extension;
+            //         $file_path = 'img/destinations/'.$filename;
+            //         Image::make($image_tmp)->save($file_path);
+            //         $destination->image = $filename;
+            //     }
+            // }
+
+            // Handle file upload
+            if ($request->hasFile('image')) {
+                $image_tmp = $data['image'];
                 if ($image_tmp->isValid()) {
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    $filename = strtotime("now") . '.' . $extension;
-                    $file_path = 'img/destinations/'.$filename;
+                    $filename = strtotime("now") . '-' . $image_tmp->getClientOriginalName();
+                    $file_path = 'img/destinations/' . $filename;
                     Image::make($image_tmp)->save($file_path);
                     $destination->image = $filename;
                 }
+            } elseif (!empty($data['gallery_image'])) {
+                // Handle gallery image selection
+                $gallery_image = $data['gallery_image'];
+                $source_path = 'img/gallery/' . $gallery_image;
+                $destination_path = 'img/destinations/' . $gallery_image;
+
+                if (!file_exists($destination_path)) {
+                    File::copy($source_path, $destination_path);
+                }
+
+                $destination->image = $gallery_image;
             }
+
             $destination->save();
             return redirect('admin/view-destinations/')->with('flash_message_success','New destination added successfully');
         }
@@ -616,20 +685,43 @@ class TourController extends Controller
     public function editDestination(Request $request, $id) {
         if($request->isMethod('post')){
             $data = $request->all();
-            // image save in folder
+            
+            // if ($request->hasFile('image')) {
+            //     $image_tmp = $request->image;
+            //     $filename = time() . '.' . $image_tmp->clientExtension();
+            //     if ($image_tmp->isValid()) {
+            //         $extension = $image_tmp->getClientOriginalExtension();
+            //         $filename = strtotime("now") . '.' . $extension;
+            //         $file_path = 'img/destinations/' . $filename;
+            //         Image::make($image_tmp)->save($file_path);
+            //     }
+            // } else if (!empty($data['current_image'])) {
+            //     $filename = $data['current_image'];
+            // } else {
+            //     $filename = '';
+            // }
+
+            // Check if a new file is uploaded
             if ($request->hasFile('image')) {
                 $image_tmp = $request->image;
-                $filename = time() . '.' . $image_tmp->clientExtension();
                 if ($image_tmp->isValid()) {
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    $filename = strtotime("now") . '.' . $extension;
+                    $filename = strtotime("now") . '-' . $image_tmp->getClientOriginalName();
                     $file_path = 'img/destinations/' . $filename;
                     Image::make($image_tmp)->save($file_path);
                 }
-            } else if (!empty($data['current_image'])) {
+            } elseif (!empty($data['gallery_image'])) {
+                // Check if a gallery image is selected
+                $gallery_image = $data['gallery_image'];
+                $source_path = 'img/gallery/' . $gallery_image;
+                $destination_path = 'img/destinations/' . $gallery_image;
+
+                if (!file_exists($destination_path)) {
+                    File::copy($source_path, $destination_path);
+                }
+                $filename = $data['gallery_image'];
+            } elseif (!empty($data['current_image'])) {
+                // Retain the current image if no new image is provided
                 $filename = $data['current_image'];
-            } else {
-                $filename = '';
             }
 
             // detail update
