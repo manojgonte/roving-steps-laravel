@@ -18,52 +18,60 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{App\Models\Tour::count()}}</h3>
-                            <p>Tours</p>
+                    <a href="{{url('admin/tour-planner/1')}}">
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{App\Models\Tour::count()}}</h3>
+                                <p>Tours</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-map"></i>
+                            </div>
+                            <span class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></span>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-map"></i>
-                        </div>
-                        {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
-                    </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>{{App\Models\Destination::count()}}</h3>
-                            <p>Destinations</p>
+                    <a href="{{url('admin/view-destinations')}}">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{App\Models\Destination::count()}}</h3>
+                                <p>Destinations</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-location"></i>
+                            </div>
+                            <span class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></span>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-location"></i>
-                        </div>
-                        {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
-                    </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>{{App\Models\TourEnquiry::count()}}</h3>
-                            <p>Tour Enquiries</p>
+                    <a href="{{url('admin/tour-enquiries')}}">
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>{{App\Models\TourEnquiry::count()}}</h3>
+                                <p>Tour Enquiries</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-social-twitch"></i>
+                            </div>
+                            <span class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></span>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-social-twitch"></i>
-                        </div>
-                        {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
-                    </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>{{App\Models\invoices::count()}}</h3>
-                            <p>Invoices</p>
+                    <a href="{{url('admin/invoice-billing')}}">
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{App\Models\invoices::count()}}</h3>
+                                <p>Invoices</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-filing"></i>
+                            </div>
+                            <span class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></span>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-filing"></i>
-                        </div>
-                        {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -77,52 +85,60 @@
             <h4 class="m-0 mb-3 text-dark">Tours</h4>
             <div class="row">
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-gradient-dark">
-                        <div class="inner">
-                            <h3>{{App\Models\PlannedTour::where('status', 0)->count()}}</h3>
-                            <p>Draft</p>
+                    <a href="{{url('admin/tours/draft')}}">
+                        <div class="small-box bg-gradient-dark">
+                            <div class="inner">
+                                <h3>{{App\Models\PlannedTour::where('status', 0)->count()}}</h3>
+                                <p>Draft</p>
+                            </div>
+                            {{-- <div class="icon">
+                                <i class="ion ion-map"></i>
+                            </div> --}}
+                            <span class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></span>
                         </div>
-                        {{-- <div class="icon">
-                            <i class="ion ion-map"></i>
-                        </div> --}}
-                        <a href="{{url('admin/tours/draft')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-gradient-dark">
-                        <div class="inner">
-                            <h3>{{App\Models\PlannedTour::where('status', 1)->whereRaw('? between from_date and end_date', [$now])->count()}}</h3>
-                            <p>Ongoing</p>
+                    <a href="{{url('admin/tours/ongoing')}}">
+                        <div class="small-box bg-gradient-dark">
+                            <div class="inner">
+                                <h3>{{App\Models\PlannedTour::where('status', 1)->whereRaw('? between from_date and end_date', [$now])->count()}}</h3>
+                                <p>Ongoing</p>
+                            </div>
+                            {{-- <div class="icon">
+                                <i class="ion ion-location"></i>
+                            </div> --}}
+                            <span class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></span>
                         </div>
-                        {{-- <div class="icon">
-                            <i class="ion ion-location"></i>
-                        </div> --}}
-                        <a href="{{url('admin/tours/ongoing')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-gradient-dark">
-                        <div class="inner">
-                            <h3>{{App\Models\PlannedTour::where('status', 1)->where('from_date', '>', $now)->count()}}</h3>
-                            <p>Upcoming</p>
+                    <a href="{{url('admin/tours/upcoming')}}">
+                        <div class="small-box bg-gradient-dark">
+                            <div class="inner">
+                                <h3>{{App\Models\PlannedTour::where('status', 1)->where('from_date', '>', $now)->count()}}</h3>
+                                <p>Upcoming</p>
+                            </div>
+                            {{-- <div class="icon">
+                                <i class="ion ion-social-twitch"></i>
+                            </div> --}}
+                            <span class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></span>
                         </div>
-                        {{-- <div class="icon">
-                            <i class="ion ion-social-twitch"></i>
-                        </div> --}}
-                        <a href="{{url('admin/tours/upcoming')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-gradient-dark">
-                        <div class="inner">
-                            <h3>{{App\Models\PlannedTour::where('status', 1)->where('end_date', '<', $now)->count()}}</h3>
-                            <p>Completed</p>
+                    <a href="{{url('admin/tours/completed')}}">
+                        <div class="small-box bg-gradient-dark">
+                            <div class="inner">
+                                <h3>{{App\Models\PlannedTour::where('status', 1)->where('end_date', '<', $now)->count()}}</h3>
+                                <p>Completed</p>
+                            </div>
+                            {{-- <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div> --}}
+                            <span class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></span>
                         </div>
-                        {{-- <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div> --}}
-                        <a href="{{url('admin/tours/completed')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
