@@ -234,6 +234,7 @@
                             <td class="text-left text-sm font-weight-bold">In Word</td>
                             <td class="text-right font-weight-bold" id="">{{AmountInWords($invoice->grand_total)}}</td>
                         </tr>
+                        @if($invoice->estimation != 1)
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
                             <td class="text-right">₹{{$invoice->payment_received}}</td>
@@ -246,6 +247,7 @@
                             <td class="text-left text-sm font-weight-bold">In Word</td>
                             <td class="text-right font-weight-bold" id="">{{AmountInWords($invoice->balance)}}</td>
                         </tr>
+                        @endif
                     </tbody>
                 </table>
 
@@ -267,7 +269,7 @@
                 </div>
                 <hr />
                 <div class="form-group">
-                    <label>Note</label>
+                    <label>Note:</label>
                     <h6>{{isset($invoice->note) ? $invoice->note : '-'}}</h6>
                 </div>
             </div>

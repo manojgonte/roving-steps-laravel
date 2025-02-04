@@ -1,18 +1,22 @@
 @extends('layouts/adminLayout/admin_design')
 @section('content')
 
+@section('styles')
+    {{-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
+    <link rel="stylesheet" href="{{asset('backend_css/sumoselect.css')}}">
+    <style>
+        .SumoSelect>.CaptionCont>span.placeholder {
+            color: #495057 !important;
+        }
+    </style>
+@endsection('styles')
+
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row">
                 <div class="col-sm-6">
-                    <h4>Tour - Enquiries</h4>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <!-- <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Home</a></li> -->
-                        <!-- <li class="breadcrumb-item active">Tour enquiry list </li> -->
-                    </ol>
+                    <h4>Tour Enquiries</h4>
                 </div>
             </div>
         </div>
@@ -58,7 +62,10 @@
                                         <a href="{{url('admin/tour-enquiries/')}}" class="btn btn-default"> Clear</a>
                                     </div>
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#form-modal"> <i class="fa fa-plus-circle"></i> Add Enquiry</button>
+                                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#form-modal"> <i class="fa fa-plus-circle"></i> New Enquiry</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="{{url('admin/sent-estimations')}}" class="btn btn-default bg-gradient-purple"><i class="fa fa-file-invoice"></i> Sent Estimations</a>
                                     </div>
                                 </div>
                             </form>
@@ -71,6 +78,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Tour Name</th>
+                                        <th>Services</th>
                                         <th>Customer Details</th>
                                         <th>Tourist No</th>
                                         <th>Travel Date</th>
@@ -79,9 +87,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($tour_enquiry as $row)
+                                @foreach($tour_enquiry as $key => $row)
 	                                <tr>
-	                                    <td>{{ $row->id }}</td>
+	                                    <td>{{ $tour_enquiry->firstItem() + $key }}</td>
                                         <td>
                                             @if($row->tour_id)
                                             <a href="{{url('tour-details/'.$row->tour_id.'/'.Str::slug($row->tour_name))}}" target="_blank" noreferrer noopener> {{ $row->tour_name }} </a>
@@ -89,7 +97,17 @@
                                             NA
                                             @endif
                                         </td>
-	                                    <td class="text-left"><i class="fa fa-user"></i> {{ Str::limit($row->name, 30) }} <br> 
+                                        <td>
+                                            @if($row->services)
+                                            @foreach($row->services as $service)
+                                            <span class="badge badge-dark">{{ $service }}</span>@if($loop->last) @else <br> @endif
+                                            @endforeach
+                                            @else
+                                            NA
+                                            @endif
+                                        </td>
+	                                    <td class="text-left">
+                                            <i class="fa fa-user"></i> {{ Str::limit($row->name, 30) }} <br> 
                                             <i class="fa fa-envelope"></i> {{ $row->email ? $row->email : 'NA' }} <br> 
                                             <i class="fa fa-phone"></i> {{ $row->contact ? $row->contact : 'NA' }}<br> 
                                             <i class="fa fa-city"></i> {{ $row->current_city ? $row->current_city : 'NA' }}
@@ -99,8 +117,15 @@
 	                                    <td>{{ $row->message ? $row->message : 'NA' }}</td>
                                         <td>
                                             <div class="d-flex justify-content-center">
-                                                <a class="btn btn-light btn-sm mr-1" title="Create Custom Tour" href="{{ url('/admin/plan-tour?tour_id='.$row->tour_id.'&name='.$row->name.'&tourist_count='.$row->tourist_no.'&from_date='.$row->from_date.'&end_date='.$row->end_date) }}"><i class="fa fa-campground"></i></a>
-                                                <a class="btn btn-danger btn-sm" onclick="return confirm('Are you sure')" href="{{ url('/admin/delete-tour-enquiry/'.$row->id) }}"><i class="fa fa-trash"></i></a>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
+                                                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                        <a href="{{ url('/admin/create-estimation/'.base64_encode($row->id))}}" class="dropdown-item"><i class="fa fa-file-invoice-dollar mr-2"></i> Create Estimation</a>
+                                                        <a href="{{ url('/admin/plan-tour?tour_id='.$row->tour_id.'&name='.$row->name.'&tourist_count='.$row->tourist_no.'&from_date='.$row->from_date.'&end_date='.$row->end_date) }}" class="dropdown-item"><i class="fa fa-campground"></i> Create Custom Tour</a>
+                                                        <a class="dropdown-divider"></a>
+                                                        <a onclick="return confirm('Are you sure')" href="{{ url('/admin/delete-tour-enquiry/'.$row->id) }}" class="dropdown-item"><i class="fa fa-trash mr-2"></i> Delete</a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </td>
 	                                </tr>
@@ -125,7 +150,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add Enquiry</h4>
+                <h4 class="modal-title">New Enquiry</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -153,6 +178,19 @@
                                     @foreach(App\Models\Tour::select('id','tour_name','days','nights')->orderBy('custom_tour','DESC')->orderBy('tour_name','ASC')->get() as $row)
                                     <option value="{{$row->id}}" @if(Request()->tour_id == $row->id) selected @endif>{{$row->tour_name}} | {{$row->nights}}N/{{$row->days}}D</option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="">Services</label>
+                                <select name="services[]" class="form-control sumoselect" multiple>
+                                    <option value="Hotel Booking">Hotel Booking</option>
+                                    <option value="Bus Booking">Bus Booking</option>
+                                    <option value="Flight Booking">Flight Booking</option>
+                                    <option value="Train Booking">Train Booking</option>
+                                    <option value="Cab Booking">Cab Booking</option>
+                                    <option value="Cruise Booking">Cruise Booking</option>
+                                    <option value="Visa Service">Visa Service</option>
+                                    <option value="Passport Service">Passport Service</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
@@ -188,6 +226,7 @@
     </div>
 </div>
 @section('scripts')
+<script src="{{asset('backend_js/jquery.sumoselect.js')}}"></script>
 <script>
     $(document).ready(function() {
         $.validator.addMethod("greaterThan", function (value, element, params) {
@@ -236,6 +275,11 @@
             }
         });
     });
+</script>
+
+<script>
+    $((function(){
+        window.asd=$(".SlectBox").SumoSelect({csvDispCount:3,selectAll:!0,captionFormatAllSelected:"Yeah, OK, so everything."}),window.Search=$(".search-box").SumoSelect({csvDispCount:3,search:!0,searchText:"Enter here."}),window.sb=$(".SlectBox-grp-src").SumoSelect({csvDispCount:3,search:!0,searchText:"Enter here.",selectAll:!0}),$(".sumoselect").SumoSelect({placeholder: 'Select'}),$(".selectsum1").SumoSelect({okCancelInMulti:!0,selectAll:!0}),$(".selectsum2").SumoSelect({selectAll:!0})}));
 </script>
 @endsection('scripts')
 

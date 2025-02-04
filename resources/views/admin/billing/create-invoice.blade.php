@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-dark font-weight-bold submit"><i class="fa fa-check-circle"></i> Save </button>
+                        <button type="submit" class="btn btn-dark font-weight-bold submit"><i class="fa fa-check-circle"></i> Save & Next </button>
                         <button type="reset" class="btn btn-light"> <i class="fa fa-refresh"></i> Reset </button>
                     </div>
                 </div>

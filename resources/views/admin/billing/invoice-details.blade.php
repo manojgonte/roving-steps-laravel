@@ -505,6 +505,7 @@
                             <td class="text-left text-sm font-weight-bold">In Word</td>
                             <td class="text-left" id="grand_total_word"></td>
                         </tr>
+                        @if($invoice->estimation != 1)
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
                             <td class="text-right">
@@ -529,6 +530,7 @@
                             <td class="text-left text-sm font-weight-bold">In Word</td>
                             <td class="text-left" id="balance_word"></td>
                         </tr>
+                        @endif
                     </tbody>
                 </table>
 

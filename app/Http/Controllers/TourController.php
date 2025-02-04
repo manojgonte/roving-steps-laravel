@@ -10,6 +10,7 @@ use App\Models\Tour;
 use App\Models\PlannedTour;
 use App\Models\Enquiry;
 use App\Models\TourEnquiry;
+use App\Models\invoices;
 use App\Services\MailchimpService;
 use Image;
 use Auth;
@@ -519,6 +520,7 @@ class TourController extends Controller
             $enquiry->contact       = !empty($data['contact']) ? $data['contact'] : null;
             $enquiry->email         = !empty($data['email']) ? $data['email'] : null;
             $enquiry->tour_id       = !empty($data['tour_id']) ? $data['tour_id'] : null;
+            $enquiry->services      = !empty($data['services']) ? $data['services'] : null;
             $enquiry->tourist_no    = !empty($data['tourist_no']) ? $data['tourist_no'] : null;
             $enquiry->current_city  = !empty($data['current_city']) ? $data['current_city'] : null;
             $enquiry->from_date     = !empty($data['from_date']) ? $data['from_date'] : null;
@@ -533,6 +535,56 @@ class TourController extends Controller
     public function deleteTourEnquiry(Request $request, $id){
         $enquiry = TourEnquiry::find($id)->delete();
         return redirect()->back()->with('flash_message_success','Enquiry deleted');
+    }
+
+    public function createEstimation(Request $request, $id){
+        $enquiry = TourEnquiry::find(base64_decode($id));
+
+        $Invoices = new invoices;
+        $Invoices->bill_to = $enquiry->name;
+        $Invoices->address = !empty($enquiry->current_city) ? $enquiry->current_city : null;
+        $Invoices->email = !empty($enquiry->email) ? $enquiry->email : null;
+        $Invoices->contact_no = !empty($enquiry->contact) ? $enquiry->contact : null;
+        $Invoices->pan_no = null;
+        $Invoices->gst_no = null;
+        $Invoices->gst_address = null;
+        $Invoices->no_of_passengers = !empty($enquiry->tourist_no) ? $enquiry->tourist_no : null;
+        $Invoices->from_date = !empty($enquiry->from_date) ? $enquiry->from_date : null;
+        $Invoices->to_date = !empty($enquiry->to_date) ? $enquiry->to_date : null;
+        $Invoices->invoice_for = $enquiry->services;
+        $Invoices->invoice_date = date('Y-m-d');
+        $Invoices->tour_name = !empty($enquiry->tour_id) ? $enquiry->tour_id : null;
+        $Invoices->estimation = 1;
+        $Invoices->save();
+
+        return redirect('admin/invoice-details/'.base64_encode($Invoices->id))->with('flash_message_success','Estimation generated successfully, please update the services amount.');
+    }
+
+    public function createEstInvoice(Request $request, $id){
+        $Invoices = invoices::find(base64_decode($id));
+        $Invoices->estimation = 0;
+        $Invoices->save();
+
+        return redirect('admin/edit-invoice-details/'.base64_encode(base64_decode($id)))->with('flash_message_success','Please fill out the payment details.');
+    }
+
+    public function viewEstimations(Request $request){
+        $estimations = invoices::with('invoiceItems')
+            ->select('invoices.*','tours.tour_name as tourName')
+            ->leftJoin('tours','tours.id','invoices.tour_name');
+
+        if($request->q){
+            $q = $request->q;
+            $estimations = $estimations->where(function($query) use($q){
+                $query->where('bill_to','like','%'.$q.'%')
+                ->orWhere('contact_no','like','%'.$q.'%');
+            });
+        }
+        $estimations = $estimations->where('estimation',1)
+            ->orderBy('invoices.id','DESC')
+            ->paginate(10);
+
+        return view('admin.enquiries.enquiry_estimations',compact('estimations'));
     }
 
     public function shareTour(Request $request){

@@ -80,7 +80,7 @@
 }
 .SumoSelect>.CaptionCont {
 	position: relative;
-    border: 1px solid #e1e6f1;
+    border: 1px solid #ced4da;
     color: #636c86;
     min-height: 14px;
     background-color: #fff;
@@ -88,6 +88,7 @@
     margin: 0;
     height: 40px;
     line-height: 30px;
+    border-radius: 0.25rem;
 
 }
 .SumoSelect>.CaptionCont>span {

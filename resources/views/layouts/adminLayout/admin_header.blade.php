@@ -5,7 +5,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/')}}" target="_blank"><i class="fas fa-globe"></i> Visit Site</a>
+            <a class="nav-link btn btn-light" href="{{url('/')}}" target="_blank"><i class="fas fa-globe"></i> Go to Site</a>
         </li>
     </ul>
 

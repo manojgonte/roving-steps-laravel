@@ -459,6 +459,7 @@
                         <td class="text-left text-sm font-weight-bold">In Word</td>
                         <td class="text-right font-weight-bold" id="">{{ ($invoice->grand_total != null || $invoice->grand_total != 0.0) ? AmountInWords($invoice->grand_total) : '-'}}</td>
                     </tr>
+                    @if($invoice->estimation != 1)
                     <tr>
                         <td class="text-left text-sm font-weight-bold">Payment Received</td>
                         <td class="text-right">Rs.{{$invoice->payment_received}}</td>
@@ -471,6 +472,7 @@
                         <td class="text-left text-sm font-weight-bold">In Word</td>
                         <td class="text-right font-weight-bold" id="">{{ ($invoice->balance != null || $invoice->balance != 0.0) ? AmountInWords($invoice->balance) : '-'}}</td>
                     </tr>
+                    @endif
                 </tbody>
             </table>
 

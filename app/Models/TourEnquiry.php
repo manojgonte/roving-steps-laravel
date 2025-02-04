@@ -10,4 +10,8 @@ class TourEnquiry extends Model
     use HasFactory;
 
     protected $table = 'tour_enquiry';
+
+    protected $casts = [
+        'services' => 'array'
+    ];
 }

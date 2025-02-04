@@ -35,7 +35,12 @@ class BillingController extends Controller
                 ->orWhere('contact_no','like','%'.$q.'%');
             });
         }
-        $invoices = $invoices->orderBy('invoices.id','DESC')->paginate(10);
+        $invoices = $invoices->where(function ($query) {
+                $query->where('estimation', 0)
+                ->orWhereNull('estimation');
+            })
+            ->orderBy('invoices.id','DESC')
+            ->paginate(10);
             
         return view('admin.billing.invoice-dashboard',compact('invoices'));
     }
@@ -57,7 +62,7 @@ class BillingController extends Controller
             $Invoices->to_date = !empty($data['to_date']) ? $data['to_date'] : null;
             $Invoices->invoice_for = $request->invoice_for;
             $Invoices->invoice_date = $data['invoice_date'];
-
+            $Invoices->estimation = 0;
             $Invoices->tour_name = !empty($data['isTour']) ? $data['tour_name'] : null;
             $Invoices->save();
 
@@ -126,8 +131,8 @@ class BillingController extends Controller
             $invoice->gst_per = $data['gst_per'];
             $invoice->gst = $data['gst'];
             $invoice->grand_total = $data['grand_total'];
-            $invoice->payment_received = $data['payment_received'];
-            $invoice->balance = $data['balance'];
+            $invoice->payment_received = !empty($data['payment_received']) ? $data['payment_received'] : null;
+            $invoice->balance = !empty($data['balance']) ? $data['balance'] : null;
             $invoice->note = $data['note'];
             $invoice->save();
 
@@ -176,7 +181,7 @@ class BillingController extends Controller
         $id = base64_decode($id);
         if($request->isMethod('post')) {
             $data = $request->all();
-            // dd($data);
+            
             $Invoices = invoices::find($id);
             $Invoices->bill_to = $data['bill_to'];
             $Invoices->address = !empty($data['address']) ? $data['address'] : null;

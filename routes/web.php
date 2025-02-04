@@ -87,11 +87,15 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/share-tour/', [TourController::class,'shareTour']);
     Route::match(['get','post'], 'admin/download-tour/{id}', [TourController::class,'downloadTour']);
 
+    // enquiries routes 
     Route::match(['get','post'], 'admin/enquiries', [TourController::class,'enquiries']);
     Route::match(['get','post'], 'admin/delete-enquiry/{id}', [TourController::class,'deleteEnquiry']);
     Route::match(['get','post'], 'admin/tour-enquiries', [TourController::class,'tourEnquiries']);
     Route::match(['get','post'], 'admin/add-enquiry', [TourController::class,'addEnquiry']);
     Route::match(['get','post'], 'admin/delete-tour-enquiry/{id}', [TourController::class,'deleteTourEnquiry']);
+    Route::match(['get','post'], 'admin/create-estimation/{id}', [TourController::class,'createEstimation']);
+    Route::match(['get','post'], 'admin/sent-estimations', [TourController::class,'viewEstimations']);
+    Route::match(['get','post'], 'admin/create-invoice/{id}', [TourController::class,'createEstInvoice']);
 
     // Destinations
     Route::match(['get','post'], 'admin/edit-destination/{id}', [TourController::class, 'editDestination']);

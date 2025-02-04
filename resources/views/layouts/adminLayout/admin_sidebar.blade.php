@@ -35,10 +35,24 @@
                 @endif
                 @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
-                    <a href="{{url('admin/tour-enquiries')}}" class="nav-link text-white @if(preg_match('#/admin/tour-enquiries#', $url)) active @endif">
+                    <a href="#" class="nav-link text-white @if(preg_match('#/admin/tour-enquiries#', $url) || preg_match('#/admin/sent-estimations#', $url)) active @endif">
                         <i class="nav-icon fas fa-comment-dots"></i>
-                        <p>Tour Enquiries</p>
+                        <p>Tour Enquiries <i class="right fas fa-angle-right"></i></p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('admin/tour-enquiries')}}" class="nav-link text-white">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tour Enquiries</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('admin/sent-estimations')}}" class="nav-link text-white">
+                              <i class="far fa-circle nav-icon"></i>
+                              <p>Sent Estimations</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 @endif
                 {{-- @if($role == 'Admin' || $role == 'Office User')

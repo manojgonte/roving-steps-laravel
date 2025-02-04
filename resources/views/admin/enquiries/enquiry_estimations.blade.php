@@ -13,7 +13,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h4 class="m-0 text-dark">Invoice & Billing</h4>
+                        <h4 class="m-0 text-dark">Sent Estimations</h4>
                     </div>
                 </div>
             </div>
@@ -33,68 +33,6 @@
         @endif
 
         <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-gradient-danger">
-                            <div class="inner">
-                                <h3>₹{{number_format($invoices->sum('balance'), 1)}}</h3>
-                                <p>Outstanding </p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-rupee-sign"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-gradient-success">
-                            <div class="inner">
-                                <h3>₹{{number_format($invoices->sum('payment_received'), 1)}}</h3>
-                                <p>Received </p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-rupee-sign"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-gradient-warning">
-                            <div class="inner">
-                                <h3>{{ App\Models\invoices::select('invoice_sent')->where('invoice_sent',0)->count() }}</h3>
-                                <p>Invoice in Progress</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-spinner"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-gradient-olive">
-                            <div class="inner">
-                                <h3>{{ App\Models\invoices::select('invoice_sent')->where('invoice_sent',1)->count() }}</h3>
-                                <p>Invoice Sent</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-envelope"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-6 col-6 align-self-end">
-                        <h5>Invoice list ({{$invoices->total()}})</h5>
-                    </div>
-                    <div class="col-lg-6 col-6" style="text-align: right">
-                        <a href="{{ url('/admin/create-invoice') }}" class="btn btn-dark"><i class="fa fa-file-alt"></i> Create Invoice</a>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-2" />
 
             {{-- Filters --}}
             <div class="card">
@@ -117,52 +55,42 @@
                                 <button type="submit" class="btn btn-default btn-sm"> Submit</button>
                             </div>
                             <div class="col-auto">
-                                <a href="{{url('admin/invoice-dashboard')}}" class="btn btn-default btn-sm"> Clear</a>
+                                <a href="{{url('admin/sent-estimations')}}" class="btn btn-default btn-sm"> Clear</a>
                             </div>
                         </div>
                     </form>
                 </div>
 
                 <div class="card-body invoicing-table p-0">
+                    @if(count($estimations) > 0)
                     <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                         <thead>
                             <tr>
-                                <th>Invoice ID</th>
+                                <th>ID</th>
                                 <th>Bill To</th>
                                 <th>Tour Name</th>
                                 <th>Invoice Date</th>
                                 <th>Total</th>
-                                <th>Payment Status</th>
                                 <th>Invoice Sent</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($invoices as $row)
+                            @foreach ($estimations as $row)
                                 <tr>
-                                    <td class="align-middle"><a class="btn btn-link" href="{{ url('/admin/invoice-details/' . base64_encode($row->id)) }}"> INV-{{ $row->id }}</a></td>
+                                    <td class="align-middle"><a class="btn btn-sm btn-link" href="{{ url('/admin/invoice-details/' . base64_encode($row->id)) }}"> EST-{{ $row->id }}</a></td>
                                     <td class="align-middle">{{ $row->bill_to }}</td>
                                     <td class="align-middle" title="{{$row->tourName}}">{{ $row->tourName ? Str::limit($row->tourName, 20) : '-' }}</td>
                                     <td class="align-middle">{{ date('d M Y', strtotime($row->invoice_date)) }}</td>
                                     <td class="align-middle">₹{{ number_format($row->grand_total,1) }}</td>
-                                    <td class="align-middle">
-                                        @if ($row->balance == 0)
-                                            PAID
-                                        @elseif ($row->payment_received > 0)
-                                            PARTIALLY PAID
-                                        @else
-                                            UNPAID
-                                        @endif
-                                    </td>
                                     <td class="align-middle">{{ $row->invoice_sent == 1 ? 'Yes' : 'No' }}</td>
                                     <td class="align-middle">
                                         <a class="btn btn-default" href="{{ url('/admin/invoice-details/'.base64_encode($row->id)) }}"><i class="fa fa-info-circle"></i></a>
-                                        <a class="btn btn-default @if($row->grand_total == 0) disabled @endif" href="{{ url('/admin/invoice-payments/'.base64_encode($row->id)) }}"><i class="fa fa-money-bill-alt"></i></a>
                                         <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
                                         <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{ url('/admin/create-invoice/'.base64_encode($row->id)) }}"><i class="fa fa-money-bill-alt"></i> &nbsp; Create Invoice</a>
                                             <a class="dropdown-item" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=download') }}"><i class="fa fa-download"></i> &nbsp; Download</a>
                                             <a class="dropdown-item" onclick="getInvoiceId(this);" invoiceId="{{base64_encode($row->id)}}" custEmail="{{$row->email}}" data-toggle="modal" data-target="#invoice-share"><i class="fa fa-share"></i> &nbsp; Share</a>
-                                            {{-- <a class="dropdown-item" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=share') }}"><i class="fa fa-share"></i> &nbsp; Share</a> --}}
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="{{ url('/admin/edit-invoice/'.base64_encode($row->id)) }}"><i class="fa fa-edit"></i> &nbsp; Edit</a>
                                             <a class="dropdown-item" href="{{ url('/admin/delete-invoice/'.base64_encode($row->id)) }}" onclick="return confirm('Are you sure?')"> <i class="fa fa-trash"></i> &nbsp; Delete </a>
@@ -172,8 +100,11 @@
                             @endforeach
                         </tbody>
                     </table>
+                    @else
+                    <div class="alert alert-dark m-2">No data found!</div>
+                    @endif
                     <div class="mt-2 d-flex justify-content-center">
-                        {{ $invoices->appends(request()->query())->links('pagination::bootstrap-4') }}
+                        {{ $estimations->appends(request()->query())->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>
