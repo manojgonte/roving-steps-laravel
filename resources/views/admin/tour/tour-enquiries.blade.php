@@ -64,9 +64,6 @@
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#form-modal"> <i class="fa fa-plus-circle"></i> New Enquiry</button>
                                     </div>
-                                    <div class="col-auto">
-                                        <a href="{{url('admin/sent-estimations')}}" class="btn btn-default bg-gradient-purple"><i class="fa fa-file-invoice"></i> Sent Estimations</a>
-                                    </div>
                                 </div>
                             </form>
                         </div>

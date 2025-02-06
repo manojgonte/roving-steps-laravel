@@ -49,7 +49,7 @@
                         <li class="nav-item">
                             <a href="{{url('admin/sent-estimations')}}" class="nav-link text-white">
                               <i class="far fa-circle nav-icon"></i>
-                              <p>Sent Estimations</p>
+                              <p>Estimations</p>
                             </a>
                         </li>
                     </ul>
