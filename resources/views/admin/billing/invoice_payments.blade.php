@@ -23,7 +23,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-8">
-                        <h4 class="m-0 text-dark">Invoice Payments</h4>
+                        <h4 class="m-0 text-dark"><a href="{{url('admin/invoice-billing')}}"><i class="fa fa-angle-left mr-3"></i> </a> Invoice Payments</h4>
                     </div>
                     <div class="col-sm-4">
                         <div class="row d-flex flex-row-reverse">

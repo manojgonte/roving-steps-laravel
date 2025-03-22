@@ -170,11 +170,11 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="">Inclusions</label>
-                                        <textarea name="inclusions" class="form-control" rows="3" placeholder="Enter Inclusions">{{$tour->inclusions}}</textarea>
+                                        <textarea name="inclusions" class="form-control" rows="5" placeholder="Enter Inclusions">{{$tour->inclusions}}</textarea>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="">Exclusions</label>
-                                        <textarea name="exclusions" class="form-control" rows="3" placeholder="Enter Exclusions">{{$tour->exclusions}}</textarea>
+                                        <textarea name="exclusions" class="form-control" rows="5" placeholder="Enter Exclusions">{{$tour->exclusions}}</textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Note</label>

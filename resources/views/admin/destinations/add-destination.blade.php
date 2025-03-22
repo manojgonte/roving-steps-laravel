@@ -51,7 +51,7 @@
                                         <select class="form-control select2bs4" name="parent_id" id="parent_id">
                                             <option value="0">Main Category</option>
                                             @foreach(App\Models\Destination::where(['parent_id'=>0])->orderBy('name','ASC')->get() as $val)
-                                            <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                            <option value="{{ $val->id }}" @if(Request()->slug == $val->name) selected @endif>{{ $val->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

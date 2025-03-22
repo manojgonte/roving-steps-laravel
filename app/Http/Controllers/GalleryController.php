@@ -25,6 +25,7 @@ class GalleryController extends Controller
                     $file_path = 'img/gallery/'.$filename;
                     Image::make($file)->save($file_path);
                     $image->image = $filename;
+                    $image->title = $data['title'] ?? '';
                     $image->save();
                 }   
             }

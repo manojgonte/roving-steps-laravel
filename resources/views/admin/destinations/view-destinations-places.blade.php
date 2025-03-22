@@ -6,10 +6,10 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4>Destination Places List</h4>
+                    <h4>{{Request()->slug}} - Places to visit</h4>
                 </div>
                 <div class="col-sm-6">
-                    <a href="{{ url('/admin/add-destination') }}" style="float: right; margin: 3px 3px;" class="btn btn-warning text-white"><i class="fa fa-plus-circle"></i> Add Destination</a>
+                    <a href="{{ url('/admin/add-destination/'.Request()->slug) }}" style="float: right; margin: 3px 3px;" class="btn btn-dark text-white"><i class="fa fa-plus-circle"></i> Add places to visit</a>
                 </div>
             </div>
         </div>

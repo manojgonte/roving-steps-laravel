@@ -5,7 +5,7 @@
         <span class="radio-btn">
             <div class="hobbies-icon">
                 <img src="{{asset('img/gallery/'.$img->image)}}">
-                <span class="">{{Str::limit($img->image, 25)}}</span>
+                <span class="">{{$img->title ?? Str::limit($img->image, 25)}}</span>
             </div>
         </span>
     </label>

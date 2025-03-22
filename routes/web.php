@@ -100,9 +100,9 @@ Route::group(['middleware'=>'admin_auth'],function(){
     // Destinations
     Route::match(['get','post'], 'admin/edit-destination/{id}', [TourController::class, 'editDestination']);
     Route::match(['get','post'], 'admin/view-destinations/', [TourController::class, 'viewDestinations']);
-    Route::match(['get','post'], 'admin/add-destination/', [TourController::class, 'addDestination']);
+    Route::match(['get','post'], 'admin/add-destination/{slug?}', [TourController::class, 'addDestination']);
     Route::match(['get','post'], 'admin/delete-destination/{id}', [TourController::class,'deleteDestination']);
-    Route::match(['get','post'], 'admin/destination/places/{id}', [TourController::class,'viewDestinationPlaces']);
+    Route::match(['get','post'], 'admin/destination/places/{id}/{slug?}', [TourController::class,'viewDestinationPlaces']);
 
     // Registered Users
     Route::match(['get','post'], 'admin/registered-users/', [UserController::class, 'viewUsers']);

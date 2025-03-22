@@ -47,7 +47,10 @@
                                             <small>Can add single or muliple images</small>
                                         </div>
                                         <div class="form-group col-md-4 mb-0">
-                                            <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check-circle"></i> Save </button>
+                                            <input type="text" name="title" class="form-control p-1" placeholder="Image title">
+                                        </div>
+                                        <div class="form-group col-md-4 mb-0">
+                                            <button type="submit" class="btn btn-dark submit"><i class="fa fa-check-circle"></i> Save </button>
                                         </div>
                                     </div>
                                 </form>
@@ -65,9 +68,10 @@
                                         <a href="{{asset('img/gallery/'.$row->image)}}" target="_blank">
                                         <img src="{{asset('img/gallery/'.$row->image)}}" class="img-fluid mb-2" style="height: 150px; width:200px; object-fit: cover;" alt="img"/>
                                         </a>
+                                        <span>{{$row->title ?? ''}}</span>
                                         <div class="d-flex justify-content-center">
-                                            <a class="btn btn-default" data-toggle="modal" data-target="#editPhoto" onclick="getId({{ $row->id }})"><i class="fa fa-edit"></i></a> &nbsp;
-                                            <a class="btn btn-default" onclick="return confirm('Are you sure?')" href="{{url('admin/delete-photo/'.$row->id)}}"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editPhoto" onclick="getId({{ $row->id }})"><i class="fa fa-edit"></i></a> &nbsp;
+                                            <a class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')" href="{{url('admin/delete-photo/'.$row->id)}}"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </div>
                                     @endforeach

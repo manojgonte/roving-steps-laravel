@@ -166,15 +166,33 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="">Inclusions</label>
-                                        <textarea name="inclusions" class="form-control" rows="3" placeholder="Enter Inclusions"></textarea>
+                                        <textarea name="inclusions" class="form-control" rows="5" placeholder="Enter Inclusions">
+1. Meals / Breakfast @ Indian Restaurant without transfers.
+2. Air Ticket 
+3. Airport and sightseeing transfers on SIC basis.
+4. Toll Taxes & Service charges 
+5. All sightseeing on SIS basis. 
+6. Air flight 
+7. Insurance</textarea>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="">Exclusions</label>
-                                        <textarea name="exclusions" class="form-control" rows="3" placeholder="Enter Exclusions"></textarea>
+                                        <textarea name="exclusions" class="form-control" rows="5" placeholder="Enter Exclusions">
+1. Tips and porter charges. 
+2. Cost of any excursions not included in the package
+ 3. Early check in and late checkout will be as per hotel policy and availability. (Extra charges may be applicable).
+ 4. Items of any personal nature such as phone calls, pay movies, room services, mini bars, laundries or other expenditures during the tour. 
+5. Tours can be cancelled or postponed without prior notice in case of any natural calamities. 
+6. SIC means seat in coach basis. Drivers would communicate with the guests if there is any change in assigned pick up time. 
+7. If guests fails to reach within the time arranged, there will be no replacement given any other services not specified above</textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Note</label>
-                                        <textarea name="note" class="form-control" rows="3" placeholder="Enter Note"></textarea>
+                                        <textarea name="note" class="form-control" rows="3" placeholder="Enter Note">
+Terms & Conditions
+•   No refund will be made for any unused accommodation, missed meals, transportation segments, sightseeing tours or any other service. 
+•   Such unused items are neither refundable nor exchangeable. Room allocation is done by the hotel depending upon availability at the time of check-in in the category of room as specified on your confirmation voucher. 
+•   No refund shall be claimed, if the services & amenities of hotel were not up to your expectations, it will be considered on case to case basis.</textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="form-check">

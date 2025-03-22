@@ -132,6 +132,7 @@
                                 <th>Tour Name</th>
                                 <th>Invoice Date</th>
                                 <th>Total</th>
+                                <th>Balance</th>
                                 <th>Payment Status</th>
                                 <th>Invoice Sent</th>
                                 <th>Action</th>
@@ -145,6 +146,7 @@
                                     <td class="align-middle" title="{{$row->tourName}}">{{ $row->tourName ? Str::limit($row->tourName, 20) : '-' }}</td>
                                     <td class="align-middle">{{ date('d M Y', strtotime($row->invoice_date)) }}</td>
                                     <td class="align-middle">₹{{ number_format($row->grand_total,1) }}</td>
+                                    <td class="align-middle">₹{{ number_format($row->balance,1) }}</td>
                                     <td class="align-middle">
                                         @if ($row->balance == 0)
                                             PAID

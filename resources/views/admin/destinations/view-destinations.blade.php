@@ -9,7 +9,7 @@
                     <h4>Destinations List</h4>
                 </div>
                 <div class="col-sm-6">
-                    <a href="{{ url('/admin/add-destination') }}" style="float: right; margin: 3px 3px;" class="btn btn-warning text-white"><i class="fa fa-plus-circle"></i> Add Destination</a>
+                    <a href="{{ url('/admin/add-destination') }}" style="float: right; margin: 3px 3px;" class="btn btn-dark text-white"><i class="fa fa-plus-circle"></i> Add Destination</a>
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
 	                                <tr>
                                         <td>{{ $destinations->firstItem() + $key }}</td>
 	                                    <td>@if($row->image)<img src="{{asset('img/destinations/'.$row->image)}}" width="50"> @else - @endif</td>
-	                                    <td><a class="btn btn-link" href="{{url('admin/destination/places/'.$row->id)}}" class="btn btn-default"> {{ Str::limit($row->name, 30) }}</a></td>
+	                                    <td><a class="btn btn-link" href="{{url('admin/destination/places/'.$row->id.'/'.$row->name)}}" class="btn btn-default"> {{ Str::limit($row->name, 30) }}</a></td>
 	                                    <td>@if($row->description){{ Str::limit($row->description, 30) }} @else NA @endif</td>
 	                                    <td>{{ $row->type }}</td>
 	                                    <td>{{ ($row->status == '1') ? 'Published' : 'Not Published' }}</td>
