@@ -130,6 +130,8 @@ class TourController extends Controller
             } elseif (!empty($data['current_image'])) {
                 // Retain the current image if no new image is provided
                 $filename = $data['current_image'];
+            } else {
+                $filename = null;
             }
 
             // detail update
@@ -442,6 +444,8 @@ class TourController extends Controller
             } elseif (!empty($data['current_image'])) {
                 // Retain the current image if no new image is provided
                 $filename = $data['current_image'];
+            } else {
+                $filename = null;
             }
 
             // detail update
@@ -774,6 +778,8 @@ class TourController extends Controller
             } elseif (!empty($data['current_image'])) {
                 // Retain the current image if no new image is provided
                 $filename = $data['current_image'];
+            } else {
+                $filename = null;
             }
 
             // detail update
