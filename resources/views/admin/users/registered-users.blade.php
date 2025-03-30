@@ -2,15 +2,15 @@
 @section('content')
 
 <div class="content-wrapper">
-    <section class="content-header">
+    <section class="content-header pb-0">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h4>Registered Users</h4>
                 </div>
-                {{-- <div class="col-sm-6">
-                    <a href="{{ url('/admin/add-destination') }}" style="float: right; margin: 3px 3px;" class="btn btn-warning text-white"><i class="fa fa-plus-circle"></i> Add Destination</a>
-                </div> --}}
+                <div class="col-sm-6 text-right">
+                    <a href="{{ url('/admin/add-user') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> New User</a>
+                </div>
             </div>
         </div>
     </section>
@@ -56,16 +56,20 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Contact</th>
-                                        {{-- <th>Action</th> --}}
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td>{{ $row->name ? $row->name : 'NA' }}</td>
-	                                    <td>{{ $row->email ? $row->email : 'NA' }}</td>
-                                        <td>{{ $row->contact ? $row->contact : 'NA' }}</td>
+	                                    <td>{{ $row->name ?? '-' }}</td>
+	                                    <td>{{ $row->email ?? '-' }}</td>
+                                        <td>{{ $row->contact ?? '-' }}</td>
+                                        <td>
+                                            <a class="btn btn-default" href="{{ url('/admin/edit-user/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a>
+                                            <a class="btn btn-danger" onclick="return confirm('Are you sure? All user data will be deleted.')" href="{{ url('/admin/delete-user/'.$row->id) }}"><i class="fa fa-trash"></i></a>
+                                        </td>
 	                                </tr>
                                 @endforeach
                                 </tbody>

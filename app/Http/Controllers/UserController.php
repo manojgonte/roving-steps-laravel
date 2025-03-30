@@ -10,6 +10,8 @@ use Auth;
 use Mail;
 use Hash;
 
+use Illuminate\Support\Str;
+
 class UserController extends Controller
 {
     public function userLogin(Request $request){
@@ -154,5 +156,110 @@ class UserController extends Controller
         };
         $users = $users->paginate(10);
         return view('admin.users.registered-users')->with(compact('users'));
+    }
+
+    public function addUser(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $user = new User;
+            $user->name = $data['name'];
+            $user->email = $data['email'] ?? null;
+            $user->contact = $data['contact'] ?? null;
+            $user->contact_alt = $data['contact_alt'] ?? null;
+            $user->address = $data['address'] ?? null;
+            $user->gst_no = $data['gst_no'] ?? null;
+            $user->gst_address = $data['gst_address'] ?? null;
+            $user->pan_no = $data['pan_no'] ?? null;
+            $user->aadhar_no = $data['aadhar_no'] ?? null;
+            $user->passport_no = $data['passport_no'] ?? null;
+            $user->password = bcrypt(Str::slug($data['name']));
+            $user->status = 1;
+
+            if($request->hasFile('pan_card_file')) {
+                $file = $request->file('pan_card_file');
+                $pdf = rand(11, 99999) . '.' . $file->getClientOriginalName();
+                $file->move(public_path('img/user/'), $pdf);
+                $user->pan_card_file=$pdf;
+            }
+
+            if($request->hasFile('aadhar_card_file')) {
+                $file = $request->file('aadhar_card_file');
+                $pdf = rand(11, 99999) . '.' . $file->getClientOriginalName();
+                $file->move(public_path('img/user/'), $pdf);
+                $user->aadhar_card_file=$pdf;
+            }
+
+            if($request->hasFile('passport_file')) {
+                $file = $request->file('passport_file');
+                $pdf = rand(11, 99999) . '.' . $file->getClientOriginalName();
+                $file->move(public_path('img/user/'), $pdf);
+                $user->passport_file=$pdf;
+            }
+
+            $user->save();
+            return redirect('admin/registered-users/')->with('flash_message_success','New user added successfully');
+        }
+        return view('admin.users.add_user');
+    }
+
+    public function editUser(Request $request, $id){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // dd($data);
+
+            // Upload file
+            if($request->hasFile('pan_card_file')) {
+                $file = $request->file('pan_card_file');
+                $pan_card_file = rand(11, 99999) . '.' . $file->getClientOriginalName();
+                $file->move(public_path('img/user/'), $pan_card_file);
+            }else if(!empty($data['current_pan_file'])){
+                $pan_card_file = $data['current_pan_file'];
+            }else{
+                $pan_card_file = '';
+            }
+            if($request->hasFile('aadhar_card_file')) {
+                $file = $request->file('aadhar_card_file');
+                $aadhar_card_file = rand(11, 99999) . '.' . $file->getClientOriginalName();
+                $file->move(public_path('img/user/'), $aadhar_card_file);
+            }else if(!empty($data['current_aadhar_file'])){
+                $aadhar_card_file = $data['current_aadhar_file'];
+            }else{
+                $aadhar_card_file = '';
+            }
+            if($request->hasFile('passport_file')) {
+                $file = $request->file('passport_file');
+                $passport_file = rand(11, 99999) . '.' . $file->getClientOriginalName();
+                $file->move(public_path('img/user/'), $passport_file);
+            }else if(!empty($data['current_passport_file'])){
+                $passport_file = $data['current_passport_file'];
+            }else{
+                $passport_file = '';
+            }
+
+            // detail update
+            User::where('id',$id)->update([
+                'name'=>$data['name'],
+                'email' => $data['email'],
+                'contact' => $data['contact'],
+                'contact_alt' => $data['contact_alt'],
+                'address' => $data['address'],
+                'gst_no' => $data['gst_no'],
+                'gst_address' => $data['gst_address'],
+                'pan_no' => $data['pan_no'],
+                'aadhar_no' => $data['aadhar_no'],
+                'passport_no' => $data['passport_no'],
+                'pan_card_file'=>$pan_card_file,
+                'aadhar_card_file'=>$aadhar_card_file,
+                'passport_file'=>$passport_file,
+            ]);
+            return redirect('admin/registered-users/')->with('flash_message_success','User details updated successfully');
+        }
+        $user = User::where('id',$id)->first();
+        return view('admin.users.edit_user')->with(compact('user'));
+    }
+
+    public function deleteUser(Request $request, $id){
+        User::find($id)->delete();
+        return redirect()->back()->with('flash_message_success','User deleted');
     }
 }
