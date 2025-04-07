@@ -29,7 +29,7 @@
         <div class="card-body">
             <dl class="row">
                 <dt class="col-sm-2">Overview</dt>
-                <dd class="col-sm-10">{{$tour->description}}</dd>
+                <dd class="col-sm-10">{{$tour->description ?? '-'}}</dd>
             </dl>
         </div>
     </div>

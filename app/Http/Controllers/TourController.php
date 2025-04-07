@@ -367,7 +367,7 @@ class TourController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
             // dd($data);
-            if(empty($data['image']) || empty($data['gallery_image'])){
+            if (!$request->hasFile('image') && empty($data['gallery_image'])) {
                 return redirect()->back()->with('flash_message_error','Please select itinerary image from Gallery or Device');
             }
 

@@ -40,3 +40,8 @@ function isDate($string){
     }
     return false;
 }
+
+function getUser($id){
+    $user = App\Models\User::select('name')->where('id',$id)->first();
+    return $user;
+}

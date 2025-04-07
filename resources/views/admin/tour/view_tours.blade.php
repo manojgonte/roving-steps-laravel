@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4>Tours</h4>
+                    <h4>Custom Tours</h4>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{ url('/admin/plan-tour') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> Create Custom Tour</a>
@@ -94,9 +94,9 @@
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
 	                                    <td class="text-left">{{ !empty($row->customer_name) ? Str::limit($row->customer_name, 40) : 'NA' }}</td>
-                                        <td class="text-left"><a href="{{url('admin/edit-tour/'.$row->tour_id)}}">{{ Str::limit($row->tour->tour_name, 40) }}</a></td>
+                                        <td class="text-left">@if($row->tour)<a href="{{url('admin/edit-tour/'.$row->tour_id)}}">{{ Str::limit($row->tour->tour_name, 40) }}</a> @else Tour not found @endif</td>
 	                                    {{-- <td>{{ $row->tour->type }}</td> --}}
-                                        <td>{{ Str::limit($row->tour->destination->name, 20) }}</td>
+                                        <td>@if($row->tour) {{ Str::limit($row->tour->destination->name, 20) }} @else Tour not found @endif</td>
 	                                    <td>{{ $row->tourist_count }}</td>
 	                                    <td>{{ $row->from_date ? date('d/m/Y', strtotime($row->from_date)) : '-' }}</td> 
                                         <td>{{ $row->end_date ? date('d/m/Y', strtotime($row->end_date)) : '-' }}</td>

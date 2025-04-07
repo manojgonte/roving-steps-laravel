@@ -1,6 +1,6 @@
 <div class="row">
     @foreach($galleryImages as $img)
-    <label class="col-2 custom-radio">
+    <label class="col-3 col-md-3 col-lg-3 col-xl-2 custom-radio">
         <input type="radio" name="gallery_image_option" value="{{$img->image}}" onclick="selectGalleryImage('{{$img->image}}')">
         <span class="radio-btn">
             <div class="hobbies-icon">

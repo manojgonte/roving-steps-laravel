@@ -76,10 +76,10 @@
                                             {{-- <input type="text" name="visit_place" class="form-control" placeholder="Enter Place" value="" required> --}}
                                             <select class="form-control select2bs4" name="visit_place" required>
                                                 <option value="">Select One</option>
-                                                @foreach($destinations as $cat){
+                                                @foreach($destinations as $cat)
                                                     <option value="{{$cat->name}}">{{$cat->name}}</option>
                                                     @php $sub_categories = App\Models\Destination::where(['parent_id'=>$cat->id])->orderBy('name','ASC')->get(); @endphp
-                                                    @foreach ($sub_categories as $sub_cat) {
+                                                    @foreach ($sub_categories as $sub_cat)
                                                     <option value="{{$sub_cat->name}}">-- {{$sub_cat->name}}</option>
                                                     @endforeach
                                                 @endforeach
@@ -117,7 +117,7 @@
                                             <input type="text" name="food" class="form-control" placeholder="Enter Food" value="" required>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label>Image <small>(Size: 800 X 530px)</small></label>
+                                            <label class="required">Image <small>(Size: 800 X 530px)</small></label>
 
                                             <div class="input-group mb-1">
                                                 <div class="input-group-prepend">
@@ -163,6 +163,7 @@
                                 View Itineraries
                             </h3><hr>
                             <div class="card-body pt-1">
+                                @if(count($tour->itinerary) > 0)
                                 <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
                                     <tr>
@@ -194,6 +195,9 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            @else
+                            <div class="alert alert-dark">No itinerary added.</div>
+                            @endif
                             {{-- {{ $tour->itinerary->links("pagination::bootstrap-4") }} --}}
                             </div>
                         </div>

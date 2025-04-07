@@ -38,23 +38,30 @@ class GalleryController extends Controller
             $data = $request->all();
             // dd($data);
 
-            $photo = Gallery::select('id','image')->where('id',$data['id'])->first();
-            if(file_exists('img/gallery/'.$photo->image)){
-                unlink('img/gallery/'.$photo->image);
-            }
-
+            $photo = Gallery::select('id','image','title')->where('id',$data['id'])->first();
             // image save in folder
             if($request->hasFile('image')){
+
+                if($photo->image && file_exists('img/gallery/'.$photo->image)){
+                    unlink('img/gallery/'.$photo->image);
+                }
+
                 $file = $request->file('image');
                 $filename = strtotime("now").'-'. $file->getClientOriginalName();
                 $file_path = 'img/gallery/'.$filename;
                 Image::make($file)->save($file_path);
+                
+                // detail update
+                Gallery::where('id',$data['id'])->update([
+                    'image'=>$filename,
+                    'title'=>$data['title'],
+                ]);
+            }else {
+                Gallery::where('id',$data['id'])->update([
+                    'title'=>$data['title'],
+                ]);
             }
 
-            // detail update
-            Gallery::where('id',$data['id'])->update([
-                'image'=>$filename,
-            ]);
             
             return redirect()->back()->with('flash_message_success','Photo updated successfully');
         }

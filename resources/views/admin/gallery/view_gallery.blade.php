@@ -64,13 +64,13 @@
                             <div class="card-body pt-1">
                                 <div class="row">
                                     @foreach($photos as $row)
-                                    <div class="col-sm-2 mt-4">
+                                    <div class="col-4 col-md-3 col-lg-2 col-xl-2 mt-4">
                                         <a href="{{asset('img/gallery/'.$row->image)}}" target="_blank">
                                         <img src="{{asset('img/gallery/'.$row->image)}}" class="img-fluid mb-2" style="height: 150px; width:200px; object-fit: cover;" alt="img"/>
                                         </a>
                                         <span>{{$row->title ?? ''}}</span>
                                         <div class="d-flex justify-content-center">
-                                            <a class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editPhoto" onclick="getId({{ $row->id }})"><i class="fa fa-edit"></i></a> &nbsp;
+                                            <a class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editPhoto" onclick="getId({{$row->id}},'{{$row->title}}')"><i class="fa fa-edit"></i></a> &nbsp;
                                             <a class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')" href="{{url('admin/delete-photo/'.$row->id)}}"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </div>
@@ -100,13 +100,17 @@
             <form method="POST" action="{{url('admin/edit-photo/')}}" enctype="multipart/form-data" id="editPhoto">@csrf
             <div class="modal-body">
                 <input type="hidden" name="id" id="imgId">
-                <div class="form-group col-md-12 mb-0">
-                    <input type="file" name="image" class="form-control p-1" required>
+                <div class="form-group col-md-12">
+                    <input type="file" name="image" class="form-control p-1">
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="">Title</label>
+                    <input type="text" name="title" class="form-control" id="imgTitle" placeholder="Image title">
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-warning text-white edit"><i class="fa fa-check-circle"></i> Update</button>
+                <button type="submit" class="btn btn-dark text-white edit"><i class="fa fa-check-circle"></i> Update</button>
             </div>
             </form>
         </div>
@@ -115,8 +119,9 @@
 
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
 <script>
-    function getId(id) {
+    function getId(id,title) {
         $("#imgId").val(id);
+        $("#imgTitle").val(title);
     }
 
     $(document).ready(function() {        
