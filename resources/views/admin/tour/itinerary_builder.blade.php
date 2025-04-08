@@ -76,11 +76,11 @@
                                             {{-- <input type="text" name="visit_place" class="form-control" placeholder="Enter Place" value="" required> --}}
                                             <select class="form-control select2bs4" name="visit_place" required>
                                                 <option value="">Select One</option>
-                                                @foreach($destinations as $cat)
-                                                    <option value="{{$cat->name}}">{{$cat->name}}</option>
-                                                    @php $sub_categories = App\Models\Destination::where(['parent_id'=>$cat->id])->orderBy('name','ASC')->get(); @endphp
-                                                    @foreach ($sub_categories as $sub_cat)
-                                                    <option value="{{$sub_cat->name}}">-- {{$sub_cat->name}}</option>
+                                                @foreach($destinations as $destination)
+                                                    <option value="{{$destination->name}}">{{$destination->name}}</option>
+                                                    @php $places = App\Models\Destination::where(['parent_id'=>$destination->id])->orderBy('name','ASC')->get(); @endphp
+                                                    @foreach ($places as $place)
+                                                    <option value="{{$place->name}}">-- {{$place->name}}</option>
                                                     @endforeach
                                                 @endforeach
                                             </select>
@@ -294,14 +294,11 @@
                     data:{place_id: placeId},
                     dataType: 'json',
                     success:function(data){
-                        // console.log(data); return false;
-                        if(data){
-                            $('input[name="activity"]').val(data.activity);
-                            $('select[name="travel_option"]').val(data.travel_option);
-                            $('textarea[name="description"]').val(data.description);
-                            $('input[name="stay"]').val(data.stay);
-                            $('input[name="food"]').val(data.food);
-                        }
+                        $('textarea[name="description"]').val(data?.destination?.description ?? data?.itinerary?.description);
+                        $('input[name="activity"]').val(data?.itinerary?.activity ?? '');
+                        $('select[name="travel_option"]').val(data?.itinerary?.travel_option ?? '');
+                        $('input[name="stay"]').val(data?.itinerary?.stay ?? '');
+                        $('input[name="food"]').val(data?.itinerary?.food ?? '');
                     }
                 });
             }else{
@@ -312,7 +309,7 @@
                 $('input[name="food"]').val('');
             }
         });
-});
+    });
 </script>
 
 @endsection

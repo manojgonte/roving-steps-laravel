@@ -476,7 +476,9 @@ class TourController extends Controller
     }
 
     public function getItineraryDetails(Request $request, $place){
-        return $itinerary = TourItinerary::where('visit_place',$place)->orderBy('id','DESC')->first();
+        $itinerary = TourItinerary::where('visit_place',$place)->orderBy('id','DESC')->first();
+        $destination = Destination::select('id','name','description','image')->where('name',$place)->first();
+        return response()->json(['destination'=>$destination,'itinerary'=>$itinerary]);
     }
 
     public function enquiries(Request $request, $status=null){
