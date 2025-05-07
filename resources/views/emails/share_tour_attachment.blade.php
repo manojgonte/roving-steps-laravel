@@ -196,7 +196,7 @@
             <div class="amenities">
                 <span>Amenities: {{ $tour['amenities'] }}</span>
             </div>
-            @if (date('d M Y', strtotime($tour['from_date'])))
+            @if ($tour['from_date'])
                 <div class="date">
                     Travel date: {{ date('d M Y', strtotime($tour['from_date'])) }}
                 </div>
