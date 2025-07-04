@@ -14,7 +14,7 @@
             color: #212529;
             text-align: left;
             background-color: #fff;
-/*            font-family: 'Poppins', sans-serif;*/
+            /*font-family: 'Poppins', sans-serif;*/
         }
         .invoice {
             background: #fff;
@@ -248,13 +248,15 @@
     <section>
         <div class="mt-auto">
             <div class="text-left" style="margin-bottom: 10px;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo/logo_trans.png'))) }}" height="50">
+                <img style="margin-bottom: 2px" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo/logo_trans.png'))) }}" height="50">
+                <h1 style="margin-bottom: 2px">{{config('app.name')}} Pvt. Ltd.</h1>
+                <h3 style="margin-top: 2px">PAN No.: AAJCR8494B | GST No.: 27AAJCR8494B1Z0</h3>
             </div>
             <hr/>
             <table class="w-full">
                 <tr>
                     <td class="w-half">
-                        <div><label><b>Bill To:</b> {{ $invoice->bill_to }}</label></div>
+                        <div><label><b>Bill To:</b> @if(filter_var($invoice->bill_to, FILTER_VALIDATE_INT) == false) {{ $invoice->bill_to }} @else {{getUser($invoice->bill_to)->name}} @endif</label></div>
                         <div><label><b>Address:</b> {{ !empty($invoice->address) ? $invoice->address : '-' }}</label></div>
                         <div><label><b>Contact No.:</b> {{ !empty($invoice->contact_no) ? $invoice->contact_no : '-' }}</label></div>
                         <div><label><b>Email:</b> {{ !empty($invoice->email) ? $invoice->email : '-' }}</label></div>
