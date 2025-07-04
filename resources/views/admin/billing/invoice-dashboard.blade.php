@@ -104,15 +104,32 @@
                             <div class="col-auto">
                                 <input class="form-control form-control-sm" type="search" name="q" placeholder="Search by Client, Tour Name" value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
                             </div>
-                            {{-- <div class="col-auto">
-                                <select name="gem_id" class="form-control" onchange="this.form.submit()">
-                                    <option value="">Select Identification</option>
-                                    <option value="paid">PAID</option>
-                                    <option value="not_paid">NOT PAID</option>
-                                    <option value="partially_paid">PARTIALLY PAID</option>
-                                    <option value="yet_to_send">YET TO SEND</option>
+                            <div class="col-auto">
+                                @php
+                                    $currentMonth = date('n'); // Get current month (1-12)
+                                    $currentYear = date('Y'); // Get current year
+
+                                    // Determine the start year of the current financial year
+                                    if ($currentMonth >= 4) { // April or later, FY starts this year
+                                        $startYear = $currentYear;
+                                    } else { // Before April, FY started last year
+                                        $startYear = $currentYear - 1;
+                                    }
+
+                                    $options = '<option value="">Select year</option>';
+                                    for ($i = 0; $i < 5; $i++) {
+                                        $fyStart = $startYear - $i;
+                                        $fyEnd = $fyStart + 1;
+                                        $fyRange = $fyStart . '-' . $fyEnd;
+
+                                        $selected = (request('fy') == $fyRange) ? 'selected' : '';
+                                        $options .= '<option ' . $selected . ' value="' . $fyRange . '">' . $fyRange . '</option>';
+                                    }
+                                @endphp
+                                <select name="fy" class="form-control form-control-sm" onchange="this.form.submit()">
+                                    <?php echo $options; ?>
                                 </select>
-                            </div> --}}
+                            </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-default btn-sm"> Submit</button>
                             </div>
@@ -142,7 +159,7 @@
                             @foreach ($invoices as $row)
                                 <tr>
                                     <td class="align-middle"><a class="btn btn-link" href="{{ url('/admin/invoice-details/' . base64_encode($row->id)) }}"> INV-{{ $row->id }}</a></td>
-                                    <td class="align-middle">{{ $row->bill_to }}</td>
+                                    <td class="align-middle">@if(filter_var($row->bill_to, FILTER_VALIDATE_INT) == false) {{ $row->bill_to }} @else {{getUser($row->bill_to)->name}} @endif</td>
                                     <td class="align-middle" title="{{$row->tourName}}">{{ $row->tourName ? Str::limit($row->tourName, 20) : '-' }}</td>
                                     <td class="align-middle">{{ date('d M Y', strtotime($row->invoice_date)) }}</td>
                                     <td class="align-middle">₹{{ number_format($row->grand_total,1) }}</td>

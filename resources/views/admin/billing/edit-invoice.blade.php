@@ -51,9 +51,21 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label class="required">Bill To</label>
-                            <input type="text" name="bill_to" class="form-control" placeholder="Enter bill to" required value="{{$invoice->bill_to}}">
+                            {{-- <input type="text" name="bill_to" class="form-control" placeholder="Enter bill to" required value="{{$invoice->bill_to}}"> --}}
+                            <select class="form-control select2bs4" name="bill_to" required>
+                                @if(filter_var($invoice->bill_to, FILTER_VALIDATE_INT) !== false)
+                                @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $row)
+                                <option value="{{$row->id}}" @if($invoice->bill_to == $row->id) selected @endif>{{$row->name}}</option>
+                                @endforeach
+                                @else
+                                <option value="" selected>{{$invoice->bill_to}} - Select from dropdown</option>
+                                @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $row)
+                                <option value="{{$row->id}}">{{$row->name}}</option>
+                                @endforeach
+                                @endif
+                            </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-5">
                             <label class="">Address</label>
                             <input type="text" name="address" class="form-control" placeholder="Enter address"  value="{{$invoice->address}}">
                         </div>
@@ -75,7 +87,7 @@
                             <label class="">GST Number</label>
                             <input type="text" name="gst_no" class="form-control" placeholder="GST Number" value="{{$invoice->gst_no}}">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-5">
                             <label class="">GST Address</label>
                             <input type="text" name="gst_address" class="form-control" placeholder="GST Address" value="{{$invoice->gst_address}}">
                         </div>

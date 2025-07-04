@@ -33,9 +33,15 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label class="required">Bill To</label>
-                            <input type="text" name="bill_to" class="form-control" placeholder="Enter bill to" required>
+                            {{-- <input type="text" name="bill_to" class="form-control" placeholder="Enter bill to" required> --}}
+                            <select class="form-control select2bs4" name="bill_to" required>
+                                <option value="" selected>Select One</option>
+                                @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $row)
+                                <option value="{{$row->id}}">{{$row->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-5">
                             <label class="">Address</label>
                             <input type="text" name="address" class="form-control" placeholder="Enter address" >
                         </div>
@@ -57,7 +63,7 @@
                             <label class="">GST Number</label>
                             <input type="text" name="gst_no" class="form-control" placeholder="GST Number">
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-5">
                             <label class="">GST Address</label>
                             <input type="text" name="gst_address" class="form-control" placeholder="GST Address">
                         </div>

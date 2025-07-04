@@ -44,8 +44,20 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-3">
-                                        <label class="">Customer Name</label>
-                                        <input type="text" name="customer_name" class="form-control" placeholder="Enter Customer Name" value="{{$tour->customer_name}}">
+                                        <label for="customer_name">Customer Name</label>
+                                        <!-- <input type="text" name="customer_name" class="form-control" placeholder="Enter Customer Name" value="{{$tour->customer_name}}"> -->
+                                        <select class="form-control select" id="customer_name" name="customer_name" required>
+                                            @if(filter_var($tour->customer_name, FILTER_VALIDATE_INT) !== false)
+                                            @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $user)
+                                            <option value="{{$user->id}}" @if($tour->customer_name == $user->id) selected @endif>{{$user->name}}</option>
+                                            @endforeach
+                                            @else
+                                            <option value="" selected>{{$tour->customer_name}} - Select from dropdown</option>
+                                            @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $user)
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                            @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required">Tour</label>

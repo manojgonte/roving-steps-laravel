@@ -2,6 +2,19 @@
 
 use Carbon\Carbon;
 
+if (!function_exists('expiryColor')) {
+    function expiryColor($date) {
+        if (!$date) return null;
+
+        $expiry = Carbon::parse($date);
+        return match (true) {
+            $expiry->isPast() => 'color: #dc3545;',         // red
+            $expiry->diffInMonths(now()) <= 4 => 'color: #fd7e14;', // orange
+            default => 'color: #28a745;',                   // green
+        };
+    }
+}
+
 function AmountInWords(float $amount=null) {
     if ($amount == null || $amount == 0.0) {
         return '-';

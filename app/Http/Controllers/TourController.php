@@ -11,6 +11,7 @@ use App\Models\PlannedTour;
 use App\Models\Enquiry;
 use App\Models\TourEnquiry;
 use App\Models\invoices;
+use App\Models\User;
 use App\Services\MailchimpService;
 use Image;
 use Auth;
@@ -182,6 +183,10 @@ class TourController extends Controller
             $tours = $tours->whereHas('tour', function($query) use ($request) {
                 $query->where('type', $request->type);
             });
+        }
+
+        if($request->customer_id){
+            $tours = $tours->where('customer_name',$request->customer_id);
         }
 
         if ($request->q) {
@@ -523,16 +528,26 @@ class TourController extends Controller
             $data = $request->all();
             $enquiry = new TourEnquiry;
             $enquiry->name          = $data['name'];
-            $enquiry->contact       = !empty($data['contact']) ? $data['contact'] : null;
-            $enquiry->email         = !empty($data['email']) ? $data['email'] : null;
-            $enquiry->tour_id       = !empty($data['tour_id']) ? $data['tour_id'] : null;
-            $enquiry->services      = !empty($data['services']) ? $data['services'] : null;
-            $enquiry->tourist_no    = !empty($data['tourist_no']) ? $data['tourist_no'] : null;
-            $enquiry->current_city  = !empty($data['current_city']) ? $data['current_city'] : null;
-            $enquiry->from_date     = !empty($data['from_date']) ? $data['from_date'] : null;
-            $enquiry->end_date      = !empty($data['end_date']) ? $data['end_date'] : null;
-            $enquiry->message       = !empty($data['message']) ? $data['message'] : null;
+            $enquiry->contact       = $data['contact'] ?? null;
+            $enquiry->email         = $data['email'] ?? null;
+            $enquiry->tour_id       = $data['tour_id'] ?? null;
+            $enquiry->services      = $data['services'] ?? null;
+            $enquiry->tourist_no    = $data['tourist_no'] ?? null;
+            $enquiry->current_city  = $data['current_city'] ?? null;
+            $enquiry->from_date     = $data['from_date'] ?? null;
+            $enquiry->end_date      = $data['end_date'] ?? null;
+            $enquiry->message       = $data['message'] ?? null;
             $enquiry->save();
+
+            $user = User::where('name',$data['name'])->first();
+            if(!$user) {
+                $user = new User;
+                $user->name = $data['name'];
+                $user->email = $data['email'] ?? null;
+                $user->contact = $data['contact'] ?? null;
+                $user->address = $data['current_city'] ?? null;
+                $user->save();
+            }
 
             return redirect()->back()->with('flash_message_success','Enquiry added');
         }

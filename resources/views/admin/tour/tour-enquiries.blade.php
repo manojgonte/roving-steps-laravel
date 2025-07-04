@@ -2,7 +2,9 @@
 @section('content')
 
 @section('styles')
-    {{-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
+    <link rel="stylesheet" href="{{asset('backend_plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('backend_plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+
     <link rel="stylesheet" href="{{asset('backend_css/sumoselect.css')}}">
     <style>
         .SumoSelect>.CaptionCont>span.placeholder {
@@ -16,7 +18,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h4>Tour Enquiries</h4>
+                    <h4>Tour Enquiries <span class="badge badge-dark">{{$tour_enquiry->total()}}</span></h4>
                 </div>
             </div>
         </div>
@@ -62,7 +64,7 @@
                                         <a href="{{url('admin/tour-enquiries/')}}" class="btn btn-default"> Clear</a>
                                     </div>
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#form-modal"> <i class="fa fa-plus-circle"></i> New Enquiry</button>
+                                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#enquiry-modal"> <i class="fa fa-plus-circle"></i> New Enquiry</button>
                                     </div>
                                 </div>
                             </form>
@@ -74,9 +76,9 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Customer Details</th>
                                         <th>Tour Name</th>
                                         <th>Services</th>
-                                        <th>Customer Details</th>
                                         <th>Tourist No</th>
                                         <th>Travel Date</th>
                                         <th>Message</th>
@@ -87,6 +89,12 @@
                                 @foreach($tour_enquiry as $key => $row)
 	                                <tr>
 	                                    <td>{{ $tour_enquiry->firstItem() + $key }}</td>
+                                        <td class="text-left">
+                                            <i class="fa fa-user"></i> @if(filter_var($row->name, FILTER_VALIDATE_INT) == false) {{ $row->name }} @else {{getUser($row->name)->name}} @endif <br> 
+                                            <i class="fa fa-envelope"></i> {{ $row->email ? $row->email : 'NA' }} <br> 
+                                            <i class="fa fa-phone"></i> {{ $row->contact ? $row->contact : 'NA' }}<br> 
+                                            <i class="fa fa-city"></i> {{ $row->current_city ? $row->current_city : 'NA' }}
+                                        </td>
                                         <td>
                                             @if($row->tour_id)
                                             <a href="{{url('tour-details/'.$row->tour_id.'/'.Str::slug($row->tour_name))}}" target="_blank" noreferrer noopener> {{ $row->tour_name }} </a>
@@ -102,12 +110,6 @@
                                             @else
                                             NA
                                             @endif
-                                        </td>
-	                                    <td class="text-left">
-                                            <i class="fa fa-user"></i> {{ Str::limit($row->name, 30) }} <br> 
-                                            <i class="fa fa-envelope"></i> {{ $row->email ? $row->email : 'NA' }} <br> 
-                                            <i class="fa fa-phone"></i> {{ $row->contact ? $row->contact : 'NA' }}<br> 
-                                            <i class="fa fa-city"></i> {{ $row->current_city ? $row->current_city : 'NA' }}
                                         </td>
 	                                    <td>{{ $row->tourist_no ? $row->tourist_no : 'NA' }}</td>
 	                                    <td>{{ $row->from_date ? date('d/m/Y', strtotime($row->from_date)) : 'NA' }} - <br>{{ $row->end_date ? date('d/m/Y', strtotime($row->end_date)) : 'NA' }}</td>
@@ -143,7 +145,7 @@
     </section>
 </div>
 
-<div class="modal fade" id="form-modal">
+<div class="modal fade" id="enquiry-modal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -157,8 +159,14 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label class="required">Customer Name</label>
-                                <input type="text" name="name" class="form-control" placeholder="Enter name" required>
+                                <label class="">Customer Name * <a href="{{ url('admin/add-user') }}" target="_blank">Create New User</a></label>
+                                <!-- <input type="text" name="name" class="form-control" placeholder="Enter name" required> -->
+                                <select class="form-control select2" id="name" name="name" required>
+                                    <option value="" selected>Select One</option>
+                                    @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $user)
+                                    <option value="{{$user->id}}" @if(Request()->user_id == $user->id) selected @endif>{{$user->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="">Customer Contact No.</label>
@@ -170,7 +178,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="">Tour</label>
-                                <select class="form-control select2bs4" name="tour_id" >
+                                <select class="form-control select2" name="tour_id" >
                                     <option value="" selected>Select One</option>
                                     @foreach(App\Models\Tour::select('id','tour_name','days','nights')->orderBy('custom_tour','DESC')->orderBy('tour_name','ASC')->get() as $row)
                                     <option value="{{$row->id}}" @if(Request()->tour_id == $row->id) selected @endif>{{$row->tour_name}} | {{$row->nights}}N/{{$row->days}}D</option>
@@ -224,6 +232,26 @@
 </div>
 @section('scripts')
 <script src="{{asset('backend_js/jquery.sumoselect.js')}}"></script>
+<script src="{{asset('backend_plugins/select2/js/select2.full.min.js')}}"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const url = new URL(window.location.href);
+        const userId = url.searchParams.get("user_id");
+
+        // Check if current path is exactly /admin/tour-enquiries and user_id is present
+        if (window.location.pathname === "/admin/tour-enquiries" && userId) {
+            $('#enquiry-modal').modal('show');
+        }
+    });
+</script>
+
+<script>
+    $(function () {
+        $('.select2').select2()
+    });
+</script>
+
 <script>
     $(document).ready(function() {
         $.validator.addMethod("greaterThan", function (value, element, params) {

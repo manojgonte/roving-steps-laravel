@@ -1,29 +1,29 @@
 {
     "poppins": {
-        "300": "poppins_300_87f0a8a73c876e947643eb7d19bec0b7",
-        "normal": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_normal_a62832bf75823019dc29c5a9c470d64d",
-        "500": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_500_a885de0ea35a644243715bf64b6d1a65",
+        "300": "poppins_300_6803ad4fe8fecdbaeff0adce8839c330",
+        "normal": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_normal_c6711d47669d7317aa5bfeda9f1dded3",
+        "500": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_500_a8989f7b44a711b1b2ef07347b37ec13",
         "600": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_600_9623fbc18c38938c2057a9aae8390a42",
         "bold": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_bold_8fe618268f56b4b8f1e70e87a9e99fc0",
-        "italic": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_italic_ae4b57e5d05718f255b8db9edf8ef938",
-        "500_italic": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_500_italic_56e96fa83379355962a1c42156b635de",
-        "600_italic": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_600_italic_804d7037cf7d484019577ca58d1828b2"
+        "italic": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_italic_11677d11ae3d58aa7603b629f870be1a",
+        "500_italic": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_500_italic_00e8237606ffe9e7756869f84f5ebcf9",
+        "600_italic": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_600_italic_14a3b5633f09679886d6b33558575f6b"
     },
     "glyphicons halflings": {
         "normal": "glyphicons_halflings_normal_4ced20531a4f462a8c5c535d4debd2eb"
     },
     "roboto mono": {
-        "italic": "roboto_mono_italic_b6de51b739f488c0f14085dc9d2d126e"
+        "italic": "roboto_mono_italic_b6fd919e1d9eb4d22288e472bab41f21"
     },
     "roboto serif": {
-        "normal": "roboto_serif_normal_740e6bbf53db7cc83cca1dff7cde5886"
+        "normal": "roboto_serif_normal_b9e24b26f5f5d061bd4a264f9a94ad3c"
     },
     "roboto slab": {
-        "normal": "roboto_slab_normal_ec2bf126fe441f17656ae32017e2a073"
+        "normal": "roboto_slab_normal_6557bd0d36febd877adba13c36287a1b"
     },
     "manrope": {
-        "500": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/manrope_500_3faecf902bdf678508c43f0770f51f59",
-        "600": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/manrope_600_7965b5f7a522f1c92cbaca274ac0692b",
-        "bold": "manrope_bold_39803e033cf59c26714816343b268345"
+        "500": "D:\\projects\\rovingsteps\\storage\\fonts\/manrope_500_d8403550e77fe090bce63b22f6836ea4",
+        "600": "D:\\projects\\rovingsteps\\storage\\fonts\/manrope_600_825a0094663b9ce5ab8aea4b45c14db6",
+        "bold": "manrope_bold_b0c828bffbbcedeaf4959ab7ffcc3244"
     }
 }

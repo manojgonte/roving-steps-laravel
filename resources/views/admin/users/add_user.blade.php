@@ -68,7 +68,7 @@
                                         <input type="text" name="gst_address" id="gst_address" class="form-control" placeholder="Enter GST address">
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="">PAN Card</label>
+                                        <label class="">PAN Card No. & File</label>
                                         <div class="input-group mb-1">
                                             <div class="input-group-prepend mr-1">
                                                 <input type="text" name="pan_no" class="form-control p-1" placeholder="Enter PAN no.">
@@ -77,7 +77,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="">Aadhar Card</label>
+                                        <label class="">Aadhar Card No. & File</label>
                                         <div class="input-group mb-1">
                                             <div class="input-group-prepend mr-1">
                                                 <input type="text" name="aadhar_no" class="form-control p-1" placeholder="Enter Aadhar no.">
@@ -86,13 +86,48 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="">Passport</label>
+                                        <label class="">Passport No. & File</label>
                                         <div class="input-group mb-1">
                                             <div class="input-group-prepend mr-1">
                                                 <input type="text" name="passport_no" class="form-control p-1" placeholder="Enter Passport no.">
                                             </div>
                                             <input type="file" name="passport_file" class="form-control p-1">
                                         </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="">Passport Expiry Date</label>
+                                        <input type="date" name="passport_expiry" id="passport_expiry" class="form-control" min="{{ date('Y-m-d'); }}" />
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="">Birth Date</label>
+                                        <input type="date" name="dob" id="dob" class="form-control" max="{{ date('Y-m-d'); }}" />
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="">Anniversary Date</label>
+                                        <input type="date" name="anniversary_date" id="anniversary_date" class="form-control" max="{{ date('Y-m-d'); }}" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Visa Type</label>
+                                        <select class="form-control select2bs4" name="visa_type">
+                                            <option value="">Select One</option>
+                                            <option value="tourist">Tourist Visa (B-2 / C-1)</option>
+                                            <option value="business">Business Visa (B-1)</option>
+                                            <option value="student">Student Visa (F-1 / M-1)</option>
+                                            <option value="work_h1b">Work Visa (e.g., H-1B, L-1, O-1)</option>
+                                            <option value="exchange">Exchange Visitor Visa (J-1)</option>
+                                            <option value="family_immigrant">Family Immigrant Visa (IR / F Category)</option>
+                                            <option value="employment_immigrant">Employment Immigrant Visa (EB Category)</option>
+                                            <option value="diplomatic">Diplomatic/Official Visa (A / G / NATO)</option>
+                                            <option value="transit">Transit Visa (C-1 / TWOV)</option>
+                                            <option value="media">Media Visa (I)</option>
+                                            <option value="crew">Crewmember Visa (D)</option>
+                                            <option value="investor">Investor Visa (E-2)</option>
+                                            <option value="other">Other / Not Listed</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="">Visa Expiry</label>
+                                        <input type="date" name="visa_expiry" id="visa_expiry" class="form-control" min="{{ date('Y-m-d'); }}" />
                                     </div>
                                     {{-- <div class="form-group col-md-3">
                                         <label class="">Status</label>
@@ -103,7 +138,7 @@
                                     </div> --}}
                                 </div>
                             </div>
-                            <div class="card-footer ">
+                            <div class="card-footer">
                                 <button type="submit" class="btn btn-dark submit"><i class="fa fa-check-circle"></i> Create </button>
                                 <button type="reset" class="btn btn-default"> Reset </button>
                                 <a href="{{url('admin/tours')}}" class="btn btn-default"> Cancel </a>

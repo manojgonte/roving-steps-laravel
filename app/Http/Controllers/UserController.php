@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TourEnquiry;
 use App\Models\User;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 use Session;
 use Auth;
 use Mail;
 use Hash;
+use Excel;
 
 use Illuminate\Support\Str;
 
@@ -151,16 +154,112 @@ class UserController extends Controller
             $users = $users->where(function($query) use($q){
                 $query->where('name','like','%'.$q.'%')
                 ->orWhere('contact','like','%'.$q.'%')
-                ->orWhere('email','like','%'.$q.'%');
+                ->orWhere('email','like','%'.$q.'%')
+                ->orWhere('visa_type','like','%'.$q.'%')
+                ->orWhere('address','like','%'.$q.'%')
+                ->orWhere('gst_no','like','%'.$q.'%')
+                ->orWhere('pan_no','like','%'.$q.'%')
+                ->orWhere('aadhar_no','like','%'.$q.'%')
+                ->orWhere('address','like','%'.$q.'%')
+                ->orWhere('id','like','%'.$q.'%');
             });
         };
+
+        // Date-based filter
+        if ($request->event === 'dob_4') {
+            $users = $users->whereNotNull('dob')->whereRaw("
+                DATE_FORMAT(dob, '%m-%d') BETWEEN DATE_FORMAT(NOW(), '%m-%d') 
+                AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 4 MONTH), '%m-%d')
+            ");
+        } elseif ($request->event === 'anniversary_4') {
+            $users = $users->whereNotNull('anniversary_date')->whereRaw("
+                DATE_FORMAT(anniversary_date, '%m-%d') BETWEEN DATE_FORMAT(NOW(), '%m-%d') 
+                AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 4 MONTH), '%m-%d')
+            ");
+        }
+
         $users = $users->paginate(10);
         return view('admin.users.registered-users')->with(compact('users'));
+    }
+
+    public function userDetails(Request $request, $user_id){
+        $user = User::with('planned_tours')->where('users.id',$user_id)->first();
+        if(!$user){
+            return redirect('admin/registered-users')->with('flash_message_error','User not found');
+        }
+        return view('admin.users.user')->with(compact('user'));
+    }
+
+    public function usersExport(Request $request){
+        $keyword = !empty($request->q) ? $request->q : null;
+        
+        $users = User::orderBy('id','DESC');
+        
+        if(!empty($request->q)) {
+            $users = $users->where(function($query) use($keyword){
+                $query->where('name','like','%'.$keyword.'%')
+                ->orWhere('contact','like','%'.$keyword.'%')
+                ->orWhere('email','like','%'.$keyword.'%')
+                ->orWhere('visa_type','like','%'.$keyword.'%')
+                ->orWhere('address','like','%'.$keyword.'%')
+                ->orWhere('gst_no','like','%'.$keyword.'%')
+                ->orWhere('pan_no','like','%'.$keyword.'%')
+                ->orWhere('aadhar_no','like','%'.$keyword.'%')
+                ->orWhere('address','like','%'.$keyword.'%')
+                ->orWhere('id','like','%'.$keyword.'%');
+            });
+        }
+
+        // Date-based filter
+        if ($request->event === 'dob_4') {
+            $users = $users->whereNotNull('dob')->whereRaw("
+                DATE_FORMAT(dob, '%m-%d') BETWEEN DATE_FORMAT(NOW(), '%m-%d') 
+                AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 6 MONTH), '%m-%d')
+            ");
+        } elseif ($request->event === 'anniversary_4') {
+            $users = $users->whereNotNull('anniversary_date')->whereRaw("
+                DATE_FORMAT(anniversary_date, '%m-%d') BETWEEN DATE_FORMAT(NOW(), '%m-%d') 
+                AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 6 MONTH), '%m-%d')
+            ");
+        }
+
+        $users = $users->get();
+        return Excel::download(new UsersExport($users),'users-list-'.date('d-M-Y').'.xlsx');
+    }
+
+    public function usersImport(Request $request){
+        if($request->isMethod('post')) {
+
+            // Validation rules
+            $request->validate([
+                'import_file' => 'required|file|mimes:xlsx,xls,csv|max:2048', // max:2048 = 2MB
+            ]);
+
+            $import = new UsersImport;
+
+            try {
+                Excel::import($import, $request->file('import_file'));
+
+                if ($import->failures()->isNotEmpty()) {
+                    return redirect()->back()->withErrors($import->failures());
+                }
+
+                return redirect()->back()->with('flash_message_success', 'Users Imported Successfully');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('flash_message_error', 'Import failed: ' . $e->getMessage());
+            }
+        }
     }
 
     public function addUser(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
+
+            $tempUser = User::where('name', $data['name'])->first();
+            if($tempUser) {
+                return redirect()->back()->with('flash_message_error','User already exists with same name');
+            }
+
             $user = new User;
             $user->name = $data['name'];
             $user->email = $data['email'] ?? null;
@@ -173,6 +272,11 @@ class UserController extends Controller
             $user->aadhar_no = $data['aadhar_no'] ?? null;
             $user->passport_no = $data['passport_no'] ?? null;
             $user->password = bcrypt(Str::slug($data['name']));
+            $user->passport_expiry = $data['passport_expiry'] ?? null;
+            $user->dob = $data['dob'] ?? null;
+            $user->anniversary_date = $data['anniversary_date'] ?? null;
+            $user->visa_type = $data['visa_type'] ?? null;
+            $user->visa_expiry = $data['visa_expiry'] ?? null;
             $user->status = 1;
 
             if($request->hasFile('pan_card_file')) {
@@ -205,7 +309,6 @@ class UserController extends Controller
     public function editUser(Request $request, $id){
         if($request->isMethod('post')){
             $data = $request->all();
-            // dd($data);
 
             // Upload file
             if($request->hasFile('pan_card_file')) {
@@ -248,6 +351,11 @@ class UserController extends Controller
                 'pan_no' => $data['pan_no'],
                 'aadhar_no' => $data['aadhar_no'],
                 'passport_no' => $data['passport_no'],
+                'passport_expiry' => $data['passport_expiry'],
+                'dob' => $data['dob'],
+                'anniversary_date' => $data['anniversary_date'],
+                'visa_type' => $data['visa_type'] ?? null,
+                'visa_expiry' => $data['visa_expiry'],
                 'pan_card_file'=>$pan_card_file,
                 'aadhar_card_file'=>$aadhar_card_file,
                 'passport_file'=>$passport_file,

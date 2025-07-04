@@ -106,6 +106,9 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     // Registered Users
     Route::match(['get','post'], 'admin/registered-users/', [UserController::class, 'viewUsers']);
+    Route::match(['get','post'], 'admin/user/{user_id}', [UserController::class, 'userDetails']);
+    Route::match(['get','post'], 'admin/users-export/', [UserController::class, 'usersExport']);
+    Route::match(['get','post'], 'admin/users-import/', [UserController::class, 'usersImport']);
     Route::match(['get','post'], 'admin/add-user/', [UserController::class, 'addUser']);
     Route::match(['get','post'], 'admin/edit-user/{id}', [UserController::class, 'editUser']);
     Route::match(['get','post'], 'admin/delete-user/{id}', [UserController::class, 'deleteUser']);

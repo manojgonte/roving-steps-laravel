@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col px-0">
         <div class="col-md-10">
-            <label><b>Bill To:</b> {{ $invoice->bill_to }}</label>
+            <label><b>Bill To:</b>@if(filter_var($invoice->bill_to, FILTER_VALIDATE_INT) == false) {{ $invoice->bill_to }} @else {{getUser($invoice->bill_to)->name}} @endif</label>
         </div>
         <div class="col-md-10">
             <label><b>Address:</b> {{ !empty($invoice->address) ? $invoice->address : '-' }}</label>

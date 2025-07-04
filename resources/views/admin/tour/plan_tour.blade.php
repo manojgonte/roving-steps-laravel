@@ -44,12 +44,18 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-3">
-                                        <label class="">Customer Name</label>
-                                        <input type="text" name="customer_name" class="form-control" placeholder="Enter Customer Name" value="{{Request()->name}}">
+                                        <label for="customer_name">Customer</label>
+                                        <!-- <input type="text" name="customer_name" class="form-control" placeholder="Enter Customer Name" value="{{Request()->name}}"> -->
+                                        <select class="form-control select2" id="customer_name" name="customer_name">
+                                            <option value="" selected>Select One</option>
+                                            @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $user)
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="required">Tour</label>
-                                        <select class="form-control select2bs4" name="tour_id" required>
+                                        <select class="form-control select2" name="tour_id" required>
                                             <option value="" selected>Select One</option>
                                             @foreach(App\Models\Tour::select('id','tour_name','days','nights')->orderBy('custom_tour','DESC')->orderBy('tour_name','ASC')->get() as $row)
                                             <option value="{{$row->id}}" @if(Request()->tour_id == $row->id) selected @endif>{{$row->tour_name}} | {{$row->nights}}N/{{$row->days}}D</option>

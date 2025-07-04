@@ -35,6 +35,13 @@ class BillingController extends Controller
                 ->orWhere('contact_no','like','%'.$q.'%');
             });
         }
+        if ($request->fy) {
+            $fyRange = explode('-', $request->fy);
+            $startYear = $fyRange[0] . '-04-01';
+            $endYear = $fyRange[1] . '-03-31';
+
+            $invoices = $invoices->whereBetween('invoice_date', [$startYear, $endYear]);
+        }
         $invoices = $invoices->where(function ($query) {
                 $query->where('estimation', 0)
                 ->orWhereNull('estimation');

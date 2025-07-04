@@ -93,7 +93,8 @@
                                 @foreach($tours as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td class="text-left">{{ !empty($row->customer_name) ? Str::limit($row->customer_name, 40) : 'NA' }}</td>
+	                                    <td class="text-left">@if(filter_var($row->customer_name, FILTER_VALIDATE_INT) == false) {{ $row->customer_name }} @else {{getUser($row->customer_name)->name}} @endif</td>
+                                        <!-- <td class="text-left">{{ !empty($row->customer_name) ? Str::limit($row->customer_name, 40) : 'NA' }}</td> -->
                                         <td class="text-left">@if($row->tour)<a href="{{url('admin/edit-tour/'.$row->tour_id)}}">{{ Str::limit($row->tour->tour_name, 40) }}</a> @else Tour not found @endif</td>
 	                                    {{-- <td>{{ $row->tour->type }}</td> --}}
                                         <td>@if($row->tour) {{ Str::limit($row->tour->destination->name, 20) }} @else Tour not found @endif</td>
