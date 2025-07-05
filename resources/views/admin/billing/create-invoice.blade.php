@@ -56,7 +56,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-3">
-                            <label class="">Pan Number</label>
+                            <label class="">PAN Number</label>
                             <input type="text" name="pan_no" class="form-control" placeholder="Pan Number" >
                         </div>
                         <div class="form-group col-md-3">

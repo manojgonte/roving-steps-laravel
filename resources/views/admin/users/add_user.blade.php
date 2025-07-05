@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <h4>New User</h4>
                     @if(Session::has('flash_message_error'))
-                    <div class="alert alert-error alert-block">
+                    <div class="alert alert-danger alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{!! session('flash_message_error') !!}</strong>
                     </div>
@@ -42,12 +42,12 @@
                                         <input type="text" name="name" class="form-control" placeholder="Enter name" required>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>Email</label>
-                                        <input type="email" name="email" class="form-control" placeholder="Enter email">
+                                        <label class="required">Email</label>
+                                        <input type="email" name="email" class="form-control" placeholder="Enter email" required>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label class="">Primary Contact No.</label>
-                                        <input type="number" name="contact" minlength="10" maxlength="10" id="contact" class="form-control" placeholder="Enter mobile number">
+                                        <label class="required">Primary Contact No.</label>
+                                        <input type="number" name="contact" minlength="10" maxlength="10" id="contact" class="form-control" placeholder="Enter mobile number" required>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="">Secondary Contact No.</label>
@@ -96,15 +96,15 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="">Passport Expiry Date</label>
-                                        <input type="date" name="passport_expiry" id="passport_expiry" class="form-control" min="{{ date('Y-m-d'); }}" />
+                                        <input type="date" name="passport_expiry" id="passport_expiry" class="form-control" />
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="">Birth Date</label>
-                                        <input type="date" name="dob" id="dob" class="form-control" max="{{ date('Y-m-d'); }}" />
+                                        <input type="date" name="dob" id="dob" class="form-control" />
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="">Anniversary Date</label>
-                                        <input type="date" name="anniversary_date" id="anniversary_date" class="form-control" max="{{ date('Y-m-d'); }}" />
+                                        <input type="date" name="anniversary_date" id="anniversary_date" class="form-control" />
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Visa Type</label>
@@ -127,7 +127,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label class="">Visa Expiry</label>
-                                        <input type="date" name="visa_expiry" id="visa_expiry" class="form-control" min="{{ date('Y-m-d'); }}" />
+                                        <input type="date" name="visa_expiry" id="visa_expiry" class="form-control" />
                                     </div>
                                     {{-- <div class="form-group col-md-3">
                                         <label class="">Status</label>

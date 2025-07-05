@@ -64,7 +64,7 @@
                                         <a href="{{url('admin/tour-enquiries/')}}" class="btn btn-default"> Clear</a>
                                     </div>
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#enquiry-modal"> <i class="fa fa-plus-circle"></i> New Enquiry</button>
+                                        <a href="{{ url('admin/new-enquiry') }}" class="btn btn-dark"> <i class="fa fa-plus-circle"></i> New Enquiry</a>
                                     </div>
                                 </div>
                             </form>
@@ -90,9 +90,9 @@
 	                                <tr>
 	                                    <td>{{ $tour_enquiry->firstItem() + $key }}</td>
                                         <td class="text-left">
-                                            <i class="fa fa-user"></i> @if(filter_var($row->name, FILTER_VALIDATE_INT) == false) {{ $row->name }} @else {{getUser($row->name)->name}} @endif <br> 
-                                            <i class="fa fa-envelope"></i> {{ $row->email ? $row->email : 'NA' }} <br> 
-                                            <i class="fa fa-phone"></i> {{ $row->contact ? $row->contact : 'NA' }}<br> 
+                                            <i class="fa fa-user"></i> @if(filter_var($row->name, FILTER_VALIDATE_INT) == false) {{ $row->name }} @else {{$row->user->name}} @endif <br> 
+                                            <i class="fa fa-envelope"></i> {{ $row->user->email ?? 'NA' }} <br> 
+                                            <i class="fa fa-phone"></i> {{ $row->user->contact ?? 'NA' }}<br> 
                                             <i class="fa fa-city"></i> {{ $row->current_city ? $row->current_city : 'NA' }}
                                         </td>
                                         <td>
@@ -145,106 +145,9 @@
     </section>
 </div>
 
-<div class="modal fade" id="enquiry-modal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">New Enquiry</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ url('admin/add-enquiry') }}" enctype="multipart/form-data" id="tourEnq">@csrf
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <label class="">Customer Name * <a href="{{ url('admin/add-user') }}" target="_blank">Create New User</a></label>
-                                <!-- <input type="text" name="name" class="form-control" placeholder="Enter name" required> -->
-                                <select class="form-control select2" id="name" name="name" required>
-                                    <option value="" selected>Select One</option>
-                                    @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $user)
-                                    <option value="{{$user->id}}" @if(Request()->user_id == $user->id) selected @endif>{{$user->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="">Customer Contact No.</label>
-                                <input type="text" name="contact" class="form-control" placeholder="Enter phone">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="">Customer Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="Enter email">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="">Tour</label>
-                                <select class="form-control select2" name="tour_id" >
-                                    <option value="" selected>Select One</option>
-                                    @foreach(App\Models\Tour::select('id','tour_name','days','nights')->orderBy('custom_tour','DESC')->orderBy('tour_name','ASC')->get() as $row)
-                                    <option value="{{$row->id}}" @if(Request()->tour_id == $row->id) selected @endif>{{$row->tour_name}} | {{$row->nights}}N/{{$row->days}}D</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="">Services</label>
-                                <select name="services[]" class="form-control sumoselect" multiple>
-                                    <option value="Hotel Booking">Hotel Booking</option>
-                                    <option value="Bus Booking">Bus Booking</option>
-                                    <option value="Flight Booking">Flight Booking</option>
-                                    <option value="Train Booking">Train Booking</option>
-                                    <option value="Cab Booking">Cab Booking</option>
-                                    <option value="Cruise Booking">Cruise Booking</option>
-                                    <option value="Visa Service">Visa Service</option>
-                                    <option value="Passport Service">Passport Service</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="">Tourist Count</label>
-                                <input type="number" min="1" name="tourist_no" class="form-control" placeholder="Enter count" >
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="">Current City</label>
-                                <input type="text" name="current_city" class="form-control" placeholder="Enter city" >
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="">From Date</label>
-                                <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Enter Date">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="">To Date</label>
-                                <input type="date" name="end_date" class="form-control" placeholder="Enter Date">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="">Message</label>
-                                <textarea name="message" class="form-control" placeholder="Enter message" rows="3" ></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer ">
-                        <button type="submit" class="btn btn-dark submit"><i class="fa fa-check-circle"></i> Create </button>
-                        <button type="reset" class="btn btn-default"> Reset </button>
-                        <button class="btn btn-default" data-dismiss="modal" aria-label="Close"> Cancel </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 @section('scripts')
 <script src="{{asset('backend_js/jquery.sumoselect.js')}}"></script>
 <script src="{{asset('backend_plugins/select2/js/select2.full.min.js')}}"></script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const url = new URL(window.location.href);
-        const userId = url.searchParams.get("user_id");
-
-        // Check if current path is exactly /admin/tour-enquiries and user_id is present
-        if (window.location.pathname === "/admin/tour-enquiries" && userId) {
-            $('#enquiry-modal').modal('show');
-        }
-    });
-</script>
 
 <script>
     $(function () {

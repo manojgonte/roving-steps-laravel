@@ -203,10 +203,10 @@
             @endif
 
             <hr class="line" />
-
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents('img/tours/'.$tour->image)) }}" height="400"
+            @if($tour->image)
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/tours/'.$tour->image))) }}" height="400"
                 style="border-radius: 8px;">
-
+            @endif
             <div class="package">
                 @if ($tour['inclusions'])
                     <div class="inclExlu">

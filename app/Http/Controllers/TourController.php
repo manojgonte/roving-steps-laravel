@@ -515,12 +515,11 @@ class TourController extends Controller
         }
         $tour_enquiry = $tour_enquiry->paginate(10);
 
-        $tours = TourEnquiry::select('tour_enquiry.id','tour_enquiry.tour_id','tours.tour_name')
-            ->leftJoin('tours','tours.id','tour_enquiry.tour_id')
+        $tours = TourEnquiry::with('user','tour')
             ->orderBy('tour_enquiry.id','DESC')
             ->groupBy('tour_enquiry.tour_id')
             ->get();
-        return view('admin.tour.tour-enquiries')->with(compact('tour_enquiry','tours'));
+        return view('admin.enquiries.tour-enquiries')->with(compact('tour_enquiry','tours'));
     }
 
     public function addEnquiry(Request $request){
@@ -539,18 +538,20 @@ class TourController extends Controller
             $enquiry->message       = $data['message'] ?? null;
             $enquiry->save();
 
-            $user = User::where('name',$data['name'])->first();
-            if(!$user) {
-                $user = new User;
-                $user->name = $data['name'];
-                $user->email = $data['email'] ?? null;
-                $user->contact = $data['contact'] ?? null;
-                $user->address = $data['current_city'] ?? null;
-                $user->save();
-            }
+            // $user = User::where('name',$data['name'])->first();
+            // if(!$user) {
+            //     $user = new User;
+            //     $user->name = $data['name'];
+            //     $user->email = $data['email'] ?? null;
+            //     $user->contact = $data['contact'] ?? null;
+            //     $user->address = $data['current_city'] ?? null;
+            //     $user->save();
+            // }
 
-            return redirect()->back()->with('flash_message_success','Enquiry added');
+            return redirect('admin/tour-enquiries')->with('flash_message_success','Enquiry added');
         }
+
+        return view('admin.enquiries.new_enquiry');
     }
 
     public function deleteTourEnquiry(Request $request, $id){

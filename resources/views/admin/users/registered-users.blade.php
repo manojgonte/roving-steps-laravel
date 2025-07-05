@@ -50,12 +50,22 @@
                             <form action="" method="GET">
                                 <div class="row d-flex justify-content-start">
                                     <div class="col-auto">
-                                        <!-- <label></label> -->
-                                        <select class="form-control form-control-sm select2bs4" name="event" onchange="this.form.submit()">
-                                            <option value="">Select Event</option>
-                                            <option value="dob_4" @if(Request()->event == 'dob_4') selected @endif>Upcoming Birthday</option>
-                                            <option value="anniversary_4" @if(Request()->event == 'anniversary_4') selected @endif>Upcoming Anniversary </option>
+                                        <select class="form-control form-control-sm select2bs4" name="filter" onchange="this.form.submit()">
+                                            <option value="">Select Filter</option>
+                                            <option value="passport_expired" @if(Request()->filter == 'passport_expired') selected @endif>Expired Passport</option>
+                                            <option value="passport_about_to_expire" @if(Request()->filter == 'passport_about_to_expire') selected @endif>Passport about to Expire </option>
+                                            <option value="valid_passport" @if(Request()->filter == 'valid_passport') selected @endif>Valid Passport </option>
                                         </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" id="bdate" name="dob" @if(Request()->dob) checked @endif onchange="this.form.submit()">
+                                            <label class="form-check-label" for="bdate">Upcoming Birthday</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" id="anndate" name="anniversary" @if(Request()->anniversary) checked @endif onchange="this.form.submit()">
+                                            <label class="form-check-label" for="anndate">Upcoming Anniversary</label>
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <input class="form-control form-control-sm" name="q" placeholder="Search..." value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
@@ -80,7 +90,7 @@
                                         <th class="text-left">User Details</th>
                                         <th class="text-left">Date</th>
                                         <th class="text-left">Passport Due</th>
-                                        <th class="text-left">Visa Type & Due</th>
+                                        <th class="text-left">Visa</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -103,11 +113,10 @@
                                             <span style="{{expiryColor($row->passport_expiry)}}"><i class="fa fa-calendar-times"></i>&nbsp; {{ $row->passport_expiry ? date('d M Y', strtotime($row->passport_expiry)) : 'NA' }}</span>
                                         </td>
                                         <td class="text-left align-middle">
-                                            <i class="fa fa-plane-departure"></i>&nbsp; {{ $row->visa_type ? Str::limit(ucfirst($row->visa_type), 30) : 'NA' }} <br>
-                                            <span style="{{expiryColor($row->visa_expiry)}}"><i class="fa fa-calendar-times"></i>&nbsp;&nbsp;&nbsp; {{ $row->visa_expiry ? date('d M Y', strtotime($row->visa_expiry)) : 'NA' }}</span>
+                                            <i class="fa fa-plane-departure"></i>&nbsp; {{ $row->visa_type ? Str::limit(ucfirst($row->visa_type), 30) : 'NA' }} 
                                         </td>
                                         <td class="align-middle">
-                                            <a class="btn btn-outline-dark btn-sm" title="Create Enquiry" href="{{ url('/admin/tour-enquiries?user_id='.$row->id) }}"><i class="fa fa-comment"></i></a>
+                                            <a class="btn btn-outline-dark btn-sm" title="Create Enquiry" href="{{ url('/admin/new-enquiry?user_id='.$row->id) }}"><i class="fa fa-comment"></i></a>
                                             <a class="btn btn-outline-dark btn-sm" href="{{ url('/admin/edit-user/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a>
                                             <a class="btn btn-outline-dark btn-sm" onclick="return confirm('Are you sure? All user data will be deleted.')" href="{{ url('/admin/delete-user/'.$row->id) }}"><i class="fa fa-trash"></i></a>
                                         </td>

@@ -161,7 +161,7 @@
                 </div>
                 <div class="modal-footer justify-content-end">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-info submit">Send</button>
+                    <button type="submit" class="btn btn-dark submit">Send</button>
                 </div>
             </form>
         </div>

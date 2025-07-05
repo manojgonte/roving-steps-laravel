@@ -165,17 +165,87 @@ class UserController extends Controller
             });
         };
 
+        // Passport filters
+        if ($request->filter) {
+            $today = now();
+            $sixMonthsLater = now()->addMonths(6);
+
+            switch ($request->filter) {
+                case 'passport_expired':
+                    $users = $users->whereNotNull('passport_expiry')
+                                   ->where('passport_expiry', '<', $today);
+                    break;
+
+                case 'passport_about_to_expire':
+                    $users = $users->whereNotNull('passport_expiry')
+                                   ->whereBetween('passport_expiry', [$today, $sixMonthsLater]);
+                    break;
+
+                case 'valid_passport':
+                    $users = $users->whereNotNull('passport_expiry')
+                                   ->where('passport_expiry', '>', $sixMonthsLater);
+                    break;
+            }
+        }
+
         // Date-based filter
-        if ($request->event === 'dob_4') {
-            $users = $users->whereNotNull('dob')->whereRaw("
-                DATE_FORMAT(dob, '%m-%d') BETWEEN DATE_FORMAT(NOW(), '%m-%d') 
-                AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 4 MONTH), '%m-%d')
-            ");
-        } elseif ($request->event === 'anniversary_4') {
-            $users = $users->whereNotNull('anniversary_date')->whereRaw("
-                DATE_FORMAT(anniversary_date, '%m-%d') BETWEEN DATE_FORMAT(NOW(), '%m-%d') 
-                AND DATE_FORMAT(DATE_ADD(NOW(), INTERVAL 4 MONTH), '%m-%d')
-            ");
+        if ($request->dob) {
+            $today = now();
+            $sixMonthsLater = now()->copy()->addMonths(6);
+
+            $users = $users->whereNotNull('dob')->where(function ($query) use ($today, $sixMonthsLater) {
+                $start = $today->format('m-d');
+                $end = $sixMonthsLater->format('m-d');
+
+                if ($start <= $end) {
+                    // Same year range (e.g., Jul -> Dec)
+                    $query->whereRaw("DATE_FORMAT(dob, '%m-%d') BETWEEN ? AND ?", [$start, $end]);
+                } else {
+                    // Wraps around year (e.g., Nov -> Apr)
+                    $query->where(function ($q) use ($start, $end) {
+                        $q->whereRaw("DATE_FORMAT(dob, '%m-%d') >= ?", [$start])
+                          ->orWhereRaw("DATE_FORMAT(dob, '%m-%d') <= ?", [$end]);
+                    });
+                }
+            });
+        }
+        if ($request->dob) {
+            $today = now();
+            $sixMonthsLater = now()->copy()->addMonths(6);
+
+            $users = $users->whereNotNull('dob')->where(function ($query) use ($today, $sixMonthsLater) {
+                $start = $today->format('m-d');
+                $end = $sixMonthsLater->format('m-d');
+
+                if ($start <= $end) {
+                    // Same year range (e.g., Jul -> Dec)
+                    $query->whereRaw("DATE_FORMAT(dob, '%m-%d') BETWEEN ? AND ?", [$start, $end]);
+                } else {
+                    // Wraps around year (e.g., Nov -> Apr)
+                    $query->where(function ($q) use ($start, $end) {
+                        $q->whereRaw("DATE_FORMAT(dob, '%m-%d') >= ?", [$start])
+                          ->orWhereRaw("DATE_FORMAT(dob, '%m-%d') <= ?", [$end]);
+                    });
+                }
+            });
+        }
+        if ($request->anniversary) {
+            $today = now();
+            $future = $today->copy()->addMonths(6);
+
+            $users = $users->whereNotNull('anniversary_date')->where(function ($query) use ($today, $future) {
+                $start = $today->format('m-d');
+                $end = $future->format('m-d');
+
+                if ($start <= $end) {
+                    $query->whereRaw("DATE_FORMAT(anniversary_date, '%m-%d') BETWEEN ? AND ?", [$start, $end]);
+                } else {
+                    $query->where(function ($q) use ($start, $end) {
+                        $q->whereRaw("DATE_FORMAT(anniversary_date, '%m-%d') >= ?", [$start])
+                          ->orWhereRaw("DATE_FORMAT(anniversary_date, '%m-%d') <= ?", [$end]);
+                    });
+                }
+            });
         }
 
         $users = $users->paginate(10);
@@ -255,9 +325,9 @@ class UserController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
 
-            $tempUser = User::where('name', $data['name'])->first();
+            $tempUser = User::where(['contact'=>$data['contact'],'email'=>$data['email']])->first();
             if($tempUser) {
-                return redirect()->back()->with('flash_message_error','User already exists with same name');
+                return redirect()->back()->with('flash_message_error','User already exists with same email/phone');
             }
 
             $user = new User;

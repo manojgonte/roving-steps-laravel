@@ -112,8 +112,9 @@
                                             </form>
                                         </td> 
 	                                    <td>
-                                            <a class="btn btn-default" href="{{ url('/admin/edit-plan-tour/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a> &nbsp;
-                                            <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-plan-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-outline-dark btn-sm" href="{{ url('/admin/edit-plan-tour/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a>
+                                            <a class="btn btn-outline-dark btn-sm" title="Share Tour" onclick="getTourId(this);" tourId="{{$row->tour_id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i> </a>
+                                            <a class="btn btn-outline-dark btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-plan-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a>
 	                                    </td>
 	                                </tr>
                                 @endforeach
@@ -132,5 +133,70 @@
         </div>
     </section>
 </div>
+
+<div class="modal fade" id="tour-share">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Share Tour on Mail</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{url('admin/share-tour/')}}" method="POST" id="shareTour">@csrf
+                <input type="hidden" id="tourId" name="tour_id" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputEmail">Email</label>
+                        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Enter Email" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSubject">Subject</label>
+                        <input type="text" name="subject" id="inputSubject" class="form-control" placeholder="Enter Subject" value="" required>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-dark submit">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section('scripts')
+
+<script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('#shareTour').validate({
+            ignore: [],
+            debug: false,
+            rules: {
+                email: {
+                    required: true,
+                    email:true,
+                },
+                subject: {
+                    required: true,
+                    maxlength:200,
+                },
+            },
+            messages: {},
+            submitHandler: function(form) {
+                $(".submit").attr("disabled", true);
+                $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
+                form.submit();
+            }
+        });
+    });
+</script>
+<script>
+    function getTourId(el){
+        tourId = $(el).attr('tourId');
+        $('#tourId').val(tourId);
+    }
+</script>
+@endsection('scripts')
 
 @endsection
