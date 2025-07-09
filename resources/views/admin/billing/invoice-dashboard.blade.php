@@ -159,7 +159,7 @@
                             @foreach ($invoices as $row)
                                 <tr>
                                     <td class="align-middle"><a class="btn btn-link" href="{{ url('/admin/invoice-details/' . base64_encode($row->id)) }}"> INV-{{ $row->id }}</a></td>
-                                    <td class="align-middle">@if(filter_var($row->bill_to, FILTER_VALIDATE_INT) == false) {{ $row->bill_to }} @else {{getUser($row->bill_to)->name}} @endif</td>
+                                    <td class="align-middle">@if(filter_var($row->bill_to, FILTER_VALIDATE_INT) == false) {{ $row->bill_to }} @else {{getUser($row->bill_to)?->name}} @endif</td>
                                     <td class="align-middle" title="{{$row->tourName}}">{{ $row->tourName ? Str::limit($row->tourName, 20) : '-' }}</td>
                                     <td class="align-middle">{{ date('d M Y', strtotime($row->invoice_date)) }}</td>
                                     <td class="align-middle">₹{{ number_format($row->grand_total,1) }}</td>
