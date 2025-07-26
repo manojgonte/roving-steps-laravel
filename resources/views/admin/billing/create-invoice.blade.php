@@ -33,39 +33,43 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label class="required">Bill To</label>
+                            @php
+                                $users = App\Models\User::select('id','name','contact','email','address','pan_no','gst_no','gst_address')->orderBy('name','ASC')->get();
+                            @endphp
                             {{-- <input type="text" name="bill_to" class="form-control" placeholder="Enter bill to" required> --}}
-                            <select class="form-control select2bs4" name="bill_to" required>
+                            <select class="form-control select2bs4" name="bill_to" id="user_id" required>
                                 <option value="" selected>Select One</option>
-                                @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $row)
-                                <option value="{{$row->id}}">{{$row->name}}</option>
+                                @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach
                             </select>
+                            <a href="#" id="updateUser" class="mt-1" style="display:none;" target="_blank">Update User</a>
                         </div>
                         <div class="form-group col-md-5">
                             <label class="">Address</label>
-                            <input type="text" name="address" class="form-control" placeholder="Enter address" >
+                            <input type="text" name="address" class="form-control" id="address" readonly disabled placeholder="Enter address" >
                         </div>
                         <div class="form-group col-md-3">
                             <label class=>Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Enter email">
+                            <input type="email" name="email" class="form-control" id="email" readonly disabled placeholder="Enter email">
                         </div>
                         <div class="form-group col-md-3">
                             <label class="">Contact Number</label>
-                            <input type="number" name="contact_no" class="form-control" placeholder="Enter contact number">
+                            <input type="number" name="contact_no" class="form-control" id="contact" readonly disabled placeholder="Enter contact number">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label class="">PAN Number</label>
-                            <input type="text" name="pan_no" class="form-control" placeholder="Pan Number" >
+                            <input type="text" name="pan_no" class="form-control" id="pan_no" readonly disabled placeholder="Pan Number" >
                         </div>
                         <div class="form-group col-md-3">
                             <label class="">GST Number</label>
-                            <input type="text" name="gst_no" class="form-control" placeholder="GST Number">
+                            <input type="text" name="gst_no" class="form-control" id="gst_no" readonly disabled placeholder="GST Number">
                         </div>
                         <div class="form-group col-md-5">
                             <label class="">GST Address</label>
-                            <input type="text" name="gst_address" class="form-control" placeholder="GST Address">
+                            <input type="text" name="gst_address" class="form-control" id="gst_address" readonly disabled placeholder="GST Address">
                         </div>
                     </div>
                     <div class="row">
@@ -215,6 +219,55 @@
 <script>
     $((function(){
         window.asd=$(".SlectBox").SumoSelect({csvDispCount:3,selectAll:!0,captionFormatAllSelected:"Yeah, OK, so everything."}),window.Search=$(".search-box").SumoSelect({csvDispCount:3,search:!0,searchText:"Enter here."}),window.sb=$(".SlectBox-grp-src").SumoSelect({csvDispCount:3,search:!0,searchText:"Enter here.",selectAll:!0}),$(".sumoselect").SumoSelect({placeholder: 'Select'}),$(".selectsum1").SumoSelect({okCancelInMulti:!0,selectAll:!0}),$(".selectsum2").SumoSelect({selectAll:!0})}));
+</script>
+
+<script>
+    $(document).ready(function () {
+        const userData = @json($users->keyBy('id'));
+
+        const $userSelect = $('#user_id');
+        const $contactInput = $('#contact');
+        const $emailInput = $('#email');
+        const $addressInput = $('#address');
+        const $pan_noInput = $('#pan_no');
+        const $gst_noInput = $('#gst_no');
+        const $gst_addressInput = $('#gst_address');
+        const $updateLink = $('#updateUser');
+
+        function updateFieldsAndLink(userId) {
+            const user = userData[userId];
+
+            if (user) {
+                $contactInput.val(user.contact ?? '');
+                $emailInput.val(user.email ?? '');
+                $addressInput.val(user.address ?? '');
+                $pan_noInput.val(user.pan_no ?? '');
+                $gst_noInput.val(user.gst_no ?? '');
+                $gst_addressInput.val(user.gst_address ?? '');
+                $updateLink.attr('href', `/admin/edit-user/${userId}`).show();
+            } else {
+                $contactInput.val('');
+                $emailInput.val('');
+                $$addressInput.val('');
+                $$pan_noInput.val('');
+                $$gst_noInput.val('');
+                $$gst_addressInput.val('');
+                $updateLink.hide();
+            }
+        }
+
+        // On change
+        $userSelect.on('change', function () {
+            updateFieldsAndLink($(this).val());
+        });
+
+        // On page load (if already selected)
+        if ($userSelect.val()) {
+            updateFieldsAndLink($userSelect.val());
+        } else {
+            $updateLink.hide(); // Hide link by default
+        }
+    });
 </script>
 
 @endsection('scripts')

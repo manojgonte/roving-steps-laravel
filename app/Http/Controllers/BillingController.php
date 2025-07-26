@@ -58,12 +58,12 @@ class BillingController extends Controller
             // dd($data);
             $Invoices = new invoices;
             $Invoices->bill_to = $data['bill_to'];
-            $Invoices->address = !empty($data['address']) ? $data['address'] : null;
-            $Invoices->email = !empty($data['email']) ? $data['email'] : null;
-            $Invoices->contact_no = !empty($data['contact_no']) ? $data['contact_no'] : null;
-            $Invoices->pan_no = !empty($data['pan_no']) ? $data['pan_no'] : null;
-            $Invoices->gst_no = !empty($data['gst_no']) ? $data['gst_no'] : null;
-            $Invoices->gst_address = !empty($data['gst_address']) ? $data['gst_address'] : null;
+            $Invoices->address = null;
+            $Invoices->email = null;
+            $Invoices->contact_no = null;
+            $Invoices->pan_no = null;
+            $Invoices->gst_no = null;
+            $Invoices->gst_address = null;
             $Invoices->no_of_passengers = !empty($data['no_of_passengers']) ? $data['no_of_passengers'] : null;
             $Invoices->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
             $Invoices->to_date = !empty($data['to_date']) ? $data['to_date'] : null;
@@ -80,7 +80,7 @@ class BillingController extends Controller
 
     public function invoiceActions(Request $request, $id) {
         $id = base64_decode($id);
-        $invoice = invoices::with('invoiceItems','invoicePayments')
+        $invoice = invoices::with('invoiceItems','invoicePayments','customer')
             ->select('invoices.*','tours.tour_name as tourName','invoices.tour_name as tour_id')
             ->leftJoin('tours','tours.id','invoices.tour_name')
             ->where('invoices.id', $id)
@@ -173,7 +173,7 @@ class BillingController extends Controller
             return redirect('admin/invoice-billing/')->with('flash_message_success','Invoices updated successfully');
         }
 
-        $invoice = invoices::with('invoiceItems')
+        $invoice = invoices::with('invoiceItems','customer')
             ->select('invoices.*','tours.tour_name as tourName','invoices.tour_name as tour_id')
             ->leftJoin('tours','tours.id','invoices.tour_name')
             ->where('invoices.id', $id)
@@ -191,12 +191,12 @@ class BillingController extends Controller
             
             $Invoices = invoices::find($id);
             $Invoices->bill_to = $data['bill_to'];
-            $Invoices->address = !empty($data['address']) ? $data['address'] : null;
-            $Invoices->email = !empty($data['email']) ? $data['email'] : null;
-            $Invoices->contact_no = !empty($data['contact_no']) ? $data['contact_no'] : null;
-            $Invoices->pan_no = !empty($data['pan_no']) ? $data['pan_no'] : null;
-            $Invoices->gst_no = !empty($data['gst_no']) ? $data['gst_no'] : null;
-            $Invoices->gst_address = !empty($data['gst_address']) ? $data['gst_address'] : null;
+            $Invoices->address = null;
+            $Invoices->email = null;
+            $Invoices->contact_no = null;
+            $Invoices->pan_no = null;
+            $Invoices->gst_no = null;
+            $Invoices->gst_address = null;
             $Invoices->no_of_passengers = !empty($data['no_of_passengers']) ? $data['no_of_passengers'] : null;
             $Invoices->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
             $Invoices->to_date = !empty($data['to_date']) ? $data['to_date'] : null;

@@ -15,6 +15,10 @@ class Invoices extends Model
         'invoice_for' => 'array'
     ];
 
+    public function customer() {
+        return $this->belongsTo(User::class, 'bill_to');
+    }
+
     public function invoicePayments() {
         return $this->hasMany(payments::class, 'invoice_id');
     }

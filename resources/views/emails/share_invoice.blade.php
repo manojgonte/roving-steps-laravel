@@ -256,10 +256,10 @@
             <table class="w-full">
                 <tr>
                     <td class="w-half">
-                        <div><label><b>Bill To:</b> @if(filter_var($invoice->bill_to, FILTER_VALIDATE_INT) == false) {{ $invoice->bill_to }} @else {{getUser($invoice->bill_to)->name}} @endif</label></div>
-                        <div><label><b>Address:</b> {{ !empty($invoice->address) ? $invoice->address : '-' }}</label></div>
-                        <div><label><b>Contact No.:</b> {{ !empty($invoice->contact_no) ? $invoice->contact_no : '-' }}</label></div>
-                        <div><label><b>Email:</b> {{ !empty($invoice->email) ? $invoice->email : '-' }}</label></div>
+                        <div><label><b>Bill To:</b> @if(filter_var($invoice->bill_to, FILTER_VALIDATE_INT) == false) {{ $invoice->bill_to }} @else {{$invoice->customer->name}} @endif</label></div>
+                        <div><label><b>Address:</b> {{ $invoice->customer->address ?? '-' }}</label></div>
+                        <div><label><b>Contact No.:</b> {{ $invoice->customer->contact ?? '-' }}</label></div>
+                        <div><label><b>Email:</b> {{ $invoice->customer->email ?? '-' }}</label></div>
                         <div><label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label></div>
                         <div>
                             <label><b>Invoice For:</b> 
@@ -283,9 +283,9 @@
                     </td>
                     <td class="w-half">
                         <div><label><b>Invoice Id:</b> {{ $invoice->id }} </label></div>
-                        <div><label><b>Pan No.:</b> {{ !empty($invoice->pan_no) ? $invoice->pan_no : '-' }} </label></div>
-                        <div><label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label></div>
-                        <div><label><b>GST Address.:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label></div>
+                        <div><label><b>Pan No.:</b> {{ $invoice->customer->pan_no ?? '-' }} </label></div>
+                        <div><label><b>GST No.:</b> {{ $invoice->customer->gst_no ?? '-' }} </label></div>
+                        <div><label><b>GST Address.:</b> {{ $invoice->customer->gst_address ?? '-' }} </label></div>
                         <div><label><b>Tourist Count:</b> {{ !empty($invoice->no_of_passengers) ? $invoice->no_of_passengers : '-' }} </label></div>
                         <div><label><b>Date:</b> {{ !empty($invoice->from_date) ? date('d/m/Y', strtotime($invoice->from_date)) : '-' }} - {{ !empty($invoice->to_date) ? date('d/m/Y', strtotime($invoice->to_date)) : '-' }} </label></div>
                     </td>

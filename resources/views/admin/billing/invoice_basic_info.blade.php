@@ -1,16 +1,16 @@
 <div class="row">
     <div class="col px-0">
         <div class="col-md-10">
-            <label><b>Bill To:</b>@if(filter_var($invoice->bill_to, FILTER_VALIDATE_INT) == false) {{ $invoice->bill_to }} @else {{getUser($invoice->bill_to)->name}} @endif</label>
+            <label><b>Bill To:</b>@if(filter_var($invoice->bill_to, FILTER_VALIDATE_INT) == false) {{ $invoice->bill_to }} @else {{$invoice->customer->name}} @endif</label>
         </div>
         <div class="col-md-10">
-            <label><b>Address:</b> {{ !empty($invoice->address) ? $invoice->address : '-' }}</label>
+            <label><b>Address:</b> {{ $invoice->customer->address ?? '-' }}</label>
         </div>
         <div class="col-md-10">
-            <label><b>Contact No.:</b> {{ !empty($invoice->contact_no) ? $invoice->contact_no : '-' }} </label>
+            <label><b>Contact No.:</b> {{ $invoice->customer->contact ?? '-' }} </label>
         </div>
         <div class="col-md-10">
-            <label><b>Email:</b> {{ !empty($invoice->email) ? $invoice->email : '-' }}</label>
+            <label><b>Email:</b> {{ $invoice->customer->email ?? '-' }}</label>
         </div>
         <div class="col-md-10">
             <label><b>Invoice Date:</b> {{ date('d/m/Y', strtotime($invoice->invoice_date)) }} </label>
@@ -45,13 +45,13 @@
             <label><b>Invoice Id:</b> {{ $invoice->id }} </label>
         </div>
         <div class="col-md-10">
-            <label><b>Pan No.:</b> {{ !empty($invoice->pan_no) ? $invoice->pan_no : '-' }} </label>
+            <label><b>Pan No.:</b> {{ $invoice->customer->pan_no ?? '-' }} </label>
         </div>
         <div class="col-md-10">
-            <label><b>GST No.:</b> {{ !empty($invoice->gst_no) ? $invoice->gst_no : '-' }} </label>
+            <label><b>GST No.:</b> {{ $invoice->customer->gst_no ?? '-' }} </label>
         </div>
         <div class="col-md-10">
-            <label><b>GST Address.:</b> {{ !empty($invoice->gst_address) ? $invoice->gst_address : '-' }} </label>
+            <label><b>GST Address.:</b> {{ $invoice->customer->gst_address ?? '-' }} </label>
         </div>
         <div class="col-md-10">
             <label><b>Tourist Count:</b> {{ !empty($invoice->no_of_passengers) ? $invoice->no_of_passengers : '-' }} </label>
