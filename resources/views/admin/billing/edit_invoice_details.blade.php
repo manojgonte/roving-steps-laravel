@@ -544,7 +544,7 @@
                         @if($invoice->estimation != 1)
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
-                            <td class="text-right"><input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" value="{{$invoice->payment_received}}" /></td>
+                            <td class="text-right"><input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" value="{{$invoice->payment_received ?? 0}}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Balance</td>

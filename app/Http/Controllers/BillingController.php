@@ -237,7 +237,7 @@ class BillingController extends Controller
             $invoice->gst_per = $data['gst_per'];
             $invoice->gst = $data['gst'];
             $invoice->grand_total = $data['grand_total'];
-            $invoice->payment_received = $data['payment_received'];
+            $invoice->payment_received = $data['payment_received'] ?? '0';
             $invoice->balance = $data['balance'];
             $invoice->note = $data['note'];
             $invoice->save();
