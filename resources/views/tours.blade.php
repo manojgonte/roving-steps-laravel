@@ -37,11 +37,11 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="searchMenu-date px-30 lg:py-20 lg:px-0 js-form-dd js-calendar">
+                                <div class="searchMenu-date px-30 lg:py-20 lg:px-0 js-calendar">
                                     <div data-x-dd-click="searchMenu-date">
                                         <h4 class="text-15 fw-500 ls-2 lh-16">Search </h4>
                                         <div class="text-15 text-light-1 ls-2 lh-16">
-                                            <input autocomplete="off" type="search" name="q" placeholder="Search with destination..." @if(Request()->q) value="{{Request()->q}}" @endif class="js-search js-dd-focus" />
+                                            <input autocomplete="off" type="search" name="q" placeholder="Search Destination..." @if(Request()->q) value="{{Request()->q}}" @endif class="js-search js-dd-focus" />
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +231,7 @@
 
                     <div class="row y-gap-10 items-center justify-between">
                         <div class="col-auto">
-                            <div class="text-20"><span class="fw-500">{{$tours->total()}} popular tour packages found</span> </div>
+                            <div class="text-20"><span class="fw-500">{{$tours->total()}} tour packages found</span> </div>
                         </div>
                     </div>
 

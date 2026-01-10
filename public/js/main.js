@@ -1451,6 +1451,10 @@ function testimonialsSlider2() {
 function testimonialsSlider3() {
   const slider = new Swiper('.js-testimonials-slider-3', {
     speed: 800,
+    autoplay: {
+     delay: 2000,
+     disableOnInteraction: false,
+   },
     cardsEffect: {
       slideShadows: true,
     },

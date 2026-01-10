@@ -44,7 +44,7 @@
                                     <div class="row pt-2">
                                         <div class="form-group col-md-4 mb-0">
                                             <input type="file" name="image[]" multiple class="form-control p-1" required>
-                                            <small>Can add single or muliple images</small>
+                                            <small>Can add single or multiple images</small>
                                         </div>
                                         <div class="form-group col-md-4 mb-0">
                                             <input type="text" name="title" class="form-control p-1" placeholder="Image title">

@@ -8,7 +8,7 @@
         <img src="{{asset('img/logo/logo_trans.png')}}" class="brand-image" style="width:80%;">
     </a>
     <div class="sidebar">
-        <nav class="mt-1">
+        <nav class="mt-3">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item has-treeview menu-open">
                     <a href="{{ route('dashboard') }}" class="nav-link text-white @if(preg_match('#/admin/dashboard#', $url)) active @endif">
@@ -87,6 +87,14 @@
                     </a>
                 </li>
                 @endif --}}
+                @if($role == 'Admin' || $role == 'Office User')
+                <li class="nav-item">
+                    <a href="{{url('admin/blogs')}}" class="nav-link text-white @if(preg_match('#/admin/blogs#', $url)) active @endif">
+                        <i class="nav-icon fas fa-blog"></i>
+                        <p>Blogs</p>
+                    </a>
+                </li>
+                @endif
                 @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/gallery')}}" class="nav-link text-white @if(preg_match('#/admin/gallery#', $url)) active @endif">

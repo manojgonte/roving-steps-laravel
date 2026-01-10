@@ -15,6 +15,21 @@ class TourEnquiry extends Model
         'services' => 'array'
     ];
 
+    protected $fillable = [
+        'tour_id',
+        'user_id',
+        'services',
+        'prefix',
+        'name',
+        'contact',
+        'email',
+        'destination',
+        'tourist_no',
+        'from_date',
+        'end_date',
+        'current_city',
+        'message'
+    ];
 
     public function user(){
         return $this->belongsTo(User::class, 'name');

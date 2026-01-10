@@ -42,7 +42,17 @@
                 <div class="rounded-4">
                     <form action="{{url('tour-enquiry')}}" method="POST" class="contactEnqForm">@csrf
                         <div class="row y-gap-20">
-                            <div class="col-6">
+                            <div class="col-3">
+                                <div class="form-input">
+                                    <select class="form-select" name="prefix" required>
+                                      <option value="Mr" selected>Mr</option>
+                                      <option value="Mrs">Mrs</option>
+                                      <option value="Miss">Miss</option>
+                                    </select>
+                                    <div class="error-message"></div>
+                                </div>
+                            </div>
+                            <div class="col-9">
                                 <div class="form-input">
                                     <input type="text" name="name" required>
                                     <label class="lh-1 text-16 text-light-1">Full Name *</label>
@@ -63,7 +73,7 @@
                                 </div>
                                 <div class="error-message"></div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="form-input">
                                     <input type="text" name="address">
                                     <label class="lh-1 text-16 text-light-1">Address</label>
@@ -72,7 +82,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-input">
-                                    <textarea name="message" rows="4" required></textarea>
+                                    <textarea name="message" rows="2" required></textarea>
                                     <label class="lh-1 text-16 text-light-1">Your Messages *</label>
                                 </div>
                                 <div class="error-message"></div>
@@ -101,7 +111,7 @@
                     </div>
                     <div class="col-12">
                         <div class="text-18 fw-500 mt-5"><i class="fa fa-envelope"></i> Email</div>
-                        <div class="text-16 text-light-1"><a href="mailto:info@rovingsteps.com"> info@rovingsteps.com </a></div>
+                        <div class="text-16 text-light-1"><a href="mailto:info@iggloo.co.in"> info@iggloo.co.in </a></div>
                     </div>
                     <div class="col-auto">
                         <div class="text-18 fw-500 mt-5">Follow us on social media</div>

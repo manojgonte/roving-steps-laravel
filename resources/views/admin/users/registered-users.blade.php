@@ -116,7 +116,7 @@
                                             <i class="fa fa-plane-departure"></i>&nbsp; {{ $row->visa_type ? Str::limit(ucfirst($row->visa_type), 30) : 'NA' }} 
                                         </td>
                                         <td class="align-middle">
-                                            <a class="btn btn-outline-dark btn-sm" title="Create Enquiry" href="{{ url('/admin/new-enquiry?user_id='.$row->id) }}"><i class="fa fa-comment"></i></a>
+                                            <a class="btn btn-outline-dark btn-sm" title="Create" href="{{ url('/admin/new-enquiry?user_id='.$row->id) }}"><i class="fa fa-comment"></i></a>
                                             <a class="btn btn-outline-dark btn-sm" href="{{ url('/admin/edit-user/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a>
                                             <a class="btn btn-outline-dark btn-sm" onclick="return confirm('Are you sure? All user data will be deleted.')" href="{{ url('/admin/delete-user/'.$row->id) }}"><i class="fa fa-trash"></i></a>
                                         </td>

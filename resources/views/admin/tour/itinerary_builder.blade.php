@@ -86,8 +86,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label class="required">Activity of the Day</label>
-                                            <input type="text" name="activity" class="form-control" placeholder="Enter Activity" value="" required>
+                                            <label class="required">Sigthseeings of the Day</label>
+                                            <input type="text" name="activity" class="form-control" placeholder="Enter Sigthseeings" value="" required>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="required">Travel Option</label>
@@ -170,7 +170,7 @@
                                         <th>Day</th>
                                         <th>Image</th>
                                         <th>Place</th>
-                                        <th>Activity</th>
+                                        <th>Sigthseeings</th>
                                         <th>Travel</th>
                                         <th>Stay</th>
                                         <th>Food</th>

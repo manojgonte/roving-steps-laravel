@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\MailChimpController;
 use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\BillingController;
 use App\Http\Middleware\AdminAuthenticated;
@@ -29,11 +30,18 @@ Route::post('/tours-filter', [IndexController::class, 'filter']);
 Route::get('/tour-details/{id?}/{slug?}', [IndexController::class, 'tourDetails']);
 Route::post('/tour-enquiry', [IndexController::class, 'tourEnquiry']);
 Route::get('/gallery', [IndexController::class, 'gallery']);
+Route::get('/blogs', [IndexController::class, 'blogs']);
+Route::get('/blog/{id}/{slug?}', [IndexController::class, 'blogDetail']);
+Route::post('/save-enquiry', [IndexController::class, 'saveEnquiry'])->name('save.enquiry');
 
 Route::get('/flight-booking', [IndexController::class, 'flightBooking']);
 Route::get('/flight-listing', [IndexController::class, 'flightListing']);
 Route::get('/cruise-booking', [IndexController::class, 'cruiseBooking']);
 Route::get('/other-services', [IndexController::class, 'otherServices']);
+
+Route::get('/terms-of-use', [IndexController::class, 'termsOfUse']);
+Route::get('/refund-policy', [IndexController::class, 'refundPolicy']);
+Route::get('/privacy-policy', [IndexController::class, 'privacyPolicy']);
 
 Route::match(['get','post'], '/sign-in', [UserController::class, 'userLogin']);
 Route::match(['get','post'], '/sign-up', [UserController::class, 'userRegister']);
@@ -113,6 +121,12 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/edit-user/{id}', [UserController::class, 'editUser']);
     Route::match(['get','post'], 'admin/delete-user/{id}', [UserController::class, 'deleteUser']);
 
+    // blogs
+    Route::match(['get','post'], 'admin/blogs/', [BlogController::class, 'viewBlogs']);
+    Route::match(['get','post'], 'admin/add-blog/', [BlogController::class, 'addBlog']);
+    Route::match(['get','post'], 'admin/edit-blog/{id}', [BlogController::class, 'editBlog']);
+    Route::match(['get','post'], 'admin/delete-blog/{id}', [BlogController::class, 'deleteBlog']);
+    
     // Associated Users
     Route::match(['get','post'], 'admin/associated-users/', [AssociateController::class, 'viewAssociates']);
     Route::match(['get','post'], 'admin/add-associate/', [AssociateController::class, 'addAssociate']);

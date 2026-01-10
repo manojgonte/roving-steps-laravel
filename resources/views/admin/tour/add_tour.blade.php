@@ -119,7 +119,7 @@
                                         <label>Special Tour</label>
                                         <select class="select2" name="special_tour_type[]" multiple="multiple" data-placeholder="Select one" style="width: 100%;">
                                             <option value="">Select One</option>
-                                            @foreach(App\Models\SpecialTour::where('status',1)->get() as $row)
+                                            @foreach(App\Models\SpecialTour::where('status',1)->orderBy('title','ASC')->get() as $row)
                                             <option value="{{$row->id}}">{{$row->title}}</option>
                                             @endforeach
                                         </select>
@@ -189,10 +189,34 @@
                                     <div class="form-group col-md-12">
                                         <label class="">Note</label>
                                         <textarea name="note" class="form-control" rows="3" placeholder="Enter Note">
-Terms & Conditions
 •   No refund will be made for any unused accommodation, missed meals, transportation segments, sightseeing tours or any other service. 
 •   Such unused items are neither refundable nor exchangeable. Room allocation is done by the hotel depending upon availability at the time of check-in in the category of room as specified on your confirmation voucher. 
 •   No refund shall be claimed, if the services & amenities of hotel were not up to your expectations, it will be considered on case to case basis.</textarea>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="">Terms & Conditions</label>
+                                        <textarea name="terms" class="form-control" rows="4" placeholder="Enter Terms & Conditions">
+•   Notification Requirement: To request a change in travel dates (prepone or postpone), clients must notify us at least 15 days prior to their original journey date via email or SMS, Whatsapp. 
+•   Service Provider Charges Apply: Any preponing or postponing of dates will incur charges as levied by hoteliers, transporters, etc. These charges will be deducted from your advance payment.
+•   Subject to Availability & Costing: All date changes are strictly subject to the availability of hotels and transportation, and the costing will be re-evaluated based on the new dates and applicable season/off-season rates.
+•   We do not accept any changes in plan within 15 days of travel date. However in rare cases like adverse climatic conditions or strikes, package can be postponed which will be intimated to you beforehand.
+•   The validity to utilize your Advance payment in prepone/postpone scenarios is 1 Year from the date of advance payment.
+•   The avance payment and the invoice Number allotted to you, are transferable i.e. you can pass on your booking to any of your friends/ relatives. (Please Note: In order to transfer your booking you must meet the above terms and conditions first).
+•   For any cancellations, please refer to our separate Cancellation Terms & Conditions for details on applicable charges and refunds.</textarea>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="">Booking Terms</label>
+                                        <textarea name="booking_terms" class="form-control" rows="4" placeholder="Enter Booking Terms">
+•   50% advance to be paid at the time of booking.
+•   By 25 days prior to the date of departure of the tour 100% of the total tour cost is to be paid
+•   Air fair is calcualted at the time of proposal creation and is subject to change at the time of booking.
+•   In case of cancellation standard cancellation policies will be applicable or may be changed as per the policies. </textarea>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="">Cancellation Policy</label>
+                                        <textarea name="cancel_policy" class="form-control" rows="4" placeholder="Enter Cancellation Policy">
+•   In case of cruises, 100% of the cruise cost to be paid at the time of booking & will be forfeited in case of any cancellations, irrespective of time of cancellation.
+•   At the time of receipt of advance, a receipt voucher to be issued by and taxes to be paid.</textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="form-check">

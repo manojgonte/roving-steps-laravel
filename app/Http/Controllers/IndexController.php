@@ -10,7 +10,9 @@ use App\Models\TourEnquiry;
 use App\Models\Testimonial;
 use App\Models\Enquiry;
 use App\Models\Gallery;
+use App\Models\Blog;
 use App\Models\Tour;
+use Validator;
 use Mail;
 use Log;
 
@@ -25,9 +27,10 @@ class IndexController extends Controller
 
         $testimonials = Testimonial::orderBy('id','DESC')->take(12)->get();
         $destinations = Destination::where(['status'=>1,'is_popular'=>1])->take(8)->get();
+        $blogs = Blog::where(['status'=>1])->take(3)->orderBy('id','DESC')->get();
 
         $meta_title = config('app.name');
-        return view('index',compact('meta_title','popularTours','destinations','testimonials'));
+        return view('index',compact('meta_title','popularTours','destinations','testimonials','blogs'));
     }
     
     public function contact(Request $request){
@@ -48,6 +51,18 @@ class IndexController extends Controller
         }
         $meta_title = 'Contact Us | '. config('app.name');
         return view('contact',compact('meta_title'));
+    }
+
+    public function blogs(Request $request){
+        $blogs = Blog::where(['status'=>1])->orderBy('id','DESC')->paginate(9);
+        $meta_title = 'Blogs';
+        return view('blogs', compact('meta_title','blogs'));
+    }
+
+    public function blogDetail(Request $request, $id){
+        $blog = Blog::where(['id'=>$id])->first();
+        $meta_title = $blog->title;
+        return view('blog_detail', compact('meta_title','blog'));
     }
 
     public function about(Request $request){
@@ -71,9 +86,9 @@ class IndexController extends Controller
             });
         }
 
-        // if($request->special_tour_type){
-        //     $tours = $tours->whereIn('special_tour_type', $request->special_tour_type);
-        // }
+        if($request->type){
+            $tours = $tours->where('type', $request->type);
+        }
 
         $destArray = null;
         if($request->dest){
@@ -133,14 +148,20 @@ class IndexController extends Controller
     }
 
     public function tourDetails(Request $request, $id=null){
-        $tour = Tour::with('itinerary')->select('tours.*','destinations.name as dest_name')
-            ->leftJoin('destinations','destinations.id','tours.dest_id')
-            ->where('tours.id', $id)
-            ->orderBy('tours.id','DESC')
+        $tour = Tour::with('itinerary','destination')
+            ->where('id', $id)
+            ->orderBy('id','DESC')
             ->first();
+
+        $relatedTours = Tour::with('itinerary','destination')
+            ->where('dest_id', $tour->dest_id)
+            ->where('id','!=', $tour->id)
+            ->orderBy('id','DESC')
+            ->take(5)
+            ->get();
         
         $meta_title = $tour->tour_name . ' | ' . config('app.name');
-        return view('tour_details',compact('meta_title','tour'));
+        return view('tour_details',compact('meta_title','tour','relatedTours'));
     }
 
     public function tourEnquiry(Request $request) {
@@ -152,6 +173,7 @@ class IndexController extends Controller
             $enquiry = new TourEnquiry;
             $enquiry->tour_id = !empty($data['tour_id']) ? $data['tour_id'] : null;
             $enquiry->user_id = !empty($data['user_id']) ? $data['user_id'] : null;
+            $enquiry->prefix = $data['prefix'] ?? null;
             $enquiry->name = $data['name'];
             $enquiry->email = $data['email'];
             $enquiry->contact = !empty($data['contact']) ? $data['contact'] : null;
@@ -167,6 +189,49 @@ class IndexController extends Controller
                 return redirect()->back()->with('error_message','Something went wrong, please try again.');
             }
         }
+    }
+
+    public function saveEnquiry(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'services'     => 'required|array|min:1',
+            'prefix'       => 'required|string',
+            'fname'        => 'required|string|max:50',
+            'lname'        => 'required|string|max:50',
+            'mobile'       => 'required|digits:10',
+            'email'        => 'required|email',
+            'destination'  => 'required|string|max:30',
+            'tourist_no'   => 'required|numeric|min:1',
+            'from_date'    => 'required|date',
+            'end_date'     => 'required|date|after_or_equal:from_date',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        TourEnquiry::create([
+            'tour_id'       => null,
+            'user_id'       => null,
+            'services'      => $request->services,
+            'prefix'        => $request->prefix,
+            'name'          => $request->fname ." ".$request->lname,
+            'contact'       => $request->mobile,
+            'email'         => $request->email,
+            'message'       => $request->destination ?? null,
+            'tourist_no'    => $request->tourist_no ?? null,
+            'from_date'     => $request->from_date ?? null,
+            'end_date'      => $request->end_date ?? null,
+            'current_city'  => null
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Enquiry submitted successfully!'
+        ]);
     }
 
     public function gallery(Request $request){
@@ -195,14 +260,19 @@ class IndexController extends Controller
         return view('other_services',compact('meta_title'));
     }
 
-    public function blogsListing(Request $request){
-        $meta_title = 'Blogs';
-        return view('blog_listing',compact('meta_title'));
+    public function termsOfUse(Request $request){
+        $meta_title = 'Terms of Use';
+        return view('terms_of_use',compact('meta_title'));
     }
 
-    public function blogDetail(Request $request, $id=null){
-        $meta_title = 'Blog Detail';
-        return view('blog_detail',compact('meta_title'));
+    public function refundPolicy(Request $request){
+        $meta_title = 'Refund Policy';
+        return view('refund_policy',compact('meta_title'));
+    }
+
+    public function privacyPolicy(Request $request){
+        $meta_title = 'Privacy Policy';
+        return view('privacy_policy',compact('meta_title'));
     }
     
 }

@@ -112,27 +112,27 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3">
                                         <label class="required">Tour Type</label>
                                         <select class="form-control select2bs4" name="type" name="type">
                                             <option value="Domestic" @if($tour->type == 'Domestic') selected @endif>Domestic</option>
                                             <option value="International" @if($tour->type == 'International') selected @endif>International</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3">
                                         <label class="">Special Tour</label>
                                         <select class="form-control select2" name="special_tour_type[]" multiple data-placeholder="Select one" style="width: 100%;">
                                             <option value="">Select One</option>
-                                            @foreach(App\Models\SpecialTour::where('status',1)->get() as $row)
+                                            @foreach(App\Models\SpecialTour::where('status',1)->orderBy('title','ASC')->get() as $row)
                                             <option value="{{$row->id}}" @if($tour->special_tour_type && in_array($row->id, $tour->special_tour_type)) selected @endif>{{$row->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
                                         <label class="required">Price per perosn (Adult)</label>
                                         <input type="text" name="adult_price" class="form-control" placeholder="Enter Price" value="{{$tour->adult_price}}" required>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
                                         <label class="">Price per perosn (Child)</label>
                                         <input type="text" name="child_price" class="form-control" placeholder="Enter Price" @if(!empty($tour->child_price)) value="{{$tour->child_price}}" @endif>
                                     </div>
@@ -178,7 +178,19 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Note</label>
-                                        <textarea name="note" class="form-control" rows="3" placeholder="Enter Note">@if(!empty($tour->note)) {{$tour->note}} @endif</textarea>
+                                        <textarea name="note" class="form-control" rows="3" placeholder="Note">@if(!empty($tour->note)) {{$tour->note}} @endif</textarea>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="">Terms & Conditions</label>
+                                        <textarea name="terms" class="form-control" rows="4" placeholder="Terms & Conditions">@if(!empty($tour->terms)) {{$tour->terms}} @endif</textarea>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="">Booking Terms</label>
+                                        <textarea name="booking_terms" class="form-control" rows="4" placeholder="Booking Terms">@if(!empty($tour->booking_terms)) {{$tour->booking_terms}} @endif</textarea>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label class="">Cancellation Policy</label>
+                                        <textarea name="cancel_policy" class="form-control" rows="4" placeholder="Cancellation Policy">@if(!empty($tour->cancel_policy)) {{$tour->cancel_policy}} @endif</textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="form-check">

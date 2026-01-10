@@ -45,6 +45,9 @@ class TourController extends Controller
             $tour->inclusions = !empty($data['inclusions']) ? $data['inclusions'] : null;;
             $tour->exclusions = !empty($data['exclusions']) ? $data['exclusions'] : null;;
             $tour->note = !empty($data['note']) ? $data['note'] : null;
+            $tour->terms = $data['terms'] ?? null;
+            $tour->booking_terms = $data['booking_terms'] ?? null;
+            $tour->cancel_policy = $data['cancel_policy'] ?? null;
             $tour->is_popular = !empty($data['is_popular']) ? $data['is_popular'] : '0' ;
             $tour->custom_tour = !empty($data['custom_tour']) ? $data['custom_tour'] : '0' ;
             $tour->status = '0';
@@ -154,6 +157,9 @@ class TourController extends Controller
                 'inclusions' => $data['inclusions'],
                 'exclusions' => $data['exclusions'],
                 'note' => !empty($data['note']) ? $data['note'] : null,
+                'terms' => !empty($data['terms']) ? $data['terms'] : null,
+                'booking_terms' => !empty($data['booking_terms']) ? $data['booking_terms'] : null,
+                'cancel_policy' => !empty($data['cancel_policy']) ? $data['cancel_policy'] : null,
                 'is_popular' => !empty($data['is_popular']) ? $data['is_popular'] : '0',
                 'custom_tour' => !empty($data['custom_tour']) ? $data['custom_tour'] : '0',
             ]);
