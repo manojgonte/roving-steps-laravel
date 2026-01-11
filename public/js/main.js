@@ -45,6 +45,7 @@ function initComponents() {
 
   testimonialsSlider()
   testimonialsSlider2()
+  textSlider2()
   cardImageSlider()
   mastheadSlider4()
   mastheadSlider7()
@@ -1445,6 +1446,19 @@ function testimonialsSlider2() {
       bulletElement: 'div',
       clickable: true
     }
+  });
+}
+
+function textSlider2() {
+  new Swiper('.mySwiper', {
+    // direction: "vertical",
+    slidesPerView: 1,
+    mousewheel: true,
+    loop: true,
+    autoplay: {
+        delay: 2500,
+        disableOnInteraction: false, // Recommended for continuous autoplay
+    },
   });
 }
 

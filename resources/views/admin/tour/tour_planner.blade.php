@@ -75,7 +75,7 @@
                             <table id="example1" class="table table-bordered table-striped" style="overflow-x: auto;">
                                 <thead>
                                     <tr>
-                                        <th>Tour ID</th>
+                                        <th>Sr.</th>
                                         <th class="text-left">Tour Name</th>
                                         <th>Type</th>
                                         <th>Destination</th>
@@ -88,9 +88,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($tours as $row)
+                                @foreach($tours as $key => $row)
 	                                <tr>
-	                                    <td>{{ $row->id }}</td>
+	                                    <td>{{ $tours->firstItem() + $key}}</td>
 	                                    <td class="text-left"><a href="{{ url('/admin/edit-tour/'.$row->id) }}">{{ Str::limit($row->tour_name, 40) }}</a></td>
 	                                    <td>{{ $row->type }}</td>
                                         <td>{{ Str::limit($row->destination, 20) }}</td>

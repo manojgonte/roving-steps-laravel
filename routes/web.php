@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AssociateController;
 use App\Http\Controllers\IndexController;
@@ -11,6 +12,8 @@ use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\BillingController;
+use App\Http\Controllers\NewsController;
+
 use App\Http\Middleware\AdminAuthenticated;
 use App\Http\Middleware\Userlogin;
 
@@ -32,7 +35,9 @@ Route::post('/tour-enquiry', [IndexController::class, 'tourEnquiry']);
 Route::get('/gallery', [IndexController::class, 'gallery']);
 Route::get('/blogs', [IndexController::class, 'blogs']);
 Route::get('/blog/{id}/{slug?}', [IndexController::class, 'blogDetail']);
+Route::get('/like-blog/{id}', [BlogController::class, 'likeBlog']);
 Route::post('/save-enquiry', [IndexController::class, 'saveEnquiry'])->name('save.enquiry');
+Route::post('/subscribe', [IndexController::class, 'subscribe'])->name('save.subscribe');
 
 Route::get('/flight-booking', [IndexController::class, 'flightBooking']);
 Route::get('/flight-listing', [IndexController::class, 'flightListing']);
@@ -126,6 +131,10 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/add-blog/', [BlogController::class, 'addBlog']);
     Route::match(['get','post'], 'admin/edit-blog/{id}', [BlogController::class, 'editBlog']);
     Route::match(['get','post'], 'admin/delete-blog/{id}', [BlogController::class, 'deleteBlog']);
+
+    // newsletter
+    Route::match(['get','post'], 'admin/newsletter-subscribers', [NewsController::class, 'viewSubscribers']);
+    Route::match(['get','post'], 'admin/delete-subscriber/{id}', [NewsController::class, 'deleteSubscriber']);
     
     // Associated Users
     Route::match(['get','post'], 'admin/associated-users/', [AssociateController::class, 'viewAssociates']);

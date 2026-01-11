@@ -1,3 +1,36 @@
+<!-- newsletter -->
+<section class="layout-pt-md layout-pb-md bg-dark-2">
+    <div class="container">
+        <div class="row y-gap-30 justify-between items-center">
+            <div class="col-auto">
+                <div class="row y-gap-20  flex-wrap items-center">
+                    <div class="col-auto">
+                        <div class="icon-newsletter text-60 sm:text-40 text-white"></div>
+                    </div>
+                    <div class="col-auto">
+                        <h4 class="text-26 text-white fw-600">Your Travel Journey Starts Here</h4>
+                        <div class="text-white">Subscibe and we'll send the best deals to you</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <form id="subscribe" method="POST">
+                    <div class="single-field -w-410 d-flex x-gap-10 y-gap-20">
+                        <div>
+                            <input class="bg-white h-60" type="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div>
+                            <button class="button -md h-60 bg-white text-black" type="submit">Subscribe</button>
+                        </div>
+                    </div>
+                    <small class="text-white d-none">You are already subscibed to newsletter</small>
+                    <div id="sub-alert" class="text-white d-none" role="alert"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 <footer class="footer -type-3 text-white bg-dark-1">
     <div class="container">
         <div class="py-60 pb-60">

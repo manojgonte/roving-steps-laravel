@@ -3,13 +3,22 @@
 
 @section('styles')
 <style>
-    .bg-triangle {
-        background-image: url('img/elements/app_bg.jpeg');
-        background-size: cover;
+.mySwiper .swiper-slide{
+    text-align: center;
+    color: #fff;
+    font-size: 85px;
+    line-height: 85px;
+    font-weight: bold;
+    filter: drop-shadow(2px 2px 2px #383838);
+}
+@media only screen and (max-width: 480px){
+    .mySwiper .swiper-slide{
+        font-size: 45px;
+        line-height: 45px;
     }
+}
 </style>
 @endsection('styles')
-
 
 <section class="masthead -type-9 relative">
     <div class="ResponsiveYTPlayer">
@@ -17,17 +26,26 @@
     </div>
     <div class="masthead-slider js-masthead-slider-9_ hero-section-content">
         <div class="swiper-wrapper">
-            <div class="swiper-slide sm:pt-30">
+            <div class="swiper-slide sm:pt-30 mt-30">
                 <!-- <div class="masthead__bg bg-dark-3">
                     <img src="{{asset('img/banner/banner1.webp')}}" alt="image">
                 </div> -->
                 <div class="container">
                     <div class="row justify-center">
+                        <h2 class="text-white text-center">NEW</h2>
                         <div class="col-auto">
-                            <div class="text-center">
+                            <div class="swiper mySwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide py-0">Experiences</div>
+                                    <div class="swiper-slide py-0">Adventures</div>
+                                    <div class="swiper-slide py-0">Escapes</div>
+                                    <div class="swiper-slide py-0">Thrills</div>
+                                </div>
+                            </div>
+                            <!-- <div class="text-center">
                                 <p class="text-white mt-6 md:mt-10">NEW</p>
                                 <h1 class="text-60 lg:text-40 md:text-30 text-white">Experiences Thrills Adventures Escapes</h1>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="d-flex justify-content-center mt-30 sm:mt-5">
                             <div class="mainSearch -w-900 bg-white px-10 py-10 sm:py-0 lg:px-20 lg:pt-5 lg:pb-20 rounded-100" style="background-color: #ffffffbf !important; backdrop-filter: blur(3px);">
@@ -61,7 +79,7 @@
         <div class="row y-gap-30">
             <div class="col-lg-3 col-md-6">
                 <div class="d-flex">
-                    <img class="size-50" src="img/featureIcons/1/1.svg" alt="image">
+                    <div class="icon-beach-umbrella text-40"></div>
                     <div class="ml-15">
                         <h4 class="text-14 fw-500">1000+ VACATIONS</h4>
                         <h4 class="text-13 fw-500">IDEAS IN OVER 60+ COUNTRIES</h4>
@@ -70,7 +88,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="d-flex">
-                    <img class="size-50" src="img/featureIcons/1/2.svg" alt="image">
+                    <div class="icon-price-label text-40"></div>
                     <div class="ml-15">
                         <h4 class="text-14 fw-500">BEST PRICE</h4>
                         <h4 class="text-13">GUARANTEED</h4>
@@ -79,7 +97,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="d-flex">
-                    <img class="size-50" src="img/featureIcons/1/3.svg" alt="image">
+                    <div class="icon-ticket text-40"></div>
                     <div class="ml-15">
                         <h4 class="text-14 fw-500">HOLIDAYS AVAILABLE</h4>
                         <h4 class="text-13">ON EASY EMI'S</h4>
@@ -88,7 +106,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="d-flex">
-                    <img class="size-50" src="img/featureIcons/1/3.svg" alt="image">
+                    <div class="icon-award text-40"></div>
                     <div class="ml-15">
                         <h4 class="text-14 fw-500">RATED 4.7 <i class="fa fa-star"></i> ON</h4>
                         <h4 class="text-13">GOOGLE BY ACTUAL TRAVELLERS</h4>
@@ -99,7 +117,7 @@
     </div>
 </section>
 
-
+<!-- popular destinations -->
 <section class="layout-pt-md layout-pb-md d-none">
     <div class="container">
         <div data-anim="slide-up delay-1" class="row y-gap-20 justify-between items-end">
@@ -154,6 +172,7 @@
     </div>
 </section>
 
+<!-- type-wise tours listing -->
 @php 
     $types = [
         [
@@ -264,6 +283,7 @@
 </section>
 @endforeach
 
+<!-- popular tours -->
 <section class="layout-pt-md layout-pb-md">
     <div data-anim="slide-up delay-1" class="container">
         <div class="row y-gap-10 justify-between items-end">
@@ -348,6 +368,7 @@
     </div>
 </section>
 
+<!-- about -->
 <section class="layout-pt-md layout-pb-md">
     <div data-anim-wrap class="container">
         <div data-anim-child="slide-up delay-1" class="row y-gap-30">
@@ -369,7 +390,7 @@
     </div>
 </section>
 
-<!-- about -->
+<!-- testimonials -->
 <section class="layout-pt-lg layout-pb-lg bg-blue-2">
     <div data-anim-wrap class="container">
         <div class="row y-gap-40 justify-between">
@@ -421,10 +442,16 @@
 <!-- blogs -->
 <section class="layout-pt-md layout-pb-md">
     <div data-anim-wrap class="container">
-        <div data-anim-child="slide-up delay-1" class="row justify-center text-center">
+        <div class="row y-gap-10 justify-between items-end">
             <div class="col-auto">
                 <div class="sectionTitle -md">
-                    <h2 class="sectionTitle__title">Get inspiration for your next trip</h2>
+                    <h2 class="sectionTitle__title">Latest Travel Trends</h2>
+                </div>
+            </div>
+            <div class="col-sm-auto">
+                <div class="d-inline-block">
+                    <a href="{{url('blogs/')}}" class="button -md -blue-1 bg-blue-1-05 text-blue-1"> View All <div class="icon-arrow-top-right ml-15"></div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -448,38 +475,7 @@
     </div>
 </section>
 
-<!-- newsletter -->
-<section class="layout-pt-md layout-pb-md bg-dark-2">
-    <div class="container">
-        <div class="row y-gap-30 justify-between items-center">
-            <div class="col-auto">
-                <div class="row y-gap-20  flex-wrap items-center">
-                    <div class="col-auto">
-                        <div class="icon-newsletter text-60 sm:text-40 text-white"></div>
-                    </div>
-                    <div class="col-auto">
-                        <h4 class="text-26 text-white fw-600">Your Travel Journey Starts Here</h4>
-                        <div class="text-white">Sign up and we'll send the best deals to you</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-auto">
-                <div class="single-field -w-410 d-flex x-gap-10 y-gap-20">
-                    <div>
-                        <input class="bg-white h-60" type="text" placeholder="Your Email">
-                    </div>
-                    <div>
-                        <button class="button -md h-60 bg-white text-black">Subscribe</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
 @section('scripts')
-
 @endsection('scripts')
 
 @endsection('content')

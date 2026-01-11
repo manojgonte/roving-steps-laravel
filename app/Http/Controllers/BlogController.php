@@ -4,17 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\BlogLike;
 use Session;
 use Auth;
-use Hash;
-use Excel;
 use Image;
 
 class BlogController extends Controller
 {
     
     public function viewBlogs(Request $request){
-        $blogs = Blog::orderBy('id','DESC');
+        $blogs = Blog::with('likes')->orderBy('id','DESC');
         if($request->q){
             $q = $request->q;
             $blogs = $blogs->where(function($query) use($q){
@@ -92,5 +91,20 @@ class BlogController extends Controller
     public function deleteBlog(Request $request, $id){
         Blog::where('id',$id)->delete();
         return redirect()->back()->with('flash_message_success','Blog deleted successfully');
+    }
+
+    public function likeBlog(Request $request, $id) {
+        $liked = BlogLike::where(['blog_id'=>$id,'user_ip'=>$request->ip()])->first();
+        if($liked){
+            BlogLike::where(['blog_id'=>$id,'user_ip'=>$request->ip()])->delete();
+            return redirect()->back();
+        }
+        else{
+            $bloglike = new BlogLike;
+            $bloglike->blog_id = $id;
+            $bloglike->user_ip = $request->ip();
+            $bloglike->save();
+            return redirect()->back();
+        }
     }
 }

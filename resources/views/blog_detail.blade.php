@@ -17,8 +17,20 @@
             <div class="row y-gap-40 justify-center text-center">
                 <div class="col-12 col-md-12 col-xl-10">
                     <div class="text-15 fw-500 text-blue-1 mb-8">IGGLOO</div>
-                        <h1 class="text-30 fw-600">{{ $blog->title }}</h1>
-                    <div class="text-15 text-light-1 mt-10">{{ date('M d, Y', strtotime($blog->created_at)) }}</div>
+                    <h1 class="text-30 fw-600">{{ $blog->title }}</h1>
+                    <div class="d-flex justify-center mt-1">
+                        <div class="text-15 text-light-1">Uploaded On: <span class="text-dark-1">{{ date('M d, Y', strtotime($blog->created_at)) }}</span></div>
+                        <div class="size-3 bg-light-1 rounded-full mx-3 mt-2"></div>
+                        <span class="fw-bold">
+                            <a class="btn" href="{{url('like-blog/'.$blog->id)}}">
+                                @if($liked = App\Models\BlogLike::where(['blog_id'=>$blog->id,'user_ip'=>Request()->ip()])->first())
+                                <h6 class="border-blue-1 px-2 rounded-4"><img class="mb-1 text-16" src="{{asset('img/icons/heart-red.svg')}}" width="16" /> <span>Liked @if(count($blog->likes)>0) ({{count($blog->likes)}})@endif</span></h6>
+                                @else
+                                <h6 class="border-blue-1 px-2 rounded-4"><img class="mb-1 text-16" src="{{asset('img/icons/heart.svg')}}"  width="16" /> <span>Like @if(count($blog->likes)>0) ({{count($blog->likes)}})@endif</span></h6>
+                                @endif
+                            </a>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="col-12 col-md-12 col-xl-10">

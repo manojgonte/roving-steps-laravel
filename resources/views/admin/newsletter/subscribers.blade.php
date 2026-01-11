@@ -6,11 +6,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4>Blogs <span class="badge badge-dark">{{$blogs->total()}}</span></h4>
+                    <h4>Newsletter Subscribers <span class="badge badge-dark">{{$emails->total()}}</span></h4>
                 </div>
                 <div class="col-sm-6 text-right">
                     <div class="d-flex justify-content-end">
-                        <a href="{{ url('/admin/add-blog') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> New Blog</a>
+                        <!-- <a href="{{ url('/admin/add-blog') }}" class="btn btn-dark"><i class="fa fa-plus-circle"></i> New Blog</a> -->
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                                         <button type="submit" class="btn btn-default btn-sm"> Submit</button>
                                     </div>
                                     <div class="col-auto">
-                                        <a href="{{url('admin/blogs/')}}" class="btn btn-default btn-sm"> Clear</a>
+                                        <a href="{{url('admin/newsletter-subscribers')}}" class="btn btn-default btn-sm"> Clear</a>
                                     </div>
                                 </div>
                             </form>
@@ -65,27 +65,21 @@
                                 <thead>
                                     <tr>
                                         <th>Sr.</th>
-                                        <th class="text-center">Thumbnail</th>
-                                        <th class="text-left">Title</th>
-                                        <th class="text-left">Likes</th>
-                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Email</th>
                                         <th class="text-center">Created At</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @if(count($blogs) > 0)
-                                @foreach($blogs as $key => $row)
+                                @if(count($emails) > 0)
+                                @foreach($emails as $key => $row)
 	                                <tr>
-                                        <td>{{ $blogs->firstItem() + $key }}</td>
-                                        <td><img src="{{ asset('img/blogs/'.$row->thumbnail) }}" width="60"></td>
-                                        <td class="text-left">{{ $row->title }}</td>
-                                        <td class="text-center">{{count($row->likes)}}</td>
-                                        <td>{{ $row->status==1 ? 'Published' : 'Unpublished' }}</td>
+                                        <td>{{ $emails->firstItem() + $key }}</td>
+                                        <td class="text-center">{{ $row->email }}</td>
                                         <td>{{ date('d M Y', strtotime($row->created_at)) }}</td>
                                         <td class="align-middle">
-                                            <a class="btn btn-outline-dark btn-sm" href="{{ url('/admin/edit-blog/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a>
-                                            <a class="btn btn-outline-dark btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-blog/'.$row->id) }}"><i class="fa fa-trash"></i></a>
+                                            <!-- <a class="btn btn-outline-dark btn-sm" href="{{ url('/admin/edit-blog/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a> -->
+                                            <a class="btn btn-outline-dark btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-subscriber/'.$row->id) }}"><i class="fa fa-trash"></i></a>
                                         </td>
 	                                </tr>
                                 @endforeach
@@ -95,7 +89,7 @@
                                 </tbody>
                             </table>
                             <div class="mt-2 d-flex justify-content-center">
-                                {{ $blogs->links("pagination::bootstrap-4") }}
+                                {{ $emails->links("pagination::bootstrap-4") }}
                             </div>
                         </div>
                     </div>

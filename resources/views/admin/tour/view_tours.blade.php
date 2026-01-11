@@ -90,9 +90,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($tours as $row)
+                                @foreach($tours as $key => $row)
 	                                <tr>
-	                                    <td>{{ $row->id }}</td>
+	                                    <td>{{ $tours->firstItem() + $key }}</td>
 	                                    <td class="text-left">@if(filter_var($row->customer_name, FILTER_VALIDATE_INT) == false) {{ $row->customer_name }} @else {{getUser($row->customer_name)->name}} @endif</td>
                                         <!-- <td class="text-left">{{ !empty($row->customer_name) ? Str::limit($row->customer_name, 40) : 'NA' }}</td> -->
                                         <td class="text-left">@if($row->tour)<a href="{{url('admin/edit-tour/'.$row->tour_id)}}">{{ Str::limit($row->tour->tour_name, 40) }}</a> @else Tour not found @endif</td>

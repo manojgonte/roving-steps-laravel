@@ -251,9 +251,6 @@
                 alertBox.className = 'alert d-none';
                 alertBox.innerHTML = '';
 
-                // Remove old errors
-                document.querySelectorAll('.error-text').forEach(el => el.remove());
-
                 const formData = new FormData(form);
 
                 fetch("{{ route('save.enquiry') }}", {
@@ -300,6 +297,73 @@
 
             function showAlert(type, message) {
                 alertBox.className = 'alert alert-' + type;
+                alertBox.innerHTML = message;
+                alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const form = document.getElementById('subscribe');
+            const alertBox = document.getElementById('sub-alert');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                alertBox.className = 'alert d-none';
+                alertBox.innerHTML = '';
+
+                const formData = new FormData(form);
+
+                fetch("{{ route('save.subscribe') }}", {
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw err; });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status) {
+                        showAlert('success', data.message);
+                        form.reset();
+                    }else{
+                        showAlert('danger', 'Something went wrong. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    if (error.errors) {
+                        Object.keys(error.errors).forEach(function (key) {
+                            const field = form.querySelector('[name="' + key + '"]');
+                            if (field) {
+                                showError(field, error.errors[key][0]);
+                            }
+                        });
+                    } else {
+                        showAlert('Something went wrong. Please try again.');
+                    }
+                });
+            });
+
+            function showError(element, message) {
+                alertBox.className = 'alert text-white alert-' + message;
+                alertBox.innerHTML = message;
+                // element.insertAdjacentHTML(
+                //     'afterend',
+                //     '<small class="error-text text-white">' + message + '</small>'
+                // );
+            }
+
+            function showAlert(type, message) {
+                alertBox.className = 'alert text-white alert-' + type;
                 alertBox.innerHTML = message;
                 alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }

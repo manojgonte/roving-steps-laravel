@@ -95,6 +95,30 @@
                     </a>
                 </li>
                 @endif
+
+                @if($role == 'Admin' || $role == 'Office User')
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white @if(preg_match('#/admin/tour-enquiries#', $url) || preg_match('#/admin/sent-estimations#', $url)) active @endif">
+                        <i class="nav-icon fas fa-comment-dots"></i>
+                        <p>Newsletter <i class="right fas fa-angle-right"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-white">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Newsletter</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('admin/newsletter-subscribers')}}" class="nav-link text-white">
+                              <i class="far fa-circle nav-icon"></i>
+                              <p>Subscribers</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+
                 @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/gallery')}}" class="nav-link text-white @if(preg_match('#/admin/gallery#', $url)) active @endif">

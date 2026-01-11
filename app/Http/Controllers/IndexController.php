@@ -12,6 +12,7 @@ use App\Models\Enquiry;
 use App\Models\Gallery;
 use App\Models\Blog;
 use App\Models\Tour;
+use App\Models\NewsletterEmail;
 use Validator;
 use Mail;
 use Log;
@@ -231,6 +232,30 @@ class IndexController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Enquiry submitted successfully!'
+        ]);
+    }
+
+    public function subscribe(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'email'        => 'required|email|unique:newsletters_emails,email',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        NewsletterEmail::create([
+            'email'         => $request->email,
+            'status'        => 1,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Subscibed successfully!'
         ]);
     }
 

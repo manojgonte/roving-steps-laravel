@@ -19,8 +19,23 @@
     <section class="layout-pt-md layout-pb-md">
         <div class="container">
         	<div class="row">
-	          	<div class="col-12">
-		            <div class="text-20 fw-500 mb-30">Refund Policy</div>
+	          	<div class="col-md-3 col-xl-3 col-xl-3 col-12">
+	              <div class="px-30 py-30 rounded-4 border-light">
+	                <div class="tabs__controls row y-gap-10 js-tabs-controls">
+	                  	<div class="col-12">
+	                    	<a href="{{ url('terms-of-use') }}" class="tabs__button js-tabs-button">Terms of Use</a>
+	                  	</div>
+	                  	<div class="col-12">
+	                   		<a href="{{ url('refund-policy') }}" class="tabs__button js-tabs-button fw-600">Refund Policy</a>
+	                  	</div>
+	                  	<div class="col-12">
+	                    	<a href="{{ url('privacy-policy') }}" class="tabs__button js-tabs-button">Privacy Policy</a>
+	                  	</div>
+	                </div>
+	              </div>
+	            </div>
+	          	<div class="col-md-9 col-xl-9 col-xl-9 col-12">
+		            <div class="text-20 fw-500 mb-10">Refund Policy</div> <hr>
 		            <p>At <b>Roving Steps Pvt. Ltd.</b>, we aim to provide a seamless travel booking experience. However, we understand that plans can change, and refunds may be necessary. This Refund Policy outlines the terms and conditions for refunds on bookings made through our platform.</p>
 		            <ul class="y-gap-15 py-20">
 		              	<li>1. General Refund Policy 

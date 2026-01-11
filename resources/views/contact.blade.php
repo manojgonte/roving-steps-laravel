@@ -2,12 +2,7 @@
 @section('content')
 
 @section('styles')
-<style>
-    .bg-triangle {
-        background-image: url('img/elements/app_bg.jpeg');
-        background-size: cover;
-    }
-</style>
+
 @endsection('styles')
 
 <section class="section-bg layout-pt-lg layout-pb-lg">
@@ -25,7 +20,7 @@
 </section>
 
 <section class="layout-pt-md layout-pb-lg">
-        <div class="container">
+    <div class="container">
         @if(Session::has('success_message'))
         <div class="p-2 mb-2 bg-info-2 rounded-4">
             <span class="text-white">{!! session('success_message') !!}</span>
