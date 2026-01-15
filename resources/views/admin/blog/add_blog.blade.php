@@ -46,7 +46,7 @@
                                         <input type="text" name="author" id="author" class="form-control" placeholder="Author Name" required>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="required">Blog Thumbnail</label>
+                                        <label class="required">Blog Thumbnail (Dimension: 1000x650px)</label>
                                         <div class="form-group mb-0">
                                             <input type="file" name="thumbnail" class="form-control p-1" required>
                                         </div>

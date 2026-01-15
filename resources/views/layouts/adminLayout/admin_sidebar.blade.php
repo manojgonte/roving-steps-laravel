@@ -98,7 +98,7 @@
 
                 @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white @if(preg_match('#/admin/tour-enquiries#', $url) || preg_match('#/admin/sent-estimations#', $url)) active @endif">
+                    <a href="#" class="nav-link text-white @if(preg_match('#/admin/newsletter-subscribers#', $url) || preg_match('#/admin/sent-estimations#', $url)) active @endif">
                         <i class="nav-icon fas fa-comment-dots"></i>
                         <p>Newsletter <i class="right fas fa-angle-right"></i></p>
                     </a>

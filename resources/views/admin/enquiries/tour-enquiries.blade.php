@@ -91,8 +91,8 @@
 	                                    <td>{{ $tour_enquiry->firstItem() + $key }}</td>
                                         <td class="text-left">
                                             <i class="fa fa-user"></i> @if(filter_var($row->name, FILTER_VALIDATE_INT) == false) {{ $row->name }} @else {{$row->user->name}} @endif <br> 
-                                            <i class="fa fa-envelope"></i> {{ $row->user->email ?? 'NA' }} <br> 
-                                            <i class="fa fa-phone"></i> {{ $row->user->contact ?? 'NA' }}<br> 
+                                            <i class="fa fa-envelope"></i> {{ !empty($row->email) ? $row->email : $row->user?->email }} <br> 
+                                            <i class="fa fa-phone"></i> {{ !empty($row->contact) ? $row->contact : $row->user?->contact }}<br> 
                                             <i class="fa fa-city"></i> {{ $row->current_city ? $row->current_city : 'NA' }}
                                         </td>
                                         <td>

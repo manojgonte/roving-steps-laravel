@@ -74,7 +74,7 @@
     </div>
 </section>
 
-<section class="layout-pt-sm layout-pb-sm bg-light-2">
+<section class="layout-pt-sm layout-pb-sm bg-dark-2 text-warning-1">
     <div class="container">
         <div class="row y-gap-30">
             <div class="col-lg-3 col-md-6">
@@ -196,13 +196,13 @@
 @foreach($types as $tourType)
 @php 
     $tours = App\Models\Tour::select('id','tour_name','image','type','description','amenities','adult_price','days','nights','dest_id','rating')
-            ->orderBy('id','DESC')
-            ->where('special_tour_type', 'LIKE', '%"'.$tourType['type_id'].'"%')
-            ->where(['status'=>1,'is_popular'=>1,'custom_tour'=>0])
-            ->take(10)
-            ->get();
+        ->orderBy('id','DESC')
+        ->where('special_tour_type', 'LIKE', '%"'.$tourType['type_id'].'"%')
+        ->where(['status'=>1,'custom_tour'=>0])
+        ->take(10)
+        ->get();
 @endphp
-
+@if(count($tours)>0)
 <section class="layout-pt-sm layout-pb-sm">
     <div data-anim="slide-up delay-1" class="container">
         <div class="row y-gap-10 justify-between items-end">
@@ -211,12 +211,12 @@
                     <h2 class="sectionTitle__title">{{ $tourType['title'] }}</h2>
                 </div>
             </div>
-            <div class="col-sm-auto">
+            {{-- <div class="col-sm-auto">
                 <div class="d-inline-block">
                     <a href="{{url('tours/')}}" class="button -md -blue-1 bg-blue-1-05 text-blue-1"> View All <div class="icon-arrow-top-right ml-15"></div>
                     </a>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-5 lg-4 md-3 sm-2 base-1" data-nav-prev="js-hotels-prev" data-pagination="js-hotels-pag" data-nav-next="js-hotels-next">
             <div class="swiper-wrapper">
@@ -281,7 +281,68 @@
         </div>
     </div>
 </section>
+@endif
 @endforeach
+
+@php 
+    $tourCats = [
+        [
+            'type_id'=>16,
+            'title'=>'Wild Life',
+            'img'=>'wildlife.webp'
+        ],[
+            'type_id'=>4,
+            'title'=>'Honeymoon',
+            'img'=>'honeymoon.png'
+        ],[
+            'type_id'=>8,
+            'title'=>'Family',
+            'img'=>'family.webp'
+        ],[
+            'type_id'=>17,
+            'title'=>'Beach',
+            'img'=>'beach.png'
+        ],[
+            'type_id'=>1,
+            'title'=>'Adventures',
+            'img'=>'adventures.webp'
+        ],
+    ]; 
+@endphp
+<section class="layout-pt-lg layout-pb-md">
+    <div class="container">
+        <div data-anim="slide-up delay-1" class="row y-gap-20 justify-between items-end">
+            <div class="col-auto">
+                <div class="sectionTitle -md">
+                    <h2 class="sectionTitle__title">Tailored Theme Escapes</h2>
+                </div>
+            </div>
+        </div>
+        <div class="relative pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="base-2 xl-4 lg-3 md-2 sm-2 base-1" data-anim="slide-up delay-2">
+            <div class="swiper-wrapper">
+                @foreach($tourCats as $cat)
+                @php $image = $cat['img'] @endphp
+                <div class="swiper-slide">
+                    <a href="{{ url('tours?special_tour_type='.$cat['type_id']) }}" class="citiesCard -type-1 d-block rounded-4 ">
+                        <div class="citiesCard__image ratio ratio-3:4">
+                            <img src="#" data-src="{{ asset('img/home/'.$image) }}" alt="image" class="js-lazy">
+                        </div>
+                        <div class="citiesCard__content d-flex flex-column justify-between text-center pt-30 pb-20 px-20">
+                            <div class="citiesCard__bg"></div>
+                            <div class="citiesCard__top">
+                            </div>
+                            <div class="citiesCard__bottom">
+                                <h4 class="text-26 md:text-20 lh-13 text-white mb-20">{{ $cat['title'] }}</h4>
+                                <button class="button col-12 h-60 -blue-1 bg-white text-dark-1">Discover</button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- popular tours -->
 <section class="layout-pt-md layout-pb-md">

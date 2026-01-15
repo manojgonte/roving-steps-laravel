@@ -80,7 +80,7 @@
                                         <th>Type</th>
                                         <th>Destination</th>
                                         <th>Duration</th>
-                                        <th>Status</th>
+                                        <th>Published</th>
                                         {{-- <th>Likes</th> --}}
                                         {{-- <th>Booked</th> --}}
                                         <th>Updated On</th>

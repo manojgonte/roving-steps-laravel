@@ -190,7 +190,7 @@
                     <div class="row y-gap-30 mt-20">
                         
                         @foreach($tour->itinerary->sortBy([['day','asc'],['created_at','asc']]) as $day)
-                        <div class="border-bottom-light rounded-4 py-20 sm:px-20 sm:py-20 border-blue-1 bg-blue-2 my-2">
+                        <div class="border-bottom-light rounded-4 py-20 sm:px-20 sm:py-20 my-2" style="box-shadow: 0px 0px 7px 2px #05103657;">
                             <div class="row y-gap-10">
                                 <h3 class="text-18 fw-600">Day {{$day->day}}: {{$day->visit_place}}</h3>
                                 <div class="col-xl-3">

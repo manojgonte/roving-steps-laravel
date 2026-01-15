@@ -43,7 +43,7 @@
                                         <input type="text" name="author" id="author" class="form-control" placeholder="Author Name" value="{{ $blog->author ?? null }}" required>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="required">Blog Thumbnail</label>
+                                        <label class="required">Blog Thumbnail (Dimension: 1000x650px)</label>
                                         @if(!empty($blog->thumbnail))
                                         <input type="hidden" name="current_thumbnail" value="{{ $blog->thumbnail }}">
                                         @endif
