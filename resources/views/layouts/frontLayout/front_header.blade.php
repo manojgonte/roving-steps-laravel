@@ -57,7 +57,7 @@
                                             <span class="mr-10">Domestic Packages</span>
                                             <i class="icon icon-chevron-sm-down"></i>
                                         </a>
-                                        <ul class="subnav">
+                                        <ul class="subnav h-400 overflow-scroll">
                                             <li class="subnav__backBtn js-nav-list-back">
                                                 <a href="javascript:void"><i class="icon icon-chevron-sm-down"></i> Domestic Packages</a>
                                             </li>
@@ -73,7 +73,7 @@
                                             <span class="mr-10">International Packages</span>
                                             <i class="icon icon-chevron-sm-down"></i>
                                         </a>
-                                        <ul class="subnav">
+                                        <ul class="subnav h-400 overflow-scroll">
                                             <li class="subnav__backBtn js-nav-list-back">
                                                 <a href="javascript:void"><i class="icon icon-chevron-sm-down"></i> International Packages</a>
                                             </li>

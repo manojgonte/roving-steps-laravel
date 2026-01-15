@@ -19,6 +19,7 @@
     <section data-anim-wrap class="layout-pt-md layout-pb-lg">
         <div class="container">
             <div class="row y-gap-30 pt-20">
+                @if(count($blogs) > 0)
                 @foreach($blogs as $blog)
                 <div data-anim-child="slide-left delay-1" class="col-lg-4 col-sm-6">
                     <a href="{{ url('/blog/'.$blog->id.'/'.Str::slug($blog->title)) }}" class="blogCard -type-1 d-block">
@@ -34,6 +35,9 @@
                     </a>
                 </div>
                 @endforeach
+                @else
+                <div>No blogs available.</div>
+                @endif
             </div>
             <div class="mt-2 d-flex justify-content-center">
                 {{ $blogs->links("pagination::bootstrap-4") }}
