@@ -28,7 +28,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{url('/admin/dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Tour Section</li>
+                        <li class="breadcrumb-item active"><a href="{{url('/admin/tour-planner/1')}}">tours</a></li>
                     </ol>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-            	                      	<label class="required">Cover Image <small>(Size: 600X500px)</small></label>
+            	                      	<label class="required">Cover Image <small>(Dimensions: 1200 X 800px)</small></label>
                                         @if(!empty($tour->image))
                                         <input type="hidden" name="current_image" value="{{ $tour->image }}">
                                         @endif

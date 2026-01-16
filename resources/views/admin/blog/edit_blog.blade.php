@@ -54,12 +54,12 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="required">Blog Content</label>
-                                        <textarea name="blog_content" id="blog_content" class="form-control" rows="5">{{ $blog->blog_content }}</textarea>
+                                        <textarea name="blog_content" id="blog_content" class="form-control summernote" rows="5">{{ $blog->blog_content }}</textarea>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="">Status</label>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="status" name="status" @if($blog->status == 1) checked @endif value="1">
+                                            <input type="checkbox" class="form-check-input" id="status" name="status" value="1" @if($blog->status == 1) checked @endif>
                                             <label class="form-check-label" for="status">Publish</label>
                                         </div>
                                     </div>
@@ -78,13 +78,29 @@
 </div>
 
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('backend_js/summernote-bs4.min.js') }}"></script>
 @section('scripts')
+
+@endsection('scripts')
 <script>
     $(function () {
-        $('.select2').select2()
-    });
+        $('.summernote').summernote({
+            lineHeights: ['0.5', '1.0'],
+            fontNames: ['Jost'],
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                // ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                // ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview', 'help']],
+            ],
+        });
+    })
 </script>
-@endsection('scripts')
 <script>
     $(document).ready(function() {
         $('#addUser').validate({

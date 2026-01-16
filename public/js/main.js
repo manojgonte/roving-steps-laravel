@@ -1453,7 +1453,7 @@ function textSlider2() {
   new Swiper('.mySwiper', {
     // direction: "vertical",
     slidesPerView: 1,
-    mousewheel: true,
+    mousewheel: false,
     loop: true,
     autoplay: {
         delay: 2500,

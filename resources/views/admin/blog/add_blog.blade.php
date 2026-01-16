@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <div class="card card-default">
-                        <form method="POST" action="{{ url('admin/add-blog') }}" enctype="multipart/form-data" id="addUser">@csrf
+                        <form method="POST" action="{{ url('admin/add-blog') }}" enctype="multipart/form-data" id="add">@csrf
                             <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-12">
@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="required">Blog Content</label>
-                                        <textarea name="blog_content" id="address" class="form-control" rows="5" required></textarea>
+                                        <textarea name="blog_content" id="address" class="form-control summernote" rows="5" required></textarea>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="">Status</label>
@@ -78,17 +78,31 @@
 </div>
 
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('backend_js/summernote-bs4.min.js') }}"></script>
 @section('scripts')
-{{-- <script src="{{asset('backend_plugins/select2/js/select2.full.min.js')}}"></script> --}}
-<script>
-    $(function () {
-        $('.select2').select2()
-    });
-</script>
 @endsection('scripts')
 <script>
+    $(function () {
+        $('.summernote').summernote({
+            lineHeights: ['0.5', '1.0'],
+            fontNames: ['Jost'],
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                // ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                // ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview', 'help']],
+            ],
+        });
+    })
+</script>
+<script>
     $(document).ready(function() {
-        $('#addUser').validate({
+        $('#add').validate({
             ignore: [],
             debug: false,
             rules: {

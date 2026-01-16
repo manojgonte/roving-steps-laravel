@@ -13,7 +13,7 @@
 }
 @media only screen and (max-width: 480px){
     .mySwiper .swiper-slide{
-        font-size: 45px;
+        font-size: 35px;
         line-height: 45px;
     }
 }
@@ -108,7 +108,7 @@
                 <div class="d-flex">
                     <div class="icon-award text-40"></div>
                     <div class="ml-15">
-                        <h4 class="text-14 fw-500">RATED 4.7 <i class="fa fa-star"></i> ON</h4>
+                        <h4 class="text-14 fw-500">RATED 4.9 <i class="fa fa-star"></i> ON</h4>
                         <h4 class="text-13">GOOGLE BY ACTUAL TRAVELLERS</h4>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                         <div class="citiesCard__content d-flex flex-column justify-between text-center pt-30 pb-20 px-20">
                             <div class="citiesCard__bg"></div>
                             <div class="citiesCard__top">
-                                {{-- <div class="text-14 text-white">14 Hotel - 22 Cars - 18 Tours - 95 Activity</div> --}}
+                                {{-- <div class="text-14 text-white"></div> --}}
                             </div>
                             <div class="citiesCard__bottom">
                                 <h4 class="text-26 md:text-20 lh-13 text-white mb-20">{{$row->name}}</h4>
@@ -459,7 +459,7 @@
                 <h2 class="text-30">What Travelers are Saying <br> About Us? </h2>
                 <div class="row y-gap-30 pt-60 lg:pt-40">
                     <div class="col-sm-5 col-6">
-                        <div class="text-30 lh-15 fw-600">4.7</div>
+                        <div class="text-30 lh-15 fw-600">4.9</div>
                         <div class="text-light-1 lh-15">Our Google Ratings</div>
                         <div class="d-flex x-gap-5 items-center pt-10">
                             <div class="icon-star text-blue-1 text-10"></div>
@@ -501,6 +501,7 @@
 </section>
 
 <!-- blogs -->
+@if(count($blogs)>0)
 <section class="layout-pt-md layout-pb-md">
     <div data-anim-wrap class="container">
         <div class="row y-gap-10 justify-between items-end">
@@ -535,6 +536,7 @@
         </div>
     </div>
 </section>
+@endif
 
 @section('scripts')
 @endsection('scripts')

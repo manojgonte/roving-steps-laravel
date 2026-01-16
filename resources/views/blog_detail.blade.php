@@ -3,7 +3,7 @@
 
 @section('styles')
 <style>
-    p span, p {
+    p span, p, p font {
         font-family: "Jost", sans-serif !important;
         font-size: 16px;
     }

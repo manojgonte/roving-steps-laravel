@@ -75,7 +75,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-            	                      	<label class="required">Cover Image <small>(Size: 600 X 500px)</small></label>
+            	                      	<label class="required">Cover Image <small>(Dimensions: 1200 X 800px)</small></label>
             	                      	{{-- <input type="file" name="image" class="form-control p-1" accept="image/*" required> --}}
                                         <div class="input-group mb-1">
                                             <div class="input-group-prepend">

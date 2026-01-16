@@ -179,55 +179,6 @@
                 </div>
 
                 <div class="col-xl-9 col-lg-8">
-                    @if(!Request()->all())
-                    <div class="row y-gap-10 items-center justify-between">
-                        <div class="col-auto">
-                            <div class="text-20"><span class="fw-500">Popular Destinations </span> </div>
-                        </div>
-                    </div>
-
-                    <div class="border-top-light mt-10 mb-20"></div>
-
-                    <div class="relative overflow-hidden pt-10 sm:pt-20 js-section-slider" data-gap="20" data-scrollbar data-slider-cols="xl-5 lg-4 md-3 sm-2 base-1" data-nav-prev="js-hotels-prev" data-pagination="js-hotels-pag" data-nav-next="js-hotels-next">
-                        <div class="swiper-wrapper">
-                            @foreach ($destinations->filter(function($destination) {
-                                    return $destination->is_popular == '1';
-                                }) as $row)
-                            <div class="swiper-slide">
-                                <a href="{{url('tours/?dest_id='.$row->id)}}" class="citiesCard -type-1 d-block rounded-4 ">
-                                    <div class="citiesCard__image ratio ratio-3:4">
-                                        <img src="#" data-src="{{asset('img/destinations/'.$row->image)}}" alt="{{$row->name}}" class="js-lazy">
-                                    </div>
-                                    <div class="citiesCard__content d-flex flex-column justify-between text-center pt-30 pb-20 px-20">
-                                        <div class="citiesCard__bg"></div>
-                                        <div class="citiesCard__top">
-                                        </div>
-                                        <div class="citiesCard__bottom">
-                                            <h4 class="text-18 md:text-16 lh-13 text-white mb-20">{{$row->name}}</h4>
-                                            <button class="button col-12 h-50 -blue-1 bg-white text-dark-1">Discover</button>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            @endforeach
-                        </div>
-                        <div class="d-flex x-gap-15 items-center justify-center sm:justify-start pt-10 sm:pt-20">
-                            <div class="col-auto">
-                                <button class="d-flex items-center text-24 arrow-left-hover js-hotels-prev">
-                                    <i class="icon icon-arrow-left"></i>
-                                </button>
-                            </div>
-                            <div class="col-auto">
-                                <div class="pagination -dots text-border js-hotels-pag"></div>
-                            </div>
-                            <div class="col-auto">
-                                <button class="d-flex items-center text-24 arrow-right-hover js-hotels-next">
-                                    <i class="icon icon-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
 
                     <div class="row y-gap-10 items-center justify-between">
                         <div class="col-auto">

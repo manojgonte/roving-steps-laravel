@@ -104,7 +104,7 @@
                         <a href="{{url('/sign-up')}}" class="button px-30 fw-400 text-14 text-white bg-dark-1 h-50">SIGN UP</a>
                         @endauth
                     </div>
-                    <div class="d-none xl:d-flex x-gap-20 items-center pl-30 text-white" data-x="header-mobile-icons" data-x-toggle="text-white">
+                    <div class="d-none xl:d-flex x-gap-20 items-center pl-30" data-x="header-mobile-icons" data-x-toggle="text-white">
                         <div>
                             <a href="{{url('sign-in')}}" class="d-flex items-center icon-user text-inherit text-22"></a>
                         </div>
