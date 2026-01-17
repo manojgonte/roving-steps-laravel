@@ -124,11 +124,17 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-2">
+                                        <label class="" for="req">Price Request</label>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="req" name="price_request" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
                                         <label class="required">Price per perosn (Adult)</label>
                                         <input type="text" name="adult_price" class="form-control" placeholder="Enter Price" required>
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-2">
                                         <label class="">Price per perosn (Child)</label>
                                         <input type="text" name="child_price" class="form-control" placeholder="Enter Price">
                                     </div>

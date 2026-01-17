@@ -145,7 +145,11 @@
             <div class="col-lg-8">
 
                 <div class="px-10 py-10 rounded-4 border-light bg-white shadow-4 my-4 mt-0">
+                    @if($tour->price_request == 1)
+                    <div class="text-22 fw-500 text-dark-1 mr-5"><span class="text-18">Price on Request</span></div>
+                    @else
                     <div class="text-22 fw-500 text-dark-1 mr-5"><span class="text-18">Starting From</span> ₹{{number_format($tour->adult_price)}}* <span class="text-14 text-light-1">Per Person</span></div>
+                    @endif
 
                     <div class="col-md-auto col-12">
                         <span>Price Includes:</span>

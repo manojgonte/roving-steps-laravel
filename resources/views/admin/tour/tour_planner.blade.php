@@ -43,7 +43,7 @@
                             <form action="" method="GET">
                                 <div class="row d-flex justify-content-start">
                                     <div class="col-auto">
-                                        <select class="form-control select2bs4" name="dest_id" onchange="javascript:this.form.submit();">
+                                        <select class="form-control form-control-sm select2bs4" name="dest_id" onchange="javascript:this.form.submit();">
                                             <option value="" selected>-- All Destinations --</option>
                                             @foreach($destinations as $dest)
                                             <option value="{{$dest->dest_id}}" @if(Request()->dest_id == $dest->dest_id) selected @endif>{{$dest->destination}}</option>
@@ -51,20 +51,34 @@
                                         </select>
                                     </div>
                                     <div class="col-auto">
-                                        <select class="form-control select2bs4" name="type" onchange="javascript:this.form.submit();">
+                                        <select class="form-control form-control-sm select2bs4" name="special_tour_type" onchange="javascript:this.form.submit();">
+                                            <option value="" selected>-- All Destinations --</option>
+                                            @foreach($specialToursArray = App\Models\SpecialTour::where('status',1)->get() as $row)
+                                            <option value="{{$row->id}}" @if(Request()->special_tour_type == $row->id) selected @endif>{{$row->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <select class="form-control form-control-sm select2bs4" name="type" onchange="javascript:this.form.submit();">
                                             <option value="" selected>-- Tour Type --</option>
                                             <option value="Domestic" @if(Request()->type == 'Domestic') selected @endif>Domestic</option>
                                             <option value="International" @if(Request()->type == 'International') selected @endif>International</option>
                                         </select>
                                     </div>
                                     <div class="col-auto">
-                                        <input class="form-control" name="q" placeholder="Search..." value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" id="checkbox" name="custom_tour" @if(Request()->custom_tour) checked @endif onchange="this.form.submit()">
+                                            <label class="form-check-label" for="checkbox">Custom Tour</label>
+                                        </div>
                                     </div>
                                     <div class="col-auto">
-                                        <button type="submit" class="btn btn-default"> Submit</button>
+                                        <input class="form-control form-control-sm" name="q" placeholder="Search..." value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
                                     </div>
                                     <div class="col-auto">
-                                        <a href="{{url('admin/tour-planner/'.Request()->status)}}" class="btn btn-default"> Clear</a>
+                                        <button type="submit" class="btn btn-default btn-sm"> Submit</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="{{url('admin/tour-planner/'.Request()->status)}}" class="btn btn-default btn-sm"> Clear</a>
                                     </div>
                                 </div>
                             </form>
@@ -81,8 +95,6 @@
                                         <th>Destination</th>
                                         <th>Duration</th>
                                         <th>Published</th>
-                                        {{-- <th>Likes</th> --}}
-                                        {{-- <th>Booked</th> --}}
                                         <th>Updated On</th>
                                         <th>Action</th>
                                     </tr>
@@ -90,14 +102,14 @@
                                 <tbody>
                                 @foreach($tours as $key => $row)
 	                                <tr>
-	                                    <td>{{ $tours->firstItem() + $key}}</td>
-	                                    <td class="text-left"><a href="{{ url('/admin/edit-tour/'.$row->id) }}">{{ Str::limit($row->tour_name, 40) }}</a></td>
-	                                    <td>{{ $row->type }}</td>
-                                        <td>{{ Str::limit($row->destination, 20) }}</td>
-                                        <td>{{ $row->days }}D | {{ $row->nights }}N</td>
-	                                    <td>
+	                                    <td class="align-middle">{{ $tours->firstItem() + $key}}</td>
+	                                    <td class="align-middle text-left"><a href="{{ url('/admin/edit-tour/'.$row->id) }}">{{ Str::limit($row->tour_name, 40) }}</a></td>
+	                                    <td class="align-middle">{{ $row->type }}</td>
+                                        <td class="align-middle">{{ Str::limit($row->destination, 20) }}</td>
+                                        <td class="align-middle">{{ $row->days }}D | {{ $row->nights }}N</td>
+	                                    <td class="align-middle">
                                             <form action="{{ url('admin/update-tour-status/'.$row->id) }}" method="post">@csrf
-                                            <div class="form-group">
+                                            <div class="form-group mb-0">
                                                 <div class="custom-control custom-switch">
                                                     <input type="checkbox" name="status" value="1" @if($row->status=="1") checked @endif class="custom-control-input" id="customSwitch1{{$row->id}}" onchange="javascript:this.form.submit();">
                                                     <label class="custom-control-label" for="customSwitch1{{$row->id}}"></label>
@@ -105,12 +117,10 @@
                                             </div>
                                             </form>
                                         </td>
-	                                    {{-- <td>NA</td> --}}
-	                                    {{-- <td>NA</td> --}}
-	                                    <td>{{date('d/m/Y', strtotime($row->updated_at))}}</td> 
-	                                    <td>
+	                                    <td class="align-middle">{{date('d/m/Y', strtotime($row->updated_at))}}</td> 
+	                                    <td class="align-middle">
                                             <div class="btn-group dropleft">
-                                                <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
+                                                <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item" href="{{url('admin/download-tour/'.$row->id)}}"><i class="fa fa-download"></i> &nbsp; Download</a>
                                                     <a class="dropdown-item" style="cursor: pointer;" onclick="getTourId(this);" tourId="{{$row->id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i> &nbsp; Share</a>

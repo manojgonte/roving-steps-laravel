@@ -77,7 +77,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Customer Details</th>
-                                        <th>Tour Name</th>
+                                        <th>Tour</th>
                                         <th>Services</th>
                                         <th>Tourist No</th>
                                         <th>Travel Date</th>
@@ -93,7 +93,7 @@
                                             <i class="fa fa-user"></i> @if(filter_var($row->name, FILTER_VALIDATE_INT) == false) {{ $row->name }} @else {{$row->user->name}} @endif <br> 
                                             <i class="fa fa-envelope"></i> {{ !empty($row->email) ? $row->email : $row->user?->email }} <br> 
                                             <i class="fa fa-phone"></i> {{ !empty($row->contact) ? $row->contact : $row->user?->contact }}<br> 
-                                            <i class="fa fa-city"></i> {{ $row->current_city ? $row->current_city : 'NA' }}
+                                            @if($row->current_city)<i class="fa fa-city"></i> {{ $row->current_city }}@endif
                                         </td>
                                         <td>
                                             @if($row->tour_id)

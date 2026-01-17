@@ -224,15 +224,19 @@
                                     <p class="text-light-1 lh-14 text-14 mt-5" title="{{$tour->amenities}}">{{Str::limit($tour->amenities, 40)}}</p>
                                     <div class="mt-5">
                                         <div class="fw-500">
+                                            @if($tour->price_request == 1)
+                                            <span class="text-14 text-light-1 fw-400">Price On Request </span>
+                                            @else
                                             <span class="text-14 text-light-1 fw-400">Starting from </span>
                                             <span class="text-blue-1">₹{{number_format($tour->adult_price)}}</span>
-                                            <span class="text-14 text-light-1 fw-400">Per Person</span>
+                                            <span class="text-14 text-light-1 fw-400">/Person</span> 
+                                            @endif
                                         </div>
                                     </div>
                                     {{-- <div class="d-flex items-center mt-10">
                                         <a href="#" class="button -md text-white bg-warning-2">BOOK NOOW</a>
                                     </div> --}}
-                                    <div class="d-flex items-center mt-10">
+                                    <div class="d-flex items-center mt-0">
                                         <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="button p-2 text-white bg-light-1">Read More</a>
                                     </div>
                                 </div>

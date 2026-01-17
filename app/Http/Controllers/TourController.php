@@ -50,6 +50,7 @@ class TourController extends Controller
             $tour->cancel_policy = $data['cancel_policy'] ?? null;
             $tour->is_popular = !empty($data['is_popular']) ? $data['is_popular'] : '0' ;
             $tour->custom_tour = !empty($data['custom_tour']) ? $data['custom_tour'] : '0' ;
+            $tour->price_request = !empty($data['price_request']) ? $data['price_request'] : '0' ;
             $tour->status = '0';
 
             // image save in folder
@@ -162,6 +163,7 @@ class TourController extends Controller
                 'cancel_policy' => !empty($data['cancel_policy']) ? $data['cancel_policy'] : null,
                 'is_popular' => !empty($data['is_popular']) ? $data['is_popular'] : '0',
                 'custom_tour' => !empty($data['custom_tour']) ? $data['custom_tour'] : '0',
+                'price_request' => !empty($data['price_request']) ? $data['price_request'] : '0',
             ]);
             return redirect('admin/itinerary-builder/'.$id)->with('flash_message_success','Tour details updated successfully');
         }
@@ -235,6 +237,12 @@ class TourController extends Controller
 
         if($request->dest_id){
             $tours = $tours->where('tours.dest_id', $request->dest_id);
+        }
+        if($request->special_tour_type){
+            $tours = $tours->where('tours.special_tour_type', 'LIKE', '%"'.$request->special_tour_type.'"%');
+        }
+        if($request->custom_tour){
+            $tours = $tours->where('tours.custom_tour', $request->custom_tour);
         }
         if($request->type){
             $tours = $tours->where('tours.type', $request->type);
