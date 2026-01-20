@@ -37,7 +37,7 @@
             <div class="row" style="min-height: 100vh;">
                 <div class="col-xl-5 col-lg-5 col-md-5 justify-content-center d-flex items-center" style="background-image: url({{asset('img/backgrounds/register.jpg')}}); background-size: cover;">
                     <a href="{{url('/')}}">
-                        <img src="{{asset('img/logo/Roving-Steps-Logo-white.png')}}" width="250">
+                        <img src="{{asset('img/logo/logo-white.png')}}" width="250">
                         <p class="text-white">Explore the Huge World and Enjoy it's Beauty</p>
                     </a>
                 </div>
@@ -106,7 +106,7 @@
                             </form>
                             <div class="row y-gap-10 pt-20">
                                 <div class="col-12">
-                                    <p class="mt-5">Already have an account? <a href="{{url('sign-in')}}" class="text-blue-1">Sign In</a></p>
+                                    <p class="mt-5">Already have an account? <a href="{{url('sign-in')}}" class="text-blue-1 underline">Sign In</a></p>
                                 </div>
                                 {{-- <div class="col-12">
                                     <div class="text-center">or sign in with</div>

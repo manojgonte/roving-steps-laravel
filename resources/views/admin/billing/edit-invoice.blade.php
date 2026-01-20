@@ -52,14 +52,17 @@
                         <div class="form-group col-md-3">
                             <label class="required">Bill To</label>
                             {{-- <input type="text" name="bill_to" class="form-control" placeholder="Enter bill to" required value="{{$invoice->bill_to}}"> --}}
+                            @php
+                                $users = App\Models\User::select('id','name')->orderBy('name','ASC')->get();
+                            @endphp
                             <select class="form-control select2bs4" name="bill_to" required>
                                 @if(filter_var($invoice->bill_to, FILTER_VALIDATE_INT) !== false)
-                                @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $row)
+                                @foreach($users as $row)
                                 <option value="{{$row->id}}" @if($invoice->bill_to == $row->id) selected @endif>{{$row->name}}</option>
                                 @endforeach
                                 @else
                                 <option value="" selected>{{$invoice->bill_to}} - Select from dropdown</option>
-                                @foreach(App\Models\User::select('id','name')->orderBy('name','ASC')->get() as $row)
+                                @foreach($users as $row)
                                 <option value="{{$row->id}}">{{$row->name}}</option>
                                 @endforeach
                                 @endif

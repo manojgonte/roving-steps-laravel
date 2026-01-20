@@ -237,7 +237,7 @@
                         @if($invoice->estimation != 1)
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
-                            <td class="text-right">₹{{$invoice->payment_received}}</td>
+                            <td class="text-right">₹{{$invoice->payment_received ?? 0}}</td>
                         </tr>
                         <tr class="bg-light-orange">
                             <td class="text-left text-sm font-weight-bold">Balance</td>

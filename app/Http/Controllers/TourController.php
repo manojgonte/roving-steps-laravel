@@ -568,6 +568,28 @@ class TourController extends Controller
         return view('admin.enquiries.new_enquiry');
     }
 
+    public function editTourEnquiry(Request $request, $id){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $enquiry = TourEnquiry::find($id);
+            $enquiry->name          = $data['name'];
+            $enquiry->contact       = $data['contact'] ?? null;
+            $enquiry->email         = $data['email'] ?? null;
+            $enquiry->tour_id       = $data['tour_id'] ?? null;
+            $enquiry->services      = $data['services'] ?? null;
+            $enquiry->tourist_no    = $data['tourist_no'] ?? null;
+            $enquiry->current_city  = $data['current_city'] ?? null;
+            $enquiry->from_date     = $data['from_date'] ?? null;
+            $enquiry->end_date      = $data['end_date'] ?? null;
+            $enquiry->message       = $data['message'] ?? null;
+            $enquiry->save();
+
+            return redirect('admin/tour-enquiries')->with('flash_message_success','Enquiry updated');
+        }
+        $enq = TourEnquiry::find($id);
+        return view('admin.enquiries.edit_enquiry', compact('enq'));
+    }
+
     public function deleteTourEnquiry(Request $request, $id){
         $enquiry = TourEnquiry::find($id)->delete();
         return redirect()->back()->with('flash_message_success','Enquiry deleted');

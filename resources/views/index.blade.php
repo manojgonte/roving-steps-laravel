@@ -74,7 +74,7 @@
     </div>
 </section>
 
-<section class="layout-pt-sm layout-pb-sm bg-dark-2 text-warning-1">
+<section class="layout-pt-sm layout-pb-sm text-white" style="background-color: #2B2B2B">
     <div class="container">
         <div class="row y-gap-30">
             <div class="col-lg-3 col-md-6">
@@ -86,7 +86,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 col-5">
                 <div class="d-flex">
                     <div class="icon-price-label text-40"></div>
                     <div class="ml-15">
@@ -95,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 col-7">
                 <div class="d-flex">
                     <div class="icon-ticket text-40"></div>
                     <div class="ml-15">

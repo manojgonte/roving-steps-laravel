@@ -175,9 +175,9 @@
                                     </td>
                                     <td class="align-middle">{{ $row->invoice_sent == 1 ? 'Yes' : 'No' }}</td>
                                     <td class="align-middle">
-                                        <a class="btn btn-default" href="{{ url('/admin/invoice-details/'.base64_encode($row->id)) }}"><i class="fa fa-info-circle"></i></a>
-                                        <a class="btn btn-default @if($row->grand_total == 0) disabled @endif" href="{{ url('/admin/invoice-payments/'.base64_encode($row->id)) }}"><i class="fa fa-money-bill-alt"></i></a>
-                                        <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
+                                        <a class="btn btn-default btn-sm" href="{{ url('/admin/invoice-details/'.base64_encode($row->id)) }}"><i class="fa fa-info-circle"></i></a>
+                                        <a class="btn btn-default btn-sm @if($row->grand_total == 0) disabled @endif" href="{{ url('/admin/invoice-payments/'.base64_encode($row->id)) }}"><i class="fa fa-money-bill-alt"></i></a>
+                                        <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=download') }}"><i class="fa fa-download"></i> &nbsp; Download</a>
                                             <a class="dropdown-item" onclick="getInvoiceId(this);" invoiceId="{{base64_encode($row->id)}}" custEmail="{{$row->email}}" data-toggle="modal" data-target="#invoice-share"><i class="fa fa-share"></i> &nbsp; Share</a>

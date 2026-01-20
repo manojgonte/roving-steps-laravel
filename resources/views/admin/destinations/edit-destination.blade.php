@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Overview</label>
-                                        <textarea name="description" class="form-control" placeholder="Enter Overview" rows="8">{{$destination->description}}</textarea>
+                                        <textarea name="description" class="form-control" placeholder="Enter Overview" rows="3">{{$destination->description}}</textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="form-check">

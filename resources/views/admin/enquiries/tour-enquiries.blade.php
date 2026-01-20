@@ -117,11 +117,12 @@
                                         <td>
                                             <div class="d-flex justify-content-center">
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
+                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
                                                     <div class="dropdown-menu dropdown-menu-right" role="menu">
                                                         <a href="{{ url('/admin/create-estimation/'.base64_encode($row->id))}}" class="dropdown-item"><i class="fa fa-file-invoice-dollar mr-2"></i> Create Estimation</a>
                                                         <a href="{{ url('/admin/plan-tour?tour_id='.$row->tour_id.'&name='.$row->name.'&tourist_count='.$row->tourist_no.'&from_date='.$row->from_date.'&end_date='.$row->end_date) }}" class="dropdown-item"><i class="fa fa-campground"></i> Create Custom Tour</a>
                                                         <a class="dropdown-divider"></a>
+                                                        <a href="{{ url('/admin/edit-tour-enquiry/'.$row->id) }}" class="dropdown-item"><i class="fa fa-pencil-alt mr-2"></i> Edit</a>
                                                         <a onclick="return confirm('Are you sure')" href="{{ url('/admin/delete-tour-enquiry/'.$row->id) }}" class="dropdown-item"><i class="fa fa-trash mr-2"></i> Delete</a>
                                                     </div>
                                                 </div>
