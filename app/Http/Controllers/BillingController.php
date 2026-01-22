@@ -24,14 +24,14 @@ class BillingController extends Controller
 {
 
     public function invoiceBilling(Request $request) {
-        $invoices = invoices::with('invoiceItems')
+        $query  = invoices::with('invoiceItems')
             ->select('invoices.*','tours.tour_name as tourName')
             ->leftJoin('tours','tours.id','invoices.tour_name');
 
         if($request->q){
             $q = $request->q;
-            $invoices = $invoices->where(function($query) use($q){
-                $query->where('bill_to','like','%'.$q.'%')
+            $query->where(function($q_inner) use($q){
+                $q_inner->where('bill_to','like','%'.$q.'%')
                 ->orWhere('contact_no','like','%'.$q.'%');
             });
         }
@@ -40,16 +40,22 @@ class BillingController extends Controller
             $startYear = $fyRange[0] . '-04-01';
             $endYear = $fyRange[1] . '-03-31';
 
-            $invoices = $invoices->whereBetween('invoice_date', [$startYear, $endYear]);
+            $query->whereBetween('invoice_date', [$startYear, $endYear]);
         }
-        $invoices = $invoices->where(function ($query) {
-                $query->where('estimation', 0)
+        
+        $query->where(function ($q_inner) {
+                $q_inner->where('estimation', 0)
                 ->orWhereNull('estimation');
-            })
-            ->orderBy('invoices.id','DESC')
-            ->paginate(10);
+            });
+
+        $totalOutstanding = (clone $query)->sum('balance');
+        $totalReceived = (clone $query)->sum('payment_received');
+        $countInProgress  = (clone $query)->where('invoice_sent', 0)->count();
+        $countSent        = (clone $query)->where('invoice_sent', 1)->count();
+
+        $invoices = $query->orderBy('invoices.id','DESC')->paginate(15);
             
-        return view('admin.billing.invoice-dashboard',compact('invoices'));
+        return view('admin.billing.invoice-dashboard',compact('invoices','totalOutstanding','totalReceived','countInProgress','countSent'));
     }
 
     public function createInvoice(Request $request) {

@@ -23,7 +23,7 @@ class UserController extends Controller
             // dd($data);
             if($user = User::where('email',$data['email'])->first()){
                 if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>'1'])){
-                    // Session::put('userSession',$user->email);
+                    Session::put('userSession',$user->id);
                     // dd(Auth::User());
                     return redirect('/');
                     // return redirect('/user/dashboard');
@@ -62,7 +62,7 @@ class UserController extends Controller
                 // });
 
                 Auth::attempt(['email'=>$data['email'],'password'=>$data['password']]);
-                Session::put('userSession',$data['email']);
+                Session::put('userSession',$user->id);
                 return redirect('/');
                 // return redirect('/user/dashboard');
             }

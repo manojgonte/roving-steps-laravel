@@ -99,7 +99,8 @@
                 <div class="d-flex items-center">
                     <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
                         @auth
-                        <a href="{{url('/')}}" class="button px-30 fw-400 text-14 text-white bg-dark-1 h-50">{{Auth::User()->name}}</a>
+                        <a href="{{url('/user/dashboard')}}" class="button px-20 fw-400 text-14 text-white bg-dark-1 h-50"><i class="fa fa-user-alt pr-10"></i> {{Auth::User()->name}}</a>
+                        <a href="{{url('/user/logout')}}" class="button px-10 fw-400 text-14 text-white bg-dark-1 h-50 mx-1" type="Logout"><i class="fa fa-sign-out"></i></a>
                         @else
                         <a href="{{url('/sign-up')}}" class="button px-30 fw-400 text-14 text-white bg-dark-1 h-50">SIGN UP</a>
                         @endauth

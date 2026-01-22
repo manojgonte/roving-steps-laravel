@@ -55,7 +55,8 @@ Route::match(['get','post'], '/forgot-password', [UserController::class, 'forgot
 Route::match(['get','post'], '/password-reset', [UserController::class, 'resetPassword']);
 
 // user routes
-Route::middleware([Userlogin::class])->group(function () {
+// Route::middleware([Userlogin::class])->group(function () {
+Route::group(['middleware'=>'userlogin'],function(){
     Route::get('user/dashboard', [UserController::class, 'dashboard']);
     Route::get('user/logout', [UserController::class, 'userLogout']);
 });

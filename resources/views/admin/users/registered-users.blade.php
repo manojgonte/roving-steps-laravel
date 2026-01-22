@@ -128,7 +128,7 @@
                                 </tbody>
                             </table>
                             <div class="mt-2 d-flex justify-content-center">
-                                {{ $users->links("pagination::bootstrap-4") }}
+                                {{ $users->withQueryString()->links("pagination::bootstrap-4") }}
                             </div>
                         </div>
                     </div>

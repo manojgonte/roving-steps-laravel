@@ -84,7 +84,7 @@
                                         <label class="">Services</label>
                                         @php
                                             $options = [
-                                                'Hotel Booking', 'Bus Booking', 'Flight Booking', 
+                                                'Tour Booking', 'Hotel Booking', 'Bus Booking', 'Flight Booking', 
                                                 'Train Booking', 'Cab Booking', 'Cruise Booking', 
                                                 'Visa Service', 'Passport Service'
                                             ];

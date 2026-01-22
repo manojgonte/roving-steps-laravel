@@ -38,7 +38,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-gradient-danger">
                             <div class="inner">
-                                <h3>₹{{number_format($invoices->sum('balance'), 1)}}</h3>
+                                <h3>₹{{number_format($totalOutstanding, 1)}}</h3>
                                 <p>Outstanding </p>
                             </div>
                             <div class="icon">
@@ -49,7 +49,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-gradient-success">
                             <div class="inner">
-                                <h3>₹{{number_format($invoices->sum('payment_received'), 1)}}</h3>
+                                <h3>₹{{number_format($totalReceived, 1)}}</h3>
                                 <p>Received </p>
                             </div>
                             <div class="icon">
@@ -60,7 +60,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-gradient-warning">
                             <div class="inner">
-                                <h3>{{ App\Models\invoices::select('invoice_sent')->where('invoice_sent',0)->count() }}</h3>
+                                <h3>{{$countInProgress}}</h3>
                                 <p>Invoice in Progress</p>
                             </div>
                             <div class="icon">
@@ -71,7 +71,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-gradient-olive">
                             <div class="inner">
-                                <h3>{{ App\Models\invoices::select('invoice_sent')->where('invoice_sent',1)->count() }}</h3>
+                                <h3>{{$countSent}}</h3>
                                 <p>Invoice Sent</p>
                             </div>
                             <div class="icon">

@@ -2,11 +2,11 @@
 @section('content')
 
 <div class="content-wrapper">
-    <section class="content-header">
+    <section class="content-header pb-1">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row mb-0">
                 <div class="col-sm-6">
-                    <h4>{{Request()->slug}} - Places to visit</h4>
+                    <h4 class="mb-0"><a href="{{ url('admin/view-destinations') }}" class="btn btn-sm border"><i class="fa fa-angle-left"></i> Back</a> {{Request()->slug}} - Places to visit <span class="badge badge-dark">{{$destinations->total()}}</span></h4>
                 </div>
                 <div class="col-sm-6">
                     <a href="{{ url('/admin/add-destination/'.Request()->slug) }}" style="float: right; margin: 3px 3px;" class="btn btn-dark text-white"><i class="fa fa-plus-circle"></i> Add places to visit</a>
@@ -94,7 +94,7 @@
                                 </tbody>
                             </table>
                             <div class="mt-2 d-flex justify-content-center">
-                                {{ $destinations->links("pagination::bootstrap-4") }}
+                                {{ $destinations->withQueryString()->links("pagination::bootstrap-4") }}
                             </div>
                             @else
                             <div class="alert alert-dark">No places found</div>

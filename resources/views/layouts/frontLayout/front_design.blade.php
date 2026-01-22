@@ -144,6 +144,7 @@
                                                 <h6>I'm Looing For:</h6>
                                                 <div class="row">
                                                     <div class="col-md-12 pdi radio-group">
+                                                        <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Tour Booking" checked><label class="radio-label" for="Tour Booking">Tour Booking</label></div>
                                                         <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Hotel Booking" checked><label class="radio-label" for="Hotel Booking">Hotel Booking</label></div>
                                                         <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Bus Booking"><label class="radio-label" for="Bus Booking">Bus Booking</label></div>
                                                         <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Flight"><label class="radio-label" for="Flight">Flight Booking</label></div>

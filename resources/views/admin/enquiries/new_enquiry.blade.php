@@ -76,15 +76,17 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="">Services</label>
+                                        @php
+                                            $options = [
+                                                'Tour Booking', 'Hotel Booking', 'Bus Booking', 'Flight Booking', 
+                                                'Train Booking', 'Cab Booking', 'Cruise Booking', 
+                                                'Visa Service', 'Passport Service'
+                                            ];
+                                        @endphp
                                         <select name="services[]" class="form-control sumoselect" multiple>
-                                            <option value="Hotel Booking">Hotel Booking</option>
-                                            <option value="Bus Booking">Bus Booking</option>
-                                            <option value="Flight Booking">Flight Booking</option>
-                                            <option value="Train Booking">Train Booking</option>
-                                            <option value="Cab Booking">Cab Booking</option>
-                                            <option value="Cruise Booking">Cruise Booking</option>
-                                            <option value="Visa Service">Visa Service</option>
-                                            <option value="Passport Service">Passport Service</option>
+                                            @foreach($options as $option)
+                                            <option value="{{ $option }}">{{ $option }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
