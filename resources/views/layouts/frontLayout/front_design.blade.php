@@ -58,9 +58,9 @@
 
     <main class="">
         
-        @php $dests = App\Models\Destination::where('status',1)->get(); @endphp
+        @php $dests = App\Models\Destination::where(['status'=>1,'parent_id'=>0])->get(); @endphp
         <!-- Page Header-->
-        @include('layouts/frontLayout/front_header')
+        @include('layouts/frontLayout/front_header', ['dests' => $dests])
 
         @yield('content')
 

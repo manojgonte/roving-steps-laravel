@@ -61,8 +61,8 @@
                                             <li class="subnav__backBtn js-nav-list-back">
                                                 <a href="javascript:void"><i class="icon icon-chevron-sm-down"></i> Domestic Packages</a>
                                             </li>
-                                            @foreach ($dests->filter(function($destination) {
-                                                return $destination->type == 'Domestic';
+                                            @foreach ($dests->filter(function($dest) {
+                                                return $dest->type == 'Domestic';
                                             }) as $destination)
                                             <li><a href="{{ url('tours?&dest='.$destination->id) }}">{{$destination->name}}</a></li>
                                             @endforeach
@@ -77,8 +77,8 @@
                                             <li class="subnav__backBtn js-nav-list-back">
                                                 <a href="javascript:void"><i class="icon icon-chevron-sm-down"></i> International Packages</a>
                                             </li>
-                                            @foreach ($dests->filter(function($destination) {
-                                                return $destination->type == 'International';
+                                            @foreach ($dests->filter(function($dest) {
+                                                return $dest->type == 'International';
                                             }) as $destination)
                                             <li><a href="{{ url('tours?&dest='.$destination->id) }}">{{$destination->name}}</a></li>
                                             @endforeach
