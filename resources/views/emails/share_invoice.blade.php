@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Invoice: {{$invoice->bill_to}}</title>
+    <title>Invoice: @if(filter_var($invoice->bill_to, FILTER_VALIDATE_INT) == false) {{ $invoice->bill_to }} @else {{$invoice->customer->name}} @endif</title>
     {{-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto+Mono:ital@1&family=Roboto+Serif:opsz@8..144&family=Roboto+Slab&display=swap" rel="stylesheet"> --}}
     <style>
         body {

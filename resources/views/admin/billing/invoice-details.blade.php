@@ -458,48 +458,53 @@
                     <tbody>
                         {{-- <tr>
                             <td class="text-left text-sm">Visa</td>
-                            <td class="text-right"><input type="number" name="visa" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
+                            <td class="text-right"><input type="number" name="visa" class="form-control form-control-sm w-25" value="{{ $invoice->visa ?? null }}" min="1" placeholder="₹" /></td>
                         </tr> --}}
                         <tr>
                             <td class="text-left text-sm">Insurance</td>
-                            <td class="text-right"><input type="number" name="insurance" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
+                            <td class="text-right"><input type="number" name="insurance" class="form-control form-control-sm w-25" value="{{ $invoice->insurance ?? null }}" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Visa Appointment</td>
-                            <td class="text-right"><input type="number" name="visa_appointment" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
+                            <td class="text-right"><input type="number" name="visa_appointment" class="form-control form-control-sm w-25" value="{{ $invoice->visa_appointment ?? null }}" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Swiss Pass</td>
-                            <td class="text-right"><input type="number" name="swiss_pass" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
+                            <td class="text-right"><input type="number" name="swiss_pass" class="form-control form-control-sm w-25" value="{{ $invoice->swiss_pass ?? null }}" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Land Package</td>
-                            <td class="text-right"><input type="number" name="land_package" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
+                            <td class="text-right"><input type="number" name="land_package" class="form-control form-control-sm w-25" value="{{ $invoice->land_package ?? null }}" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
-                            <td class="text-right"><input type="number" name="passport_services" class="form-control form-control-sm w-25" min="1" placeholder="₹" /></td>
+                            <td class="text-right"><input type="number" name="passport_services" class="form-control form-control-sm w-25" value="{{ $invoice->passport_services ?? null }}" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Total</td>
-                            <td class="text-right"><input type="number" name="total" class="form-control form-control-sm w-25" id="total" min="1" readonly /></td>
+                            <td class="text-right"><input type="number" name="total" class="form-control form-control-sm w-25" value="{{ $invoice->total ?? null }}" id="total" min="1" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Service Charges</td>
-                            <td class="text-right"><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" placeholder="₹" value="0" /></td>
+                            <td class="text-right"><input type="number" name="service_charges" class="form-control form-control-sm w-25" min="0" placeholder="₹" value="{{ $invoice->service_charges ?? 0 }}" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold d-flex justify-content-between border-0">
                                 <span>GST </span>
                                 <div>
-                                    <select class="form-control form-control-sm border-0" name="gst_per" required><option value="">Select GST %</option><option value="0">0%</option><option value="18">18%</option><option value="5">5%</option></select>
+                                    <select class="form-control form-control-sm border-0 bg-gradient-dark" name="gst_per" required>
+                                        <option value="">Select GST %</option>
+                                        <option value="0" @if($invoice->gst_per == 0) selected @endif>0%</option>
+                                        <option value="5" @if($invoice->gst_per == 5) selected @endif>5%</option>
+                                        <option value="18" @if($invoice->gst_per == 18) selected @endif>18%</option>
+                                    </select>
                                 </div>
                             </td>
-                            <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" value="{{ $invoice->gst ?? null }}" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Grand Total</td>
-                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" value="{{ $invoice->grand_total ?? null }}" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
@@ -510,21 +515,21 @@
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
                             <td class="text-right">
                                 <div class="d-flex">
-                                    <input type="number" name="payment_received" class="form-control form-control-sm w-25" min="0" placeholder="₹" />&nbsp;
+                                    <input type="number" name="payment_received" class="form-control form-control-sm w-25" value="{{ $invoice->payment_received ?? null }}" min="0" placeholder="₹" />&nbsp;
                                     <select class="form-control form-control-sm w-25" name="payment_mode">
                                         <option value="">Mode of Payment</option>
-                                        <option value="Bank Transfer">Bank Transfer</option>
-                                        <option value="Cash">Cash</option>
-                                        <option value="UPI">UPI</option>
-                                        <option value="Card">Card</option>
-                                        <option value="Cheque">Cheque</option>
+                                        <option value="Bank Transfer" @if($invoice->payment_mode == 'Bank Transfer') selected @endif>Bank Transfer</option>
+                                        <option value="Cash" @if($invoice->payment_mode == 'Cash') selected @endif>Cash</option>
+                                        <option value="UPI" @if($invoice->payment_mode == 'UPI') selected @endif>UPI</option>
+                                        <option value="Card" @if($invoice->payment_mode == 'Card') selected @endif>Card</option>
+                                        <option value="Cheque" @if($invoice->payment_mode == 'Cheque') selected @endif>Cheque</option>
                                     </select>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Balance</td>
-                            <td class="text-right"><input type="number" name="balance" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-right"><input type="number" name="balance" class="form-control form-control-sm w-25" value="{{ $invoice->balance ?? null }}" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
@@ -553,7 +558,7 @@
                 <hr />
                 <div class="form-group">
                     <label>Note</label>
-                    <input type="text" name="note" class="form-control form-control-sm">
+                    <input type="text" name="note" class="form-control form-control-sm" value="{{ $invoice->note ?? null }}">
                 </div>
                 <div class="form-group">
                     <a href="{{url('admin/invoice-billing')}}" class="btn btn-default">Cancel</a>
@@ -586,7 +591,7 @@
 <script>
     $(document).ready(function() {
         // Function to convert number to words
-        function numberToWords(number) {
+        function numberToWords1(number) {
             // Array of units
             var units = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
 
@@ -637,6 +642,56 @@
             }
 
             return convertToWords(number);
+        }
+
+        function numberToWords(num) {
+          if (num === 0) return "Zero Rupees";
+
+          const ones = [
+            "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+            "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+            "Seventeen", "Eighteen", "Nineteen"
+          ];
+
+          const tens = [
+            "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"
+          ];
+
+          function twoDigitToWords(n) {
+            if (n < 20) return ones[n];
+            return tens[Math.floor(n / 10)] + (n % 10 ? " " + ones[n % 10] : "");
+          }
+
+          function threeDigitToWords(n) {
+            let str = "";
+            if (Math.floor(n / 100) > 0) {
+              str += ones[Math.floor(n / 100)] + " hundred";
+              n = n % 100;
+              if (n > 0) str += " ";
+            }
+            if (n > 0) str += twoDigitToWords(n);
+            return str.trim();
+          }
+
+          let result = "";
+
+          const crore = Math.floor(num / 10000000);
+          num %= 10000000;
+
+          const lac = Math.floor(num / 100000);
+          num %= 100000;
+
+          const thousand = Math.floor(num / 1000);
+          num %= 1000;
+
+          const hundredPart = num;
+
+          if (crore > 0) result += threeDigitToWords(crore) + " Crore ";
+          if (lac > 0) result += threeDigitToWords(lac) + " Lac ";
+          if (thousand > 0) result += threeDigitToWords(thousand) + " Thousand ";
+          if (hundredPart > 0) result += threeDigitToWords(hundredPart) + " ";
+
+          return result.trim() + "";
         }
 
         // Function to calculate total cost for each row and update subtotal
