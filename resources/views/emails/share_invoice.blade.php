@@ -249,7 +249,7 @@
         <div class="mt-auto">
             <div class="text-left" style="margin-bottom: 10px;">
                 <img style="margin-bottom: 2px" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('img/logo/logo_trans.png'))) }}" height="50">
-                <h1 style="margin-bottom: 2px">{{config('app.name')}} Pvt. Ltd.</h1>
+                <h1 style="margin-bottom: 2px">Roving Steps Pvt. Ltd.</h1>
                 <h3 style="margin-top: 2px">PAN No.: AAJCR8494B | GST No.: 27AAJCR8494B1Z0</h3>
             </div>
             <hr/>
