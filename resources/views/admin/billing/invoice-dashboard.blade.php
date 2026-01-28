@@ -127,14 +127,22 @@
                                     }
                                 @endphp
                                 <select name="fy" class="form-control form-control-sm" onchange="this.form.submit()">
-                                    <?php echo $options; ?>
+                                    {!! $options !!}
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <select name="customer" class="form-control form-control-sm" onchange="this.form.submit()">
+                                    <option value="">Customer</option>
+                                    @foreach(App\Models\User::orderBy('name','ASC')->get() as $user)
+                                    <option value="{{ $user->id }}" @if(Request()->customer == $user->id) selected @endif>{{ $user->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-default btn-sm"> Submit</button>
                             </div>
                             <div class="col-auto">
-                                <a href="{{url('admin/invoice-dashboard')}}" class="btn btn-default btn-sm"> Clear</a>
+                                <a href="{{url('admin/invoice-billing')}}" class="btn btn-default btn-sm"> Clear</a>
                             </div>
                         </div>
                     </form>
@@ -156,39 +164,43 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if(!$invoices->isEmpty())
                             @foreach ($invoices as $row)
-                                <tr>
-                                    <td class="align-middle"><a class="btn btn-link" href="{{ url('/admin/invoice-details/' . base64_encode($row->id)) }}"> INV-{{ $row->id }}</a></td>
-                                    <td class="align-middle">@if(filter_var($row->bill_to, FILTER_VALIDATE_INT) == false) {{ $row->bill_to }} @else {{getUser($row->bill_to)?->name}} @endif</td>
-                                    <td class="align-middle" title="{{$row->tourName}}">{{ $row->tourName ? Str::limit($row->tourName, 20) : '-' }}</td>
-                                    <td class="align-middle">{{ date('d M Y', strtotime($row->invoice_date)) }}</td>
-                                    <td class="align-middle">₹{{ number_format($row->grand_total,1) }}</td>
-                                    <td class="align-middle">₹{{ number_format($row->balance,1) }}</td>
-                                    <td class="align-middle">
-                                        @if ($row->balance == 0)
-                                            PAID
-                                        @elseif ($row->payment_received > 0)
-                                            PARTIALLY PAID
-                                        @else
-                                            UNPAID
-                                        @endif
-                                    </td>
-                                    <td class="align-middle">{{ $row->invoice_sent == 1 ? 'Yes' : 'No' }}</td>
-                                    <td class="align-middle">
-                                        <a class="btn btn-default btn-sm" href="{{ url('/admin/invoice-details/'.base64_encode($row->id)) }}"><i class="fa fa-info-circle"></i></a>
-                                        <a class="btn btn-default btn-sm @if($row->grand_total == 0) disabled @endif" href="{{ url('/admin/invoice-payments/'.base64_encode($row->id)) }}"><i class="fa fa-money-bill-alt"></i></a>
-                                        <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=download') }}"><i class="fa fa-download"></i> &nbsp; Download</a>
-                                            <a class="dropdown-item" onclick="getInvoiceId(this);" invoiceId="{{base64_encode($row->id)}}" custEmail="{{$row->email}}" data-toggle="modal" data-target="#invoice-share"><i class="fa fa-share"></i> &nbsp; Share</a>
-                                            {{-- <a class="dropdown-item" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=share') }}"><i class="fa fa-share"></i> &nbsp; Share</a> --}}
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{{ url('/admin/edit-invoice/'.base64_encode($row->id)) }}"><i class="fa fa-edit"></i> &nbsp; Edit</a>
-                                            <a class="dropdown-item" href="{{ url('/admin/delete-invoice/'.base64_encode($row->id)) }}" onclick="return confirm('Are you sure?')"> <i class="fa fa-trash"></i> &nbsp; Delete </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td class="align-middle"><a class="btn btn-link" href="{{ url('/admin/invoice-details/' . base64_encode($row->id)) }}"> INV-{{ $row->id }}</a></td>
+                                <td class="align-middle">@if(filter_var($row->bill_to, FILTER_VALIDATE_INT) == false) {{ $row->bill_to }} @else {{getUser($row->bill_to)?->name}} @endif</td>
+                                <td class="align-middle" title="{{$row->tourName}}">{{ $row->tourName ? Str::limit($row->tourName, 20) : '-' }}</td>
+                                <td class="align-middle">{{ date('d M Y', strtotime($row->invoice_date)) }}</td>
+                                <td class="align-middle">₹{{ number_format($row->grand_total,1) }}</td>
+                                <td class="align-middle">₹{{ number_format($row->balance,1) }}</td>
+                                <td class="align-middle">
+                                    @if ($row->balance == 0)
+                                        PAID
+                                    @elseif ($row->payment_received > 0)
+                                        PARTIALLY PAID
+                                    @else
+                                        UNPAID
+                                    @endif
+                                </td>
+                                <td class="align-middle">{{ $row->invoice_sent == 1 ? 'Yes' : 'No' }}</td>
+                                <td class="align-middle">
+                                    <a class="btn btn-default btn-sm" href="{{ url('/admin/invoice-details/'.base64_encode($row->id)) }}"><i class="fa fa-info-circle"></i></a>
+                                    <a class="btn btn-default btn-sm @if($row->grand_total == 0) disabled @endif" href="{{ url('/admin/invoice-payments/'.base64_encode($row->id)) }}"><i class="fa fa-money-bill-alt"></i></a>
+                                    <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=download') }}"><i class="fa fa-download"></i> &nbsp; Download</a>
+                                        <a class="dropdown-item" onclick="getInvoiceId(this);" invoiceId="{{base64_encode($row->id)}}" custEmail="{{$row->email}}" data-toggle="modal" data-target="#invoice-share"><i class="fa fa-share"></i> &nbsp; Share</a>
+                                        {{-- <a class="dropdown-item" href="{{ url('/admin/invoice-actions/'.base64_encode($row->id).'?type=share') }}"><i class="fa fa-share"></i> &nbsp; Share</a> --}}
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ url('/admin/edit-invoice/'.base64_encode($row->id)) }}"><i class="fa fa-edit"></i> &nbsp; Edit</a>
+                                        <a class="dropdown-item" href="{{ url('/admin/delete-invoice/'.base64_encode($row->id)) }}" onclick="return confirm('Are you sure?')"> <i class="fa fa-trash"></i> &nbsp; Delete </a>
+                                    </div>
+                                </td>
+                            </tr>
                             @endforeach
+                            @else
+                            <tr><td colspan="9">No data available.</td></tr>
+                            @endif
                         </tbody>
                     </table>
                     <div class="mt-2 d-flex justify-content-center">

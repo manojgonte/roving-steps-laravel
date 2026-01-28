@@ -58,7 +58,7 @@
 
     <main class="">
         
-        @php $dests = App\Models\Destination::where(['status'=>1,'parent_id'=>0])->get(); @endphp
+        @php $dests = App\Models\Destination::where(['status'=>1,'parent_id'=>0])->orderBy('name','ASC')->get(); @endphp
         <!-- Page Header-->
         @include('layouts/frontLayout/front_header', ['dests' => $dests])
 

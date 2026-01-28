@@ -32,6 +32,7 @@ class BillingController extends Controller
             $q = $request->q;
             $query->where(function($q_inner) use($q){
                 $q_inner->where('bill_to','like','%'.$q.'%')
+                ->orWhere('invoices.id','like','%'.$q.'%')
                 ->orWhere('contact_no','like','%'.$q.'%');
             });
         }
@@ -42,11 +43,14 @@ class BillingController extends Controller
 
             $query->whereBetween('invoice_date', [$startYear, $endYear]);
         }
+        if ($request->customer) {
+            $query->where('bill_to', $request->customer);
+        }
         
         $query->where(function ($q_inner) {
-                $q_inner->where('estimation', 0)
-                ->orWhereNull('estimation');
-            });
+            $q_inner->where('estimation', 0)
+            ->orWhereNull('estimation');
+        });
 
         $totalOutstanding = (clone $query)->sum('balance');
         $totalReceived = (clone $query)->sum('payment_received');
