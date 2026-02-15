@@ -104,7 +104,7 @@
             <a href="https://www.facebook.com/RovingStepsPvtLtd?mibextid=LQQJ4d">
                 <i class="icon-facebook text-20"></i>
             </a>
-            <a href="https://instagram.com/roving_steps?igshid=OGQ5ZDc2ODk2ZA==">
+            <a href="https://www.instagram.com/iggloo.co.in?igsh=MWN0b3hidHgwMml1Yg==">
                 <i class="icon-instagram text-20"></i>
             </a>
         </div>

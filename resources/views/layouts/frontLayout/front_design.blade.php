@@ -121,7 +121,7 @@
                                     <div class="d-flex justify-center items-center border-light rounded-full size-20 mr-10">
                                         <i class="icon-check text-6"></i>
                                     </div>
-                                    <p class="text-15 text-dark-1">Rated 4.7 across Social Media Platforms (2500+ Reviews)</p>
+                                    <p class="text-15 text-dark-1">Rated 4.9 across Social Media Platforms (2500+ Reviews)</p>
                                 </div>
                             </div>
                         </div>

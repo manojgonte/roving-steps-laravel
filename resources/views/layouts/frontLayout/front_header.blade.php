@@ -6,7 +6,7 @@
             <div class="col-auto">
                 <div class="row x-gap-15 items-center jusify-between">
                     <div class="col-auto md:d-none pt-1">
-                        <a href="https://instagram.com/roving_steps?igshid=OGQ5ZDc2ODk2ZA==" target="_blank" noreferrer noopener class="text-12 text-white"><i class="icon-instagram text-20"></i></a>
+                        <a href="https://www.instagram.com/iggloo.co.in?igsh=MWN0b3hidHgwMml1Yg==" target="_blank" noreferrer noopener class="text-12 text-white"><i class="icon-instagram text-20"></i></a>
                     </div>
                     <div class="col-auto md:d-none">
                         <div class="w-1 h-20 bg-white-20"></div>
