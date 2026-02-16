@@ -13181,12 +13181,12 @@ a.button.bg-light-1:hover {
     border-radius: 100%;
     color: #fff;
     display: flex;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
-    height: 40px;
+    height: 60px;
     justify-content: center;
     position: relative;
-    width: 40px;
+    width: 60px;
 }
 
 .footer-logo .logo-link {

@@ -39,7 +39,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Customer</th>
+                                        <th colspan="2">Customer</th>
                                         <th>Testimonial</th>
                                         <th>Action</th>
                                     </tr>
@@ -48,7 +48,8 @@
                                 @foreach($testimonials as $row)
 	                                <tr>
 	                                    <td>{{ $row->id }}</td>
-	                                    <td>{{ Str::limit($row->user_name, 30) }}</td>
+	                                    <td>@if($row->thumbnail_img)<img src="{{ asset('img/testimonials/'.$row->thumbnail_img) }}" height="50">@else - @endif</td>
+                                        <td>{{ Str::limit($row->user_name, 30) }}</td>
 	                                    <td>@if($row->testimonial){{ Str::limit($row->testimonial, 80) }} @else NA @endif</td>
 	                                    <td>
                                             <a class="btn btn-default" href="{{ url('/admin/edit-testimonial/'.$row->id) }}"><i class="fa fa-edit" style="color: #000;"></i></a> &nbsp;

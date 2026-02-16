@@ -63,10 +63,21 @@ class AdminController extends Controller
     public function addTestimonial(Request $request) {
         if($request->isMethod('post')){
             $data = $request->all();
-            // dd($data);
+            
             $destination = new Testimonial;
             $destination->user_name = $data['user_name'];
             $destination->testimonial = $data['testimonial'];
+
+            if($request->hasFile('thumbnail_img')) {
+                $image_tmp = $request->thumbnail_img;
+                if ($image_tmp->isValid()) {
+                    $filename = strtotime("now").'-'. $image_tmp->getClientOriginalName();
+                    $img_path = 'img/testimonials/'.$filename;
+                    Image::make($image_tmp)->save($img_path);
+                    $destination->thumbnail_img = $filename;
+                }
+            }
+
             $destination->save();
             return redirect('admin/testimonials/')->with('flash_message_success','Testimonial added successfully');
         }
@@ -76,10 +87,25 @@ class AdminController extends Controller
     public function editTestimonial(Request $request, $id) {
         if($request->isMethod('post')){
             $data = $request->all();
+
+            if ($request->hasFile('thumbnail_img')) {
+                $image_tmp = $request->thumbnail_img;
+                if ($image_tmp->isValid()) {
+                    $extension = $image_tmp->getClientOriginalName();
+                    $filename = strtotime("now").'.'. $extension;
+                    $collaborate_path = 'img/testimonials/' . $filename;
+                    Image::make($image_tmp)->save($collaborate_path);
+                }
+            } else if (!empty($data['current_thumbnail_img'])) {
+                $filename = $data['current_thumbnail_img'];
+            } else {
+                $filename = null;
+            }
           
             Testimonial::where('id',$id)->update([
-                'user_name'=>$data['user_name'],
-                'testimonial'=>$data['testimonial']
+                'user_name'     =>$data['user_name'],
+                'thumbnail_img' =>$filename,
+                'testimonial'   =>$data['testimonial']
             ]);
             
             return redirect('admin/testimonials')->with('flash_message_success','Testimonial updated successfully');

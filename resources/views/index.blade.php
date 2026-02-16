@@ -182,9 +182,6 @@
             'type_id'=>11,
             'title'=>'Trending Indian Holidays'
         ],[
-            'type_id'=>12,
-            'title'=>'Tailored Theme Escapes'
-        ],[
             'type_id'=>13,
             'title'=>'Trending International Holidays'
         ],[
@@ -486,7 +483,11 @@
                         <div class="swiper-slide">
                             <div class="row items-center x-gap-30 y-gap-20">
                                 <div class="col-auto">
+                                    @if(empty($testimonial->thumbnail_img))
                                     <div class="avatar avatar-md bg-info">{{mb_substr(ucfirst($testimonial->user_name) , 0, 1)}}</div>
+                                    @else
+                                    <img src="{{ asset('img/testimonials/'.$testimonial->thumbnail_img) }}" width="70">
+                                    @endif
                                 </div>
                                 <div class="col-auto">
                                     <h5 class="text-16 fw-500">{{$testimonial->user_name}}</h5>

@@ -177,7 +177,7 @@
                 return true;
             }
             if (from_date_value && end_date_value) {
-                return new Date(end_date_value) > new Date(from_date_value);
+                return new Date(end_date_value) >= new Date(from_date_value);
             }
             return false;
         }, "To Date must be greater than From Date.");

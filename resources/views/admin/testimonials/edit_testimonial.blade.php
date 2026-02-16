@@ -38,10 +38,18 @@
                         <form method="POST" action="{{ url('admin/edit-testimonial/'.$testimonial->id) }}" enctype="multipart/form-data" id="addTestimonial">@csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-6">
             	                        <label class="required">Customer Name</label>
             	                        <input type="text" name="user_name" class="form-control" placeholder="Enter Customer Name" value="{{$testimonial->user_name}}" required>
                           	        </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="">Thumbnail <small>(Dimensions: 200x200px)</small></label>
+                                        <input type="file" name="thumbnail_img" class="form-control p-1">
+                                        @if(!empty($testimonial->thumbnail_img)) 
+                                        <input type="hidden" name="current_thumbnail_img" value="{{ $testimonial->thumbnail_img }}"> 
+                                        <img src="{{ asset('img/testimonials/'.$testimonial->thumbnail_img) }}" height="50">
+                                        @endif
+                                    </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Testimonial</label>
                                         <textarea name="testimonial" class="form-control" placeholder="Enter Testimonial" rows="3">{{$testimonial->testimonial}}</textarea>
@@ -49,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="card-footer ">
-                                <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check-circle"></i> Update </button>
+                                <button type="submit" class="btn btn-dark submit"><i class="fa fa-check-circle"></i> Update </button>
                                 <button type="reset" class="btn btn-default"> Reset </button>
                             </div>
                         </form>
@@ -67,6 +75,10 @@
             ignore: [],
             debug: false,
             rules: {
+                user_name: {
+                    required: true,
+                    maxlength:30,
+                },
                 user_name: {
                     required: true,
                     maxlength:30,

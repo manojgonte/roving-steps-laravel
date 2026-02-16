@@ -39,9 +39,13 @@
                             id="addTestimonial">@csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-6">
                                         <label class="required">Customer Name</label>
                                         <input type="text" name="user_name" class="form-control" placeholder="Enter Customer Name" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="">Thumbnail <small>(Dimensions: 200x200px)</small></label>
+                                        <input type="file" name="thumbnail_img" class="form-control p-1" >
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label class="">Testimonial</label>
@@ -50,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="card-footer ">
-                                <button type="submit" class="btn btn-warning text-white submit"><i class="fa fa-check-circle"></i> Add </button>
+                                <button type="submit" class="btn btn-dark text-white submit"><i class="fa fa-check-circle"></i> Save </button>
                                 <button type="reset" class="btn btn-default"> Reset </button>
                             </div>
                         </form>
