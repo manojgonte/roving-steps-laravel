@@ -206,6 +206,15 @@
                             <td class="text-right">{{isset($invoice->land_package) ? $invoice->land_package : '-'}}</td>
                         </tr>
                         <tr>
+                            <td class="text-left align-middle text-sm font-weight-bold d-flex justify-content-between border-0">
+                                TCS <small>(on Swiss Pass + Land Package)</small>
+                                <div>
+                                    <button class="form-control form-control-sm border-0" disabled><option>{{$invoice->tcs_per ?? null}}%</option></button>
+                                </div>
+                            </td>
+                            <td class="text-right align-middle">₹{{$invoice->tcs_amt ?? null}}</td>
+                        </tr>
+                        <tr>
                             <td class="text-left text-sm">Passport Services</td>
                             <td class="text-right">{{isset($invoice->passport_services) ? $invoice->passport_services : '-'}}</td>
                         </tr>

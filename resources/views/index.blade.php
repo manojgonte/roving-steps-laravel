@@ -310,7 +310,7 @@
         ],
     ]; 
 @endphp
-<section class="layout-pt-lg layout-pb-md">
+<section class="layout-pt-md layout-pb-md">
     <div class="container">
         <div data-anim="slide-up delay-1" class="row y-gap-20 justify-between items-end">
             <div class="col-auto">

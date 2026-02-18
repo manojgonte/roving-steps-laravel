@@ -147,6 +147,8 @@ class BillingController extends Controller
             $invoice->service_charges = $data['service_charges'];
             $invoice->gst_per = $data['gst_per'];
             $invoice->gst = $data['gst'];
+            $invoice->tcs_per = $data['tcs_per'] ?? null;
+            $invoice->tcs_amt = $data['tcs_amt'] ?? null;
             $invoice->grand_total = $data['grand_total'];
             $invoice->payment_received = !empty($data['payment_received']) ? $data['payment_received'] : null;
             $invoice->balance = !empty($data['balance']) ? $data['balance'] : null;
@@ -246,6 +248,8 @@ class BillingController extends Controller
             $invoice->service_charges = $data['service_charges'];
             $invoice->gst_per = $data['gst_per'];
             $invoice->gst = $data['gst'];
+            $invoice->tcs_per = $data['tcs_per'] ?? null;
+            $invoice->tcs_amt = $data['tcs_amt'] ?? null;
             $invoice->grand_total = $data['grand_total'];
             $invoice->payment_received = $data['payment_received'] ?? '0';
             $invoice->balance = $data['balance'];

@@ -424,21 +424,27 @@
                     @if(!empty($invoice->swiss_pass))
                     <tr>
                         <td class="text-left text-sm">Swiss Pass</td>
-                        <td class="text-right">{{isset($invoice->swiss_pass) ? $invoice->swiss_pass : '-'}}</td>
+                        <td class="text-right">Rs.{{isset($invoice->swiss_pass) ? $invoice->swiss_pass : '-'}}</td>
                     </tr>
                     @endif
                     @if(!empty($invoice->land_package))
                     <tr>
                         <td class="text-left text-sm">Land Package</td>
-                        <td class="text-right">{{isset($invoice->land_package) ? $invoice->land_package : '-'}}</td>
+                        <td class="text-right">Rs.{{isset($invoice->land_package) ? $invoice->land_package : '-'}}</td>
                     </tr>
                     @endif
                     @if(!empty($invoice->passport_services))
                     <tr>
                         <td class="text-left text-sm">Passport Services</td>
-                        <td class="text-right">{{isset($invoice->passport_services) ? $invoice->passport_services : '-'}}</td>
+                        <td class="text-right">Rs.{{isset($invoice->passport_services) ? $invoice->passport_services : '-'}}</td>
                     </tr>
                     @endif
+                    <tr>
+                        <td class="text-left align-middle text-sm font-weight-bold d-flex justify-content-between border-0">
+                            TCS <small>(on Swiss Pass + Land Package)</small> ({{$invoice->tcs_per ?? null}}%)
+                        </td>
+                        <td class="text-right align-middle">Rs.{{$invoice->tcs_amt ?? null}}</td>
+                    </tr>
                     <tr>
                         <td class="text-left text-sm font-weight-bold">Total</td>
                         <td class="text-right">Rs.{{$invoice->total}}</td>

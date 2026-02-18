@@ -477,6 +477,20 @@
                             <td class="text-right"><input type="number" name="land_package" class="form-control form-control-sm w-25" value="{{ $invoice->land_package ?? null }}" min="1" placeholder="₹" /></td>
                         </tr>
                         <tr>
+                            <td class="text-left text-sm d-flex justify-content-between border-0">
+                                <span>TCS <small>(on Swiss Pass + Land Package)</small></span>
+                                <div>
+                                    <select class="form-control form-control-sm" name="tcs_per">
+                                        <option value="">Select %</option>
+                                        <option value="2" @if($invoice->tcs_per == '2') selected @endif>2%</option>
+                                        <option value="3" @if($invoice->tcs_per == '3') selected @endif>3%</option>
+                                        <option value="5" @if($invoice->tcs_per == '5') selected @endif>5%</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td class="text-right"><input type="number" name="tcs_amt" class="form-control form-control-sm w-25" readonly value="{{ $invoice->tcs_amt ?? null }}" /></td>
+                        </tr>
+                        <tr>
                             <td class="text-left text-sm">Passport Services</td>
                             <td class="text-right"><input type="number" name="passport_services" class="form-control form-control-sm w-25" value="{{ $invoice->passport_services ?? null }}" min="1" placeholder="₹" /></td>
                         </tr>
@@ -492,7 +506,7 @@
                             <td class="text-left text-sm font-weight-bold d-flex justify-content-between border-0">
                                 <span>GST </span>
                                 <div>
-                                    <select class="form-control form-control-sm border-0 bg-gradient-dark" name="gst_per" required>
+                                    <select class="form-control form-control-sm" name="gst_per" required>
                                         <option value="">Select GST %</option>
                                         <option value="0" @if($invoice->gst_per == 0) selected @endif>0%</option>
                                         <option value="5" @if($invoice->gst_per == 5) selected @endif>5%</option>
@@ -713,6 +727,16 @@
             subtotal += parseFloat($('[name="land_package"]').val() || 0);
             subtotal += parseFloat($('[name="passport_services"]').val() || 0);
 
+            var swissPass = parseFloat($('[name="swiss_pass"]').val());
+            var landPackage = parseFloat($('[name="land_package"]').val());
+            var tcsSlab = parseFloat($('[name="tcs_per"]').val());
+            var tcs = 0;
+            
+            tcs = ((swissPass + landPackage) * tcsSlab) / 100;
+            $('[name="tcs_amt"]').val(tcs.toFixed(2));
+
+            subtotal = subtotal + tcs;
+
             $('#total').val(subtotal);
             calculateGrandTotal();
         }
@@ -721,6 +745,8 @@
         function calculateGrandTotal() {
             var serviceCharges = parseFloat($('[name="service_charges"]').val());
             var gstSlab = parseFloat($('[name="gst_per"]').val());
+            
+            
             var gst = 0;
             var subtotal = parseFloat($('#total').val());
 
@@ -771,12 +797,13 @@
         });
 
         // Calculate grand total when service charges or GST slab change
-        $('[name="service_charges"], [name="gst_per"]').on('change input', function() {
+        $('[name="service_charges"], [name="gst_per"], [name="tcs_per"]').on('change input', function() {
             calculateGrandTotal();
+            calculateTotalCost();
         });
 
         // Calculate grand total when additional fields change
-        $('input[name="visa"], input[name="insurance"], input[name="visa_appointment"], input[name="swiss_pass"], input[name="land_package"], input[name="passport_services"]').on('input', function() {
+        $('input[name="visa"], input[name="insurance"], input[name="visa_appointment"], input[name="swiss_pass"], input[name="land_package"], input[name="passport_services"], input[name="tcs_per"]').on('input', function() {
             calculateTotalCost();
         });
 
