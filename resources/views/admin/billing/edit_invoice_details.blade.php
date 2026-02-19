@@ -757,15 +757,19 @@
             subtotal += parseFloat($('[name="land_package"]').val() || 0);
             subtotal += parseFloat($('[name="passport_services"]').val() || 0);
 
-            var swissPass = parseFloat($('[name="swiss_pass"]').val());
-            var landPackage = parseFloat($('[name="land_package"]').val());
-            var tcsSlab = parseFloat($('[name="tcs_per"]').val());
+            var swissPass = parseFloat($('[name="swiss_pass"]').val() || 0);
+            var landPackage = parseFloat($('[name="land_package"]').val() || 0);
+            var tcsSlab = parseFloat($('[name="tcs_per"]').val() || 0);
+            
             var tcs = 0;
             
-            tcs = ((swissPass + landPackage) * tcsSlab) / 100;
+            if (tcsSlab > 0) {
+                tcs = ((swissPass + landPackage) * tcsSlab) / 100;
+            }
+
             $('[name="tcs_amt"]').val(tcs.toFixed(2));
 
-            subtotal = subtotal + tcs;
+            subtotal += tcs;
 
             $('#total').val(subtotal);
             calculateGrandTotal();
@@ -826,14 +830,14 @@
 
         // Calculate grand total when service charges or GST slab change
         $('[name="service_charges"], [name="gst_per"], [name="tcs_per"]').on('change input', function() {
-            calculateGrandTotal();
             calculateTotalCost();
         });
 
         // Calculate grand total when additional fields change
-        $('input[name="visa"], input[name="insurance"], input[name="visa_appointment"], input[name="swiss_pass"], input[name="land_package"], input[name="passport_services"], [name="tcs_per"]').on('input', function() {
+        $('input[name="insurance"], input[name="visa_appointment"], input[name="swiss_pass"], input[name="land_package"], input[name="passport_services"]').on('input', function() {
             calculateTotalCost();
         });
+
 
         // Update balance when payment received changes
         $('[name="payment_received"]').on('input', function() {
