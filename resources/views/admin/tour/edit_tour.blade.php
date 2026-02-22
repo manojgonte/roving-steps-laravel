@@ -28,7 +28,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{url('/admin/dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="{{url('/admin/tour-planner/1')}}">tours</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/admin/tour-planner/1')}}">Tour Planner</a></li>
+                        <li class="breadcrumb-item active">{{$tour->tour_name}}</li>
                     </ol>
                 </div>
             </div>
@@ -57,7 +58,7 @@
                                         <label class="required">Destination</label>
                                         <select class="form-control select2bs4" name="dest_id" required>
                                             <option value="" selected>Select One</option>
-                                            @foreach(App\Models\Destination::where('status',1)->orderBy('name','ASC')->get() as $cat)
+                                            @foreach(App\Models\Destination::orderBy('name','ASC')->get() as $cat)
                                                 <option value="{{$cat->id}}" @if($tour->dest_id == $cat->id) selected @endif>{{$cat->name}}</option>
                                                 {{-- @php $sub_categories = App\Models\Destination::where(['parent_id'=>$cat->id])->get(); @endphp
                                                 @foreach ($sub_categories as $sub_cat)

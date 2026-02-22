@@ -15,9 +15,15 @@
         <div class="content-header pb-0">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <h4 class="m-0 text-dark">Update Invoice</h4>
-                        <hr class="mb-0">
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{url('/admin/dashboard')}}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{url('/admin/invoice-billing')}}">Invoices</a></li>
+                            <li class="breadcrumb-item active">Edit Invoice</li>
+                        </ol>
                     </div>
                 </div>
             </div>

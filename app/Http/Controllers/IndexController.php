@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Rules\Recaptcha;
+use App\Rules\SanitizeIP;
 use App\Models\Destination;
 use App\Models\TourEnquiry;
 use App\Models\Testimonial;
@@ -36,6 +37,15 @@ class IndexController extends Controller
     
     public function contact(Request $request){
         if($request->isMethod('post')){
+
+            $this -> validate($request, [
+                'g-recaptcha-response' => ['required', new Recaptcha()],
+                'name' => ['required', new SanitizeIP()],
+                'email' => ['required', new SanitizeIP()],
+                'address' => ['nullable', new SanitizeIP()],
+                'contact' => ['nullable', new SanitizeIP()],
+                'message' => ['nullable', new SanitizeIP()],
+            ]);
 
             $data = $request->all();
             Log::info($data);
@@ -195,6 +205,7 @@ class IndexController extends Controller
     public function saveEnquiry(Request $request){
 
         $validator = Validator::make($request->all(), [
+            'g-recaptcha-response' => ['required', new Recaptcha()],
             'services'     => 'required|array|min:1',
             'prefix'       => 'required|string',
             'fname'        => 'required|string|max:50',

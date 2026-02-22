@@ -49,14 +49,10 @@
                 </div>
                 <div class="col-xl-3 col-lg-3 col-sm-6 border-left-light">
                     <h5 class="text-16 fw-500 mb-30">TOURS BY CATEGORY</h5>
-                    <div class="d-flex y-gap-10 flex-column">
-                        <a href="#">Romantic</a>
-                        <a href="#">Festivals and Events</a>
-                        <a href="#">Weekend</a>
-                        <a href="#">Heritage</a>
-                        <a href="#">Hill Station</a>
-                        <a href="#">Religious</a>
-                        <a href="#">Cruise</a>
+                    <div class="d-flex y-gap-10 flex-column h-400 overflow-scroll">
+                        @foreach(App\Models\SpecialTour::where('status',1)->orderBy('title','ASC')->get() as $row)
+                        <a href="{{ url('tours?&special_tour_type='.$row->id) }}">{{$row->title}}</a>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-xl-2 col-lg-3 col-sm-6 border-left-light">

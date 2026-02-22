@@ -130,6 +130,9 @@ return [
     'MAILCHIMP_API_KEY' => env('MAILCHIMP_API_KEY'),
     'MAILCHIMP_LIST_ID' => env('MAILCHIMP_LIST_ID'),
 
+    'google_recaptcha_site' => env('GOOGLE_RECAPTCHA_SITE'),
+    'google_recaptcha_secret' => env('GOOGLE_RECAPTCHA_SECRET'),
+
 
 
     /*

@@ -31,6 +31,9 @@
             <span class="text-white">{!! session('error_message') !!}</span>
         </div>
         @endif
+        @foreach ($errors->all() as $error)
+        <div class="alert alert-danger">{{ $error }}</div>
+        @endforeach
         <div class="row d-flex x-gap-80 y-gap-20 justify-between">
             <div class="col-lg-7">
                 <div class="text-30 sm:text-24 fw-600">Keep in touch with us</div>
@@ -82,6 +85,7 @@
                                 </div>
                                 <div class="error-message"></div>
                             </div>
+                            <div class="g-recaptcha mb-10" id="feedback-recaptcha" data-sitekey="{{ config('app.google_recaptcha_site') }}"></div>
                             <div class="col-auto">
                                 <button type="submit" class="button px-24 h-50 -dark-1 bg-warning-2 text-white">
                                     Send a Messsage <div class="icon-arrow-top-right ml-15"></div>
@@ -128,6 +132,7 @@
 @section('scripts')
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{asset('backend_js/jquery.validate.js')}}"></script>
+
 <script>
     $(document).ready(function () {
         var container = $('div.error-container');

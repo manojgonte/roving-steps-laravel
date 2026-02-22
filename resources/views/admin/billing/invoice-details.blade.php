@@ -22,10 +22,10 @@
         <div class="content-header pb-1">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                         <h4 class="m-0 text-dark">Update Invoice Details</h4>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                         <div class="text-right">
                             <a href="{{ url('/admin/invoice-billing/') }}" class="btn btn-light btn-sm"><i class="fa fa-arrow-left"></i> Back</a>
                             <a href="{{ url('/admin/edit-invoice/'.Request()->id) }}" class="btn btn-light btn-sm"><i class="fa fa-pencil-alt"></i> Edit</a>

@@ -32,6 +32,7 @@
         <!-- Stylesheets -->
         <link rel="stylesheet" href="{{asset('css/vendors.css')}}">
         <link rel="stylesheet" href="{{asset('css/main.css')}}">
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
         @yield('styles')
 
@@ -131,7 +132,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12 pdi radio-group">
                                                         <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Tour Booking" checked><label class="radio-label" for="Tour Booking">Tour Booking</label></div>
-                                                        <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Hotel Booking" checked><label class="radio-label" for="Hotel Booking">Hotel Booking</label></div>
+                                                        <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Hotel Booking"><label class="radio-label" for="Hotel Booking">Hotel Booking</label></div>
                                                         <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Bus Booking"><label class="radio-label" for="Bus Booking">Bus Booking</label></div>
                                                         <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Flight"><label class="radio-label" for="Flight">Flight Booking</label></div>
                                                         <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Train Booking"><label class="radio-label" for="Train Booking">Train Booking</label></div>
@@ -204,6 +205,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="g-recaptcha" id="feedback-recaptcha" data-sitekey="{{ config('app.google_recaptcha_site') }}"></div>
                                                 <div class="row pt-15">
                                                     <button type="submit" class="bg-dark-2 text-white"><i class="fa fa-check-circle"></i> Send Enquiry</button>
                                                 </div>
@@ -256,7 +258,7 @@
                 })
                 .then(data => {
                     if (data.status) {
-                        showAlert('success', data.message);
+                        showAlert('bg-success-1', data.message);
                         form.reset();
                     }else{
                         showAlert('danger', 'Something went wrong. Please try again.');
@@ -321,7 +323,7 @@
                 })
                 .then(data => {
                     if (data.status) {
-                        showAlert('success', data.message);
+                        showAlert('bg-success-1', data.message);
                         form.reset();
                     }else{
                         showAlert('danger', 'Something went wrong. Please try again.');
@@ -342,7 +344,7 @@
             });
 
             function showError(element, message) {
-                alertBox.className = 'alert text-white alert-' + message;
+                alertBox.className = 'alert text-white px-3 alert-' + message;
                 alertBox.innerHTML = message;
                 // element.insertAdjacentHTML(
                 //     'afterend',
@@ -351,7 +353,7 @@
             }
 
             function showAlert(type, message) {
-                alertBox.className = 'alert text-white alert-' + type;
+                alertBox.className = 'alert text-white px-3 alert-' + type;
                 alertBox.innerHTML = message;
                 alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }

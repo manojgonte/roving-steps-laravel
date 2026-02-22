@@ -23,7 +23,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{url('/admin/dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Destination Section</li>
+                        <li class="breadcrumb-item"><a href="{{url('/admin/view-destinations')}}">Destinations </a></li>
+                        <li class="breadcrumb-item active">Edit Destination</li>
                     </ol>
                 </div>
             </div>

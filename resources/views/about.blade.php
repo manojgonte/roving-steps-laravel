@@ -75,8 +75,7 @@
                                         <h3 class="color-brand-1 mt-10 mb-15 wow animate__animated animate__fadeIn"
                                             data-wow-delay=".0s">Our Vision</h3>
                                         <p class="font-md color-grey-400 wow animate__animated animate__fadeIn"
-                                            data-wow-delay=".0s">Roving Steps - The most trusted travel company for
-                                            elite travel at affordable prices creating memories & Experiences.</p>
+                                            data-wow-delay=".0s">To be the most trusted travel company, specializing in creating elite experiences at accessible prices that delight every type of traveler, from solo adventurers and families to corporate and student groups. We envision a world where every journey fills hearts with joy and wonder, consistently crafting unforgettable memories and deep connections for our cherished family of travelers. We aspire to be the beacon of comfort and seamless care, transforming aspirations into treasured realities, one extraordinary adventure at a time</p>
                                     </div>
                                 </div>
                             </div>
@@ -98,9 +97,7 @@
                                         <h3 class="color-brand-1 mt-10 mb-15 wow animate__animated animate__fadeIn"
                                             data-wow-delay=".0s">Our Mission</h3>
                                         <p class="font-md color-grey-400 wow animate__animated animate__fadeIn"
-                                            data-wow-delay=".0s">We are keen towards providing a lavish experience to
-                                            our guest when they travel to their dream destinations. Our mission is to
-                                            make dreams affordable with continuous innovation in tourism world.</p>
+                                            data-wow-delay=".0s">Our mission is to provide dedicated, end-to-end travel management, offering tailored solutions and consistent support, ensuring exceptional comfort and great value. We strive to make global exploration joyful and accessible, building lasting connections with every traveler we serve. </p>
                                     </div>
                                 </div>
                             </div>

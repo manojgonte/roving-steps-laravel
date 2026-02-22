@@ -15,9 +15,15 @@
         <div class="content-header pb-0">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <h4 class="m-0 text-dark">Create Invoice</h4>
-                        <hr class="mb-0">
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{url('/admin/dashboard')}}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{url('/admin/invoice-billing')}}">Invoices</a></li>
+                            <li class="breadcrumb-item active">Create Invoice</li>
+                        </ol>
                     </div>
                 </div>
             </div>
@@ -25,7 +31,7 @@
 
         <section class="content">
             <form method="POST" action="{{ route('createInvoice') }}" enctype="multipart/form-data" id="createInvoice">@csrf
-                <div class="card-body">
+                <div class="card card-body">
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label class="required">Invoice date</label>

@@ -32,6 +32,13 @@
                     </div>
                     @endif
                 </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{url('/admin/dashboard')}}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/admin/tour-enquiries')}}">Tour Enquiries</a></li>
+                        <li class="breadcrumb-item active">Edit Enquiry</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </section>

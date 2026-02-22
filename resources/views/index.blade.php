@@ -202,81 +202,84 @@
 @if(count($tours)>0)
 <section class="layout-pt-sm layout-pb-sm">
     <div data-anim="slide-up delay-1" class="container">
-        <div class="row y-gap-10 justify-between items-end">
-            <div class="col-auto">
+        <div class="row y-gap-10 justify-between items-center">
+            <div class="col-12 col-md-3">
                 <div class="sectionTitle -md">
                     <h2 class="sectionTitle__title">{{ $tourType['title'] }}</h2>
+                    <hr class="w-1/2">
                 </div>
+                {{-- <div class="col-sm-auto">
+                    <div class="d-inline-block">
+                        <a href="{{url('tours/')}}" class="button -md -blue-1 bg-blue-1-05 text-blue-1"> View All <div class="icon-arrow-top-right ml-15"></div>
+                        </a>
+                    </div>
+                </div> --}}
             </div>
-            {{-- <div class="col-sm-auto">
-                <div class="d-inline-block">
-                    <a href="{{url('tours/')}}" class="button -md -blue-1 bg-blue-1-05 text-blue-1"> View All <div class="icon-arrow-top-right ml-15"></div>
-                    </a>
-                </div>
-            </div> --}}
-        </div>
-        <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-5 lg-4 md-3 sm-2 base-1" data-nav-prev="js-hotels-prev" data-pagination="js-hotels-pag" data-nav-next="js-hotels-next">
-            <div class="swiper-wrapper">
-                @foreach($tours as $tour)
-                <div class="swiper-slide">
-                    <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="hotelsCard -type-1 ">
-                        <div class="hotelsCard__image">
-                            <div class="cardImage ratio ratio-1:1">
-                                <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="{{asset('img/tours/'.$tour->image)}}" alt="{{$tour->tour_name}}">
+            <div class="col-12 col-md-9">
+                <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-4 lg-4 md-3 sm-2 base-1" data-nav-prev="js-hotels-prev" data-pagination="js-hotels-pag" data-nav-next="js-hotels-next">
+                    <div class="swiper-wrapper mb-15">
+                        @foreach($tours as $tour)
+                        <div class="swiper-slide">
+                            <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="hotelsCard -type-1 ">
+                                <div class="hotelsCard__image">
+                                    <div class="cardImage ratio ratio-1:1">
+                                        <div class="cardImage__content">
+                                            <img class="rounded-4 col-12" src="{{asset('img/tours/'.$tour->image)}}" alt="{{$tour->tour_name}}">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="hotelsCard__content mt-10">
-                            <h4 class="hotelsCard__title text-dark-1 text-17 lh-16 fw-500">
-                                <span>{{$tour->tour_name}} | <span class="text-light-1">{{$tour->nights}}N-{{$tour->days}}D</span></span>
-                            </h4>
-                            @php
-                                $fullStars = floor($tour->rating);
-                                $hasHalfStar = ($tour->rating - $fullStars) >= 0.5;
-                            @endphp
-                            <div class="d-flex x-gap-5 items-center pt-5">
-                                @for ($i = 1; $i <= $fullStars; $i++)
-                                <div class="fa fa-star text-yellow-2 text-14"></div>
-                                @endfor
+                                <div class="hotelsCard__content mt-10">
+                                    <h4 class="hotelsCard__title text-dark-1 text-15 lh-14 fw-500">
+                                        <span>{{$tour->tour_name}} | <span class="text-light-1">{{$tour->nights}}N-{{$tour->days}}D</span></span>
+                                    </h4>
+                                    {{-- @php
+                                        $fullStars = floor($tour->rating);
+                                        $hasHalfStar = ($tour->rating - $fullStars) >= 0.5;
+                                    @endphp
+                                    <div class="d-flex x-gap-5 items-center pt-5">
+                                        @for ($i = 1; $i <= $fullStars; $i++)
+                                        <div class="fa fa-star text-yellow-2 text-14"></div>
+                                        @endfor
 
-                                @if ($hasHalfStar)
-                                <div class="fa fa-star-half-alt text-yellow-2 text-14"></div>
-                                @endif
-                            </div>
-                            <p class="text-light-1 lh-14 text-14 mt-5">{{Str::limit($tour->amenities, 30)}}</p>
-                            <div class="mt-0">
-                                <div class="fw-500">
-                                    @if($tour->price_request == 1)
-                                    <span class="text-14 text-light-1 fw-400">Price On Request </span>
-                                    @else
-                                    <span class="text-14 text-light-1 fw-400">Starting from </span>
-                                    <span class="text-blue-1">₹{{number_format($tour->adult_price)}}</span>
-                                    <span class="text-14 text-light-1 fw-400">/Person</span> 
-                                    @endif
+                                        @if ($hasHalfStar)
+                                        <div class="fa fa-star-half-alt text-yellow-2 text-14"></div>
+                                        @endif
+                                    </div>
+                                    <p class="text-light-1 lh-14 text-14 mt-5">{{Str::limit($tour->amenities, 30)}}</p>
+                                    <div class="mt-0">
+                                        <div class="fw-500">
+                                            @if($tour->price_request == 1)
+                                            <span class="text-14 text-light-1 fw-400">Price On Request </span>
+                                            @else
+                                            <span class="text-14 text-light-1 fw-400">Starting from </span>
+                                            <span class="text-blue-1">₹{{number_format($tour->adult_price)}}</span>
+                                            <span class="text-14 text-light-1 fw-400">/Person</span> 
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="d-flex items-center mt-0">
+                                        <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="button p-2 text-white bg-light-1">Read More</a>
+                                    </div> --}}
                                 </div>
-                            </div>
-                            <div class="d-flex items-center mt-0">
-                                <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="button p-2 text-white bg-light-1">Read More</a>
-                            </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                @endforeach
-            </div>
-            <div class="d-flex x-gap-15 items-center justify-center sm:justify-start pt-40 sm:pt-20">
-                <div class="col-auto">
-                    <button class="d-flex items-center text-24 arrow-left-hover js-hotels-prev">
-                        <i class="icon icon-arrow-left"></i>
-                    </button>
-                </div>
-                <div class="col-auto">
-                    <div class="pagination -dots text-border js-hotels-pag"></div>
-                </div>
-                <div class="col-auto">
-                    <button class="d-flex items-center text-24 arrow-right-hover js-hotels-next">
-                        <i class="icon icon-arrow-right"></i>
-                    </button>
+                        @endforeach
+                    </div>
+                    <div class="d-flex x-gap-15 items-center justify-center sm:justify-start pt-40 sm:pt-20">
+                        <div class="col-auto">
+                            <button class="d-flex items-center text-24 arrow-left-hover js-hotels-prev">
+                                <i class="icon icon-arrow-left"></i>
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <div class="pagination -dots text-border js-hotels-pag"></div>
+                        </div>
+                        <div class="col-auto">
+                            <button class="d-flex items-center text-24 arrow-right-hover js-hotels-next">
+                                <i class="icon icon-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -319,7 +322,7 @@
                 </div>
             </div>
         </div>
-        <div class="relative pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="base-2 xl-4 lg-3 md-2 sm-2 base-1" data-anim="slide-up delay-2">
+        <div class="relative pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="base-2 xl-5 lg-4 md-4 sm-2 base-1" data-anim="slide-up delay-2">
             <div class="swiper-wrapper">
                 @foreach($tourCats as $cat)
                 @php $image = $cat['img'] @endphp
@@ -348,86 +351,83 @@
 <!-- popular tours -->
 <section class="layout-pt-md layout-pb-md">
     <div data-anim="slide-up delay-1" class="container">
-        <div class="row y-gap-10 justify-between items-end">
-            <div class="col-auto">
+        <div class="row y-gap-10 justify-between items-center">
+            <div class="col-12 col-md-3">
                 <div class="sectionTitle -md">
                     <h2 class="sectionTitle__title">Popular Tour Packages</h2>
+                    <hr class="w-1/2">
                 </div>
             </div>
-            <div class="col-sm-auto">
-                <div class="d-inline-block">
-                    <a href="{{url('tours/')}}" class="button -md -blue-1 bg-blue-1-05 text-blue-1"> View All <div class="icon-arrow-top-right ml-15"></div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-4 lg-3 md-2 sm-2 base-1" data-nav-prev="js-hotels-prev" data-pagination="js-hotels-pag" data-nav-next="js-hotels-next">
-            <div class="swiper-wrapper">
-                @foreach($popularTours as $tour)
-                <div class="swiper-slide">
-                    <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="hotelsCard -type-1 ">
-                        <div class="hotelsCard__image">
-                            <div class="cardImage ratio ratio-1:1">
-                                <div class="cardImage__content">
-                                    <img class="rounded-4 col-12" src="{{asset('img/tours/'.$tour->image)}}" alt="{{$tour->tour_name}}">
+            <div class="col-12 col-md-9">
+                <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-4 lg-3 md-2 sm-2 base-1" data-nav-prev="js-hotels-prev" data-pagination="js-hotels-pag" data-nav-next="js-hotels-next">
+                    <div class="swiper-wrapper">
+                        @foreach($popularTours as $tour)
+                        <div class="swiper-slide">
+                            <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="hotelsCard -type-1 ">
+                                <div class="hotelsCard__image">
+                                    <div class="cardImage ratio ratio-1:1">
+                                        <div class="cardImage__content">
+                                            <img class="rounded-4 col-12" src="{{asset('img/tours/'.$tour->image)}}" alt="{{$tour->tour_name}}">
+                                        </div>
+                                        {{-- <div class="cardImage__wishlist">
+                                            <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                                <i class="icon-heart text-12"></i>
+                                            </button>
+                                        </div> --}}
+                                    </div>
                                 </div>
-                                {{-- <div class="cardImage__wishlist">
-                                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                        <i class="icon-heart text-12"></i>
-                                    </button>
-                                </div> --}}
-                            </div>
-                        </div>
-                        <div class="hotelsCard__content mt-10">
-                            <h4 class="hotelsCard__title text-dark-1 text-17 lh-16 fw-500">
-                                <span>{{$tour->tour_name}} | <span class="text-light-1">{{$tour->nights}}N-{{$tour->days}}D</span></span>
-                            </h4>
-                            @php
-                                $fullStars = floor($tour->rating);
-                                $hasHalfStar = ($tour->rating - $fullStars) >= 0.5;
-                            @endphp
-                            <div class="d-flex x-gap-5 items-center pt-5">
-                                @for ($i = 1; $i <= $fullStars; $i++)
-                                <div class="fa fa-star text-yellow-2 text-14"></div>
-                                @endfor
+                                <div class="hotelsCard__content mt-10">
+                                    <h4 class="hotelsCard__title text-dark-1 text-15 lh-14 fw-500">
+                                        <span>{{$tour->tour_name}} | <span class="text-light-1">{{$tour->nights}}N-{{$tour->days}}D</span></span>
+                                    </h4>
+                                    {{-- @php
+                                        $fullStars = floor($tour->rating);
+                                        $hasHalfStar = ($tour->rating - $fullStars) >= 0.5;
+                                    @endphp
+                                    <div class="d-flex x-gap-5 items-center pt-5">
+                                        @for ($i = 1; $i <= $fullStars; $i++)
+                                        <div class="fa fa-star text-yellow-2 text-14"></div>
+                                        @endfor
 
-                                @if ($hasHalfStar)
-                                <div class="fa fa-star-half-alt text-yellow-2 text-14"></div>
-                                @endif
-                            </div>
-                            <p class="text-light-1 lh-14 text-14 mt-5">{{Str::limit($tour->amenities, 30)}}</p>
-                            <div class="mt-0">
-                                <div class="fw-500"> 
-                                    @if($tour->price_request == 1)
-                                    <span class="text-14 text-light-1 fw-400">Price On Request </span>
-                                    @else
-                                    <span class="text-14 text-light-1 fw-400">Starting from </span>
-                                    <span class="text-blue-1">₹{{number_format($tour->adult_price)}}</span>
-                                    <span class="text-14 text-light-1 fw-400">/Person</span> 
-                                    @endif
+                                        @if ($hasHalfStar)
+                                        <div class="fa fa-star-half-alt text-yellow-2 text-14"></div>
+                                        @endif
+                                    </div>
+                                    <p class="text-light-1 lh-14 text-14 mt-5">{{Str::limit($tour->amenities, 30)}}</p>
+                                    <div class="mt-0">
+                                        <div class="fw-500"> 
+                                            @if($tour->price_request == 1)
+                                            <span class="text-14 text-light-1 fw-400">Price On Request </span>
+                                            @else
+                                            <span class="text-14 text-light-1 fw-400">Starting from </span>
+                                            <span class="text-blue-1">₹{{number_format($tour->adult_price)}}</span>
+                                            <span class="text-14 text-light-1 fw-400">/Person</span> 
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="d-flex items-center mt-0">
+                                        <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="button p-2 text-white bg-light-1">Read More</a>
+                                    </div> --}}
                                 </div>
-                            </div>
-                            <div class="d-flex items-center mt-0">
-                                <a href="{{url('/tour-details/'.$tour->id.'/'.Str::slug($tour->tour_name))}}" class="button p-2 text-white bg-light-1">Read More</a>
-                            </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                @endforeach
-            </div>
-            <div class="d-flex x-gap-15 items-center justify-center sm:justify-start pt-40 sm:pt-20">
-                <div class="col-auto">
-                    <button class="d-flex items-center text-24 arrow-left-hover js-hotels-prev">
-                        <i class="icon icon-arrow-left"></i>
-                    </button>
-                </div>
-                <div class="col-auto">
-                    <div class="pagination -dots text-border js-hotels-pag"></div>
-                </div>
-                <div class="col-auto">
-                    <button class="d-flex items-center text-24 arrow-right-hover js-hotels-next">
-                        <i class="icon icon-arrow-right"></i>
-                    </button>
+                        @endforeach
+                    </div>
+                    <div class="d-flex x-gap-15 items-center justify-center sm:justify-start pt-40 sm:pt-20">
+                        <div class="col-auto">
+                            <button class="d-flex items-center text-24 arrow-left-hover js-hotels-prev">
+                                <i class="icon icon-arrow-left"></i>
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <div class="pagination -dots text-border js-hotels-pag"></div>
+                        </div>
+                        <div class="col-auto">
+                            <button class="d-flex items-center text-24 arrow-right-hover js-hotels-next">
+                                <i class="icon icon-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
