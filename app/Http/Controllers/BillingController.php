@@ -19,6 +19,8 @@ use Auth;
 use Mail;
 use PDF;
 use Illuminate\Support\Facades\View;
+use App\Exports\InvoicesExport;
+use Excel;
 
 class BillingController extends Controller
 {
@@ -46,7 +48,27 @@ class BillingController extends Controller
         if ($request->customer) {
             $query->where('bill_to', $request->customer);
         }
-        
+        if ($request->payment_status) {
+            switch ($request->payment_status) {
+                case 'paid':
+                    $query->where('balance', 0);
+                    break;
+                case 'partially_paid':
+                    $query->where('balance', '>', 0)->where('payment_received', '>', 0);
+                    break;
+                case 'unpaid':
+                    $query->where('balance', '>', 0)->where('payment_received', 0);
+                    break;
+            }
+        }
+        if ($request->from_date && $request->to_date) {
+            $query->whereBetween('invoice_date', [$request->from_date, $request->to_date]);
+        } elseif ($request->from_date) {
+            $query->where('invoice_date', '>=', $request->from_date);
+        } elseif ($request->to_date) {
+            $query->where('invoice_date', '<=', $request->to_date);
+        }
+
         $query->where(function ($q_inner) {
             $q_inner->where('estimation', 0)
             ->orWhereNull('estimation');
@@ -60,6 +82,57 @@ class BillingController extends Controller
         $invoices = $query->orderBy('invoices.id','DESC')->paginate(15);
             
         return view('admin.billing.invoice-dashboard',compact('invoices','totalOutstanding','totalReceived','countInProgress','countSent'));
+    }
+
+    public function invoicesExport(Request $request) {
+        $query = invoices::select('invoices.*','tours.tour_name as tourName')
+            ->leftJoin('tours','tours.id','invoices.tour_name');
+
+        if ($request->q) {
+            $q = $request->q;
+            $query->where(function($q_inner) use($q){
+                $q_inner->where('bill_to','like','%'.$q.'%')
+                ->orWhere('invoices.id','like','%'.$q.'%')
+                ->orWhere('contact_no','like','%'.$q.'%');
+            });
+        }
+        if ($request->fy) {
+            $fyRange = explode('-', $request->fy);
+            $startYear = $fyRange[0] . '-04-01';
+            $endYear = $fyRange[1] . '-03-31';
+            $query->whereBetween('invoice_date', [$startYear, $endYear]);
+        }
+        if ($request->customer) {
+            $query->where('bill_to', $request->customer);
+        }
+        if ($request->payment_status) {
+            switch ($request->payment_status) {
+                case 'paid':
+                    $query->where('balance', 0);
+                    break;
+                case 'partially_paid':
+                    $query->where('balance', '>', 0)->where('payment_received', '>', 0);
+                    break;
+                case 'unpaid':
+                    $query->where('balance', '>', 0)->where('payment_received', 0);
+                    break;
+            }
+        }
+        if ($request->from_date && $request->to_date) {
+            $query->whereBetween('invoice_date', [$request->from_date, $request->to_date]);
+        } elseif ($request->from_date) {
+            $query->where('invoice_date', '>=', $request->from_date);
+        } elseif ($request->to_date) {
+            $query->where('invoice_date', '<=', $request->to_date);
+        }
+
+        $query->where(function ($q_inner) {
+            $q_inner->where('estimation', 0)
+            ->orWhereNull('estimation');
+        });
+
+        $invoices = $query->orderBy('invoices.id','DESC')->get();
+        return Excel::download(new InvoicesExport($invoices), 'invoices-'.date('d-M-Y').'.xlsx');
     }
 
     public function createInvoice(Request $request) {

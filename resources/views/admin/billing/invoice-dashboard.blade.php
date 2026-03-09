@@ -90,6 +90,7 @@
                         <h5>Invoice list ({{$invoices->total()}})</h5>
                     </div>
                     <div class="col-lg-6 col-6" style="text-align: right">
+                        <a href="{{ url('admin/invoices-export?q='.Request()->q.'&fy='.Request()->fy.'&customer='.Request()->customer.'&payment_status='.Request()->payment_status.'&from_date='.Request()->from_date.'&to_date='.Request()->to_date) }}" class="btn btn-light border"><i class="fa fa-file-excel"></i> Download</a>
                         <a href="{{ url('/admin/create-invoice') }}" class="btn btn-dark"><i class="fa fa-file-alt"></i> Create Invoice</a>
                     </div>
                 </div>
@@ -137,6 +138,20 @@
                                     <option value="{{ $user->id }}" @if(Request()->customer == $user->id) selected @endif>{{ $user->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="col-auto">
+                                <select name="payment_status" class="form-control form-control-sm" onchange="this.form.submit()">
+                                    <option value="">Payment Status</option>
+                                    <option value="paid" @if(Request()->payment_status == 'paid') selected @endif>Paid</option>
+                                    <option value="partially_paid" @if(Request()->payment_status == 'partially_paid') selected @endif>Partially Paid</option>
+                                    <option value="unpaid" @if(Request()->payment_status == 'unpaid') selected @endif>Unpaid</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control form-control-sm" type="date" name="from_date" placeholder="From Date" value="{{ Request()->from_date }}" title="From Date">
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control form-control-sm" type="date" name="to_date" placeholder="To Date" value="{{ Request()->to_date }}" title="To Date">
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-default btn-sm"> Submit</button>

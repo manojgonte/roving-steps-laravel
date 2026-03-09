@@ -38,6 +38,7 @@ Route::get('/blog/{id}/{slug?}', [IndexController::class, 'blogDetail']);
 Route::get('/like-blog/{id}', [BlogController::class, 'likeBlog']);
 Route::post('/save-enquiry', [IndexController::class, 'saveEnquiry'])->name('save.enquiry');
 Route::post('/subscribe', [IndexController::class, 'subscribe'])->name('save.subscribe');
+Route::get('/newsletter/unsubscribe/{token}', [NewsController::class, 'unsubscribe']);
 
 Route::get('/flight-booking', [IndexController::class, 'flightBooking']);
 Route::get('/flight-listing', [IndexController::class, 'flightListing']);
@@ -134,9 +135,27 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/edit-blog/{id}', [BlogController::class, 'editBlog']);
     Route::match(['get','post'], 'admin/delete-blog/{id}', [BlogController::class, 'deleteBlog']);
 
-    // newsletter
+    // newsletter - subscribers
     Route::match(['get','post'], 'admin/newsletter-subscribers', [NewsController::class, 'viewSubscribers']);
-    Route::match(['get','post'], 'admin/delete-subscriber/{id}', [NewsController::class, 'deleteSubscriber']);
+    Route::get('admin/delete-subscriber/{id}', [NewsController::class, 'deleteSubscriber']);
+
+    // newsletter - templates
+    Route::get('admin/newsletter-templates', [NewsController::class, 'viewTemplates']);
+    Route::get('admin/newsletter-template/create', [NewsController::class, 'createTemplate']);
+    Route::post('admin/newsletter-template/store', [NewsController::class, 'storeTemplate']);
+    Route::get('admin/newsletter-template/edit/{id}', [NewsController::class, 'editTemplate']);
+    Route::post('admin/newsletter-template/update/{id}', [NewsController::class, 'updateTemplate']);
+    Route::get('admin/newsletter-template/delete/{id}', [NewsController::class, 'deleteTemplate']);
+    Route::get('admin/newsletter-template/preview/{id}', [NewsController::class, 'previewTemplate']);
+
+    // newsletter - compose & send
+    Route::get('admin/newsletter-compose', [NewsController::class, 'viewCompose']);
+    Route::post('admin/newsletter-send', [NewsController::class, 'sendCampaign']);
+    Route::get('admin/newsletter-load-template', [NewsController::class, 'loadTemplate']);
+
+    // newsletter - campaigns
+    Route::get('admin/newsletter-campaigns', [NewsController::class, 'viewCampaigns']);
+    Route::get('admin/newsletter-campaign/{id}', [NewsController::class, 'showCampaign']);
     
     // Associated Users
     Route::match(['get','post'], 'admin/associated-users/', [AssociateController::class, 'viewAssociates']);
@@ -164,6 +183,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     // Billing & invoices
     Route::match(['get','post'], 'admin/invoice-billing', [BillingController::class, 'invoiceBilling']);
+    Route::match(['get','post'], 'admin/invoices-export', [BillingController::class, 'invoicesExport']);
     Route::match(['get','post'], 'admin/create-invoice', [BillingController::class, 'createInvoice'])->name('createInvoice');
     Route::match(['get','post'], 'admin/invoice-details/{id}', [BillingController::class, 'invoiceDetails']);
 
@@ -187,6 +207,9 @@ Route::group(['middleware'=>'admin_auth'],function(){
     Route::match(['get','post'], 'admin/delete-staff/{id}', [AdminController::class, 'deleteStaff']);
 });
 
+
+// SendGrid webhook (no auth, CSRF exempted in VerifyCsrfToken)
+Route::post('/newsletter/webhook/sendgrid', [NewsController::class, 'sendgridWebhook']);
 
 //ADMIN AUTH ROUTES
 Route::match(['get','post'], '/admin', [AdminController::class, 'login']);
