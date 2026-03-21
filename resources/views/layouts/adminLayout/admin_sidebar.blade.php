@@ -98,15 +98,27 @@
 
                 @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white @if(preg_match('#/admin/newsletter-subscribers#', $url) || preg_match('#/admin/sent-estimations#', $url)) active @endif">
-                        <i class="nav-icon fas fa-comment-dots"></i>
+                    <a href="#" class="nav-link text-white @if(preg_match('#/admin/newsletter#', $url)) active @endif">
+                        <i class="nav-icon fas fa-envelope"></i>
                         <p>Newsletter <i class="right fas fa-angle-right"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white">
+                            <a href="{{url('admin/newsletter-compose')}}" class="nav-link text-white">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Newsletter</p>
+                                <p>Compose</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('admin/newsletter-campaigns')}}" class="nav-link text-white">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Campaigns</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('admin/newsletter-templates')}}" class="nav-link text-white">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Templates</p>
                             </a>
                         </li>
                         <li class="nav-item">

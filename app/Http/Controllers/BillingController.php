@@ -28,27 +28,28 @@ class BillingController extends Controller
     public function invoiceBilling(Request $request) {
         $query  = invoices::with('invoiceItems')
             ->select('invoices.*','tours.tour_name as tourName')
-            ->leftJoin('tours','tours.id','invoices.tour_name');
+            ->leftJoin('tours','tours.id','invoices.tour_name')
+                ->where(function ($q) {
+                $q->where('estimation', 0)
+                  ->orWhereNull('estimation');
+            });
 
-        if($request->q){
-            $q = $request->q;
-            $query->where(function($q_inner) use($q){
-                $q_inner->where('bill_to','like','%'.$q.'%')
-                ->orWhere('invoices.id','like','%'.$q.'%')
-                ->orWhere('contact_no','like','%'.$q.'%');
+        // search
+        if ($request->filled('q')) {
+            $search = trim($request->q);
+
+            $query->where(function ($q) use ($search) {
+                $q->where('bill_to', 'like', '%' . $search . '%')
+                  ->orWhere('invoices.id', 'like', '%' . $search . '%')
+                  ->orWhere('contact_no', 'like', '%' . $search . '%');
             });
         }
-        if ($request->fy) {
-            $fyRange = explode('-', $request->fy);
-            $startYear = $fyRange[0] . '-04-01';
-            $endYear = $fyRange[1] . '-03-31';
-
-            $query->whereBetween('invoice_date', [$startYear, $endYear]);
-        }
-        if ($request->customer) {
+        // Customer filter
+        if ($request->filled('customer')) {
             $query->where('bill_to', $request->customer);
         }
-        if ($request->payment_status) {
+
+        if ($request->filled('payment_status')) {
             switch ($request->payment_status) {
                 case 'paid':
                     $query->where('balance', 0);
@@ -61,23 +62,67 @@ class BillingController extends Controller
                     break;
             }
         }
-        if ($request->from_date && $request->to_date) {
-            $query->whereBetween('invoice_date', [$request->from_date, $request->to_date]);
-        } elseif ($request->from_date) {
-            $query->where('invoice_date', '>=', $request->from_date);
-        } elseif ($request->to_date) {
-            $query->where('invoice_date', '<=', $request->to_date);
+
+        $today = now()->toDateString();
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+
+        // Financial year range
+        if ($request->filled('fy')) {
+            $fyRange = explode('-', $request->fy);
+
+            if (count($fyRange) === 2) {
+                $fyStart = $fyRange[0] . '-04-01';
+                $fyEnd   = $fyRange[1] . '-03-31';
+
+                // Restrict overall data to selected financial year
+                $query->whereBetween('invoice_date', [$fyStart, $fyEnd]);
+
+                // If user selected custom dates, force them inside FY
+                if (!empty($fromDate) && $fromDate < $fyStart) {
+                    $fromDate = $fyStart;
+                }
+                if (!empty($fromDate) && $fromDate > $fyEnd) {
+                    $fromDate = null;
+                }
+
+                if (!empty($toDate) && $toDate > $fyEnd) {
+                    $toDate = $fyEnd;
+                }
+                if (!empty($toDate) && $toDate < $fyStart) {
+                    $toDate = null;
+                }
+            }
+        } else {
+            // No FY selected: allow only past dates
+            if (!empty($fromDate) && $fromDate > $today) {
+                $fromDate = $today;
+            }
+            if (!empty($toDate) && $toDate > $today) {
+                $toDate = $today;
+            }
         }
 
-        $query->where(function ($q_inner) {
-            $q_inner->where('estimation', 0)
-            ->orWhereNull('estimation');
-        });
+        // Date filters
+        if (!empty($fromDate) && !empty($toDate)) {
+            if ($fromDate > $toDate) {
+                [$fromDate, $toDate] = [$toDate, $fromDate];
+            }
 
-        $totalOutstanding = (clone $query)->sum('balance');
-        $totalReceived = (clone $query)->sum('payment_received');
-        $countInProgress  = (clone $query)->where('invoice_sent', 0)->count();
-        $countSent        = (clone $query)->where('invoice_sent', 1)->count();
+            $query->whereBetween('invoice_date', [$fromDate, $toDate]);
+        } elseif (!empty($fromDate)) {
+            $query->whereDate('invoice_date', '>=', $fromDate);
+        } elseif (!empty($toDate)) {
+            $query->whereDate('invoice_date', '<=', $toDate);
+        }
+
+        // Summary cards
+        $baseQuery = clone $query;
+
+        $totalOutstanding = (clone $baseQuery)->sum('balance');
+        $totalReceived    = (clone $baseQuery)->sum('payment_received');
+        $countInProgress  = (clone $baseQuery)->where('invoice_sent', 0)->count();
+        $countSent        = (clone $baseQuery)->where('invoice_sent', 1)->count();
 
         $invoices = $query->orderBy('invoices.id','DESC')->paginate(15);
             
@@ -85,27 +130,30 @@ class BillingController extends Controller
     }
 
     public function invoicesExport(Request $request) {
-        $query = invoices::select('invoices.*','tours.tour_name as tourName')
-            ->leftJoin('tours','tours.id','invoices.tour_name');
+        $query  = invoices::with('invoiceItems')
+            ->select('invoices.*','tours.tour_name as tourName')
+            ->leftJoin('tours','tours.id','invoices.tour_name')
+                ->where(function ($q) {
+                $q->where('estimation', 0)
+                  ->orWhereNull('estimation');
+            });
 
-        if ($request->q) {
-            $q = $request->q;
-            $query->where(function($q_inner) use($q){
-                $q_inner->where('bill_to','like','%'.$q.'%')
-                ->orWhere('invoices.id','like','%'.$q.'%')
-                ->orWhere('contact_no','like','%'.$q.'%');
+        // search
+        if ($request->filled('q')) {
+            $search = trim($request->q);
+
+            $query->where(function ($q) use ($search) {
+                $q->where('bill_to', 'like', '%' . $search . '%')
+                  ->orWhere('invoices.id', 'like', '%' . $search . '%')
+                  ->orWhere('contact_no', 'like', '%' . $search . '%');
             });
         }
-        if ($request->fy) {
-            $fyRange = explode('-', $request->fy);
-            $startYear = $fyRange[0] . '-04-01';
-            $endYear = $fyRange[1] . '-03-31';
-            $query->whereBetween('invoice_date', [$startYear, $endYear]);
-        }
-        if ($request->customer) {
+        // Customer filter
+        if ($request->filled('customer')) {
             $query->where('bill_to', $request->customer);
         }
-        if ($request->payment_status) {
+
+        if ($request->filled('payment_status')) {
             switch ($request->payment_status) {
                 case 'paid':
                     $query->where('balance', 0);
@@ -118,18 +166,59 @@ class BillingController extends Controller
                     break;
             }
         }
-        if ($request->from_date && $request->to_date) {
-            $query->whereBetween('invoice_date', [$request->from_date, $request->to_date]);
-        } elseif ($request->from_date) {
-            $query->where('invoice_date', '>=', $request->from_date);
-        } elseif ($request->to_date) {
-            $query->where('invoice_date', '<=', $request->to_date);
+
+        $today = now()->toDateString();
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+
+        // Financial year range
+        if ($request->filled('fy')) {
+            $fyRange = explode('-', $request->fy);
+
+            if (count($fyRange) === 2) {
+                $fyStart = $fyRange[0] . '-04-01';
+                $fyEnd   = $fyRange[1] . '-03-31';
+
+                // Restrict overall data to selected financial year
+                $query->whereBetween('invoice_date', [$fyStart, $fyEnd]);
+
+                // If user selected custom dates, force them inside FY
+                if (!empty($fromDate) && $fromDate < $fyStart) {
+                    $fromDate = $fyStart;
+                }
+                if (!empty($fromDate) && $fromDate > $fyEnd) {
+                    $fromDate = null;
+                }
+
+                if (!empty($toDate) && $toDate > $fyEnd) {
+                    $toDate = $fyEnd;
+                }
+                if (!empty($toDate) && $toDate < $fyStart) {
+                    $toDate = null;
+                }
+            }
+        } else {
+            // No FY selected: allow only past dates
+            if (!empty($fromDate) && $fromDate > $today) {
+                $fromDate = $today;
+            }
+            if (!empty($toDate) && $toDate > $today) {
+                $toDate = $today;
+            }
         }
 
-        $query->where(function ($q_inner) {
-            $q_inner->where('estimation', 0)
-            ->orWhereNull('estimation');
-        });
+        // Date filters
+        if (!empty($fromDate) && !empty($toDate)) {
+            if ($fromDate > $toDate) {
+                [$fromDate, $toDate] = [$toDate, $fromDate];
+            }
+
+            $query->whereBetween('invoice_date', [$fromDate, $toDate]);
+        } elseif (!empty($fromDate)) {
+            $query->whereDate('invoice_date', '>=', $fromDate);
+        } elseif (!empty($toDate)) {
+            $query->whereDate('invoice_date', '<=', $toDate);
+        }
 
         $invoices = $query->orderBy('invoices.id','DESC')->get();
         return Excel::download(new InvoicesExport($invoices), 'invoices-'.date('d-M-Y').'.xlsx');

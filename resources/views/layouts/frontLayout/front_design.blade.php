@@ -128,7 +128,7 @@
                                             </h5>
                                             <div class="mt-10">
                                                 <div id="formAlert" class="alert d-none px-5 bg-green-1 fw-500" role="alert"></div>
-                                                <h6>I'm Looing For:</h6>
+                                                <h6>I'm Looing For: <small>(Can select one or more)</small></h6>
                                                 <div class="row">
                                                     <div class="col-md-12 pdi radio-group">
                                                         <div class="radio-item"><input type="checkbox" class="plan" name="services[]" value="Tour Booking" checked><label class="radio-label" for="Tour Booking">Tour Booking</label></div>
@@ -181,12 +181,12 @@
                                                 <div class="row py-15">
                                                     <div class="col-sm-6 col-md-6 col-12 no-padding_right">
                                                         <div class="form-group border-bottom-light">
-                                                            <input type="text" name="destination" class="form-control mr-sm-2" maxlength="30" placeholder="Destination" required>
+                                                            <input type="text" name="destination" class="form-control mr-sm-2" maxlength="30" placeholder="Destination *" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6 col-md-6 col-12 no-padding">
                                                         <div class="form-group border-bottom-light">
-                                                            <input type="text" name="tourist_no" class="form-control" placeholder="No. of Pax" aria-label="No. of Pax" required>
+                                                            <input type="text" name="tourist_no" class="form-control" placeholder="No. of Pax *" aria-label="No. of Pax" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -195,13 +195,13 @@
                                                     <div class="col-sm-6 col-md-6 col-12 no-padding_right">
                                                         <div class="form-group border-bottom-light">
                                                             <label class="text-light-1 text-14">From Date:</label>
-                                                            <input type="date" name="from_date" placeholder="From Date" aria-label="Travel Date" autocomplete="off">
+                                                            <input type="date" name="from_date" id="from_date" placeholder="From Date" aria-label="Travel Date" autocomplete="off" min="{{ date('Y-m-d') }}">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6 col-md-6 col-12 no-padding">
                                                         <div class="form-group border-bottom-light">
                                                             <label class="text-light-1 text-14">To Date:</label>
-                                                            <input type="date" name="end_date" placeholder="To Date" aria-label="Travel Date" autocomplete="off">
+                                                            <input type="date" name="end_date" id="end_date" placeholder="To Date" aria-label="Travel Date" autocomplete="off" min="{{ date('Y-m-d') }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -228,6 +228,23 @@
 
     <script src="{{asset('js/vendors.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
+
+    <script>
+        const fromInput = document.getElementById('from_date');
+        const toInput = document.getElementById('end_date');
+
+        fromInput.addEventListener('change', () => {
+            if (fromInput.value) {
+                toInput.disabled = false;
+
+                toInput.min = fromInput.value;
+
+                if (toInput.value && toInput.value < fromInput.value) {
+                    toInput.value = "";
+                }
+            }
+      });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -286,7 +303,7 @@
             }
 
             function showAlert(type, message) {
-                alertBox.className = 'alert alert-' + type;
+                alertBox.className = 'alert alert- ' + type;
                 alertBox.innerHTML = message;
                 alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }

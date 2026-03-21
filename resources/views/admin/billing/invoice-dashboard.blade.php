@@ -106,6 +106,22 @@
                                 <input class="form-control form-control-sm" type="search" name="q" placeholder="Search by Client, Tour Name" value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
                             </div>
                             <div class="col-auto">
+                                <select name="customer" class="form-control form-control-sm" onchange="this.form.submit()">
+                                    <option value="">Customer</option>
+                                    @foreach(App\Models\User::orderBy('name','ASC')->get() as $user)
+                                    <option value="{{ $user->id }}" @if(Request()->customer == $user->id) selected @endif>{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <select name="payment_status" class="form-control form-control-sm" onchange="this.form.submit()">
+                                    <option value="">Payment Status</option>
+                                    <option value="paid" @if(Request()->payment_status == 'paid') selected @endif>Paid</option>
+                                    <option value="partially_paid" @if(Request()->payment_status == 'partially_paid') selected @endif>Partially Paid</option>
+                                    <option value="unpaid" @if(Request()->payment_status == 'unpaid') selected @endif>Unpaid</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
                                 @php
                                     $currentMonth = date('n'); // Get current month (1-12)
                                     $currentYear = date('Y'); // Get current year
@@ -127,31 +143,15 @@
                                         $options .= '<option ' . $selected . ' value="' . $fyRange . '">' . $fyRange . '</option>';
                                     }
                                 @endphp
-                                <select name="fy" class="form-control form-control-sm" onchange="this.form.submit()">
+                                <select name="fy" id="fy" class="form-control form-control-sm">
                                     {!! $options !!}
                                 </select>
                             </div>
                             <div class="col-auto">
-                                <select name="customer" class="form-control form-control-sm" onchange="this.form.submit()">
-                                    <option value="">Customer</option>
-                                    @foreach(App\Models\User::orderBy('name','ASC')->get() as $user)
-                                    <option value="{{ $user->id }}" @if(Request()->customer == $user->id) selected @endif>{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
+                                <input class="form-control form-control-sm" type="date" name="from_date" id="from_date" placeholder="From Date" value="{{ Request()->from_date }}" title="From Date">
                             </div>
                             <div class="col-auto">
-                                <select name="payment_status" class="form-control form-control-sm" onchange="this.form.submit()">
-                                    <option value="">Payment Status</option>
-                                    <option value="paid" @if(Request()->payment_status == 'paid') selected @endif>Paid</option>
-                                    <option value="partially_paid" @if(Request()->payment_status == 'partially_paid') selected @endif>Partially Paid</option>
-                                    <option value="unpaid" @if(Request()->payment_status == 'unpaid') selected @endif>Unpaid</option>
-                                </select>
-                            </div>
-                            <div class="col-auto">
-                                <input class="form-control form-control-sm" type="date" name="from_date" placeholder="From Date" value="{{ Request()->from_date }}" title="From Date">
-                            </div>
-                            <div class="col-auto">
-                                <input class="form-control form-control-sm" type="date" name="to_date" placeholder="To Date" value="{{ Request()->to_date }}" title="To Date">
+                                <input class="form-control form-control-sm" type="date" name="to_date" id="to_date" placeholder="To Date" value="{{ Request()->to_date }}" title="To Date">
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-default btn-sm"> Submit</button>
@@ -254,6 +254,73 @@
 </div>
 
 @section('scripts')
+<script>
+    function updateDateRestrictions() {
+        const fy = document.getElementById('fy').value;
+        const fromDate = document.getElementById('from_date');
+        const toDate = document.getElementById('to_date');
+
+        const today = new Date().toISOString().split('T')[0];
+
+        if (fy) {
+            const years = fy.split('-');
+            const startYear = years[0];
+            const endYear = years[1];
+
+            const minDate = `${startYear}-04-01`;
+            const maxDate = `${endYear}-03-31`;
+
+            fromDate.min = minDate;
+            fromDate.max = maxDate;
+            toDate.min = minDate;
+            toDate.max = maxDate;
+
+            if (fromDate.value && (fromDate.value < minDate || fromDate.value > maxDate)) {
+                fromDate.value = '';
+            }
+
+            if (toDate.value && (toDate.value < minDate || toDate.value > maxDate)) {
+                toDate.value = '';
+            }
+        } else {
+            fromDate.removeAttribute('min');
+            toDate.removeAttribute('min');
+
+            fromDate.max = today;
+            toDate.max = today;
+        }
+
+        // Ensure to_date is not before from_date
+        if (fromDate.value) {
+            toDate.min = fromDate.value;
+        }
+
+        // Ensure from_date is not after to_date
+        if (toDate.value) {
+            fromDate.max = fy ? fromDate.max : today;
+        }
+    }
+
+    document.getElementById('fy').addEventListener('change', function () {
+        document.getElementById('from_date').value = '';
+        document.getElementById('to_date').value = '';
+        updateDateRestrictions();
+    });
+
+    document.getElementById('from_date').addEventListener('change', function () {
+        const toDate = document.getElementById('to_date');
+        toDate.min = this.value || toDate.min;
+    });
+
+    document.getElementById('to_date').addEventListener('change', function () {
+        const fromDate = document.getElementById('from_date');
+        if (fromDate.value && this.value < fromDate.value) {
+            this.value = '';
+        }
+    });
+
+    window.addEventListener('load', updateDateRestrictions);
+</script>
 <script>
     function getInvoiceId(el){
         invoiceId = $(el).attr('invoiceId');

@@ -66,6 +66,7 @@
                                     <tr>
                                         <th>Sr.</th>
                                         <th class="text-center">Email</th>
+                                        <th class="text-center">Status</th>
                                         <th class="text-center">Created At</th>
                                         <th>Action</th>
                                     </tr>
@@ -76,6 +77,13 @@
 	                                <tr>
                                         <td>{{ $emails->firstItem() + $key }}</td>
                                         <td class="text-center">{{ $row->email }}</td>
+                                        <td class="text-center">
+                                            @if($row->status == 1)
+                                                <span class="badge badge-success">Active</span>
+                                            @else
+                                                <span class="badge badge-secondary">Unsubscribed</span>
+                                            @endif
+                                        </td>
                                         <td>{{ date('d M Y', strtotime($row->created_at)) }}</td>
                                         <td class="align-middle">
                                             <!-- <a class="btn btn-outline-dark btn-sm" href="{{ url('/admin/edit-blog/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a> -->

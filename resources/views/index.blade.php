@@ -464,7 +464,7 @@
                 <h2 class="text-30">What Travelers are Saying <br> About Us? </h2>
                 <div class="row y-gap-30 pt-60 lg:pt-40">
                     <div class="col-sm-5 col-6">
-                        <div class="text-30 lh-15 fw-600">4.9</div>
+                        <div class="text-30 lh-15 fw-600">4.9 / 5.0</div>
                         <div class="text-light-1 lh-15">Our Google Ratings</div>
                         <div class="d-flex x-gap-5 items-center pt-10">
                             <div class="icon-star text-blue-1 text-10"></div>
@@ -486,23 +486,23 @@
                                     @if(empty($testimonial->thumbnail_img))
                                     <div class="avatar avatar-md bg-info">{{mb_substr(ucfirst($testimonial->user_name) , 0, 1)}}</div>
                                     @else
-                                    <img src="{{ asset('img/testimonials/'.$testimonial->thumbnail_img) }}" width="70">
+                                    <img src="{{ asset('img/testimonials/'.$testimonial->thumbnail_img) }}" class="rounded-4" width="85">
                                     @endif
                                 </div>
                                 <div class="col-auto">
                                     <h5 class="text-16 fw-500">{{$testimonial->user_name}}</h5>
-                                    <div class="text-15 text-light-1 lh-15 invisible d-none">UX / UI Designer</div>
+                                    <div class="text-15 text-light-1 lh-15 invisible d-none">Testimonial</div>
                                 </div>
                             </div>
-                            <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">{{$testimonial->testimonial}}</p>
+                            <p class="text-18 fw-500 text-dark-1 mt-10 sm:mt-20">{{$testimonial->testimonial}}</p>
                         </div>
                         @endforeach
                     </div>
-                    <div class="d-flex items-center mt-60 sm:mt-20 js-testimonials-slider-pag">
+                    <!-- <div class="d-flex items-center mt-60 sm:mt-20 js-testimonials-slider-pag">
                         <div class="text-dark-1 fw-500 js-current">01</div>
                         <div class="slider-scrollbar bg-border ml-20 mr-20 w-max-300 js-scrollbar"></div>
                         <div class="text-dark-1 fw-500 js-all">{{ count($testimonials) }}</div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

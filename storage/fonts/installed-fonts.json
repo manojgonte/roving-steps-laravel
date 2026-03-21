@@ -1,22 +1,22 @@
 {
     "poppins": {
-        "300": "poppins_300_6803ad4fe8fecdbaeff0adce8839c330",
-        "normal": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_normal_c6711d47669d7317aa5bfeda9f1dded3",
-        "500": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_500_a8989f7b44a711b1b2ef07347b37ec13",
+        "300": "poppins_300_7bd74212042e2303e96e1e2a59c91153",
+        "normal": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_normal_41eae6f88194706e4cb26de3ac737d8a",
+        "500": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_500_2a496847b9018af565e71324a9cbc097",
         "600": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_600_9623fbc18c38938c2057a9aae8390a42",
         "bold": "C:\\Users\\Manoj\\Desktop\\laravel\\version-test\\storage\\fonts\/poppins_bold_8fe618268f56b4b8f1e70e87a9e99fc0",
-        "italic": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_italic_11677d11ae3d58aa7603b629f870be1a",
-        "500_italic": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_500_italic_00e8237606ffe9e7756869f84f5ebcf9",
-        "600_italic": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_600_italic_14a3b5633f09679886d6b33558575f6b"
+        "italic": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_italic_480e1f539c3db7c8a2b8d3b1c148999a",
+        "500_italic": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_500_italic_184fe5de7c424843e21013032819c80e",
+        "600_italic": "D:\\projects\\rovingsteps\\storage\\fonts\/poppins_600_italic_18744d018023f438c70dfc3910401aa7"
     },
     "glyphicons halflings": {
         "normal": "glyphicons_halflings_normal_4ced20531a4f462a8c5c535d4debd2eb"
     },
     "roboto mono": {
-        "italic": "roboto_mono_italic_b6fd919e1d9eb4d22288e472bab41f21"
+        "italic": "roboto_mono_italic_7d155a9462cd6a5897e7e151704c00c6"
     },
     "roboto serif": {
-        "normal": "roboto_serif_normal_b9e24b26f5f5d061bd4a264f9a94ad3c"
+        "normal": "roboto_serif_normal_941fe8ea3dadcbc9d3ac5e6624b6e359"
     },
     "roboto slab": {
         "normal": "roboto_slab_normal_6557bd0d36febd877adba13c36287a1b"
