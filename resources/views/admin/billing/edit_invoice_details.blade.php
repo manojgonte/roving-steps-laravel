@@ -128,7 +128,7 @@
                                             </select>
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" value="{{$item->tourist_count}}" />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" step="0.01" value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" value="{{$item->cost_person}}" />
@@ -179,7 +179,7 @@
                                             </select>
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" step="0.01" required value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
@@ -223,7 +223,7 @@
                                             <input type="hidden" name="days[]" value="">
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" step="0.01" required value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
@@ -267,7 +267,7 @@
                                             <input type="hidden" name="days[]" value="">
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" step="0.01" required value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
@@ -319,7 +319,7 @@
                                             </select>
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" step="0.01" required value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
@@ -364,7 +364,7 @@
                                             <input type="hidden" name="days[]" value="">
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" step="0.01" required value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
@@ -409,7 +409,7 @@
                                             <input type="hidden" name="days[]" value="">
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required value="{{$item->tourist_count}}" />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" step="0.01" required value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required value="{{$item->cost_person}}" />
@@ -474,7 +474,7 @@
                                             <input type="number" name='days[]' placeholder='Enter days' class="form-control form-control-sm" required min="1" value="{{$item->days}}" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" required min="1" value="{{$item->tourist_count}}" />
+                                            <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" required min="1" step="0.01" value="{{$item->tourist_count}}" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='cost_person[]' placeholder='Cost per person' class="form-control form-control-sm" required min="1" value="{{$item->cost_person}}" />
@@ -531,7 +531,7 @@
                                     </select>
                                 </div>
                             </td>
-                            <td class="text-right"><input type="number" name="tcs_amt" class="form-control form-control-sm w-25" readonly value="{{ $invoice->tcs_amt ?? null }}" /></td>
+                            <td class="text-right"><input type="number" name="tcs_amt" class="form-control form-control-sm w-25" readonly value="{{ $invoice->tcs_amt ?? null }}" step="0.01" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
@@ -552,11 +552,11 @@
                                     <select class="form-control form-control-sm" name="gst_per" required><option value="">Select GST %</option><option value="0" @if($invoice->gst_per == '0') selected @endif>0%</option><option value="18" @if($invoice->gst_per == '18') selected @endif>18%</option><option value="5" @if($invoice->gst_per == '5') selected @endif>5%</option></select>
                                 </div>
                             </td>
-                            <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" step="0.01" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Grand Total</td>
-                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" step="0.01" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
@@ -565,11 +565,11 @@
                         @if($invoice->estimation != 1)
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
-                            <td class="text-right"><input type="number" name="payment_received" class="form-control form-control-sm w-25" min="1" value="{{$invoice->payment_received ?? 0}}" /></td>
+                            <td class="text-right"><input type="number" name="payment_received" class="form-control form-control-sm w-25" min="0" step="0.01" value="{{$invoice->payment_received ?? 0}}" onkeydown="return ![109,107,189,187,69].includes(event.keyCode)" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Balance</td>
-                            <td class="text-right"><input type="number" name="balance" class="form-control form-control-sm w-25" readonly /></td>
+                            <td class="text-right"><input type="number" name="balance" class="form-control form-control-sm w-25" readonly step="0.01" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
@@ -703,7 +703,7 @@
             var teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
 
             // Array of scales in Indian numbering system
-            var scales = ['', 'Thousand', 'Lac', 'Crore'];
+            var scales = ['', 'Thousand', 'Lakh', 'Crore'];
 
             // Convert a three-digit number into words
             function convertThreeDigits(num) {
@@ -729,8 +729,9 @@
             // Convert a number into words
             function convertToWords(num) {
                 if (num === 0) return 'Zero';
+                num = Math.floor(Math.abs(num));
                 var word = '';
-                var scaleIndex = 0; // Index for selecting the appropriate scale
+                var scaleIndex = 0;
                 while (num > 0) {
                     var remainder = num % 1000;
                     if (remainder > 0) {
@@ -804,15 +805,24 @@
 
         // Function to update balance based on payment received
         function updateBalance() {
-            var paymentReceived = parseFloat($('[name="payment_received"]').val());
-            var grandTotal = parseFloat($('[name="grand_total"]').val());
+            var paymentReceived = parseFloat($('[name="payment_received"]').val()) || 0;
+            var grandTotal = parseFloat($('[name="grand_total"]').val()) || 0;
+
+            if (paymentReceived < 0) {
+                $('[name="payment_received"]').val(0);
+                paymentReceived = 0;
+            }
+
+            if (paymentReceived > grandTotal) {
+                alert('Payment received cannot be more than Grand Total (' + grandTotal.toFixed(2) + ')');
+                $('[name="payment_received"]').val(grandTotal.toFixed(2));
+                paymentReceived = grandTotal;
+            }
 
             if (!isNaN(paymentReceived) && !isNaN(grandTotal)) {
                 var balance = grandTotal - paymentReceived;
                 $('[name="balance"]').val(balance.toFixed(2));
-
-                // Convert balance to words
-                $('#balance_word').text(numberToWords(balance) + ' Rupees Only');
+                $('#balance_word').text(numberToWords(Math.floor(balance)) + ' Rupees Only');
             } else {
                 $('[name="balance"]').val('');
                 $('#balance_word').text('');
@@ -824,7 +834,7 @@
             var grandTotal = parseFloat($('[name="grand_total"]').val());
 
             if (!isNaN(grandTotal)) {
-                $('#grand_total_word').text(numberToWords(grandTotal) + ' Rupees Only');
+                $('#grand_total_word').text(numberToWords(Math.floor(grandTotal)) + ' Rupees Only');
             } else {
                 $('#grand_total_word').text('');
             }

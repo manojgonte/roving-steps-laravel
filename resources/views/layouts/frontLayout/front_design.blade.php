@@ -81,7 +81,7 @@
                 <div class="login-box login-box-modal">
 
                     <div class="row">
-                        <div class="col-lg-5 col-md-5 col-sm-12 col-12">
+                        <div class="col-lg-5 col-md-5 col-sm-12 col-12 order-last order-lg-first order-md-first">
                             <div class="visa-modal-text">                                
                                 <div class="text-20 fw-500 lh-15">Why book with us</div>
                             </div>
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class=" col-lg-7 col-md-7 col-sm-12 col-12">
+                        <div class=" col-lg-7 col-md-7 col-sm-12 col-12 order-first order-lg-last order-md-last">
                             <form id="SendEnquiry" method="POST">
                                 <div class="modal-body">
                                     <div class="panel-body pop-up-view no-padding">
@@ -194,13 +194,13 @@
                                                 <div class="row py-15">
                                                     <div class="col-sm-6 col-md-6 col-12 no-padding_right">
                                                         <div class="form-group border-bottom-light">
-                                                            <label class="text-light-1 text-14">From Date:</label>
+                                                            <label class="text-light-1 text-14">From Date *</label>
                                                             <input type="date" name="from_date" id="from_date" placeholder="From Date" aria-label="Travel Date" autocomplete="off" min="{{ date('Y-m-d') }}">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6 col-md-6 col-12 no-padding">
                                                         <div class="form-group border-bottom-light">
-                                                            <label class="text-light-1 text-14">To Date:</label>
+                                                            <label class="text-light-1 text-14">To Date *</label>
                                                             <input type="date" name="end_date" id="end_date" placeholder="To Date" aria-label="Travel Date" autocomplete="off" min="{{ date('Y-m-d') }}">
                                                         </div>
                                                     </div>

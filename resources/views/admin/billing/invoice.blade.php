@@ -318,7 +318,7 @@
             var teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
 
             // Array of scales in Indian numbering system
-            var scales = ['', 'Thousand', 'Lac', 'Crore'];
+            var scales = ['', 'Thousand', 'Lakh', 'Crore'];
 
             // Convert a three-digit number into words
             function convertThreeDigits(num) {

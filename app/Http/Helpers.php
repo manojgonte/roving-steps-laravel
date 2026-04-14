@@ -19,8 +19,7 @@ function AmountInWords(float $amount=null) {
     if ($amount == null || $amount == 0.0) {
         return '-';
     }else{
-        $amount_after_decimal = round($amount - ($num = floor($amount)), 2) * 100;
-        // Check if there is any number after decimal
+        $num = floor($amount);
         $amt_hundred = null;
         $count_length = strlen($num);
         $x = 0;
@@ -42,8 +41,7 @@ function AmountInWords(float $amount=null) {
             else $string[] = null;
         }
         $implode_to_Rupees = implode('', array_reverse($string));
-        $get_paise = ($amount_after_decimal > 0) ? "And " . ($change_words[$amount_after_decimal / 10] . " " . $change_words[$amount_after_decimal % 10]) . ' Paise' : '';
-        return ($implode_to_Rupees ? $implode_to_Rupees . 'Rupees Only' : '') . $get_paise;
+        return $implode_to_Rupees ? $implode_to_Rupees . 'Rupees Only' : '-';
     }
 }
 

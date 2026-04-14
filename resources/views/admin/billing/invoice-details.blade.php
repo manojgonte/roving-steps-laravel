@@ -113,7 +113,7 @@
                                             <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1"  step="0.01" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
@@ -162,7 +162,7 @@
                                             <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1"  step="0.01" required />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
@@ -202,7 +202,7 @@
                                             <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1"  step="0.01" required />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
@@ -242,7 +242,7 @@
                                             <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1"  step="0.01" required />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" />
@@ -288,7 +288,7 @@
                                             <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1"  step="0.01" required />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' class="form-control form-control-sm" readonly />
@@ -330,7 +330,7 @@
                                             <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1"  step="0.01" required />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' class="form-control form-control-sm" readonly />
@@ -372,7 +372,7 @@
                                             <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" min="1" required />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1" required />
+                                            <input type="number" name='cost_person[]' placeholder='Enter cost' class="form-control form-control-sm" min="1"  step="0.01" required />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' class="form-control form-control-sm" readonly />
@@ -434,7 +434,7 @@
                                             <input type="number" name='tourist_count[]' placeholder='Enter count' class="form-control form-control-sm" required min="1" />
                                         </td>
                                         <td class="align-middle">
-                                            <input type="number" name='cost_person[]' placeholder='Cost per person' class="form-control form-control-sm" required min="1" />
+                                            <input type="number" name='cost_person[]' placeholder='Cost per person' class="form-control form-control-sm" required min="1" step="0.01" />
                                         </td>
                                         <td class="align-middle">
                                             <input type="number" name='total_cost[]' readonly class="form-control form-control-sm" required />
@@ -488,7 +488,7 @@
                                     </select>
                                 </div>
                             </td>
-                            <td class="text-right"><input type="number" name="tcs_amt" class="form-control form-control-sm w-25" readonly value="{{ $invoice->tcs_amt ?? null }}" /></td>
+                            <td class="text-right"><input type="number" name="tcs_amt" class="form-control form-control-sm w-25" readonly value="{{ $invoice->tcs_amt ?? null }}" step="0.01" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
@@ -514,11 +514,11 @@
                                     </select>
                                 </div>
                             </td>
-                            <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" value="{{ $invoice->gst ?? null }}" readonly /></td>
+                            <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" value="{{ $invoice->gst ?? null }}" step="0.01" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Grand Total</td>
-                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" value="{{ $invoice->grand_total ?? null }}" readonly /></td>
+                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" value="{{ $invoice->grand_total ?? null }}" step="0.01" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
@@ -529,7 +529,7 @@
                             <td class="text-left text-sm font-weight-bold">Payment Received</td>
                             <td class="text-right">
                                 <div class="d-flex">
-                                    <input type="number" name="payment_received" class="form-control form-control-sm w-25" value="{{ $invoice->payment_received ?? null }}" min="0" placeholder="₹" />&nbsp;
+                                    <input type="number" name="payment_received" class="form-control form-control-sm w-25" value="{{ $invoice->payment_received ?? null }}" min="0" placeholder="₹" step="0.01" />&nbsp;
                                     <select class="form-control form-control-sm w-25" name="payment_mode">
                                         <option value="">Mode of Payment</option>
                                         <option value="Bank Transfer" @if($invoice->payment_mode == 'Bank Transfer') selected @endif>Bank Transfer</option>
@@ -543,7 +543,7 @@
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Balance</td>
-                            <td class="text-right"><input type="number" name="balance" class="form-control form-control-sm w-25" value="{{ $invoice->balance ?? null }}" readonly /></td>
+                            <td class="text-right"><input type="number" name="balance" class="form-control form-control-sm w-25" value="{{ $invoice->balance ?? null }}" step="0.01" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
@@ -616,7 +616,7 @@
             var teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
 
             // Array of scales in Indian numbering system
-            var scales = ['', 'Thousand', 'Lac', 'Crore'];
+            var scales = ['', 'Thousand', 'Lakh', 'Crore'];
 
             // Convert a three-digit number into words
             function convertThreeDigits(num) {
@@ -701,7 +701,7 @@
           const hundredPart = num;
 
           if (crore > 0) result += threeDigitToWords(crore) + " Crore ";
-          if (lac > 0) result += threeDigitToWords(lac) + " Lac ";
+          if (lac > 0) result += threeDigitToWords(lac) + " Lakh ";
           if (thousand > 0) result += threeDigitToWords(thousand) + " Thousand ";
           if (hundredPart > 0) result += threeDigitToWords(hundredPart) + " ";
 

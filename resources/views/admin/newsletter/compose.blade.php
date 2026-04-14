@@ -63,11 +63,30 @@
 
                         <div class="form-group">
                             <label class="required">Send To</label>
-                            <select name="recipient_type" class="form-control" required>
+                            <select name="recipient_type" id="recipient-type" class="form-control" required>
                                 <option value="both" {{ old('recipient_type') == 'both' ? 'selected' : '' }}>Both Users & Subscribers ({{ $counts['users'] + $counts['subscribers'] }} max)</option>
                                 <option value="users" {{ old('recipient_type') == 'users' ? 'selected' : '' }}>Users Only ({{ $counts['users'] }})</option>
                                 <option value="subscribers" {{ old('recipient_type') == 'subscribers' ? 'selected' : '' }}>Subscribers Only ({{ $counts['subscribers'] }})</option>
                             </select>
+                        </div>
+
+                        <div class="row mb-3" id="date-filters">
+                            <div class="col-md-6">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="upcoming_birthday" name="upcoming_birthday" value="1" {{ old('upcoming_birthday') ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="upcoming_birthday">
+                                        Upcoming Birthday (within next 3 months)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="upcoming_anniversary" name="upcoming_anniversary" value="1" {{ old('upcoming_anniversary') ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="upcoming_anniversary">
+                                        Upcoming Anniversary (within next 3 months)
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -121,6 +140,19 @@ $(function(){
             }
         });
     });
+
+    function toggleDateFilters() {
+        var type = $('#recipient-type').val();
+        if (type === 'subscribers') {
+            $('#date-filters').hide();
+            $('#upcoming_birthday, #upcoming_anniversary').prop('checked', false);
+        } else {
+            $('#date-filters').show();
+        }
+    }
+
+    $('#recipient-type').on('change', toggleDateFilters);
+    toggleDateFilters();
 });
 </script>
 @endsection

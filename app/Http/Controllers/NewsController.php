@@ -149,7 +149,11 @@ class NewsController extends Controller
             'recipient_type' => 'required|in:users,subscribers,both',
         ]);
 
-        $recipients = $this->getRecipientsByType($request->recipient_type);
+        $recipients = $this->getRecipientsByType(
+            $request->recipient_type,
+            $request->boolean('upcoming_birthday'),
+            $request->boolean('upcoming_anniversary')
+        );
 
         if ($recipients->isEmpty()) {
             return redirect()->back()
@@ -258,14 +262,48 @@ class NewsController extends Controller
      * Each item: ['email' => ..., 'name' => ..., 'unsubscribe_url' => ...]
      * Extensible: add 'vendors' case when that table exists.
      */
-    protected function getRecipientsByType(string $type)
+    protected function getRecipientsByType(string $type, bool $upcomingBirthday = false, bool $upcomingAnniversary = false)
     {
         $recipients = collect();
 
         if (in_array($type, ['users', 'both'])) {
-            $users = User::whereNotNull('email')
-                ->where('email', '!=', '')
-                ->get(['email', 'name']);
+            $query = User::whereNotNull('email')->where('email', '!=', '');
+
+            if ($upcomingBirthday || $upcomingAnniversary) {
+                $today  = now()->format('m-d');
+                $future = now()->addMonths(3)->format('m-d');
+
+                $query->where(function ($q) use ($upcomingBirthday, $upcomingAnniversary, $today, $future) {
+                    if ($upcomingBirthday) {
+                        $q->orWhere(function ($sub) use ($today, $future) {
+                            $sub->whereNotNull('dob');
+                            if ($today <= $future) {
+                                $sub->whereRaw("DATE_FORMAT(dob, '%m-%d') BETWEEN ? AND ?", [$today, $future]);
+                            } else {
+                                $sub->where(function ($wrap) use ($today, $future) {
+                                    $wrap->whereRaw("DATE_FORMAT(dob, '%m-%d') >= ?", [$today])
+                                         ->orWhereRaw("DATE_FORMAT(dob, '%m-%d') <= ?", [$future]);
+                                });
+                            }
+                        });
+                    }
+                    if ($upcomingAnniversary) {
+                        $q->orWhere(function ($sub) use ($today, $future) {
+                            $sub->whereNotNull('anniversary_date');
+                            if ($today <= $future) {
+                                $sub->whereRaw("DATE_FORMAT(anniversary_date, '%m-%d') BETWEEN ? AND ?", [$today, $future]);
+                            } else {
+                                $sub->where(function ($wrap) use ($today, $future) {
+                                    $wrap->whereRaw("DATE_FORMAT(anniversary_date, '%m-%d') >= ?", [$today])
+                                         ->orWhereRaw("DATE_FORMAT(anniversary_date, '%m-%d') <= ?", [$future]);
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+
+            $users = $query->get(['email', 'name']);
 
             foreach ($users as $user) {
                 $recipients->push([
