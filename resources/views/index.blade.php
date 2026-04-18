@@ -481,20 +481,17 @@
                     <div class="swiper-wrapper">
                         @foreach($testimonials as $testimonial)
                         <div class="swiper-slide">
-                            <div class="row items-center x-gap-30 y-gap-20">
-                                <div class="col-auto">
-                                    @if(empty($testimonial->thumbnail_img))
-                                    <div class="avatar avatar-md bg-info">{{mb_substr(ucfirst($testimonial->user_name) , 0, 1)}}</div>
-                                    @else
-                                    <img src="{{ asset('img/testimonials/'.$testimonial->thumbnail_img) }}" class="rounded-4" width="85">
-                                    @endif
-                                </div>
-                                <div class="col-auto">
-                                    <h5 class="text-16 fw-500">{{$testimonial->user_name}}</h5>
-                                    <div class="text-15 text-light-1 lh-15 invisible d-none">Testimonial</div>
+                            <div class="testimonial-card">
+                                @if(empty($testimonial->thumbnail_img))
+                                <div class="testimonial-card__avatar" aria-hidden="true">{{ mb_substr(ucfirst($testimonial->user_name), 0, 1) }}</div>
+                                @else
+                                <img src="{{ asset('img/testimonials/'.$testimonial->thumbnail_img) }}" alt="{{ $testimonial->user_name }}" class="testimonial-card__img" width="220" height="180">
+                                @endif
+                                <div class="testimonial-card__body">
+                                    <div class="testimonial-card__name">{{ $testimonial->user_name }}</div>
+                                    <p class="testimonial-card__quote text-16 fw-500 text-dark-1">{{ $testimonial->testimonial }}</p>
                                 </div>
                             </div>
-                            <p class="text-18 fw-500 text-dark-1 mt-10 sm:mt-20">{{$testimonial->testimonial}}</p>
                         </div>
                         @endforeach
                     </div>

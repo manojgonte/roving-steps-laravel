@@ -1,5 +1,8 @@
 @extends('layouts/adminLayout/admin_design')
 @section('content')
+@php 
+    $role = Auth::guard('admin')->user()->roles;
+@endphp
 
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
@@ -59,6 +62,7 @@
                         </div>
                     </a>
                 </div>
+                @if($role == 'Admin' || $role == 'Accountant')
                 <div class="col-lg-3 col-6">
                     <a href="{{url('admin/invoice-billing')}}">
                         <div class="small-box bg-danger">
@@ -73,6 +77,7 @@
                         </div>
                     </a>
                 </div>
+                @endif
             </div>
         </div>
     </section>

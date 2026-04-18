@@ -39,9 +39,8 @@ class BillingController extends Controller
             $search = trim($request->q);
 
             $query->where(function ($q) use ($search) {
-                $q->where('bill_to', 'like', '%' . $search . '%')
-                  ->orWhere('invoices.id', 'like', '%' . $search . '%')
-                  ->orWhere('contact_no', 'like', '%' . $search . '%');
+                $q->where('invoices.id', 'like', '%' . $search . '%')
+                  ->orWhere('tours.tour_name', 'like', '%' . $search . '%');
             });
         }
         // Customer filter
@@ -143,9 +142,8 @@ class BillingController extends Controller
             $search = trim($request->q);
 
             $query->where(function ($q) use ($search) {
-                $q->where('bill_to', 'like', '%' . $search . '%')
-                  ->orWhere('invoices.id', 'like', '%' . $search . '%')
-                  ->orWhere('contact_no', 'like', '%' . $search . '%');
+                $q->where('invoices.id', 'like', '%' . $search . '%')
+                  ->orWhere('tours.tour_name', 'like', '%' . $search . '%');
             });
         }
         // Customer filter

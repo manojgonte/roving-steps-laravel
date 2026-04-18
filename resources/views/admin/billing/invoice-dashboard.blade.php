@@ -103,7 +103,7 @@
                     <form action="" method="GET">
                         <div class="row d-flex justify-content-start">
                             <div class="col-auto">
-                                <input class="form-control form-control-sm" type="search" name="q" placeholder="Search by Client, Tour Name" value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
+                                <input class="form-control form-control-sm" type="search" name="q" placeholder="Search by Invoice ID or Tour Name" value="@if(!empty(Request()->q)) {{Request()->q}} @endif">
                             </div>
                             <div class="col-auto">
                                 <select name="customer" class="form-control form-control-sm" onchange="this.form.submit()">

@@ -58,7 +58,7 @@
                                         <label class="required">Destination</label>
                                         <select class="form-control select2bs4" name="dest_id" required>
                                             <option value="" selected>Select One</option>
-                                            @foreach(App\Models\Destination::orderBy('name','ASC')->get() as $cat)
+                                            @foreach(App\Models\Destination::where('parent_id',0)->orderBy('name','ASC')->get() as $cat)
                                                 <option value="{{$cat->id}}" @if($tour->dest_id == $cat->id) selected @endif>{{$cat->name}}</option>
                                                 {{-- @php $sub_categories = App\Models\Destination::where(['parent_id'=>$cat->id])->get(); @endphp
                                                 @foreach ($sub_categories as $sub_cat)
