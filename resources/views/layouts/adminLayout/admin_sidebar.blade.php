@@ -71,7 +71,7 @@
                     </a>
                 </li>
                 @endif
-                {{-- @if($role == 'Admin' || $role == 'Office User')
+                @if($role == 'Admin' || $role == 'Office User')
                 <li class="nav-item">
                     <a href="{{url('admin/registered-users')}}" class="nav-link text-white @if(preg_match('#/admin/registered-users#', $url)) active @endif">
                         <i class="nav-icon fas fa-user-plus"></i>

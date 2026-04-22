@@ -52,6 +52,7 @@
                                     <div class="form-group col-md-5">
                                         <label class="required">Role</label>
                                         <select name="roles" class="form-control" id="role">
+                                            <option value="Admin" @if($user->roles == 'Admin') selected @endif>Admin</option>
                                             <option value="Accountant" @if($user->roles == 'Accountant') selected @endif>Accountant</option>
                                             <option value="Office User" @if($user->roles == 'Office User') selected @endif>Office User</option>
                                         </select>

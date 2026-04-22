@@ -55,6 +55,7 @@
                                     <div class="form-group col-md-5">
                                         <label class="required">Role</label>
                                         <select name="roles" class="form-control" id="role">
+                                            <option value="Admin">Admin</option>
                                             <option value="Accountant">Accountant</option>
                                             <option value="Office User">Office User</option>
                                         </select>
