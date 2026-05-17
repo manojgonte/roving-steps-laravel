@@ -587,6 +587,17 @@
 @section('scripts')
 
 <script>
+    // Prevent mouse wheel from changing values in number inputs (causes
+    // accidental increments like 5250 -> 5248 on cost_person, or 0 -> 0.02
+    // on payment_received when the user scrolls while the field is focused).
+    $(document).on('wheel', 'input[type=number]', function (e) {
+        if ($(this).is(':focus')) {
+            $(this).blur();
+        }
+    });
+</script>
+
+<script>
     $(document).ready(function() {
         // Function to add a new row
         $("table").on("click", ".add-row1", function() {
