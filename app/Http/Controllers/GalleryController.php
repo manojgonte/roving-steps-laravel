@@ -77,7 +77,13 @@ class GalleryController extends Controller
     }
 
     public function getGalleryImages(Request $request) {
-        $galleryImages = Gallery::orderBy('id', 'DESC')->paginate(12);
+        $search = $request->input('search');
+        $galleryImages = Gallery::when($search, function ($query) use ($search) {
+                $query->where('title', 'like', '%'.$search.'%')
+                      ->orWhere('image', 'like', '%'.$search.'%');
+            })
+            ->orderBy('id', 'DESC')
+            ->paginate(12);
         return view('admin.gallery_images_partial', compact('galleryImages'))->render();
     }
 }

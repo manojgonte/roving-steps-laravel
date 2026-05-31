@@ -86,8 +86,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label class="required">Sigthseeings of the Day</label>
-                                            <input type="text" name="activity" class="form-control" placeholder="Enter Sigthseeings" value="" required>
+                                            <label class="">Sigthseeings of the Day</label>
+                                            <input type="text" name="activity" class="form-control" placeholder="Enter Sigthseeings" value="" >
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="required">Travel Option</label>
@@ -102,6 +102,7 @@
                                                 <option value="Flight">Flight</option>
                                                 <option value="Cruise">Cruise</option>
                                                 <option value="Private Boat">Private Boat</option>
+                                                <option value="Shared Travel">Shared Travel</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-12">

@@ -206,6 +206,7 @@
                                     </div>
                                 </div>
                                 <div class="y-gap-5 d-flex justify-between">
+                                    @if($day->activity)
                                     <div class="d-flex justify-start align-items-center">
                                         <div class="flex-center size-50 rounded-full bg-blue-1">
                                             <i class="icon-customer text-white text-30"></i>
@@ -215,6 +216,7 @@
                                             <p class="text-15">Sigthseeings</p>
                                         </div>
                                     </div>
+                                    @endif
                                     <div class="d-flex justify-start align-items-center">
                                         <div class="flex-center size-50 rounded-full bg-blue-1">
                                             <i class="icon-bed text-white text-30"></i>

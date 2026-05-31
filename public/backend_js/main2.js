@@ -23,16 +23,25 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(document).ready(function() {
-    // Function to load gallery images
-    function loadGalleryImages(page = 1) {
+    var gallerySearchTimer;
+
+    // Function to load gallery images.
+    // gridOnly = true replaces just the image grid so the search box keeps focus.
+    function loadGalleryImages(page = 1, search = '', gridOnly = false) {
         $.ajax({
-            url: '/admin/gallery-images?page=' + page,
+            url: '/admin/gallery-images',
             type: 'GET',
+            data: { page: page, search: search },
             beforeSend: function() {
-                $('#gallery-content').html("<center>Fetching images...</center>");
+                var target = gridOnly ? $('#gallery-grid') : $('#gallery-content');
+                target.html("<center class='py-4'>Fetching images...</center>");
             },
             success: function(data) {
-                $('#gallery-content').html(data);
+                if (gridOnly) {
+                    $('#gallery-grid').replaceWith($('<div>').html(data).find('#gallery-grid'));
+                } else {
+                    $('#gallery-content').html(data);
+                }
             },
             error: function(xhr) {
                 console.error("Error loading images:", xhr);
@@ -45,11 +54,22 @@ $(document).ready(function() {
         loadGalleryImages();
     });
 
-    // Handle pagination click
+    // Live search (debounced)
+    $(document).on('input', '#gallery-search-input', function() {
+        var search = $(this).val();
+        clearTimeout(gallerySearchTimer);
+        gallerySearchTimer = setTimeout(function() {
+            loadGalleryImages(1, search, true);
+        }, 400);
+    });
+
+    // Handle pagination click (preserve current search term)
     $(document).on('click', '.gallery-modal-pagination .pagination a', function(event) {
         event.preventDefault();
-        var page = $(this).attr('href').split('page=')[1];
-        loadGalleryImages(page);
+        var url = new URL($(this).attr('href'), window.location.origin);
+        var page = url.searchParams.get('page') || 1;
+        var search = $('#gallery-search-input').val() || '';
+        loadGalleryImages(page, search, true);
     });
 });
 

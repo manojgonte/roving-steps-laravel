@@ -43,49 +43,65 @@
                             <div class="col-3">
                                 <div class="form-input">
                                     <select class="form-select" name="prefix" required>
-                                      <option value="Mr" selected>Mr</option>
-                                      <option value="Mrs">Mrs</option>
-                                      <option value="Miss">Miss</option>
+                                      <option value="Mr" {{ old('prefix','Mr') == 'Mr' ? 'selected' : '' }}>Mr</option>
+                                      <option value="Mrs" {{ old('prefix') == 'Mrs' ? 'selected' : '' }}>Mrs</option>
+                                      <option value="Miss" {{ old('prefix') == 'Miss' ? 'selected' : '' }}>Miss</option>
                                     </select>
                                     <div class="error-message"></div>
                                 </div>
                             </div>
                             <div class="col-9">
                                 <div class="form-input">
-                                    <input type="text" name="name" required>
+                                    <input type="text" name="name" value="{{ old('name') }}" required>
                                     <label class="lh-1 text-16 text-light-1">Full Name *</label>
                                 </div>
                                 <div class="error-message"></div>
                             </div>
                             <div class="col-6">
                                 <div class="form-input">
-                                    <input type="text" name="email" required>
+                                    <input type="text" name="email" value="{{ old('email') }}" required>
                                     <label class="lh-1 text-16 text-light-1">Email *</label>
                                 </div>
                                 <div class="error-message"></div>
                             </div>
                             <div class="col-6">
                                 <div class="form-input">
-                                    <input type="text" name="contact" required>
+                                    <input type="text" name="contact" value="{{ old('contact') }}" required>
                                     <label class="lh-1 text-16 text-light-1">Contact</label>
                                 </div>
                                 <div class="error-message"></div>
                             </div>
                             <div class="col-12">
                                 <div class="form-input">
-                                    <input type="text" name="address">
+                                    <input type="text" name="address" value="{{ old('address') }}">
                                     <label class="lh-1 text-16 text-light-1">Address</label>
                                 </div>
                                 <div class="error-message"></div>
                             </div>
                             <div class="col-12">
                                 <div class="form-input">
-                                    <textarea name="message" rows="2" required></textarea>
+                                    <textarea name="message" rows="2" required>{{ old('message') }}</textarea>
                                     <label class="lh-1 text-16 text-light-1">Your Messages *</label>
                                 </div>
                                 <div class="error-message"></div>
                             </div>
-                            <div class="g-recaptcha mb-10" id="feedback-recaptcha" data-sitekey="{{ config('app.google_recaptcha_site') }}"></div>
+                            <input type="hidden" name="enq_type" value="contact">
+                            <div class="col-12">
+                                <div class="d-flex items-center">
+                                    <span class="captcha-img-wrap d-inline-flex" id="captchaImage">{!! captcha_img('flat') !!}</span>
+                                    <button type="button" id="refreshCaptcha" title="Refresh captcha"
+                                        class="button -dark-1 bg-light-2 size-40 rounded-8 ml-10">
+                                        <i class="fa fa-redo text-16"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-input">
+                                    <input type="text" name="captcha" autocomplete="off" required>
+                                    <label class="lh-1 text-16 text-light-1">Enter Captcha *</label>
+                                </div>
+                                <div class="error-message"></div>
+                            </div>
                             <div class="col-auto">
                                 <button type="submit" class="button px-24 h-50 -dark-1 bg-warning-2 text-white">
                                     Send a Messsage <div class="icon-arrow-top-right ml-15"></div>
@@ -155,6 +171,9 @@
                     required:true,
                     maxlength:200,
                 },
+                captcha:{
+                    required:true,
+                },
             },
             messages:{
                 name:{ 
@@ -174,15 +193,22 @@
                     required: "Please enter message",
                     maxlength: "Please enter no more than {0} characters",
                 },
+                captcha:{
+                    required: "Please enter the captcha",
+                },
             },
             errorPlacement: function(error, element) {
                 error.appendTo(element.closest('.col-12, .col-6').find('.error-message'));
             },
             submitHandler: function(form) {
-                $(".button").attr("disabled", true);
-                $(".button").html("<span class='fa fa-spinner fa-spin'></span>&nbsp; Please wait...");
+                $(".contactEnqForm button[type='submit']").attr("disabled", true);
+                $(".contactEnqForm button[type='submit']").html("<span class='fa fa-spinner fa-spin'></span>&nbsp; Please wait...");
                 form.submit();
             }
+        });
+
+        $("#refreshCaptcha").on("click", function () {
+            $("#captchaImage img").attr("src", "{{ url('captcha/flat') }}?_=" + Date.now());
         });
     });
 </script>

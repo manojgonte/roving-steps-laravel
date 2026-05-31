@@ -299,7 +299,7 @@ class TourController extends Controller
                         $itinerary->tour_id       = $customTour->id;
                         $itinerary->day           = $day->day;
                         $itinerary->visit_place   = $day->visit_place;
-                        $itinerary->activity      = $day->activity;
+                        $itinerary->activity      = $day->activity ?? null;
                         $itinerary->travel_option = $day->travel_option;
                         $itinerary->description   = $day->description;
                         $itinerary->stay          = $day->stay;
@@ -394,7 +394,7 @@ class TourController extends Controller
             $itinerary->tour_id       = $id;
             $itinerary->day           = $data['day'];
             $itinerary->visit_place   = $data['visit_place'];
-            $itinerary->activity      = $data['activity'];
+            $itinerary->activity      = $data['activity'] ?? null;
             $itinerary->travel_option = $data['travel_option'];
             $itinerary->description   = $data['description'];
             $itinerary->stay          = $data['stay'];
@@ -434,7 +434,7 @@ class TourController extends Controller
             // dd($data);
 
             $visit_place   = $data['visit_place'];
-            $activity      = $data['activity'];
+            $activity      = $data['activity'] ?? null;
             $travel_option = $data['travel_option'];
             $description   = $data['description'];
             $stay          = $data['stay'];
@@ -470,7 +470,7 @@ class TourController extends Controller
             // detail update
             TourItinerary::where(['id'=>$id])->update([
                 'visit_place' => $visit_place,
-                'activity' => $activity,
+                'activity' => $activity ?? null,
                 'travel_option' => $travel_option,
                 'description' => $description,
                 'stay' => $stay,

@@ -177,6 +177,16 @@ class IndexController extends Controller
 
     public function tourEnquiry(Request $request) {
         if($request->isMethod('post')) {
+
+            if($request->input('enq_type') === 'contact'){
+                $request->validate([
+                    'captcha' => ['required', 'captcha'],
+                ], [
+                    'captcha.required' => 'Please enter the captcha.',
+                    'captcha.captcha'  => 'Invalid captcha, please try again.',
+                ]);
+            }
+
             $data = $request->all();
 
             Log::info($data);

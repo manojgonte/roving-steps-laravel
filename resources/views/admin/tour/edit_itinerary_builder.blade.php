@@ -58,8 +58,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label class="required">Activity of the Day</label>
-                                            <input type="text" name="activity" class="form-control" placeholder="Enter Activity" value="{{$itinerary->activity}}" required>
+                                            <label>Sigthseeings of the Day</label>
+                                            <input type="text" name="activity" class="form-control" placeholder="Enter Activity" value="{{$itinerary->activity}}">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="required">Travel Option</label>
@@ -74,6 +74,7 @@
                                                 <option value="Flight" @if($itinerary->travel_option == 'Flight') selected @endif>Flight</option>
                                                 <option value="Cruise" @if($itinerary->travel_option == 'Cruise') selected @endif>Cruise</option>
                                                 <option value="Private Boat" @if($itinerary->travel_option == 'Private Boat') selected @endif>Private Boat</option>
+                                                <option value="Shared Travel" @if($itinerary->travel_option == 'Shared Travel') selected @endif>Shared Travel</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-12">
@@ -184,9 +185,6 @@
             debug: false,
             rules: {
                 visit_place: {
-                    required: true,
-                },
-                activity: {
                     required: true,
                 },
                 description: {
