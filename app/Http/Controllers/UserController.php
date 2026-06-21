@@ -325,9 +325,11 @@ class UserController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
 
-            $tempUser = User::where(['contact'=>$data['contact'],'email'=>$data['email']])->first();
+            $tempUser = User::where('email',$data['email'])
+                ->orWhere('contact',$data['contact'])
+                ->first();
             if($tempUser) {
-                return redirect()->back()->with('flash_message_error','User already exists with same email/phone');
+                return redirect()->back()->withInput()->with('flash_message_error','User already exists with same email/phone');
             }
 
             $user = new User;
@@ -379,6 +381,16 @@ class UserController extends Controller
     public function editUser(Request $request, $id){
         if($request->isMethod('post')){
             $data = $request->all();
+
+            $tempUser = User::where('id','!=',$id)
+                ->where(function($query) use($data){
+                    $query->where('email',$data['email'])
+                        ->orWhere('contact',$data['contact']);
+                })
+                ->first();
+            if($tempUser) {
+                return redirect()->back()->withInput()->with('flash_message_error','Another user already exists with same email/phone');
+            }
 
             // Upload file
             if($request->hasFile('pan_card_file')) {
