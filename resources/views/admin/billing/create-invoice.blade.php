@@ -3,6 +3,8 @@
 
 @section('styles')
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{asset('backend_plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('backend_plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend_css/sumoselect.css')}}">
     <style>
         .SumoSelect>.CaptionCont>span.placeholder {
@@ -134,6 +136,7 @@
 
 @section('scripts')
 <script src="{{asset('backend_js/jquery.sumoselect.js')}}"></script>
+<script src="{{asset('backend_plugins/select2/js/select2.full.min.js')}}"></script>
 
 <script>
     function toggleTourNameField() {
@@ -235,6 +238,12 @@
         const userData = @json($users->keyBy('id'));
 
         const $userSelect = $('#user_id');
+        $userSelect.select2({
+            theme: 'bootstrap4',
+            placeholder: 'Select One',
+            width: '100%',
+            minimumResultsForSearch: 0,
+        });
         const $contactInput = $('#contact');
         const $emailInput = $('#email');
         const $addressInput = $('#address');

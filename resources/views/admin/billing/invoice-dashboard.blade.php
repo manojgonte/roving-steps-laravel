@@ -189,7 +189,7 @@
                                 <td class="align-middle">₹{{ number_format($row->grand_total,1) }}</td>
                                 <td class="align-middle">₹{{ number_format($row->balance,1) }}</td>
                                 <td class="align-middle">
-                                    @if ($row->balance == 0)
+                                    @if ($row->grand_total > 0 && $row->balance < 1)
                                         PAID
                                     @elseif ($row->payment_received > 0)
                                         PARTIALLY PAID

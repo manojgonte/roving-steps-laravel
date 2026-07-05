@@ -154,13 +154,15 @@ class BillingController extends Controller
         if ($request->filled('payment_status')) {
             switch ($request->payment_status) {
                 case 'paid':
-                    $query->where('balance', 0);
+                    $query->where('grand_total', '>', 0)->where('balance', '<', 1);
                     break;
                 case 'partially_paid':
-                    $query->where('balance', '>', 0)->where('payment_received', '>', 0);
+                    $query->where('balance', '>=', 1)->where('payment_received', '>', 0);
                     break;
                 case 'unpaid':
-                    $query->where('balance', '>', 0)->where('payment_received', 0);
+                    $query->where('balance', '>=', 1)->where(function ($q) {
+                        $q->whereNull('payment_received')->orWhere('payment_received', 0);
+                    });
                     break;
             }
         }
@@ -308,10 +310,11 @@ class BillingController extends Controller
             $invoice->gst_per = $data['gst_per'];
             $invoice->gst = $data['gst'];
             $invoice->tcs_per = $data['tcs_per'] ?? null;
-            $invoice->tcs_amt = $data['tcs_amt'] ?? null;
+            $invoice->tcs_amt = isset($data['tcs_amt']) ? round($data['tcs_amt']) : null;
             $invoice->grand_total = $data['grand_total'];
-            $invoice->payment_received = !empty($data['payment_received']) ? $data['payment_received'] : null;
-            $invoice->balance = !empty($data['balance']) ? $data['balance'] : null;
+            $paymentReceived = !empty($data['payment_received']) ? (float) $data['payment_received'] : 0;
+            $invoice->payment_received = $paymentReceived ?: null;
+            $invoice->balance = round((float) $data['grand_total'] - $paymentReceived, 2);
             $invoice->note = $data['note'];
             $invoice->save();
 
@@ -409,10 +412,11 @@ class BillingController extends Controller
             $invoice->gst_per = $data['gst_per'];
             $invoice->gst = $data['gst'];
             $invoice->tcs_per = $data['tcs_per'] ?? null;
-            $invoice->tcs_amt = $data['tcs_amt'] ?? null;
+            $invoice->tcs_amt = isset($data['tcs_amt']) ? round($data['tcs_amt']) : null;
             $invoice->grand_total = $data['grand_total'];
-            $invoice->payment_received = $data['payment_received'] ?? '0';
-            $invoice->balance = $data['balance'];
+            $paymentReceived = !empty($data['payment_received']) ? (float) $data['payment_received'] : 0;
+            $invoice->payment_received = $paymentReceived ?: null;
+            $invoice->balance = round((float) $data['grand_total'] - $paymentReceived, 2);
             $invoice->note = $data['note'];
             $invoice->save();
 

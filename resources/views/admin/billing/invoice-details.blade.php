@@ -488,7 +488,7 @@
                                     </select>
                                 </div>
                             </td>
-                            <td class="text-right"><input type="number" name="tcs_amt" class="form-control form-control-sm w-25" readonly value="{{ $invoice->tcs_amt ?? null }}" step="0.01" /></td>
+                            <td class="text-right"><input type="number" name="tcs_amt" class="form-control form-control-sm w-25" readonly value="{{ $invoice->tcs_amt ? round($invoice->tcs_amt) : null }}" step="1" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
@@ -514,11 +514,11 @@
                                     </select>
                                 </div>
                             </td>
-                            <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" value="{{ $invoice->gst ?? null }}" step="0.01" readonly /></td>
+                            <td class="text-right"><input type="number" name="gst" class="form-control form-control-sm w-25" value="{{ $invoice->gst ? round($invoice->gst) : null }}" step="1" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Grand Total</td>
-                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" value="{{ $invoice->grand_total ?? null }}" step="0.01" readonly /></td>
+                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" value="{{ $invoice->grand_total ?? null }}" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
@@ -670,7 +670,7 @@
         }
 
         function numberToWords(num) {
-          if (num === 0) return "Zero Rupees";
+          if (num === 0) return "Zero";
 
           const ones = [
             "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
@@ -745,10 +745,10 @@
             var tcs = 0;
             
             if (tcsSlab > 0) {
-                tcs = ((swissPass + landPackage) * tcsSlab) / 100;
+                tcs = Math.round(((swissPass + landPackage) * tcsSlab) / 100);
             }
 
-            $('[name="tcs_amt"]').val(tcs.toFixed(2));
+            $('[name="tcs_amt"]').val(tcs);
 
             subtotal += tcs;
 
@@ -766,11 +766,11 @@
             var subtotal = parseFloat($('#total').val());
 
             if (gstSlab === 18) {
-                gst = (serviceCharges * 18) / 100;
+                gst = Math.round((serviceCharges * 18) / 100);
             } else if (gstSlab === 5) {
-                gst = (serviceCharges * 5) / 100;
+                gst = Math.round((serviceCharges * 5) / 100);
             }
-            $('[name="gst"]').val(gst.toFixed(2));
+            $('[name="gst"]').val(gst);
             var grandTotal = subtotal + serviceCharges + gst;
             $('[name="grand_total"]').val(grandTotal.toFixed(2));
             
@@ -780,10 +780,10 @@
 
         // Function to update balance based on payment received
         function updateBalance() {
-            var paymentReceived = parseFloat($('[name="payment_received"]').val());
+            var paymentReceived = parseFloat($('[name="payment_received"]').val()) || 0;
             var grandTotal = parseFloat($('[name="grand_total"]').val());
 
-            if (!isNaN(paymentReceived) && !isNaN(grandTotal)) {
+            if (!isNaN(grandTotal)) {
                 var balance = grandTotal - paymentReceived;
                 $('[name="balance"]').val(balance.toFixed(2));
 

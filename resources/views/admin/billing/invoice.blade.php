@@ -212,7 +212,7 @@
                                     <button class="form-control form-control-sm border-0" disabled><option>{{$invoice->tcs_per ?? null}}%</option></button>
                                 </div>
                             </td>
-                            <td class="text-right align-middle">₹{{$invoice->tcs_amt ?? null}}</td>
+                            <td class="text-right align-middle">₹{{ $invoice->tcs_amt ? round($invoice->tcs_amt) : null }}</td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
@@ -396,10 +396,10 @@
 
         // Function to update balance based on payment received
         function updateBalance() {
-            var paymentReceived = parseFloat($('[name="payment_received"]').val());
+            var paymentReceived = parseFloat($('[name="payment_received"]').val()) || 0;
             var grandTotal = parseFloat($('[name="grand_total"]').val());
 
-            if (!isNaN(paymentReceived) && !isNaN(grandTotal)) {
+            if (!isNaN(grandTotal)) {
                 var balance = grandTotal - paymentReceived;
                 $('[name="balance"]').val(balance.toFixed(2));
 

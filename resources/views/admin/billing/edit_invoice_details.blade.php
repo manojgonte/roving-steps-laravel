@@ -531,7 +531,7 @@
                                     </select>
                                 </div>
                             </td>
-                            <td class="text-right"><input type="number" name="tcs_amt" class="form-control form-control-sm w-25" readonly value="{{ $invoice->tcs_amt ?? null }}" step="0.01" /></td>
+                            <td class="text-right"><input type="number" name="tcs_amt" class="form-control form-control-sm w-25" readonly value="{{ $invoice->tcs_amt ? round($invoice->tcs_amt) : null }}" step="1" /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm">Passport Services</td>
@@ -556,7 +556,7 @@
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">Grand Total</td>
-                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" step="0.01" readonly /></td>
+                            <td class="text-right"><input type="number" name="grand_total" class="form-control form-control-sm w-25" readonly /></td>
                         </tr>
                         <tr>
                             <td class="text-left text-sm font-weight-bold">In Word</td>
@@ -783,10 +783,10 @@
             var tcs = 0;
             
             if (tcsSlab > 0) {
-                tcs = ((swissPass + landPackage) * tcsSlab) / 100;
+                tcs = Math.round(((swissPass + landPackage) * tcsSlab) / 100);
             }
 
-            $('[name="tcs_amt"]').val(tcs.toFixed(2));
+            $('[name="tcs_amt"]').val(tcs);
 
             subtotal += tcs;
 

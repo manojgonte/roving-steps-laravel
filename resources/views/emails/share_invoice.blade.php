@@ -443,7 +443,7 @@
                         <td class="text-left align-middle text-sm font-weight-bold d-flex justify-content-between border-0">
                             TCS <small>(on Swiss Pass + Land Package)</small> ({{$invoice->tcs_per ?? null}}%)
                         </td>
-                        <td class="text-right align-middle">Rs.{{$invoice->tcs_amt ?? null}}</td>
+                        <td class="text-right align-middle">Rs.{{ $invoice->tcs_amt ? round($invoice->tcs_amt) : null }}</td>
                     </tr>
                     <tr>
                         <td class="text-left text-sm font-weight-bold">Total</td>
