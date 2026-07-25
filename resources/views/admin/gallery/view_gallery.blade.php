@@ -58,27 +58,20 @@
                         </div>
 
                         <div class="card bg-light m-3">
-                            <h3 class="card-title text-muted pt-2 pl-3">
-                                Gallery
-                            </h3><hr>
-                            <div class="card-body pt-1">
-                                <div class="row">
-                                    @foreach($photos as $row)
-                                    <div class="col-4 col-md-3 col-lg-2 col-xl-2 mt-4">
-                                        <a href="{{asset('img/gallery/'.$row->image)}}" target="_blank">
-                                        <img src="{{asset('img/gallery/'.$row->image)}}" class="img-fluid mb-2" style="height: 150px; width:200px; object-fit: cover;" alt="img"/>
-                                        </a>
-                                        <span>{{$row->title ?? ''}}</span>
-                                        <div class="d-flex justify-content-center">
-                                            <a class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editPhoto" onclick="getId({{$row->id}},'{{$row->title}}')"><i class="fa fa-edit"></i></a> &nbsp;
-                                            <a class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')" href="{{url('admin/delete-photo/'.$row->id)}}"><i class="fa fa-trash"></i></a>
-                                        </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2 pl-3 pr-3">
+                                <h3 class="card-title text-muted mb-0">
+                                    Gallery
+                                </h3>
+                                <div class="input-group input-group-sm" style="max-width: 300px;">
+                                    <input type="text" id="search-image" class="form-control" placeholder="Search image by name..." value="{{ request('search') }}" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-search"></i></span>
                                     </div>
-                                    @endforeach
                                 </div>
-                                <div class="mt-2 d-flex justify-content-center">
-                                    {{ $photos->links("pagination::bootstrap-4") }}
-                                </div>
+                            </div>
+                            <hr class="mt-2 mb-2">
+                            <div class="card-body pt-1" id="gallery-list-container">
+                                @include('admin.gallery.gallery_list_partial')
                             </div>
                         </div>
                     </div>
@@ -125,6 +118,41 @@
     }
 
     $(document).ready(function() {        
+        let searchTimer;
+        function fetchGalleryPhotos(page = 1) {
+            let search = $('#search-image').val();
+            $.ajax({
+                url: "{{ url('admin/gallery') }}",
+                type: "GET",
+                data: {
+                    page: page,
+                    search: search
+                },
+                success: function(data) {
+                    $('#gallery-list-container').html(data);
+                },
+                error: function(xhr) {
+                    console.error("Error fetching gallery images", xhr);
+                }
+            });
+        }
+
+        $(document).on('keyup input', '#search-image', function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(function() {
+                fetchGalleryPhotos(1);
+            }, 300);
+        });
+
+        $(document).on('click', '#gallery-list-container .pagination a', function(e) {
+            e.preventDefault();
+            let url = $(this).attr('href');
+            if (url) {
+                let pageParam = new URLSearchParams(url.split('?')[1]).get('page') || 1;
+                fetchGalleryPhotos(pageParam);
+            }
+        });
+
         $('#addPhotos').validate({
             ignore: [],
             debug: false,

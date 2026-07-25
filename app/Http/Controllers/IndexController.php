@@ -167,6 +167,7 @@ class IndexController extends Controller
         $relatedTours = Tour::with('itinerary','destination')
             ->where('dest_id', $tour->dest_id)
             ->where('id','!=', $tour->id)
+            ->where('status', 1)
             ->orderBy('id','DESC')
             ->take(5)
             ->get();

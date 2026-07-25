@@ -19,6 +19,8 @@ use Mail;
 use PDF;
 use File;
 use Illuminate\Support\Facades\View;
+use App\Exports\ToursExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TourController extends Controller
 {
@@ -35,7 +37,7 @@ class TourController extends Controller
             $tour->dest_id = $data['dest_id'];
             $tour->rating = $data['rating'];
             $tour->description = !empty($data['description']) ? $data['description'] : null;
-            $tour->adult_price = $data['adult_price'];
+            $tour->adult_price = !empty($data['adult_price']) ? $data['adult_price'] : null;
             $tour->child_price = !empty($data['child_price']) ? $data['child_price'] : null;
             $tour->from_date = !empty($data['from_date']) ? $data['from_date'] : null;
             $tour->end_date = !empty($data['end_date']) ? $data['end_date'] : null;
@@ -148,7 +150,7 @@ class TourController extends Controller
                 'rating' => $data['rating'],
                 'dest_id' => $data['dest_id'],
                 'description' => $data['description'],
-                'adult_price' => $data['adult_price'],
+                'adult_price' => !empty($data['adult_price']) ? $data['adult_price'] : null,
                 'child_price' => !empty($data['child_price']) ? $data['child_price'] : null,
                 'from_date' => !empty($data['from_date']) ? $data['from_date'] : null,
                 'end_date' => !empty($data['end_date']) ? $data['end_date'] : null,
@@ -226,6 +228,57 @@ class TourController extends Controller
             ->groupBy('tours.dest_id')
             ->get();
         return view('admin.tour.view_tours')->with(compact('tours','destinations'));
+    }
+
+    public function toursExport(Request $request) {
+        $now = date('Y-m-d');
+        $tours = PlannedTour::with(['tour', 'tour.destination'])->orderBy('id', 'DESC');
+
+        if (!$request->has('download_all') || $request->download_all != '1') {
+            if ($request->dest_id) {
+                $tours = $tours->whereHas('tour', function($query) use ($request) {
+                    $query->where('dest_id', $request->dest_id);
+                });
+            }
+
+            if ($request->type) {
+                $tours = $tours->whereHas('tour', function($query) use ($request) {
+                    $query->where('type', $request->type);
+                });
+            }
+
+            if ($request->customer_id) {
+                $tours = $tours->where('customer_name', $request->customer_id);
+            }
+
+            if ($request->q) {
+                $q = trim($request->q);
+                $tours = $tours->where(function ($query) use ($q) {
+                    $query->where('from_date', 'like', '%' . $q . '%')
+                        ->orWhere('end_date', 'like', '%' . $q . '%')
+                        ->orWhereHas('tour', function ($subquery) use ($q) {
+                            $subquery->where('tour_name', 'like', '%' . $q . '%')
+                                ->orWhere('description', 'like', '%' . $q . '%');
+                        });
+                });
+            }
+
+            $status = $request->status;
+            if (empty($status) || $status == 'draft') {
+                $tours = $tours->where('status', 0);
+            } elseif ($status == 'ongoing') {
+                $tours = $tours->where('status', 1)->whereRaw('? between from_date and end_date', [$now]);
+            } elseif ($status == 'upcoming') {
+                $tours = $tours->where('status', 1)->where('from_date', '>', $now);
+            } elseif ($status == 'completed') {
+                $tours = $tours->where('status', 1)->where('end_date', '<', $now);
+            }
+        }
+
+        $tours = $tours->get();
+        $fileName = ($request->download_all == '1') ? 'all-tours-' . date('d-M-Y') . '.xlsx' : 'tours-' . date('d-M-Y') . '.xlsx';
+
+        return Excel::download(new ToursExport($tours), $fileName);
     }
 
     public function tourPlanner(Request $request, $status=null){

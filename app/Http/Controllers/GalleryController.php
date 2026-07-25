@@ -8,8 +8,21 @@ use Image;
 
 class GalleryController extends Controller
 {
-    public function viewPhotos() {
-        $photos = Gallery::orderBy('id','DESC')->paginate(12);
+    public function viewPhotos(Request $request) {
+        $search = $request->input('search');
+        $photos = Gallery::when($search, function ($query) use ($search) {
+                $query->where(function($q) use ($search) {
+                    $q->where('title', 'like', '%'.$search.'%')
+                      ->orWhere('image', 'like', '%'.$search.'%');
+                });
+            })
+            ->orderBy('id','DESC')
+            ->paginate(12);
+
+        if ($request->ajax()) {
+            return view('admin.gallery.gallery_list_partial', compact('photos'))->render();
+        }
+
         return view('admin.gallery.view_gallery')->with(compact('photos'));
     }
 

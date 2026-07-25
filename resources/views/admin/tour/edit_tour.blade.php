@@ -270,6 +270,24 @@
 @endsection('scripts')
 <script>
     $(document).ready(function() {
+        function togglePriceFields() {
+            if ($('#req').is(':checked')) {
+                $('input[name="adult_price"]').prop('disabled', true).removeClass('error');
+                $('input[name="child_price"]').prop('disabled', true).removeClass('error');
+                $('#adult_price-error').hide();
+                $('#child_price-error').hide();
+            } else {
+                $('input[name="adult_price"]').prop('disabled', false);
+                $('input[name="child_price"]').prop('disabled', false);
+            }
+        }
+
+        $('#req').on('change', function() {
+            togglePriceFields();
+        });
+
+        togglePriceFields();
+
         $('#addTour').validate({
             ignore: [],
             debug: false,
@@ -279,7 +297,9 @@
                     maxlength:120,
                 },
                 adult_price: {
-                    required: true,
+                    required: function() {
+                        return !$('#req').is(':checked');
+                    },
                     number:true,
                 },
                 child_price: {

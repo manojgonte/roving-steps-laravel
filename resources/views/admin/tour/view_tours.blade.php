@@ -69,6 +69,16 @@
                                     <div class="col-auto">
                                         <a href="{{url('admin/tours/'.Request()->status)}}" class="btn btn-default"> Clear</a>
                                     </div>
+                                    <div class="col-auto">
+                                        <div class="dropdown show">
+                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Download
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                                <a class="dropdown-item" href="{{ url('admin/tours-export?status='.(Request()->status ?? 'draft').'&dest_id='.Request()->dest_id.'&type='.Request()->type.'&q='.Request()->q) }}">Download</a>
+                                                <a class="dropdown-item" href="{{ url('admin/tours-export?download_all=1') }}">Download All</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>

@@ -211,9 +211,9 @@
                                         <div class="flex-center size-50 rounded-full bg-blue-1">
                                             <i class="icon-customer text-white text-30"></i>
                                         </div>
-                                        <div class="text-left mt-5 pl-20">
-                                            <h4 class="text-16 fw-500">{{$day->activity}}</h4>
+                                        <div class="text-left mt-5 pl-10">
                                             <p class="text-15">Sigthseeings</p>
+                                            <h4 class="text-16 fw-500">{{$day->activity}}</h4>
                                         </div>
                                     </div>
                                     @endif
@@ -221,18 +221,18 @@
                                         <div class="flex-center size-50 rounded-full bg-blue-1">
                                             <i class="icon-bed text-white text-30"></i>
                                         </div>
-                                        <div class="text-left mt-5 pl-20">
-                                            <h4 class="text-16 fw-500">{{$day->stay}}</h4>
+                                        <div class="text-left mt-5 pl-10">
                                             <p class="text-15">Stay</p>
+                                            <h4 class="text-16 fw-500">{{$day->stay}}</h4>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-start align-items-center">
                                         <div class="flex-center size-50 rounded-full bg-blue-1">
                                             <i class="icon-food text-white text-30"></i>
                                         </div>
-                                        <div class="text-left mt-5 pl-20">
-                                            <h4 class="text-16 fw-500">{{$day->food}}</h4>
+                                        <div class="text-left mt-5 pl-10">
                                             <p class="text-15">Food</p>
+                                            <h4 class="text-16 fw-500">{{$day->food}}</h4>
                                         </div>
                                     </div>
                                 </div>

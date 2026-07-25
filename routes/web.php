@@ -101,6 +101,7 @@ Route::group(['middleware'=>'admin_auth'],function(){
 
     Route::match(['get','post'], 'admin/share-tour/', [TourController::class,'shareTour']);
     Route::match(['get','post'], 'admin/download-tour/{id}', [TourController::class,'downloadTour']);
+    Route::match(['get','post'], 'admin/tours-export', [TourController::class,'toursExport']);
 
     // enquiries routes 
     Route::match(['get','post'], 'admin/enquiries', [TourController::class,'enquiries']);
