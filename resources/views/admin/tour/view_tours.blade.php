@@ -123,6 +123,7 @@
                                         </td> 
 	                                    <td>
                                             <a class="btn btn-outline-dark btn-sm" href="{{ url('/admin/edit-plan-tour/'.$row->id) }}"><i class="fa fa-pencil-alt"></i></a>
+                                            <a class="btn btn-outline-dark btn-sm" href="{{url('admin/download-tour/'.$row->tour_id)}}"><i class="fa fa-download"></i></a>
                                             <a class="btn btn-outline-dark btn-sm" title="Share Tour" onclick="getTourId(this);" tourId="{{$row->tour_id}}" data-toggle="modal" data-target="#tour-share"><i class="fa fa-share"></i> </a>
                                             <a class="btn btn-outline-dark btn-sm" onclick="return confirm('Are you sure?')" href="{{ url('/admin/delete-plan-tour/'.$row->id) }}"><i class="fa fa-trash"></i></a>
 	                                    </td>

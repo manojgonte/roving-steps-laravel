@@ -1,8 +1,8 @@
 <div class="row">
     @forelse($photos as $row)
-    <div class="col-4 col-md-3 col-lg-2 col-xl-2 mt-4">
+    <div class="col-4 col-md-3 col-lg-2 col-xl-2 mt-4 card p-2 m-1">
         <a href="{{asset('img/gallery/'.$row->image)}}" target="_blank">
-        <img src="{{asset('img/gallery/'.$row->image)}}" class="img-fluid mb-2" style="height: 150px; width:200px; object-fit: cover;" alt="img"/>
+        <img src="{{asset('img/gallery/'.$row->image)}}" class="img-fluid mb-1" style="height: 150px; width:100%; object-fit: cover;" alt="img"/>
         </a>
         <span>{{$row->title ?? ''}}</span>
         <div class="d-flex justify-content-center">

@@ -193,49 +193,79 @@
                     <h3 class="text-22 fw-500 slanted d-flex my-10">Itinerary</h3>
                     <div class="row y-gap-30 mt-20">
                         
-                        @foreach($tour->itinerary->sortBy([['day','asc'],['created_at','asc']]) as $day)
+                        @foreach($tour->itinerary->sortBy([['day','asc'],['created_at','asc']])->groupBy('day') as $dayNumber => $dayItineraries)
                         <div class="border-bottom-light rounded-4 py-20 sm:px-20 sm:py-20 my-2" style="box-shadow: 0px 0px 7px 2px #05103657;">
                             <div class="row y-gap-10">
-                                <h3 class="text-18 fw-600">Day {{$day->day}}: {{$day->visit_place}}</h3>
-                                <div class="col-xl-3">
-                                    <img src="{{asset('img/tours/tour_itinerary/'.$day->image)}}" alt="" class="rounded-4 img-repso">
+                                <div class="col-12">
+                                    <h3 class="text-18 fw-600">Day {{ $dayNumber }}: {{ $dayItineraries->pluck('visit_place')->unique()->filter()->implode(' - ') }}</h3>
                                 </div>
-                                <div class="col-xl-9">
-                                    <div class="rounded-4 px-10">
-                                        <p class="text-dark-1 text-15"> {!! nl2br($day->description) !!}</p>
-                                    </div>
-                                </div>
-                                <div class="y-gap-5 d-flex justify-between">
-                                    @if($day->activity)
-                                    <div class="d-flex justify-start align-items-center">
-                                        <div class="flex-center size-50 rounded-full bg-blue-1">
-                                            <i class="icon-customer text-white text-30"></i>
+                                
+                                @foreach($dayItineraries as $day)
+                                    @if(!$loop->first)
+                                        <div class="col-12 my-15">
+                                            <hr style="border-top: 1px solid #e0e0e0;">
                                         </div>
-                                        <div class="text-left mt-5 pl-10">
-                                            <p class="text-15">Sigthseeings</p>
-                                            <h4 class="text-16 fw-500">{{$day->activity}}</h4>
-                                        </div>
-                                    </div>
                                     @endif
-                                    <div class="d-flex justify-start align-items-center">
-                                        <div class="flex-center size-50 rounded-full bg-blue-1">
-                                            <i class="icon-bed text-white text-30"></i>
+
+                                    @if($dayItineraries->count() > 1 && $day->visit_place)
+                                        <div class="col-12">
+                                            <h4 class="text-16 fw-600 text-blue-1">{{ $day->visit_place }}</h4>
                                         </div>
-                                        <div class="text-left mt-5 pl-10">
-                                            <p class="text-15">Stay</p>
-                                            <h4 class="text-16 fw-500">{{$day->stay}}</h4>
+                                    @endif
+
+                                    @if($day->image)
+                                        <div class="col-xl-3">
+                                            <img src="{{asset('img/tours/tour_itinerary/'.$day->image)}}" alt="" class="rounded-4 img-repso">
                                         </div>
+                                        <div class="col-xl-9">
+                                            <div class="rounded-4 px-10">
+                                                <p class="text-dark-1 text-15"> {!! nl2br($day->description) !!}</p>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="col-12">
+                                            <div class="rounded-4 px-10">
+                                                <p class="text-dark-1 text-15"> {!! nl2br($day->description) !!}</p>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    <div class="col-12 y-gap-5 d-flex justify-between flex-wrap">
+                                        @if($day->activity)
+                                        <div class="d-flex justify-start align-items-center">
+                                            <div class="flex-center size-50 rounded-full bg-blue-1">
+                                                <i class="icon-customer text-white text-30"></i>
+                                            </div>
+                                            <div class="text-left mt-5 pl-10">
+                                                <p class="text-15">Sigthseeings</p>
+                                                <h4 class="text-16 fw-500">{{$day->activity}}</h4>
+                                            </div>
+                                        </div>
+                                        @endif
+                                        @if($day->stay)
+                                        <div class="d-flex justify-start align-items-center">
+                                            <div class="flex-center size-50 rounded-full bg-blue-1">
+                                                <i class="icon-bed text-white text-30"></i>
+                                            </div>
+                                            <div class="text-left mt-5 pl-10">
+                                                <p class="text-15">Stay</p>
+                                                <h4 class="text-16 fw-500">{{$day->stay}}</h4>
+                                            </div>
+                                        </div>
+                                        @endif
+                                        @if($day->food)
+                                        <div class="d-flex justify-start align-items-center">
+                                            <div class="flex-center size-50 rounded-full bg-blue-1">
+                                                <i class="icon-food text-white text-30"></i>
+                                            </div>
+                                            <div class="text-left mt-5 pl-10">
+                                                <p class="text-15">Food</p>
+                                                <h4 class="text-16 fw-500">{{$day->food}}</h4>
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
-                                    <div class="d-flex justify-start align-items-center">
-                                        <div class="flex-center size-50 rounded-full bg-blue-1">
-                                            <i class="icon-food text-white text-30"></i>
-                                        </div>
-                                        <div class="text-left mt-5 pl-10">
-                                            <p class="text-15">Food</p>
-                                            <h4 class="text-16 fw-500">{{$day->food}}</h4>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         @endforeach
