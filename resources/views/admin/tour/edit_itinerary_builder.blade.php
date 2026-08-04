@@ -102,7 +102,13 @@
                                                 <input type="hidden" name="gallery_image" id="gallery_image">
                                                 <input type="file" name="image" class="form-control p-1" id="image_file" onchange="checkFileInput()">
                                             </div>
-                                            <img class="mt-1" style="width: 15%;" src="{{ asset('img/tours/tour_itinerary/'.$itinerary->image) }}" alt="">
+                                            <div id="visit_place_image_wrapper" style="display: none;" class="mt-1">
+                                                <img id="visit_place_image_preview" src="" style="max-height: 60px; border-radius: 4px;" alt="Image Preview">
+                                                <small id="visit_place_image_info" class="text-muted d-block"></small>
+                                            </div>
+                                            @if(!empty($itinerary->image))
+                                            <img class="mt-1" id="current_itinerary_image" style="width: 15%;" src="{{ asset('img/tours/tour_itinerary/'.$itinerary->image) }}" alt="">
+                                            @endif
                                         </div>
                                     </div>
                                     
@@ -146,6 +152,12 @@
     function selectGalleryImage(image) {
         document.getElementById('gallery_image').value = image;
         document.getElementById('image_file').disabled = true;
+        if($('#visit_place_image_preview').length > 0){
+            var imgSrc = "{{ asset('img/gallery') }}/" + image;
+            $('#visit_place_image_preview').attr('src', imgSrc);
+            $('#visit_place_image_wrapper').show();
+            $('#visit_place_image_info').text('Selected gallery image: ' + image);
+        }
     }
 
     function checkFileInput() {
@@ -155,6 +167,9 @@
             const galleryRadios = document.getElementsByName('gallery_image_option');
             for (let i = 0; i < galleryRadios.length; i++) {
                 galleryRadios[i].checked = false;
+            }
+            if($('#visit_place_image_wrapper').length > 0){
+                $('#visit_place_image_wrapper').hide();
             }
         }
     }
@@ -180,6 +195,35 @@
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
 <script>
     $(document).ready(function() {
+        $('select[name="visit_place"]').change(function(){
+            var placeId = $(this).val();
+            if(placeId){
+                $.ajax({
+                    type:"GET",
+                    url:"../../admin/get-itinerary-details/"+placeId,
+                    data:{place_id: placeId},
+                    dataType: 'json',
+                    success:function(data){
+                        var placeImage = data?.destination?.image ?? data?.itinerary?.image;
+                        if(placeImage){
+                            $('#gallery_image').val(placeImage);
+                            if($('#visit_place_image_wrapper').length > 0){
+                                var imgSrc = data?.destination?.image ? ("{{ asset('img/destinations') }}/" + placeImage) : ("{{ asset('img/tours/tour_itinerary') }}/" + placeImage);
+                                $('#visit_place_image_preview').attr('src', imgSrc);
+                                $('#visit_place_image_wrapper').show();
+                                $('#visit_place_image_info').text('Linked visit place image: ' + placeImage);
+                            }
+                        } else {
+                            $('#gallery_image').val('');
+                            if($('#visit_place_image_wrapper').length > 0){
+                                $('#visit_place_image_wrapper').hide();
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
         $('#editItinerary').validate({
             ignore: [],
             debug: false,

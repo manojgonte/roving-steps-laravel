@@ -50,16 +50,23 @@
                         <form method="POST" action="{{ route('addTour') }}" enctype="multipart/form-data" id="addTour">@csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-5">
             	                        <label class="required">Tour Name</label>
             	                        <input type="text" name="tour_name" class="form-control" placeholder="Enter Tour Name" required>
                           	        </div>
                                     <div class="form-group col-md-2">
+                                        <label class="required">Tour Type</label>
+                                        <select class="form-control select2bs4" name="type" id="tour_type">
+                                            <option value="Domestic">Domestic</option>
+                                            <option value="International">International</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
                                         <label class="required">Destination</label>
-                                        <select class="form-control select2bs4" name="dest_id" required>
+                                        <select class="form-control select2bs4" name="dest_id" id="dest_id" required>
                                             <option value="">Select One</option>
                                             @foreach(App\Models\Destination::where('parent_id',0)->orderBy('name','ASC')->get() as $cat)
-                                                <option value="{{$cat->id}}">{{$cat->name}}</option>
+                                                <option value="{{$cat->id}}" data-type="{{$cat->type}}">{{$cat->name}}</option>
                                                 {{-- @php $sub_categories = App\Models\Destination::where(['parent_id'=>$cat->id])->get(); @endphp
                                                 @foreach ($sub_categories as $sub_cat)
                                                 <option value="{{$sub_cat->id}}">-- {{$sub_cat->name}}</option>
@@ -75,7 +82,7 @@
                                             @endfor
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
             	                      	<label class="required">Cover Image <small>(Dimensions: 1200 X 800px)</small></label>
             	                      	{{-- <input type="file" name="image" class="form-control p-1" accept="image/*" required> --}}
                                         <div class="input-group mb-1">
@@ -108,13 +115,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label class="required">Tour Type</label>
-                                        <select class="form-control select2bs4" name="type" name="type">
-                                            <option value="Domestic">Domestic</option>
-                                            <option value="International">International</option>
-                                        </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Special Tour</label>
@@ -291,12 +291,53 @@
 <script src="{{asset('backend_plugins/select2/js/select2.full.min.js')}}"></script>
 <script>
     $(function () {
-        $('.select2').select2()
+        $('.select2').select2();
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
     });
 </script>
 @endsection('scripts')
 <script>
     $(document).ready(function() {
+        var allDestOptions = [];
+        $('#dest_id option').each(function() {
+            allDestOptions.push({
+                value: $(this).val(),
+                text: $(this).text(),
+                type: $(this).data('type') || '',
+                selected: $(this).is(':selected')
+            });
+        });
+
+        function filterDestinations() {
+            var selectedType = $('#tour_type').val();
+            var currentDestId = $('#dest_id').val();
+
+            $('#dest_id').empty();
+
+            $.each(allDestOptions, function(i, opt) {
+                if (opt.value === '' || opt.type === selectedType) {
+                    var isSelected = (opt.value !== '' && opt.value == currentDestId);
+                    var newOpt = new Option(opt.text, opt.value, isSelected, isSelected);
+                    $(newOpt).attr('data-type', opt.type);
+                    $('#dest_id').append(newOpt);
+                }
+            });
+
+            if ($('#dest_id option:selected').length === 0) {
+                $('#dest_id').val('');
+            }
+
+            $('#dest_id').trigger('change.select2');
+        }
+
+        $('#tour_type').on('change', function() {
+            filterDestinations();
+        });
+
+        filterDestinations();
+
         function togglePriceFields() {
             if ($('#req').is(':checked')) {
                 $('input[name="adult_price"]').prop('disabled', true).removeClass('error');

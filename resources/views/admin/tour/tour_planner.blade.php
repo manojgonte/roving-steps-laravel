@@ -59,13 +59,6 @@
                                         </select>
                                     </div>
                                     <div class="col-auto">
-                                        <select class="form-control form-control-sm select2bs4" name="type" onchange="javascript:this.form.submit();">
-                                            <option value="" selected>-- Tour Type --</option>
-                                            <option value="Domestic" @if(Request()->type == 'Domestic') selected @endif>Domestic</option>
-                                            <option value="International" @if(Request()->type == 'International') selected @endif>International</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-auto">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="1" id="checkbox" name="custom_tour" @if(Request()->custom_tour) checked @endif onchange="this.form.submit()">
                                             <label class="form-check-label" for="checkbox">Custom Tour</label>

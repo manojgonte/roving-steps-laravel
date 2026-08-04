@@ -160,9 +160,28 @@
                 <div class="relative d-flex justify-center overflow-hidden js-section-slider" data-slider-cols="base-1" data-nav-prev="js-img-prev" data-nav-next="js-img-next">
                     <div class="swiper-wrapper">
                         @foreach($tour->itinerary->take(4) as $image)
+                        @php
+                            $imgName = $image->image;
+                            if(empty($imgName) && $image->visit_place) {
+                                $dest = App\Models\Destination::where('name', $image->visit_place)->first();
+                                $imgName = $dest?->image;
+                            }
+                            $imgPath = '';
+                            if($imgName) {
+                                if(file_exists(public_path('img/tours/tour_itinerary/'.$imgName))) {
+                                    $imgPath = asset('img/tours/tour_itinerary/'.$imgName);
+                                } elseif(file_exists(public_path('img/destinations/'.$imgName))) {
+                                    $imgPath = asset('img/destinations/'.$imgName);
+                                } elseif(file_exists(public_path('img/gallery/'.$imgName))) {
+                                    $imgPath = asset('img/gallery/'.$imgName);
+                                }
+                            }
+                        @endphp
+                        @if($imgPath)
                         <div class="swiper-slide">
-                            <img src="{{asset('img/tours/tour_itinerary/'.$image->image)}}" alt="" class="rounded-4 col-12 h-full object-cover">
+                            <img src="{{ $imgPath }}" alt="" class="rounded-4 col-12 h-full object-cover">
                         </div>
+                        @endif
                         @endforeach
                     </div>
                     <div class="absolute h-full col-11">
@@ -197,7 +216,7 @@
                         <div class="border-bottom-light rounded-4 py-20 sm:px-20 sm:py-20 my-2" style="box-shadow: 0px 0px 7px 2px #05103657;">
                             <div class="row y-gap-10">
                                 <div class="col-12">
-                                    <h3 class="text-18 fw-600">Day {{ $dayNumber }}: {{ $dayItineraries->pluck('visit_place')->unique()->filter()->implode(' - ') }}</h3>
+                                    <h3 class="text-18 fw-600">Day {{ $dayNumber }}:</h3>
                                 </div>
                                 
                                 @foreach($dayItineraries as $day)
@@ -207,15 +226,33 @@
                                         </div>
                                     @endif
 
-                                    @if($dayItineraries->count() > 1 && $day->visit_place)
+                                    @if($day->visit_place)
                                         <div class="col-12">
                                             <h4 class="text-16 fw-600 text-blue-1">{{ $day->visit_place }}</h4>
                                         </div>
                                     @endif
 
-                                    @if($day->image)
+                                    @php
+                                        $imgName = $day->image;
+                                        if(empty($imgName) && $day->visit_place) {
+                                            $dest = App\Models\Destination::where('name', $day->visit_place)->first();
+                                            $imgName = $dest?->image;
+                                        }
+                                        $imgPath = '';
+                                        if($imgName) {
+                                            if(file_exists(public_path('img/tours/tour_itinerary/'.$imgName))) {
+                                                $imgPath = asset('img/tours/tour_itinerary/'.$imgName);
+                                            } elseif(file_exists(public_path('img/destinations/'.$imgName))) {
+                                                $imgPath = asset('img/destinations/'.$imgName);
+                                            } elseif(file_exists(public_path('img/gallery/'.$imgName))) {
+                                                $imgPath = asset('img/gallery/'.$imgName);
+                                            }
+                                        }
+                                    @endphp
+
+                                    @if($imgPath)
                                         <div class="col-xl-3">
-                                            <img src="{{asset('img/tours/tour_itinerary/'.$day->image)}}" alt="" class="rounded-4 img-repso">
+                                            <img src="{{ $imgPath }}" alt="" class="rounded-4 img-repso">
                                         </div>
                                         <div class="col-xl-9">
                                             <div class="rounded-4 px-10">
@@ -229,43 +266,53 @@
                                             </div>
                                         </div>
                                     @endif
+                                @endforeach
 
+                                @php
+                                    $dayActivity = $dayItineraries->pluck('activity')->filter()->first();
+                                    $dayStay = $dayItineraries->pluck('stay')->filter()->first();
+                                    $dayFood = $dayItineraries->pluck('food')->filter()->first();
+                                @endphp
+
+                                @if($dayActivity || $dayStay || $dayFood)
+                                <div class="col-12 mt-15">
                                     <div class="col-12 y-gap-5 d-flex justify-between flex-wrap">
-                                        @if($day->activity)
+                                        @if($dayActivity)
                                         <div class="d-flex justify-start align-items-center">
                                             <div class="flex-center size-50 rounded-full bg-blue-1">
                                                 <i class="icon-customer text-white text-30"></i>
                                             </div>
                                             <div class="text-left mt-5 pl-10">
                                                 <p class="text-15">Sigthseeings</p>
-                                                <h4 class="text-16 fw-500">{{$day->activity}}</h4>
+                                                <h4 class="text-16 fw-500">{{$dayActivity}}</h4>
                                             </div>
                                         </div>
                                         @endif
-                                        @if($day->stay)
+                                        @if($dayStay)
                                         <div class="d-flex justify-start align-items-center">
                                             <div class="flex-center size-50 rounded-full bg-blue-1">
                                                 <i class="icon-bed text-white text-30"></i>
                                             </div>
                                             <div class="text-left mt-5 pl-10">
                                                 <p class="text-15">Stay</p>
-                                                <h4 class="text-16 fw-500">{{$day->stay}}</h4>
+                                                <h4 class="text-16 fw-500">{{$dayStay}}</h4>
                                             </div>
                                         </div>
                                         @endif
-                                        @if($day->food)
+                                        @if($dayFood)
                                         <div class="d-flex justify-start align-items-center">
                                             <div class="flex-center size-50 rounded-full bg-blue-1">
                                                 <i class="icon-food text-white text-30"></i>
                                             </div>
                                             <div class="text-left mt-5 pl-10">
                                                 <p class="text-15">Food</p>
-                                                <h4 class="text-16 fw-500">{{$day->food}}</h4>
+                                                <h4 class="text-16 fw-500">{{$dayFood}}</h4>
                                             </div>
                                         </div>
                                         @endif
                                     </div>
-                                @endforeach
+                                </div>
+                                @endif
                             </div>
                         </div>
                         @endforeach

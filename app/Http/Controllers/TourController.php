@@ -448,10 +448,10 @@ class TourController extends Controller
             $itinerary->day           = $data['day'];
             $itinerary->visit_place   = $data['visit_place'];
             $itinerary->activity      = $data['activity'] ?? null;
-            $itinerary->travel_option = $data['travel_option'];
+            $itinerary->travel_option = $data['travel_option'] ?? null;
             $itinerary->description   = $data['description'];
-            $itinerary->stay          = $data['stay'];
-            $itinerary->food          = $data['food'];
+            $itinerary->stay          = $data['stay'] ?? null;
+            $itinerary->food          = $data['food'] ?? null;
 
             // Handle file upload
             if ($request->hasFile('image')) {
@@ -465,11 +465,14 @@ class TourController extends Controller
             } elseif (!empty($data['gallery_image'])) {
                 // Handle gallery image selection
                 $gallery_image = $data['gallery_image'];
-                $source_path = 'img/gallery/' . $gallery_image;
                 $destination_path = 'img/tours/tour_itinerary/' . $gallery_image;
 
                 if (!file_exists($destination_path)) {
-                    File::copy($source_path, $destination_path);
+                    if (file_exists('img/gallery/' . $gallery_image)) {
+                        File::copy('img/gallery/' . $gallery_image, $destination_path);
+                    } elseif (file_exists('img/destinations/' . $gallery_image)) {
+                        File::copy('img/destinations/' . $gallery_image, $destination_path);
+                    }
                 }
 
                 $itinerary->image = $gallery_image;
@@ -506,11 +509,14 @@ class TourController extends Controller
             } elseif (!empty($data['gallery_image'])) {
                 // Check if a gallery image is selected
                 $gallery_image = $data['gallery_image'];
-                $source_path = 'img/gallery/' . $gallery_image;
                 $destination_path = 'img/tours/tour_itinerary/' . $gallery_image;
 
                 if (!file_exists($destination_path)) {
-                    File::copy($source_path, $destination_path);
+                    if (file_exists('img/gallery/' . $gallery_image)) {
+                        File::copy('img/gallery/' . $gallery_image, $destination_path);
+                    } elseif (file_exists('img/destinations/' . $gallery_image)) {
+                        File::copy('img/destinations/' . $gallery_image, $destination_path);
+                    }
                 }
                 $filename = $data['gallery_image'];
             } elseif (!empty($data['current_image'])) {

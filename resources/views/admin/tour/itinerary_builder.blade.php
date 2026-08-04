@@ -90,8 +90,8 @@
                                             <input type="text" name="activity" class="form-control" placeholder="Enter Sigthseeings" value="" >
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label class="required">Travel Option</label>
-                                            <select class="form-control select2bs4" name="travel_option" required>
+                                            <label class="">Travel Option</label>
+                                            <select class="form-control select2bs4" name="travel_option">
                                                 <option value="">Select One</option>
                                                 <option value="NA">NA</option>
                                                 <option value="Bike">Bike</option>
@@ -110,12 +110,12 @@
                                             <textarea name="description" class="form-control" rows="5" placeholder="Enter Overview" required></textarea>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label class="required">Stay</label>
-                                            <input type="text" name="stay" class="form-control" placeholder="Enter Stay" value="" required>
+                                            <label class="">Stay</label>
+                                            <input type="text" name="stay" class="form-control" placeholder="Enter Stay" value="">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label class="required">Food</label>
-                                            <input type="text" name="food" class="form-control" placeholder="Enter Food" value="" required>
+                                            <label class="">Food</label>
+                                            <input type="text" name="food" class="form-control" placeholder="Enter Food" value="">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="required">Image <small>(Size: 800 X 530px)</small></label>
@@ -126,6 +126,10 @@
                                                 </div>
                                                 <input type="hidden" name="gallery_image" id="gallery_image">
                                                 <input type="file" name="image" class="form-control p-1" id="image_file" onchange="checkFileInput()">
+                                            </div>
+                                            <div id="visit_place_image_wrapper" style="display: none;" class="mt-1">
+                                                <img id="visit_place_image_preview" src="" style="max-height: 60px; border-radius: 4px;" alt="Image Preview">
+                                                <small id="visit_place_image_info" class="text-muted d-block"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -214,6 +218,12 @@
     function selectGalleryImage(image) {
         document.getElementById('gallery_image').value = image;
         document.getElementById('image_file').disabled = true;
+        if($('#visit_place_image_preview').length > 0){
+            var imgSrc = "{{ asset('img/gallery') }}/" + image;
+            $('#visit_place_image_preview').attr('src', imgSrc);
+            $('#visit_place_image_wrapper').show();
+            $('#visit_place_image_info').text('Selected gallery image: ' + image);
+        }
     }
 
     function checkFileInput() {
@@ -223,6 +233,9 @@
             const galleryRadios = document.getElementsByName('gallery_image_option');
             for (let i = 0; i < galleryRadios.length; i++) {
                 galleryRadios[i].checked = false;
+            }
+            if($('#visit_place_image_wrapper').length > 0){
+                $('#visit_place_image_wrapper').hide();
             }
         }
     }
@@ -247,7 +260,25 @@
 
 <script src="{{ asset('backend_plugins/jquery/jquery.min.js') }}"></script>
 <script>
+    var existingDays = @json($tour->itinerary->pluck('day')->map(function($d) { return (int)$d; })->unique()->values()->toArray());
+
+    function checkDayFields() {
+        var selectedDay = parseInt($('select[name="day"]').val());
+        if (existingDays.includes(selectedDay)) {
+            $('input[name="activity"]').prop('disabled', true).val('');
+            $('input[name="stay"]').prop('disabled', true).val('');
+            $('input[name="food"]').prop('disabled', true).val('');
+        } else {
+            $('input[name="activity"]').prop('disabled', false);
+            $('input[name="stay"]').prop('disabled', false);
+            $('input[name="food"]').prop('disabled', false);
+        }
+    }
+
     $(document).ready(function() {
+        $('select[name="day"]').on('change', checkDayFields);
+        checkDayFields();
+
         $('#TourItinerary').validate({
             ignore: [],
             debug: false,
@@ -258,16 +289,7 @@
                 visit_place: {
                     required: true,
                 },
-                activity: {
-                    required: true,
-                },
                 description: {
-                    required: true,
-                },
-                stay: {
-                    required: true,
-                },
-                food: {
                     required: true,
                 },
                 image: {
@@ -276,7 +298,7 @@
                 },
             },
             messages: {},
-            submitHandler: function(gallery) {
+            submitHandler: function(form) {
                 $(".submit").attr("disabled", true);
                 $(".submit").html("<span class='fa fa-spinner fa-spin'></span> Please wait...");
                 form.submit();
@@ -296,18 +318,51 @@
                     dataType: 'json',
                     success:function(data){
                         $('textarea[name="description"]').val(data?.destination?.description ?? data?.itinerary?.description);
-                        $('input[name="activity"]').val(data?.itinerary?.activity ?? '');
                         $('select[name="travel_option"]').val(data?.itinerary?.travel_option ?? '');
-                        $('input[name="stay"]').val(data?.itinerary?.stay ?? '');
-                        $('input[name="food"]').val(data?.itinerary?.food ?? '');
+                        if (!$('input[name="activity"]').is(':disabled')) {
+                            $('input[name="activity"]').val(data?.itinerary?.activity ?? '');
+                        }
+                        if (!$('input[name="stay"]').is(':disabled')) {
+                            $('input[name="stay"]').val(data?.itinerary?.stay ?? '');
+                        }
+                        if (!$('input[name="food"]').is(':disabled')) {
+                            $('input[name="food"]').val(data?.itinerary?.food ?? '');
+                        }
+
+                        // Link visit_place image with name="gallery_image"
+                        var placeImage = data?.destination?.image ?? data?.itinerary?.image;
+                        if(placeImage){
+                            $('#gallery_image').val(placeImage);
+                            if($('#visit_place_image_wrapper').length > 0){
+                                var imgSrc = data?.destination?.image ? ("{{ asset('img/destinations') }}/" + placeImage) : ("{{ asset('img/tours/tour_itinerary') }}/" + placeImage);
+                                $('#visit_place_image_preview').attr('src', imgSrc);
+                                $('#visit_place_image_wrapper').show();
+                                $('#visit_place_image_info').text('Linked visit place image: ' + placeImage);
+                            }
+                        } else {
+                            $('#gallery_image').val('');
+                            if($('#visit_place_image_wrapper').length > 0){
+                                $('#visit_place_image_wrapper').hide();
+                            }
+                        }
                     }
                 });
             }else{
-                $('input[name="activity"]').val('');
+                if (!$('input[name="activity"]').is(':disabled')) {
+                    $('input[name="activity"]').val('');
+                }
                 $('select[name="travel_option"]').val('');
                 $('textarea[name="description"]').val('');
-                $('input[name="stay"]').val('');
-                $('input[name="food"]').val('');
+                if (!$('input[name="stay"]').is(':disabled')) {
+                    $('input[name="stay"]').val('');
+                }
+                if (!$('input[name="food"]').is(':disabled')) {
+                    $('input[name="food"]').val('');
+                }
+                $('#gallery_image').val('');
+                if($('#visit_place_image_wrapper').length > 0){
+                    $('#visit_place_image_wrapper').hide();
+                }
             }
         });
     });
