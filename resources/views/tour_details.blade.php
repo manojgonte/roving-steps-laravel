@@ -41,6 +41,15 @@
         text-decoration: none;
         cursor: pointer;
     }
+
+    .itinerary-meta-text {
+        min-width: 0;
+        flex: 1;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        white-space: normal;
+    }
 </style>
 @endsection('styles')
 
@@ -276,37 +285,43 @@
 
                                 @if($dayActivity || $dayStay || $dayFood)
                                 <div class="col-12 mt-15">
-                                    <div class="col-12 y-gap-5 d-flex justify-between flex-wrap">
+                                    <div class="row y-gap-10 items-start">
                                         @if($dayActivity)
-                                        <div class="d-flex justify-start align-items-center">
-                                            <div class="flex-center size-50 rounded-full bg-blue-1">
-                                                <i class="icon-customer text-white text-30"></i>
-                                            </div>
-                                            <div class="text-left mt-5 pl-10">
-                                                <p class="text-15">Sigthseeings</p>
-                                                <h4 class="text-16 fw-500">{{$dayActivity}}</h4>
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <div class="d-flex justify-start align-items-start">
+                                                <div class="flex-center size-50 rounded-full bg-blue-1 flex-shrink-0">
+                                                    <i class="icon-customer text-white text-30"></i>
+                                                </div>
+                                                <div class="text-left mt-5 pl-10 itinerary-meta-text">
+                                                    <p class="text-15">Sightseeings</p>
+                                                    <h4 class="text-16 fw-500">{{$dayActivity}}</h4>
+                                                </div>
                                             </div>
                                         </div>
                                         @endif
                                         @if($dayStay)
-                                        <div class="d-flex justify-start align-items-center">
-                                            <div class="flex-center size-50 rounded-full bg-blue-1">
-                                                <i class="icon-bed text-white text-30"></i>
-                                            </div>
-                                            <div class="text-left mt-5 pl-10">
-                                                <p class="text-15">Stay</p>
-                                                <h4 class="text-16 fw-500">{{$dayStay}}</h4>
+                                        <div class="col-lg-3 col-md-3 col-12">
+                                            <div class="d-flex justify-start align-items-start">
+                                                <div class="flex-center size-50 rounded-full bg-blue-1 flex-shrink-0">
+                                                    <i class="icon-bed text-white text-30"></i>
+                                                </div>
+                                                <div class="text-left mt-5 pl-10 itinerary-meta-text">
+                                                    <p class="text-15">Stay</p>
+                                                    <h4 class="text-16 fw-500">{{$dayStay}}</h4>
+                                                </div>
                                             </div>
                                         </div>
                                         @endif
                                         @if($dayFood)
-                                        <div class="d-flex justify-start align-items-center">
-                                            <div class="flex-center size-50 rounded-full bg-blue-1">
-                                                <i class="icon-food text-white text-30"></i>
-                                            </div>
-                                            <div class="text-left mt-5 pl-10">
-                                                <p class="text-15">Food</p>
-                                                <h4 class="text-16 fw-500">{{$dayFood}}</h4>
+                                        <div class="col-lg-3 col-md-3 col-12">
+                                            <div class="d-flex justify-start align-items-start">
+                                                <div class="flex-center size-50 rounded-full bg-blue-1 flex-shrink-0">
+                                                    <i class="icon-food text-white text-30"></i>
+                                                </div>
+                                                <div class="text-left mt-5 pl-10 itinerary-meta-text">
+                                                    <p class="text-15">Food</p>
+                                                    <h4 class="text-16 fw-500">{{$dayFood}}</h4>
+                                                </div>
                                             </div>
                                         </div>
                                         @endif

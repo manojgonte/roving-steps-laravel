@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="col-auto">
                                         <select class="form-control form-control-sm select2bs4" name="special_tour_type" onchange="javascript:this.form.submit();">
-                                            <option value="" selected>-- All Destinations --</option>
+                                            <option value="" selected>-- All Special Tours --</option>
                                             @foreach($specialToursArray = App\Models\SpecialTour::where('status',1)->get() as $row)
                                             <option value="{{$row->id}}" @if(Request()->special_tour_type == $row->id) selected @endif>{{$row->title}}</option>
                                             @endforeach
