@@ -570,7 +570,8 @@ class TourController extends Controller
     }
 
     public function tourEnquiries(Request $request, $status=null){
-        $tour_enquiry = TourEnquiry::select('tour_enquiry.*','tours.id as tour_id','tours.tour_name')
+        $tour_enquiry = TourEnquiry::with('user')
+            ->select('tour_enquiry.*','tours.id as tour_id','tours.tour_name')
             ->leftJoin('tours','tour_enquiry.tour_id','tours.id')
             ->orderBy('tour_enquiry.id','DESC');
 
